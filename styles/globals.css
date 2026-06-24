@@ -10,13 +10,17 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-dancing: var(--font-dancing-script);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+@theme {
+  --color-dent-dark: #1a3535;
+  --color-dent-nav: #2d6c72;
+  --color-dent-accent: #3ec8c8;
+  --color-dent-mint: #ebf8f8;
+  --color-dent-text: #1b3c42;
+  --color-dent-border: #c5eaea;
+  --color-dent-light: #f0fbfb;
 }
 
 *,
@@ -35,6 +39,7 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   margin: 0;
@@ -43,6 +48,12 @@ body {
 
 img,
 video {
+  display: block;
   max-width: 100%;
   height: auto;
+}
+
+
+.max-w-7xl {
+  max-width: 1470px;
 }
