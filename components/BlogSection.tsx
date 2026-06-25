@@ -42,7 +42,7 @@ export default function BlogSection() {
   const visiblePosts = [posts[start], posts[(start + 1) % posts.length]];
 
   return (
-    <section className="mx-auto max-w-7xl px-5 py-6 sm:px-8 lg:px-12 lg:py-24">
+    <section className="mx-auto max-w-7xl px-5 py-6 sm:px-8 lg:px-12 lg:py-14">
       <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <p className="text-sm font-extrabold uppercase text-[#28d1c2] sm:text-base">

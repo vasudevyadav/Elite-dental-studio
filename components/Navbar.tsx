@@ -153,7 +153,7 @@ export default function Navbar() {
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-5 px-5 py-4 sm:px-8 lg:px-12 lg:py-5">
 
           {/* Icon links – scrollable on mobile */}
-          <nav className="scrollbar-hide flex items-center gap-5 overflow-x-auto pb-0.5 lg:gap-9">
+          <nav className="scrollbar-hide flex items-center gap-5 overflow-x-auto pb-0.5 lg:gap-12 ">
             {subNavItems.map(({ label, img }) => (
               <Link
                 key={label}

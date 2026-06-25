@@ -33,8 +33,8 @@ export default function FAQSection() {
   const [openIndex, setOpenIndex] = useState(0);
 
   return (
-    <section className="mx-auto max-w-7xl px-5 py-10 sm:px-8 lg:px-12 lg:py-16">
-      <div className="rounded-[30px] bg-[#f0faf8] px-6 py-10 sm:px-10 lg:grid lg:grid-cols-[0.9fr_1.1fr] lg:gap-14 lg:px-14 lg:py-16">
+    <section className="mx-auto max-w-7xl px-5 py-10 sm:px-8 lg:px-12 lg:py-10">
+      <div className="rounded-[30px] bg-[#f0faf8] px-6 py-10 sm:px-10 lg:grid lg:grid-cols-[0.9fr_1.1fr] lg:gap-14 lg:px-14 lg:py-10">
         <div>
           <p className="text-sm font-extrabold uppercase text-[#28d1c2] sm:text-base">
             FAQs

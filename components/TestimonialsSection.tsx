@@ -39,7 +39,7 @@ export default function TestimonialsSection() {
     setIndex((current) => (current + step + testimonials.length) % testimonials.length);
 
   return (
-    <section className="overflow-hidden px-5 py-6 sm:px-8 lg:py-24">
+    <section className="overflow-hidden px-5 py-6 sm:px-8 lg:py-14">
       <div className="mx-auto max-w-7xl">
         <div className="relative rounded-[28px] bg-[#2c7477] px-6 pb-[170px] pt-10 sm:px-10 lg:px-16 lg:pb-[180px] lg:pt-12">
           <Image

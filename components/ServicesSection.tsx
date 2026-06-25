@@ -114,7 +114,7 @@ export default function ServicesSection() {
   };
 
   return (
-    <section id="services" className="overflow-hidden px-5 py-6 sm:px-8 lg:py-20">
+    <section id="services" className="overflow-hidden px-5 py-6 sm:px-8 lg:py-12">
       <div className="mx-auto max-w-7xl">
         <div className="relative rounded-[28px] bg-[#2c7477] px-5 pb-[250px] pt-8 sm:px-9 sm:pb-[240px] sm:pt-11 lg:px-12 lg:pb-[255px] lg:pt-14 xl:px-16">
           <div className="flex flex-col gap-7 lg:flex-row lg:items-center lg:justify-between">

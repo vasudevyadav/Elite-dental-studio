@@ -49,10 +49,10 @@ function SocialIcon({ type }: { type: "facebook" | "tiktok" | "instagram" | "wha
 
 export default function Footer() {
   return (
-    <footer className="bg-[#03484d] text-white">
-      <div className="mx-auto max-w-7xl px-5 py-16 sm:px-8 lg:px-12 lg:py-20">
+    <footer className="bg-[#03484d] text-white lg:mt-8">
+      <div className="mx-auto max-w-7xl px-5 py-8 sm:px-8 lg:px-12 lg:py-12">
         <div className="grid gap-12 grid-cols-2 lg:grid-cols-[1.45fr_0.75fr_1.15fr_0.65fr] lg:gap-16">
-        
+
           <div>
             <Image
               src="/home/logo-white.png"
