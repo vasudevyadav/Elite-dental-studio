@@ -1,4 +1,5 @@
 import Image from "next/image";
+import AnimatedCounter from "./AnimatedCounter";
 
 function ToothIcon() {
   return (
@@ -39,7 +40,7 @@ export default function AboutUs() {
   return (
     <section
       id="about-us"
-      className="mx-auto max-w-7xl px-5 py-8 sm:px-8 lg:px-12 lg:py-14"
+      className="mx-auto max-w-7xl px-5 py-8 sm:px-8 lg:px-12 lg:py-12"
     >
       <div className="grid items-center gap-6 lg:grid-cols-[0.92fr_1.08fr] lg:gap-14">
         <div className="mx-auto w-full max-w-[610px]">
@@ -83,10 +84,10 @@ export default function AboutUs() {
           </div>
 
           <div className="mt-10 border-y border-[#dfe8e8] py-7">
-            <div className="grid gap-6 lg:grid-cols-2 lg:gap-4">
-              <div className="flex items-center gap-2 ">
+            <div className="grid gap-6 grid-cols-2 lg:gap-4">
+              <div className="lg:flex grid items-center gap-2 ">
                 <strong className="shrink-0 text-2xl font-black leading-none text-[#2bd0c0] lg:text-5xl">
-                  98%
+                  <AnimatedCounter value={98} suffix="%" duration={1400} />
                 </strong>
                 <span className="text-sm leading-relaxed text-[#303436] sm:text-sm font-semibold">
                   Invisalign Treatment
@@ -95,9 +96,9 @@ export default function AboutUs() {
                 </span>
               </div>
 
-              <div className="flex items-center gap-3">
+              <div className="lg:flex grid items-center gap-3">
                 <strong className="shrink-0 text-2xl font-black leading-none text-[#2bd0c0] lg:text-5xl">
-                  100%
+                  <AnimatedCounter value={100} suffix="%" duration={1400} />
                 </strong>
                 <span className="text-sm leading-relaxed text-[#303436] sm:text-sm font-semibold">
                   Patient Satisfaction
@@ -110,7 +111,7 @@ export default function AboutUs() {
 
           <button
             type="button"
-            className="lg:mt-10 mt-6 inline-flex items-center gap-3 rounded-lg bg-[#07515a] py-2.5 pl-5 pr-2.5 text-base font-bold text-white transition hover:-translate-y-0.5 hover:bg-[#2d7378] focus:outline-none focus:ring-4 focus:ring-[#2bd0c0]/25"
+            className="lg:mt-10 mt-6 inline-flex items-center gap-3 rounded-lg bg-[#07515a] lg:py-2.5 py-2 pl-5 pr-2.5 text-base font-bold text-white transition hover:-translate-y-0.5 hover:bg-[#2d7378] focus:outline-none focus:ring-4 focus:ring-[#2bd0c0]/25"
           >
             MORE ABOUT
             <ArrowIcon />

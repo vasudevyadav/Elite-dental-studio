@@ -118,7 +118,7 @@ export default function NearestClinic() {
   const mapPageUrl = `https://www.google.com/maps/search/?api=1&query=${encodedMapQuery}`;
 
   return (
-    <section className="mx-auto max-w-7xl px-5 py-8 sm:px-8 lg:px-12 lg:py-14">
+    <section id="clinics" className="mx-auto max-w-7xl px-5 py-8 sm:px-8 lg:px-12 ">
       <div className="lg:mb-10 mb-6 flex items-center gap-5">
         <h2 className="shrink-0 text-3xl font-bold tracking-[-0.02em] text-[#073f48] lg:text-[34px]">
           Choose Your <span className="text-[#25cfc0]">Nearest Clinic</span>

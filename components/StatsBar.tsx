@@ -1,9 +1,10 @@
 import Image from "next/image";
+import AnimatedCounter from "./AnimatedCounter";
 
 const stats = [
-  { icon: "/home/count-icon-1.png", count: "10000+", label: "Dental Implant" },
-  { icon: "/home/count-icon-2.png", count: "5000+", label: "Invisible Aligners" },
-  { icon: "/home/count-icon-3.png", count: "8000+", label: "Invisalign" },
+  { icon: "/home/count-icon-1.png", count: 10000, label: "Dental Implant" },
+  { icon: "/home/count-icon-2.png", count: 5000, label: "Invisible Aligners" },
+  { icon: "/home/count-icon-3.png", count: 8000, label: "Invisalign" },
 ];
 
 export default function StatsBar() {
@@ -23,7 +24,7 @@ export default function StatsBar() {
               </div>
               <div className="text-white">
                 <div className="text-lg font-black leading-none tracking-tight sm:text-3xl lg:text-4xl">
-                  {count}
+                  <AnimatedCounter value={count} suffix="+" />
                 </div>
                 <div className="mt-1 text-[10px] font-semibold sm:text-sm lg:text-base">
                   {label}
