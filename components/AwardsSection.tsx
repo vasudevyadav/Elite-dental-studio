@@ -58,7 +58,7 @@ export default function AwardsSection() {
   return (
     <section
       id="awards"
-      className="mx-auto max-w-7xl overflow-hidden px-5 py-6 sm:px-8 lg:px-12 lg:py-14"
+      className="mx-auto max-w-7xl overflow-hidden px-5 py-6 sm:px-8 lg:px-12 lg:py-12"
     >
       <div className="grid items-center gap-14 lg:grid-cols-[0.94fr_1.06fr] lg:gap-8 xl:gap-14">
         <div className="relative z-10">

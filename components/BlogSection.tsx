@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 const posts = [
   {
@@ -39,10 +39,34 @@ function Arrow({ left = false }: { left?: boolean }) {
 
 export default function BlogSection() {
   const [start, setStart] = useState(0);
+  const touchStartX = useRef<number | null>(null);
   const visiblePosts = [posts[start], posts[(start + 1) % posts.length]];
 
+  const move = (step: number) => {
+    setStart((current) => (current + step + posts.length) % posts.length);
+  };
+
+  const handleTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
+    touchStartX.current = event.touches[0]?.clientX ?? null;
+  };
+
+  const handleTouchEnd = (event: React.TouchEvent<HTMLDivElement>) => {
+    if (touchStartX.current === null) {
+      return;
+    }
+
+    const distance = touchStartX.current - event.changedTouches[0].clientX;
+    touchStartX.current = null;
+
+    if (Math.abs(distance) < 45) {
+      return;
+    }
+
+    move(distance > 0 ? 1 : -1);
+  };
+
   return (
-    <section className="mx-auto max-w-7xl px-5 py-6 sm:px-8 lg:px-12 lg:py-14">
+    <section className="mx-auto max-w-7xl px-5 py-6 sm:px-8 lg:px-12 lg:py-12">
       <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <p className="text-sm font-extrabold uppercase text-[#28d1c2] sm:text-base">
@@ -53,7 +77,7 @@ export default function BlogSection() {
             <br className="hidden sm:block" /> oral health advice
           </h2>
         </div>
-        <button className="inline-flex w-fit items-center gap-4 rounded-[8px] bg-[#064a50] py-1.5 lg:py-3 pl-5 pr-3 text-sm font-bold uppercase text-white">
+        <button className="inline-flex w-fit items-center gap-4 rounded-[8px] bg-[#064a50] py-1.5 lg:py-3 pl-5 pr-3 text-sm font-bold uppercase text-white !hidden lg:block">
           View All Post
           <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-[#2c7477]">
             <Arrow />
@@ -61,17 +85,22 @@ export default function BlogSection() {
         </button>
       </div>
     
-      <div className="mt-16 flex items-center gap-4 lg:gap-8">
+      <div className="lg:mt-16 mt-8 flex items-center gap-4 lg:gap-8">
         <button
           type="button"
-          onClick={() => setStart((current) => (current - 1 + posts.length) % posts.length)}
+          onClick={() => move(-1)}
           aria-label="Previous blog posts"
           className="hidden h-10 w-10 shrink-0 items-center justify-center rounded-[5px] bg-[#28d1c2] text-white sm:flex"
         >
           <Arrow left />
         </button>
 
-        <div className="grid min-w-0 flex-1 gap-8 md:grid-cols-2">
+        <div
+          className="grid min-w-0 flex-1 touch-pan-y gap-8 md:grid-cols-2"
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
+          aria-live="polite"
+        >
           {visiblePosts.map((post, index) => (
             <article
               key={`${post.title}-${start}-${index}`}
@@ -121,9 +150,40 @@ export default function BlogSection() {
 
         <button
           type="button"
-          onClick={() => setStart((current) => (current + 1) % posts.length)}
+          onClick={() => move(1)}
           aria-label="Next blog posts"
           className="hidden h-10 w-10 shrink-0 items-center justify-center rounded-[5px] bg-[#2c7477] text-white sm:flex"
+        >
+          <Arrow />
+        </button>
+      </div>
+
+      <div className="mt-5 flex items-center justify-center gap-4 sm:hidden">
+        <button
+          type="button"
+          onClick={() => move(-1)}
+          aria-label="Previous blog post"
+          className="flex h-11 w-12 items-center justify-center rounded-lg bg-[#28d1c2] text-white shadow-sm transition active:scale-95 focus:outline-none focus:ring-4 focus:ring-[#28d1c2]/25"
+        >
+          <Arrow left />
+        </button>
+
+        <div className="flex items-center gap-1.5" aria-hidden="true">
+          {posts.map((post, index) => (
+            <span
+              key={`${post.title}-${index}`}
+              className={`h-2 rounded-full transition-all duration-300 ${
+                index === start ? "w-6 bg-[#2c7477]" : "w-2 bg-[#acd5d6]"
+              }`}
+            />
+          ))}
+        </div>
+
+        <button
+          type="button"
+          onClick={() => move(1)}
+          aria-label="Next blog post"
+          className="flex h-11 w-12 items-center justify-center rounded-lg bg-[#2c7477] text-white shadow-sm transition active:scale-95 focus:outline-none focus:ring-4 focus:ring-[#2c7477]/25"
         >
           <Arrow />
         </button>

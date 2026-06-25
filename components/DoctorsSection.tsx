@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { useRef } from "react";
 
 const highlights = [
   {
@@ -55,7 +56,47 @@ const doctors = [
   },
 ];
 
+function Arrow({ direction }: { direction: "left" | "right" }) {
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 24 24"
+      className={`h-5 w-5 ${direction === "left" ? "rotate-180" : ""}`}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.5"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M5 12h14m-5-5 5 5-5 5"
+      />
+    </svg>
+  );
+}
+
 export default function DoctorsSection() {
+  const doctorsTrackRef = useRef<HTMLDivElement>(null);
+
+  const scrollDoctors = (direction: "left" | "right") => {
+    const track = doctorsTrackRef.current;
+    const firstCard = track?.querySelector<HTMLElement>("article");
+
+    if (!track || !firstCard) {
+      return;
+    }
+
+    const gap = Number.parseFloat(getComputedStyle(track).columnGap) || 24;
+
+    track.scrollBy({
+      left:
+        direction === "right"
+          ? firstCard.offsetWidth + gap
+          : -(firstCard.offsetWidth + gap),
+      behavior: "smooth",
+    });
+  };
+
   return (
     <section
       id="doctors"
@@ -66,7 +107,7 @@ export default function DoctorsSection() {
           Our Doctors
         </h2>
 
-        <p className="mx-auto mt-3 max-w-[1120px] text-base leading-[1.65] text-[#555] sm:text-lg lg:mt-5 lg:text-[20px]">
+        <p className="mx-auto mt-3 max-w-[1120px] text-sm leading-[1.65] text-[#555] sm:text-lg lg:mt-5 lg:text-[20px]">
           We are delighted to welcome you to Elite Dental Studio! At our office,
           every member of our team strives to make each patient feel welcome,
           comfortable, and valued – because you are the most important person in
@@ -113,12 +154,18 @@ export default function DoctorsSection() {
         ))}
       </div>
 
-      {/* Doctors */}
-      <div className="mt-16 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:mt-20 lg:grid-cols-3 xl:grid-cols-5 xl:gap-7">
+      {/* Doctors carousel */}
+      <div
+        ref={doctorsTrackRef}
+        role="region"
+        aria-label="Our doctors carousel"
+        tabIndex={0}
+        className="mt-16 flex snap-x snap-mandatory gap-5 overflow-x-auto scroll-smooth pb-5 outline-none focus-visible:ring-4 focus-visible:ring-[#29cfc0]/25 sm:grid sm:grid-cols-2 sm:overflow-visible sm:pb-0 lg:mt-20 lg:grid-cols-3 lg:gap-7 xl:grid-cols-5 [&::-webkit-scrollbar]:hidden [scrollbar-width:none]"
+      >
         {doctors.map((doctor) => (
           <article
             key={doctor.name}
-            className="group mx-auto flex w-full max-w-[330px] flex-col overflow-hidden rounded-[28px] bg-[#2b7477] p-3 pb-0 shadow-[0_14px_35px_rgba(25,87,90,0.12)] transition duration-300 hover:-translate-y-2 hover:shadow-[0_20px_45px_rgba(25,87,90,0.2)] xl:max-w-none"
+            className="group flex w-[84%] max-w-[330px] shrink-0 snap-start flex-col overflow-hidden rounded-[28px] bg-[#2b7477] p-3 pb-0 shadow-[0_14px_35px_rgba(25,87,90,0.12)] transition duration-300 hover:-translate-y-2 hover:shadow-[0_20px_45px_rgba(25,87,90,0.2)] sm:mx-auto sm:w-full sm:max-w-none"
           >
             <div className="relative aspect-[1.03/1] overflow-hidden rounded-[20px] bg-[#edf2f5]">
               <Image
@@ -145,6 +192,25 @@ export default function DoctorsSection() {
             </div>
           </article>
         ))}
+      </div>
+
+      <div className="mt-2 flex items-center justify-center gap-3 sm:hidden">
+        <button
+          type="button"
+          onClick={() => scrollDoctors("left")}
+          aria-label="View previous doctors"
+          className="flex h-11 w-12 items-center justify-center rounded-lg bg-[#29cfc0] text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-[#20bfb1] focus:outline-none focus:ring-4 focus:ring-[#29cfc0]/25"
+        >
+          <Arrow direction="left" />
+        </button>
+        <button
+          type="button"
+          onClick={() => scrollDoctors("right")}
+          aria-label="View next doctors"
+          className="flex h-11 w-12 items-center justify-center rounded-lg bg-[#2b7477] text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-[#205f63] focus:outline-none focus:ring-4 focus:ring-[#2b7477]/25"
+        >
+          <Arrow direction="right" />
+        </button>
       </div>
     </section>
   );

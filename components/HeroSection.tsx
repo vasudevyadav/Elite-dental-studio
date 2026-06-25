@@ -14,6 +14,7 @@ const ChevronDown = () => (
 
 export default function HeroSection() {
   const [slide, setSlide] = useState(0);
+  const [modalOpen, setModalOpen] = useState(false);
   const [form, setForm] = useState({ name: "", phone: "", email: "", date: "", clinic: "" });
 
   const total = SLIDES.length;
@@ -24,6 +25,28 @@ export default function HeroSection() {
     return () => clearInterval(id);
   }, [next]);
 
+  useEffect(() => {
+    if (!modalOpen) {
+      return;
+    }
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setModalOpen(false);
+      }
+    };
+
+    document.addEventListener("keydown", closeOnEscape);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener("keydown", closeOnEscape);
+    };
+  }, [modalOpen]);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
     setForm((p) => ({ ...p, [e.target.name]: e.target.value }));
 
@@ -33,7 +56,7 @@ export default function HeroSection() {
     "h-11 w-full rounded-[5px] border border-[#8bb5b6] bg-[#f5fbfa] px-4 text-sm text-gray-700 placeholder-gray-500 focus:border-dent-accent focus:outline-none focus:ring-1 focus:ring-dent-accent sm:h-12 sm:px-5";
 
   return (
-    <section className="relative h-[620px] overflow-hidden sm:h-[700px] lg:h-[790px] xl:h-[850px]">
+    <section className="relative h-[430px] overflow-hidden sm:h-[560px] lg:h-[790px] xl:h-[850px]">
 
       {/* Background image slider */}
       {SLIDES.map((s, i) => (
@@ -46,14 +69,14 @@ export default function HeroSection() {
             src={s.img}
             alt={s.alt}
             fill
-            className="object-cover object-[38%_center] sm:object-center"
+            className="object-cover lg:object-center object-[-100px]"
             priority={i === 0}
           />
         </div>
       ))}
 
       {/* Slide dots */}
-      <div className="absolute bottom-7 left-1/2 z-40 flex -translate-x-1/2 items-center gap-2">
+      <div className="absolute bottom-5 left-1/2 z-40 flex -translate-x-1/2 items-center gap-2 lg:bottom-7">
         {SLIDES.map((_, i) => (
           <button
             key={i}
@@ -65,9 +88,20 @@ export default function HeroSection() {
         ))}
       </div>
 
+      {/* Mobile CTA – the full form lives in the appointment section below */}
+      <div className="absolute inset-x-0 bottom-14 z-40 flex justify-center px-5 lg:hidden">
+        <button
+          type="button"
+          onClick={() => setModalOpen(true)}
+          className="inline-flex min-w-[220px] items-center justify-center rounded-lg bg-[#28cfc1] px-7 py-3.5 text-sm font-extrabold uppercase tracking-wide text-white shadow-[0_12px_30px_rgba(19,79,83,0.28)] transition active:scale-[0.98] focus:outline-none focus:ring-4 focus:ring-white/40"
+        >
+          Book an Appointment
+        </button>
+      </div>
+
       {/* Form – right side, on top of slider */}
-      <div className="absolute inset-y-0 right-0 z-40 flex w-full items-center px-4 sm:px-8 lg:right-[7%] lg:w-full lg:px-0">
-        <div className="ml-auto w-full rounded-[18px] bg-white/95 p-4 shadow-2xl backdrop-blur-sm sm:max-w-[470px] sm:p-6 lg:p-8">
+      <div className="absolute inset-y-0 right-[7%] z-40 hidden w-full items-center lg:flex lg:px-0">
+        <div className=" w-full rounded-[18px] bg-white/95 p-4 shadow-2xl backdrop-blur-sm sm:max-w-[470px] sm:p-6 lg:p-8 absolute right-10">
           <h3 className="mb-4 text-center text-base font-bold italic text-dent-text sm:mb-6 sm:text-lg">
             Book an Appointment
           </h3>
@@ -117,6 +151,110 @@ export default function HeroSection() {
       <div>
         <Image src="/home/hero-sha.png" alt="" width={2056} height={456} aria-hidden="true" className="absolute bottom-0 left-0 z-30 h-auto w-full" />
       </div>
+
+      {/* Mobile appointment modal */}
+      {modalOpen && (
+        <div
+          className="fixed inset-0 z-[120] flex items-center justify-center bg-[#123f43]/70 p-4 backdrop-blur-sm lg:hidden"
+          role="presentation"
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget) {
+              setModalOpen(false);
+            }
+          }}
+        >
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="mobile-appointment-title"
+            className="relative max-h-[92dvh] w-full max-w-[440px] overflow-y-auto rounded-[22px] bg-white p-5 shadow-[0_24px_70px_rgba(5,42,45,0.35)] sm:p-7"
+          >
+            <button
+              type="button"
+              onClick={() => setModalOpen(false)}
+              aria-label="Close appointment form"
+              className="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full bg-[#e8f8f6] text-xl font-bold text-dent-nav transition hover:bg-[#d5f3ef] focus:outline-none focus:ring-4 focus:ring-dent-accent/20"
+            >
+              ×
+            </button>
+
+            <h3
+              id="mobile-appointment-title"
+              className="mb-5 pr-10 text-center text-lg font-bold italic text-dent-text"
+            >
+              Book an Appointment
+            </h3>
+
+            <form onSubmit={handleSubmit} className="flex flex-col gap-3.5">
+              <input
+                type="text"
+                name="name"
+                value={form.name}
+                onChange={handleChange}
+                placeholder="Enter Your Name"
+                className={inputClass}
+                required
+              />
+              <input
+                type="tel"
+                name="phone"
+                value={form.phone}
+                onChange={handleChange}
+                placeholder="Enter Your Mobile No."
+                className={inputClass}
+                required
+              />
+              <input
+                type="email"
+                name="email"
+                value={form.email}
+                onChange={handleChange}
+                placeholder="Enter Your Mail"
+                className={inputClass}
+              />
+              <input
+                type="text"
+                name="date"
+                value={form.date}
+                onChange={handleChange}
+                placeholder="DD/MM/YYYY"
+                className={inputClass}
+                onFocus={(event) => (event.target.type = "date")}
+                onBlur={(event) => {
+                  if (!event.target.value) event.target.type = "text";
+                }}
+                required
+              />
+
+              <div className="relative">
+                <select
+                  name="clinic"
+                  value={form.clinic}
+                  onChange={handleChange}
+                  className="h-11 w-full appearance-none rounded-[5px] border border-[#8bb5b6] bg-[#f5fbfa] px-4 pr-12 text-sm text-gray-500 focus:border-dent-accent focus:outline-none focus:ring-1 focus:ring-dent-accent sm:h-12 sm:px-5"
+                  required
+                >
+                  <option value="">Select Clinic</option>
+                  <option value="calicut">Calicut</option>
+                  <option value="kochi">Kochi</option>
+                  <option value="kannur">Kannur</option>
+                  <option value="coimbatore">Coimbatore</option>
+                </select>
+                <div className="pointer-events-none absolute right-0 top-0 flex h-full w-11 items-center justify-center rounded-r-lg bg-dent-nav">
+                  <ChevronDown />
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                className="mx-auto mt-2 w-full max-w-[260px] rounded-[6px] bg-dent-accent py-3 text-sm font-bold text-white transition-colors hover:bg-[#2bbdbd] focus:outline-none focus:ring-4 focus:ring-dent-accent/25"
+              >
+                Book Now!
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
 
     </section>
   );

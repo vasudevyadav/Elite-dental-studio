@@ -153,11 +153,15 @@ export default function ServicesSection() {
           id="services-list"
           className="relative z-10 -mt-[190px] px-2 sm:-mt-[180px] sm:px-8 lg:-mt-[190px] lg:px-12"
         >
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
+          <div
+            className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8"
+            aria-live="polite"
+          >
             {services.map((service, index) => (
               <article
                 key={service.title}
-                className={`overflow-hidden rounded-[28px] border bg-white p-5 shadow-[0_18px_45px_rgba(21,74,78,0.09)] transition duration-300 sm:p-6 ${index === services.length - 1 ? "sm:col-span-2 sm:mx-auto sm:w-[48%] lg:col-span-1 lg:mx-0 lg:w-auto" : ""
+                className={`overflow-hidden rounded-[28px] border bg-white p-5 shadow-[0_18px_45px_rgba(21,74,78,0.09)] transition duration-300 sm:block sm:p-6 ${index !== activeService ? "hidden" : ""
+                  } ${index === services.length - 1 ? "sm:col-span-2 sm:mx-auto sm:w-[48%] lg:col-span-1 lg:mx-0 lg:w-auto" : ""
                   } ${index === activeService
                     ? "border-[#2b7f82] md:-translate-y-2"
                     : "border-[#8cb8ba]"
@@ -198,23 +202,26 @@ export default function ServicesSection() {
           </div>
 
           <div className="mt-7 flex items-center justify-center">
-            <div className="flex overflow-hidden rounded-[8px] shadow-sm">
-              <button
-                type="button"
-                onClick={() => move(-1)}
-                aria-label="Previous service"
-                className="flex h-11 w-12 items-center justify-center bg-[#27d3c4] text-white transition hover:bg-[#20c4b6] focus:outline-none focus:ring-4 focus:ring-[#27d3c4]/25"
-              >
-                <Arrow direction="left" />
-              </button>
-              <button
-                type="button"
-                onClick={() => move(1)}
-                aria-label="Next service"
-                className="flex h-11 w-12 items-center justify-center bg-[#2c7477] text-white transition hover:bg-[#205f63] focus:outline-none focus:ring-4 focus:ring-[#2c7477]/25"
-              >
-                <Arrow />
-              </button>
+            <div className="flex items-center gap-3">
+
+              <div className="flex overflow-hidden rounded-[8px] shadow-sm">
+                <button
+                  type="button"
+                  onClick={() => move(-1)}
+                  aria-label="Previous service"
+                  className="flex h-11 w-12 items-center justify-center bg-[#27d3c4] text-white transition hover:bg-[#20c4b6] focus:outline-none focus:ring-4 focus:ring-[#27d3c4]/25"
+                >
+                  <Arrow direction="left" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => move(1)}
+                  aria-label="Next service"
+                  className="flex h-11 w-12 items-center justify-center bg-[#2c7477] text-white transition hover:bg-[#205f63] focus:outline-none focus:ring-4 focus:ring-[#2c7477]/25"
+                >
+                  <Arrow />
+                </button>
+              </div>
             </div>
           </div>
         </div>
