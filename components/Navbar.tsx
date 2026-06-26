@@ -172,7 +172,7 @@ export default function Navbar() {
         <div className="mx-auto flex lg:h-[92px] h-[70px] max-w-7xl items-center justify-between px-5 sm:px-8 lg:h-[112px] lg:px-12">
 
           {/* Logo */}
-          <Link href="/" className="shrink-0">
+          <Link href="/" className="shrink-0 smooth-hover hover-lift">
             <Image
               src="/navbar/elite-logo.png"
               alt="Elite Dental Studio"
@@ -204,9 +204,9 @@ export default function Navbar() {
                     onClick={() => toggleDropdown(name)}
                     aria-expanded={isOpen}
                     aria-controls={`${name}-desktop-menu`}
-                    className={`flex items-center gap-2 whitespace-nowrap rounded-md px-6 py-3 text-sm font-semibold text-[#15494d] transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-[#27d6c2]/25 ${isOpen
+                    className={`smooth-hover button-hover hover-lift flex items-center gap-2 whitespace-nowrap rounded-md px-6 py-3 text-sm font-semibold text-[#15494d] focus:outline-none focus:ring-4 focus:ring-[#27d6c2]/25 ${isOpen
                       ? "bg-[#20c9b7] shadow-[0_8px_20px_rgba(32,201,183,0.22)]"
-                      : "bg-[#27d6c2] hover:-translate-y-0.5 hover:bg-[#22cdbc]"
+                      : "bg-[#27d6c2] hover:bg-[#22cdbc]"
                       }`}
                   >
                     {label}
@@ -230,9 +230,9 @@ export default function Navbar() {
                           key={item.label}
                           href={item.href}
                           onClick={closeMenus}
-                          className="group flex items-center gap-3 rounded-xl px-4 py-3 transition-colors hover:bg-[#effafa] focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[#27d6c2]"
+                          className="group smooth-hover hover-lift flex items-center gap-3 rounded-xl px-4 py-3 hover:bg-[#effafa] focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[#27d6c2]"
                         >
-                          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#e2f8f5] text-[#247378] transition-colors group-hover:bg-[#27d6c2] group-hover:text-white">
+                          <span className="smooth-hover flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#e2f8f5] text-[#247378] group-hover:bg-[#27d6c2] group-hover:text-white">
                             <span aria-hidden="true">→</span>
                           </span>
                           <span>
@@ -249,7 +249,7 @@ export default function Navbar() {
                     <Link
                       href="/#appointment"
                       onClick={closeMenus}
-                      className="mt-2 flex items-center justify-between rounded-xl bg-[#2d6c72] px-4 py-3 text-xs font-bold uppercase tracking-[0.08em] text-white transition-colors hover:bg-[#235a5f] focus:outline-none focus:ring-4 focus:ring-[#2d6c72]/20"
+                      className="smooth-hover button-hover hover-lift mt-2 flex items-center justify-between rounded-xl bg-[#2d6c72] px-4 py-3 text-xs font-bold uppercase tracking-[0.08em] text-white hover:bg-[#235a5f] focus:outline-none focus:ring-4 focus:ring-[#2d6c72]/20"
                     >
                       Book a free consultation
                       <span aria-hidden="true">↗</span>
@@ -293,7 +293,7 @@ export default function Navbar() {
             {/* CTA */}
             <Link
               href="/#appointment"
-              className="whitespace-nowrap rounded-[4px] bg-[#29696d] px-6 py-3 text-xs font-bold tracking-wider text-white transition-colors hover:bg-dent-text focus:outline-none focus:ring-4 focus:ring-[#29696d]/20"
+              className="smooth-hover button-hover hover-lift whitespace-nowrap rounded-[4px] bg-[#29696d] px-6 py-3 text-xs font-bold tracking-wider text-white hover:bg-dent-text focus:outline-none focus:ring-4 focus:ring-[#29696d]/20"
             >
               BOOK FREE CONSULTATION
             </Link>
@@ -315,7 +315,7 @@ export default function Navbar() {
                 setMobileOpen((current) => !current);
                 setActiveDropdown(null);
               }}
-              className="rounded-md p-2 text-dent-nav transition-colors hover:bg-dent-mint focus:outline-none focus:ring-4 focus:ring-dent-accent/20"
+              className="smooth-hover hover-lift rounded-md p-2 text-dent-nav hover:bg-dent-mint focus:outline-none focus:ring-4 focus:ring-dent-accent/20"
               aria-label={mobileOpen ? "Close navigation menu" : "Open navigation menu"}
               aria-expanded={mobileOpen}
               aria-controls="mobile-navigation"
@@ -360,7 +360,7 @@ export default function Navbar() {
                 onClick={closeMenus}
                 tabIndex={mobileOpen ? 0 : -1}
                 aria-label="Close navigation menu"
-                className="flex h-10 w-10 items-center justify-center rounded-full bg-[#e9f9f7] text-dent-nav transition-colors hover:bg-[#d5f3ef] focus:outline-none focus:ring-4 focus:ring-dent-accent/20"
+                className="smooth-hover hover-lift flex h-10 w-10 items-center justify-center rounded-full bg-[#e9f9f7] text-dent-nav hover:bg-[#d5f3ef] focus:outline-none focus:ring-4 focus:ring-dent-accent/20"
               >
                 <XIcon />
               </button>
@@ -391,7 +391,7 @@ export default function Navbar() {
                         tabIndex={mobileOpen ? 0 : -1}
                         aria-expanded={isOpen}
                         aria-controls={`${name}-mobile-menu`}
-                        className={`flex w-full items-center justify-between px-4 py-3.5 text-sm font-bold transition-colors focus:outline-none focus:ring-2 focus:ring-inset focus:ring-dent-accent ${isOpen
+                        className={`smooth-hover flex w-full items-center justify-between px-4 py-3.5 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-inset focus:ring-dent-accent ${isOpen
                             ? "bg-[#e9f9f7] text-[#23676c]"
                             : "bg-white text-[#287479]"
                           }`}
@@ -409,7 +409,7 @@ export default function Navbar() {
                               key={item.label}
                               href={item.href}
                               onClick={closeMenus}
-                              className="flex items-center justify-between rounded-lg px-3 py-2.5 text-sm font-medium text-[#244f53] transition-colors hover:bg-[#e9f9f7] focus:outline-none focus:ring-2 focus:ring-dent-accent"
+                              className="smooth-hover hover-lift flex items-center justify-between rounded-lg px-3 py-2.5 text-sm font-medium text-[#244f53] hover:bg-[#e9f9f7] focus:outline-none focus:ring-2 focus:ring-dent-accent"
                             >
                               {item.label}
                               <span aria-hidden="true" className="text-[#20bba9]">
@@ -433,7 +433,7 @@ export default function Navbar() {
                     key={label}
                     href={href}
                     onClick={closeMenus}
-                    className="flex items-center gap-3 rounded-xl border border-[#d5ecea] bg-[#f7fcfb] px-3 py-3 text-sm font-semibold text-[#285f64] transition-colors hover:border-[#27d6c2] hover:bg-[#eaf9f7] focus:outline-none focus:ring-2 focus:ring-dent-accent"
+                    className="smooth-hover hover-lift flex items-center gap-3 rounded-xl border border-[#d5ecea] bg-[#f7fcfb] px-3 py-3 text-sm font-semibold text-[#285f64] hover:border-[#27d6c2] hover:bg-[#eaf9f7] focus:outline-none focus:ring-2 focus:ring-dent-accent"
                   >
                     <Image
                       src={img}
@@ -475,7 +475,7 @@ export default function Navbar() {
               <Link
                 href="/#appointment"
                 onClick={closeMenus}
-                className="block w-full rounded-lg bg-dent-dark py-3.5 text-center text-sm font-bold tracking-wider text-white transition-colors hover:bg-dent-nav focus:outline-none focus:ring-4 focus:ring-dent-nav/20"
+                className="smooth-hover button-hover hover-lift block w-full rounded-lg bg-dent-dark py-3.5 text-center text-sm font-bold tracking-wider text-white hover:bg-dent-nav focus:outline-none focus:ring-4 focus:ring-dent-nav/20"
               >
                 BOOK FREE CONSULTATION
               </Link>
@@ -494,7 +494,7 @@ export default function Navbar() {
               <Link
                 key={label}
                 href={href}
-                className="flex flex-col items-center gap-1.5 text-white hover:opacity-80 transition-opacity group shrink-0"
+                className="group smooth-hover hover-lift flex flex-col items-center gap-1.5 text-white hover:opacity-90 shrink-0"
               >
                 <div className="flex items-center justify-center group-hover:border-white transition-colors">
                   <Image
@@ -502,7 +502,7 @@ export default function Navbar() {
                     alt={label}
                     width={28}
                     height={28}
-                    className="h-7 w-7 object-contain lg:h-12 lg:w-12"
+                    className="image-hover h-7 w-7 object-contain lg:h-12 lg:w-12"
                   />
                 </div>
                 <span className="whitespace-nowrap text-[10px] font-medium lg:text-sm">{label}</span>

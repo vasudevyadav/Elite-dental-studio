@@ -121,7 +121,7 @@ export default function DoctorsSection() {
         {highlights.map((highlight, index) => (
           <article
             key={highlight.label}
-            className={`flex min-h-[120px] items-center gap-5 rounded-[20px] border-2 border-[#8ab7b8] bg-[#f4fbfa] px-5 py-3 transition duration-300 hover:-translate-y-1 hover:border-[#2acfc1] hover:shadow-[0_14px_35px_rgba(36,110,114,0.1)] lg:px-7 ${index === highlights.length - 1
+            className={`smooth-hover card-hover flex min-h-[120px] items-center gap-5 rounded-[20px] border-2 border-[#8ab7b8] bg-[#f4fbfa] px-5 py-3 hover:border-[#2acfc1] lg:px-7 ${index === highlights.length - 1
               ? "sm:col-span-2 sm:mx-auto sm:w-[48%] lg:col-span-1 lg:mx-0 lg:w-auto"
               : ""
               }`}
@@ -165,7 +165,7 @@ export default function DoctorsSection() {
         {doctors.map((doctor) => (
           <article
             key={doctor.name}
-            className="group flex w-[84%] max-w-[330px] shrink-0 snap-start flex-col overflow-hidden rounded-[28px] bg-[#2b7477] p-3 pb-0 shadow-[0_14px_35px_rgba(25,87,90,0.12)] transition duration-300 hover:-translate-y-2 hover:shadow-[0_20px_45px_rgba(25,87,90,0.2)] sm:mx-auto sm:w-full sm:max-w-none"
+            className="group smooth-hover card-hover flex w-[84%] max-w-[330px] shrink-0 snap-start flex-col overflow-hidden rounded-[28px] bg-[#2b7477] p-3 pb-0 shadow-[0_14px_35px_rgba(25,87,90,0.12)] sm:mx-auto sm:w-full sm:max-w-none"
           >
             <div className="relative aspect-[1.03/1] overflow-hidden rounded-[20px] bg-[#edf2f5]">
               <Image
@@ -173,7 +173,7 @@ export default function DoctorsSection() {
                 alt={doctor.name}
                 fill
                 sizes="(max-width: 639px) 90vw, (max-width: 767px) 45vw, (max-width: 1279px) 30vw, 250px"
-                className="object-cover object-[center_22%] transition duration-500 group-hover:scale-[1.035]"
+                className="image-hover object-cover object-[center_22%]"
               />
             </div>
 
@@ -199,7 +199,7 @@ export default function DoctorsSection() {
           type="button"
           onClick={() => scrollDoctors("left")}
           aria-label="View previous doctors"
-          className="flex h-11 w-12 items-center justify-center rounded-lg bg-[#29cfc0] text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-[#20bfb1] focus:outline-none focus:ring-4 focus:ring-[#29cfc0]/25"
+          className="smooth-hover button-hover hover-lift flex h-11 w-12 items-center justify-center rounded-lg bg-[#29cfc0] text-white shadow-sm hover:bg-[#20bfb1] focus:outline-none focus:ring-4 focus:ring-[#29cfc0]/25"
         >
           <Arrow direction="left" />
         </button>
@@ -207,7 +207,7 @@ export default function DoctorsSection() {
           type="button"
           onClick={() => scrollDoctors("right")}
           aria-label="View next doctors"
-          className="flex h-11 w-12 items-center justify-center rounded-lg bg-[#2b7477] text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-[#205f63] focus:outline-none focus:ring-4 focus:ring-[#2b7477]/25"
+          className="smooth-hover button-hover hover-lift flex h-11 w-12 items-center justify-center rounded-lg bg-[#2b7477] text-white shadow-sm hover:bg-[#205f63] focus:outline-none focus:ring-4 focus:ring-[#2b7477]/25"
         >
           <Arrow direction="right" />
         </button>
