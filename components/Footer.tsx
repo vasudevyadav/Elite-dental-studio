@@ -27,7 +27,7 @@ const clinics = ["CALICUT", "KOCHI", "Kannur", "Coimbatore"];
 
 function SocialIcon({ type }: { type: "facebook" | "tiktok" | "instagram" | "whatsapp" }) {
   return (
-    <span className="flex h-8 w-8 items-center justify-center rounded-[5px] bg-[#28d1c2] text-[#064a50]">
+    <span className="smooth-hover flex h-8 w-8 items-center justify-center rounded-[5px] bg-[#28d1c2] text-[#064a50]">
       {type === "facebook" && <strong className="text-xl leading-none">f</strong>}
       {type === "tiktok" && <strong className="text-lg leading-none">♪</strong>}
       {type === "instagram" && (
@@ -67,10 +67,10 @@ export default function Footer() {
             </p>
             <div className="mt-5 w-[340px] max-w-full border-t border-white/70" />
             <div className="mt-8 flex gap-3">
-              <a href="#" aria-label="Facebook"><SocialIcon type="facebook" /></a>
-              <a href="#" aria-label="TikTok"><SocialIcon type="tiktok" /></a>
-              <a href="#" aria-label="Instagram"><SocialIcon type="instagram" /></a>
-              <a href="#" aria-label="WhatsApp"><SocialIcon type="whatsapp" /></a>
+              <a href="#" aria-label="Facebook" className="smooth-hover hover-lift"><SocialIcon type="facebook" /></a>
+              <a href="#" aria-label="TikTok" className="smooth-hover hover-lift"><SocialIcon type="tiktok" /></a>
+              <a href="#" aria-label="Instagram" className="smooth-hover hover-lift"><SocialIcon type="instagram" /></a>
+              <a href="#" aria-label="WhatsApp" className="smooth-hover hover-lift"><SocialIcon type="whatsapp" /></a>
             </div>
           </div>
 
@@ -78,7 +78,7 @@ export default function Footer() {
             <ul className="space-y-5">
               {companyLinks.map((link) => (
                 <li key={link}>
-                  <Link href="#" className="text-base font-medium hover:text-[#28d1c2]">
+                  <Link href="#" className="smooth-hover link-hover text-base font-medium hover:text-[#28d1c2]">
                     {link}
                   </Link>
                 </li>
@@ -93,7 +93,7 @@ export default function Footer() {
             <ul className="mt-5 space-y-5">
               {serviceLinks.map((link) => (
                 <li key={link}>
-                  <Link href="#" className="text-base font-medium hover:text-[#28d1c2]">
+                  <Link href="#" className="smooth-hover link-hover text-base font-medium hover:text-[#28d1c2]">
                     {link}
                   </Link>
                 </li>
@@ -108,7 +108,7 @@ export default function Footer() {
             <ul className="mt-5 space-y-5">
               {clinics.map((clinic) => (
                 <li key={clinic}>
-                  <Link href="#" className="text-base font-medium hover:text-[#28d1c2]">
+                  <Link href="#" className="smooth-hover link-hover text-base font-medium hover:text-[#28d1c2]">
                     {clinic}
                   </Link>
                 </li>

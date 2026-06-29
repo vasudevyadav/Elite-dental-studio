@@ -153,7 +153,7 @@ export default function NearestClinic() {
               href={mapPageUrl}
               target="_blank"
               rel="noreferrer"
-              className="flex items-center justify-center rounded-full bg-[#2d7378] px-6 text-lg font-bold text-white transition hover:bg-[#164f57] focus:outline-none focus:ring-4 focus:ring-[#2d7378]/25"
+              className="smooth-hover button-hover hover-lift flex items-center justify-center rounded-full bg-[#2d7378] px-6 text-lg font-bold text-white hover:bg-[#164f57] focus:outline-none focus:ring-4 focus:ring-[#2d7378]/25"
             >
               Find Clinic
             </a>
@@ -161,15 +161,15 @@ export default function NearestClinic() {
 
           <div className="px-6 pb-7 sm:px-9 sm:pb-9 lg:px-12">
             <div className="space-y-6 py-3 text-lg text-[#747b7c] sm:text-xl">
-              <a href={`tel:${clinic.phone.replace(/\s/g, "")}`} className="flex items-center gap-5 transition hover:text-[#2d7378]">
+              <a href={`tel:${clinic.phone.replace(/\s/g, "")}`} className="smooth-hover hover-lift flex items-center gap-5 hover:text-[#2d7378]">
                 <PhoneIcon />
                 <span>{clinic.phone}</span>
               </a>
-              <a href={`tel:${clinic.landline.replace(/\s/g, "")}`} className="flex items-center gap-5 transition hover:text-[#2d7378]">
+              <a href={`tel:${clinic.landline.replace(/\s/g, "")}`} className="smooth-hover hover-lift flex items-center gap-5 hover:text-[#2d7378]">
                 <LandlineIcon />
                 <span>{clinic.landline}</span>
               </a>
-              <a href={`mailto:${clinic.email}`} className="flex min-w-0 items-center gap-5 transition hover:text-[#2d7378]">
+              <a href={`mailto:${clinic.email}`} className="smooth-hover hover-lift flex min-w-0 items-center gap-5 hover:text-[#2d7378]">
                 <EmailIcon />
                 <span className="min-w-0 break-all">{clinic.email}</span>
               </a>
@@ -189,7 +189,7 @@ export default function NearestClinic() {
                     href={mapPageUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="mt-5 inline-flex items-center gap-5 rounded-lg bg-[#064b52] py-2 pl-5 pr-2 text-sm font-bold text-white transition hover:bg-[#2d7378]"
+                    className="smooth-hover button-hover hover-lift mt-5 inline-flex items-center gap-5 rounded-lg bg-[#064b52] py-2 pl-5 pr-2 text-sm font-bold text-white hover:bg-[#2d7378]"
                   >
                     VIEW MAP
                     <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white text-[#2d7378]">

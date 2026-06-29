@@ -82,7 +82,7 @@ export default function HeroSection() {
             key={i}
             onClick={() => setSlide(i)}
             aria-label={`Slide ${i + 1}`}
-            className={`h-2.5 rounded-full transition-all duration-300 ${i === slide ? "bg-dent-accent w-7" : "bg-white/60 w-2.5 hover:bg-white"
+            className={`smooth-hover h-2.5 rounded-full ${i === slide ? "bg-dent-accent w-7" : "bg-white/60 w-2.5 hover:bg-white"
               }`}
           />
         ))}
@@ -93,7 +93,7 @@ export default function HeroSection() {
         <button
           type="button"
           onClick={() => setModalOpen(true)}
-          className="inline-flex min-w-[220px] items-center justify-center rounded-lg bg-[#28cfc1] px-7 py-3.5 text-sm font-extrabold uppercase tracking-wide text-white shadow-[0_12px_30px_rgba(19,79,83,0.28)] transition active:scale-[0.98] focus:outline-none focus:ring-4 focus:ring-white/40"
+          className="smooth-hover button-hover hover-lift inline-flex min-w-[220px] items-center justify-center rounded-lg bg-[#28cfc1] px-7 py-3.5 text-sm font-extrabold uppercase tracking-wide text-white shadow-[0_12px_30px_rgba(19,79,83,0.28)] active:scale-[0.98] focus:outline-none focus:ring-4 focus:ring-white/40"
         >
           Book an Appointment
         </button>
@@ -142,7 +142,7 @@ export default function HeroSection() {
             </div>
 
             <button type="submit"
-              className="mx-auto mt-2 w-full max-w-[245px] rounded-[5px] bg-dent-accent py-3 text-sm font-bold text-white transition-colors hover:bg-[#2bbdbd]">
+              className="smooth-hover button-hover hover-lift mx-auto mt-2 w-full max-w-[245px] rounded-[5px] bg-dent-accent py-3 text-sm font-bold text-white hover:bg-[#2bbdbd]">
               Book Now!
             </button>
           </form>
@@ -173,7 +173,7 @@ export default function HeroSection() {
               type="button"
               onClick={() => setModalOpen(false)}
               aria-label="Close appointment form"
-              className="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full bg-[#e8f8f6] text-xl font-bold text-dent-nav transition hover:bg-[#d5f3ef] focus:outline-none focus:ring-4 focus:ring-dent-accent/20"
+              className="smooth-hover hover-lift absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full bg-[#e8f8f6] text-xl font-bold text-dent-nav hover:bg-[#d5f3ef] focus:outline-none focus:ring-4 focus:ring-dent-accent/20"
             >
               ×
             </button>
@@ -247,7 +247,7 @@ export default function HeroSection() {
 
               <button
                 type="submit"
-                className="mx-auto mt-2 w-full max-w-[260px] rounded-[6px] bg-dent-accent py-3 text-sm font-bold text-white transition-colors hover:bg-[#2bbdbd] focus:outline-none focus:ring-4 focus:ring-dent-accent/25"
+                className="smooth-hover button-hover hover-lift mx-auto mt-2 w-full max-w-[260px] rounded-[6px] bg-dent-accent py-3 text-sm font-bold text-white hover:bg-[#2bbdbd] focus:outline-none focus:ring-4 focus:ring-dent-accent/25"
               >
                 Book Now!
               </button>

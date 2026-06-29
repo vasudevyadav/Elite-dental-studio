@@ -139,7 +139,7 @@ export default function ServicesSection() {
 
             <a
               href="#services-list"
-              className="inline-flex w-fit items-center gap-4 rounded-[9px] bg-[#27d3c4] py-3 pl-5 pr-3 text-sm font-extrabold uppercase text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-[#20c4b6] focus:outline-none focus:ring-4 focus:ring-white/30 sm:text-base"
+              className="smooth-hover button-hover hover-lift inline-flex w-fit items-center gap-4 rounded-[9px] bg-[#27d3c4] py-3 pl-5 pr-3 text-sm font-extrabold uppercase text-white shadow-sm hover:bg-[#20c4b6] focus:outline-none focus:ring-4 focus:ring-white/30 sm:text-base"
             >
               All Services
               <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-[#27bdb3]">
@@ -160,7 +160,7 @@ export default function ServicesSection() {
             {services.map((service, index) => (
               <article
                 key={service.title}
-                className={`overflow-hidden rounded-[28px] border bg-white p-5 shadow-[0_18px_45px_rgba(21,74,78,0.09)] transition duration-300 sm:block sm:p-6 ${index !== activeService ? "hidden" : ""
+                className={`group smooth-hover card-hover overflow-hidden rounded-[28px] border bg-white p-5 shadow-[0_18px_45px_rgba(21,74,78,0.09)] sm:block sm:p-6 ${index !== activeService ? "hidden" : ""
                   } ${index === services.length - 1 ? "sm:col-span-2 sm:mx-auto sm:w-[48%] lg:col-span-1 lg:mx-0 lg:w-auto" : ""
                   } ${index === activeService
                     ? "border-[#2b7f82] md:-translate-y-2"
@@ -176,7 +176,7 @@ export default function ServicesSection() {
                     type="button"
                     onClick={() => setActiveService(index)}
                     aria-label={`View ${service.title}`}
-                    className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-[#287579] transition hover:bg-[#e7f8f6] hover:text-[#20cbbb] focus:outline-none focus:ring-4 focus:ring-[#25d3c4]/20"
+                    className="smooth-hover hover-lift flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-[#287579] hover:bg-[#e7f8f6] hover:text-[#20cbbb] focus:outline-none focus:ring-4 focus:ring-[#25d3c4]/20"
                   >
                     <Arrow />
                   </button>
@@ -194,7 +194,7 @@ export default function ServicesSection() {
                     alt={`${service.title} treatment demonstration`}
                     fill
                     sizes="(max-width: 767px) 90vw, (max-width: 1279px) 30vw, 390px"
-                    className="object-cover transition duration-500 hover:scale-105"
+                    className="image-hover object-cover"
                   />
                 </div>
               </article>
@@ -209,7 +209,7 @@ export default function ServicesSection() {
                   type="button"
                   onClick={() => move(-1)}
                   aria-label="Previous service"
-                  className="flex h-11 w-12 items-center justify-center bg-[#27d3c4] text-white transition hover:bg-[#20c4b6] focus:outline-none focus:ring-4 focus:ring-[#27d3c4]/25"
+                  className="smooth-hover button-hover hover-lift flex h-11 w-12 items-center justify-center bg-[#27d3c4] text-white hover:bg-[#20c4b6] focus:outline-none focus:ring-4 focus:ring-[#27d3c4]/25"
                 >
                   <Arrow direction="left" />
                 </button>
@@ -217,7 +217,7 @@ export default function ServicesSection() {
                   type="button"
                   onClick={() => move(1)}
                   aria-label="Next service"
-                  className="flex h-11 w-12 items-center justify-center bg-[#2c7477] text-white transition hover:bg-[#205f63] focus:outline-none focus:ring-4 focus:ring-[#2c7477]/25"
+                  className="smooth-hover button-hover hover-lift flex h-11 w-12 items-center justify-center bg-[#2c7477] text-white hover:bg-[#205f63] focus:outline-none focus:ring-4 focus:ring-[#2c7477]/25"
                 >
                   <Arrow />
                 </button>

@@ -111,7 +111,7 @@ export default function AboutUs() {
 
           <button
             type="button"
-            className="lg:mt-10 mt-6 inline-flex items-center gap-3 rounded-lg bg-[#07515a] lg:py-2.5 py-2 pl-5 pr-2.5 text-base font-bold text-white transition hover:-translate-y-0.5 hover:bg-[#2d7378] focus:outline-none focus:ring-4 focus:ring-[#2bd0c0]/25"
+            className="smooth-hover button-hover hover-lift lg:mt-10 mt-6 inline-flex items-center gap-3 rounded-lg bg-[#07515a] lg:py-2.5 py-2 pl-5 pr-2.5 text-base font-bold text-white hover:bg-[#2d7378] focus:outline-none focus:ring-4 focus:ring-[#2bd0c0]/25"
           >
             MORE ABOUT
             <ArrowIcon />

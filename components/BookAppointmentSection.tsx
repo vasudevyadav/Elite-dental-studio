@@ -65,7 +65,7 @@ export default function BookAppointmentSection() {
             <div>
               <p className="text-xs sm:text-sm">We always take care of your smile</p>
               <p className="mt-1 font-semibold">Emergency Contact No.</p>
-              <a href="tel:+919048611911" className="text-lg font-black sm:text-xl">
+              <a href="tel:+919048611911" className="smooth-hover link-hover text-lg font-black hover:text-[#28d1c2] sm:text-xl">
                 +91 9048 611 911
               </a>
             </div>
@@ -103,7 +103,7 @@ export default function BookAppointmentSection() {
             </div>
             <button
               type="submit"
-              className="mx-auto block w-full max-w-[245px] rounded-[5px] bg-[#28d1c2] py-3 text-base font-extrabold text-white transition hover:bg-[#20c4b6]"
+              className="smooth-hover button-hover hover-lift mx-auto block w-full max-w-[245px] rounded-[5px] bg-[#28d1c2] py-3 text-base font-extrabold text-white hover:bg-[#20c4b6] focus:outline-none focus:ring-4 focus:ring-[#28d1c2]/25"
             >
               Book Now!
             </button>

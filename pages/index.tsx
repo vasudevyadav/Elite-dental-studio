@@ -12,6 +12,7 @@ import BlogSection from "@/components/BlogSection";
 import FAQSection from "@/components/FAQSection";
 import BookAppointmentSection from "@/components/BookAppointmentSection";
 import Footer from "@/components/Footer";
+import AffordableDentalTreatment from "@/components/affordable-dental-treatment";
 
 export default function Home() {
   return (
@@ -38,6 +39,7 @@ export default function Home() {
           <BlogSection />
           <FAQSection />
           <BookAppointmentSection />
+          <AffordableDentalTreatment />
         </main>
         <Footer />
       </div>
