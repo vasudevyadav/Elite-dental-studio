@@ -9,7 +9,7 @@ const stats = [
 
 export default function StatsBar() {
   return (
-    <div className="w-full bg-[#2a686d] py-7 lg:py-9">
+    <div className="w-full bg-dent-nav py-7 lg:py-9">
       <div className="mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-12">
         <div className="grid grid-cols-3 items-center gap-3">
           {stats.map(({ icon, count, label }, i) => (

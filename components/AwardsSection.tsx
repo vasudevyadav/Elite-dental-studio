@@ -33,7 +33,7 @@ function AwardMedal({ className = "" }: { className?: string }) {
 
 function ToggleIcon({ open }: { open: boolean }) {
   return (
-    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-[5px] bg-[#28d1c2] text-white shadow-sm">
+    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-[5px] bg-dent-accent text-white shadow-sm">
       <svg
         aria-hidden="true"
         viewBox="0 0 24 24"
@@ -88,7 +88,7 @@ export default function AwardsSection() {
                     type="button"
                     onClick={() => setOpenIndex(isOpen ? -1 : index)}
                     aria-expanded={isOpen}
-                    className="flex w-full items-center gap-4 text-left focus:outline-none focus-visible:ring-4 focus-visible:ring-[#28d1c2]/25"
+                    className="flex w-full items-center gap-4 text-left focus:outline-none focus-visible:ring-4 focus-visible:ring-dent-accent/25"
                   >
                     <AwardMedal className="h-9 w-[30px] shrink-0 object-contain sm:h-10 sm:w-9" />
                     <span className="min-w-0 flex-1 text-lg font-extrabold leading-tight text-[#286f73] sm:text-xl lg:text-[23px]">

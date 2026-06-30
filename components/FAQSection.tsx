@@ -36,7 +36,7 @@ export default function FAQSection() {
     <section className="mx-auto max-w-7xl px-5 py-6 sm:px-8 lg:px-12 lg:py-10">
       <div className="rounded-[30px] bg-[#f0faf8] px-6 py-10 sm:px-10 lg:grid lg:grid-cols-[0.9fr_1.1fr] lg:gap-14 lg:px-14 lg:py-10">
         <div>
-          <p className="text-sm font-extrabold uppercase text-[#28d1c2] sm:text-base">
+          <p className="text-sm font-extrabold uppercase text-dent-accent sm:text-base">
             FAQs
           </p>
           <h2 className="lg:mt-6 mt-3 text-3xl font-extrabold leading-[1.18] tracking-[-0.025em] text-[#2c7477] sm:text-[42px]">

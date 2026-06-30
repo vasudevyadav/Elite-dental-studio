@@ -139,7 +139,7 @@ export default function ServicesSection() {
 
             <a
               href="#services-list"
-              className="smooth-hover button-hover hover-lift inline-flex w-fit items-center gap-4 rounded-[9px] bg-[#27d3c4] py-3 pl-5 pr-3 text-sm font-extrabold uppercase text-white shadow-sm hover:bg-[#20c4b6] focus:outline-none focus:ring-4 focus:ring-white/30 sm:text-base"
+              className="smooth-hover button-hover hover-lift inline-flex w-fit items-center gap-4 rounded-[9px] bg-dent-accent py-3 pl-5 pr-3 text-sm font-extrabold uppercase text-white shadow-sm hover:bg-dent-nav focus:outline-none focus:ring-4 focus:ring-white/30 sm:text-base"
             >
               All Services
               <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-[#27bdb3]">
@@ -209,7 +209,7 @@ export default function ServicesSection() {
                   type="button"
                   onClick={() => move(-1)}
                   aria-label="Previous service"
-                  className="smooth-hover button-hover hover-lift flex h-11 w-12 items-center justify-center bg-[#27d3c4] text-white hover:bg-[#20c4b6] focus:outline-none focus:ring-4 focus:ring-[#27d3c4]/25"
+                  className="smooth-hover button-hover hover-lift flex h-11 w-12 items-center justify-center bg-dent-accent text-white hover:bg-dent-nav focus:outline-none focus:ring-4 focus:ring-dent-accent/25"
                 >
                   <Arrow direction="left" />
                 </button>

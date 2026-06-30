@@ -15,8 +15,8 @@
 
 @theme {
   --color-dent-dark: #1a3535;
-  --color-dent-nav: #2d6c72;
-  --color-dent-accent: #3ec8c8;
+  --color-dent-nav: #07565a;
+  --color-dent-accent: #2ebfab;
   --color-dent-mint: #ebf8f8;
   --color-dent-text: #1b3c42;
   --color-dent-border: #c5eaea;
@@ -117,6 +117,7 @@ video {
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   .smooth-hover,
   .link-hover::after,
   .image-hover {

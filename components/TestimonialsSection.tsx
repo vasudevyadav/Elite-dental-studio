@@ -53,7 +53,7 @@ export default function TestimonialsSection() {
 
           <div className="relative z-10 flex flex-col gap-7 lg:flex-row lg:items-start lg:justify-between">
             <div>
-              <p className="text-sm font-extrabold uppercase text-[#28d1c2] sm:text-base">
+              <p className="text-sm font-extrabold uppercase text-dent-accent sm:text-base">
                 Testimonial
               </p>
               <h2 className="mt-5 max-w-[690px] text-2xl font-extrabold leading-[1.15] tracking-[-0.025em] text-white sm:text-[42px]">
@@ -68,7 +68,7 @@ export default function TestimonialsSection() {
 
             <button
               type="button"
-              className="inline-flex w-fit items-center gap-4 rounded-[8px] bg-[#28d1c2] lg:py-3 py-1.5 pl-5 pr-3 text-sm font-bold uppercase text-white transition hover:-translate-y-0.5 hover:bg-[#20c4b6]"
+              className="inline-flex w-fit items-center gap-4 rounded-[8px] bg-dent-accent lg:py-3 py-1.5 pl-5 pr-3 text-sm font-bold uppercase text-white transition hover:-translate-y-0.5 hover:bg-dent-nav"
             >
               Video Review
               <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-[#28cabb]">
@@ -114,7 +114,7 @@ export default function TestimonialsSection() {
                     type="button"
                     onClick={() => move(-1)}
                     aria-label="Previous testimonial"
-                    className="flex h-10 w-11 items-center justify-center bg-[#28d1c2] text-white"
+                    className="flex h-10 w-11 items-center justify-center bg-dent-accent text-white"
                   >
                     <Arrow left />
                   </button>

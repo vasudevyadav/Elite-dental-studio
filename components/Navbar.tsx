@@ -204,9 +204,9 @@ export default function Navbar() {
                     onClick={() => toggleDropdown(name)}
                     aria-expanded={isOpen}
                     aria-controls={`${name}-desktop-menu`}
-                    className={`smooth-hover button-hover hover-lift flex items-center gap-2 whitespace-nowrap rounded-md px-6 py-3 text-sm font-semibold text-[#15494d] focus:outline-none focus:ring-4 focus:ring-[#27d6c2]/25 ${isOpen
-                      ? "bg-[#20c9b7] shadow-[0_8px_20px_rgba(32,201,183,0.22)]"
-                      : "bg-[#27d6c2] hover:bg-[#22cdbc]"
+                    className={`smooth-hover button-hover hover-lift flex items-center gap-2 whitespace-nowrap rounded-md px-6 py-3 text-sm font-semibold text-[#15494d] focus:outline-none focus:ring-4 focus:ring-dent-accent/25 ${isOpen
+                      ? "bg-dent-accent shadow-[0_8px_20px_rgba(37,191,174,0.22)]"
+                      : "bg-dent-accent hover:bg-[#1fae9f]"
                       }`}
                   >
                     {label}
@@ -221,7 +221,7 @@ export default function Navbar() {
                       : "invisible -translate-y-2 pointer-events-none opacity-0"
                       }`}
                   >
-                    <div className="px-4 pb-2 pt-3 text-[11px] font-bold uppercase tracking-[0.16em] text-[#23bbaa]">
+                    <div className="px-4 pb-2 pt-3 text-[11px] font-bold uppercase tracking-[0.16em] text-dent-accent">
                       {menu.eyebrow}
                     </div>
                     <div className="space-y-1">
@@ -230,9 +230,9 @@ export default function Navbar() {
                           key={item.label}
                           href={item.href}
                           onClick={closeMenus}
-                          className="group smooth-hover hover-lift flex items-center gap-3 rounded-xl px-4 py-3 hover:bg-[#effafa] focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[#27d6c2]"
+                          className="group smooth-hover hover-lift flex items-center gap-3 rounded-xl px-4 py-3 hover:bg-[#effafa] focus:outline-none focus:ring-2 focus:ring-inset focus:ring-dent-accent"
                         >
-                          <span className="smooth-hover flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#e2f8f5] text-[#247378] group-hover:bg-[#27d6c2] group-hover:text-white">
+                          <span className="smooth-hover flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#e2f8f5] text-[#247378] group-hover:bg-dent-accent group-hover:text-white">
                             <span aria-hidden="true">→</span>
                           </span>
                           <span>
@@ -367,7 +367,7 @@ export default function Navbar() {
             </div>
 
             <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-5">
-              <p className="mb-3 px-1 text-[11px] font-bold uppercase tracking-[0.16em] text-[#22bbaa]">
+              <p className="mb-3 px-1 text-[11px] font-bold uppercase tracking-[0.16em] text-dent-accent">
                 Main menu
               </p>
 
@@ -412,7 +412,7 @@ export default function Navbar() {
                               className="smooth-hover hover-lift flex items-center justify-between rounded-lg px-3 py-2.5 text-sm font-medium text-[#244f53] hover:bg-[#e9f9f7] focus:outline-none focus:ring-2 focus:ring-dent-accent"
                             >
                               {item.label}
-                              <span aria-hidden="true" className="text-[#20bba9]">
+                              <span aria-hidden="true" className="text-dent-accent">
                                 →
                               </span>
                             </Link>
@@ -424,7 +424,7 @@ export default function Navbar() {
                 })}
               </div>
 
-              <p className="mb-3 mt-6 px-1 text-[11px] font-bold uppercase tracking-[0.16em] text-[#22bbaa]">
+              <p className="mb-3 mt-6 px-1 text-[11px] font-bold uppercase tracking-[0.16em] text-dent-accent">
                 Quick links
               </p>
               <div className="grid grid-cols-2 gap-2.5">
@@ -433,7 +433,7 @@ export default function Navbar() {
                     key={label}
                     href={href}
                     onClick={closeMenus}
-                    className="smooth-hover hover-lift flex items-center gap-3 rounded-xl border border-[#d5ecea] bg-[#f7fcfb] px-3 py-3 text-sm font-semibold text-[#285f64] hover:border-[#27d6c2] hover:bg-[#eaf9f7] focus:outline-none focus:ring-2 focus:ring-dent-accent"
+                    className="smooth-hover hover-lift flex items-center gap-3 rounded-xl border border-[#d5ecea] bg-[#f7fcfb] px-3 py-3 text-sm font-semibold text-[#285f64] hover:border-dent-accent hover:bg-[#eaf9f7] focus:outline-none focus:ring-2 focus:ring-dent-accent"
                   >
                     <Image
                       src={img}
@@ -511,7 +511,7 @@ export default function Navbar() {
           </nav>
 
           {/* Timing card – hidden on small screens */}
-          <div className="hidden shrink-0 items-center gap-3 rounded-md bg-[#27d6c2] px-4 py-2.5 text-white xl:flex">
+          <div className="hidden shrink-0 items-center gap-3 rounded-md bg-dent-accent px-4 py-2.5 text-white xl:flex">
             <div className="mx-0.5 flex h-11 w-11 items-center justify-center rounded-lg bg-[#29696d]">
               <ClockIcon />
             </div>
