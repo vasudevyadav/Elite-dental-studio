@@ -93,7 +93,7 @@ export default function HeroSection() {
         <button
           type="button"
           onClick={() => setModalOpen(true)}
-          className="smooth-hover button-hover hover-lift inline-flex min-w-[220px] items-center justify-center rounded-lg bg-[#28cfc1] px-7 py-3.5 text-sm font-extrabold uppercase tracking-wide text-white shadow-[0_12px_30px_rgba(19,79,83,0.28)] active:scale-[0.98] focus:outline-none focus:ring-4 focus:ring-white/40"
+          className="smooth-hover button-hover hover-lift inline-flex min-w-[220px] items-center justify-center rounded-lg bg-dent-accent px-7 py-3.5 text-sm font-extrabold uppercase tracking-wide text-white shadow-[0_12px_30px_rgba(7,86,90,0.28)] active:scale-[0.98] focus:outline-none focus:ring-4 focus:ring-white/40"
         >
           Book an Appointment
         </button>
@@ -142,7 +142,7 @@ export default function HeroSection() {
             </div>
 
             <button type="submit"
-              className="smooth-hover button-hover hover-lift mx-auto mt-2 w-full max-w-[245px] rounded-[5px] bg-dent-accent py-3 text-sm font-bold text-white hover:bg-[#2bbdbd]">
+              className="smooth-hover button-hover hover-lift mx-auto mt-2 w-full max-w-[245px] rounded-[5px] bg-dent-accent py-3 text-sm font-bold text-white hover:bg-dent-nav">
               Book Now!
             </button>
           </form>
@@ -247,7 +247,7 @@ export default function HeroSection() {
 
               <button
                 type="submit"
-                className="smooth-hover button-hover hover-lift mx-auto mt-2 w-full max-w-[260px] rounded-[6px] bg-dent-accent py-3 text-sm font-bold text-white hover:bg-[#2bbdbd] focus:outline-none focus:ring-4 focus:ring-dent-accent/25"
+                className="smooth-hover button-hover hover-lift mx-auto mt-2 w-full max-w-[260px] rounded-[6px] bg-dent-accent py-3 text-sm font-bold text-white hover:bg-dent-nav focus:outline-none focus:ring-4 focus:ring-dent-accent/25"
               >
                 Book Now!
               </button>

@@ -20,13 +20,13 @@ export default function BookAppointmentSection() {
   };
 
   const fieldClass =
-    "h-12 w-full rounded-[6px] border border-[#6b9fa1] bg-[#f4fbfa] px-5 text-sm text-[#3f4444] outline-none transition placeholder:text-[#555] focus:border-[#28d1c2] focus:ring-4 focus:ring-[#28d1c2]/15";
+    "h-12 w-full rounded-[6px] border border-[#6b9fa1] bg-[#f4fbfa] px-5 text-sm text-[#3f4444] outline-none transition placeholder:text-[#555] focus:border-dent-accent focus:ring-4 focus:ring-dent-accent/15";
 
   return (
     <section id="appointment" className="px-5 py-6 sm:px-8 lg:py-12">
       <div className="mx-auto max-w-7xl rounded-[28px] bg-[#2c7477] px-6 py-10 sm:px-10 lg:grid lg:grid-cols-[0.95fr_1.05fr] lg:gap-16 lg:px-16 lg:py-16">
         <div className="text-white">
-          <p className="text-sm font-extrabold uppercase text-[#28d1c2] sm:text-base">
+          <p className="text-sm font-extrabold uppercase text-dent-accent sm:text-base">
             Book Your Appointment
           </p>
           <h2 className="lg:mt-5 mt-3 text-2xl font-extrabold leading-[1.35] tracking-[-0.025em] sm:text-[42px]">
@@ -65,7 +65,7 @@ export default function BookAppointmentSection() {
             <div>
               <p className="text-xs sm:text-sm">We always take care of your smile</p>
               <p className="mt-1 font-semibold">Emergency Contact No.</p>
-              <a href="tel:+919048611911" className="smooth-hover link-hover text-lg font-black hover:text-[#28d1c2] sm:text-xl">
+              <a href="tel:+919048611911" className="smooth-hover link-hover text-lg font-black hover:text-dent-accent sm:text-xl">
                 +91 9048 611 911
               </a>
             </div>
@@ -103,7 +103,7 @@ export default function BookAppointmentSection() {
             </div>
             <button
               type="submit"
-              className="smooth-hover button-hover hover-lift mx-auto block w-full max-w-[245px] rounded-[5px] bg-[#28d1c2] py-3 text-base font-extrabold text-white hover:bg-[#20c4b6] focus:outline-none focus:ring-4 focus:ring-[#28d1c2]/25"
+              className="smooth-hover button-hover hover-lift mx-auto block w-full max-w-[245px] rounded-[5px] bg-dent-accent py-3 text-base font-extrabold text-white hover:bg-dent-nav focus:outline-none focus:ring-4 focus:ring-dent-accent/25"
             >
               Book Now!
             </button>

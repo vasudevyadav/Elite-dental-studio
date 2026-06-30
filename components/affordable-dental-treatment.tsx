@@ -14,7 +14,7 @@ export default function AffordableDentalTreatment() {
 
         {/* Left — Text */}
         <div>
-          <p className="mb-2 text-sm font-extrabold uppercase tracking-widest text-[#28d1c2] sm:text-base">
+          <p className="mb-2 text-sm font-extrabold uppercase tracking-widest text-dent-accent sm:text-base">
             Dental Tourism
           </p>
           <h2 className="mb-5 text-3xl font-extrabold leading-[1.2] tracking-tight text-[#2c7477] sm:text-[38px]">
@@ -35,7 +35,7 @@ export default function AffordableDentalTreatment() {
           <ul className="space-y-3">
             {benefits.map((item) => (
               <li key={item} className="flex items-start gap-3">
-                <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#28d1c2]">
+                <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-dent-accent">
                   <svg viewBox="0 0 12 10" className="h-2.5 w-2.5" fill="none">
                     <path
                       d="M1 5l3.5 3.5L11 1"

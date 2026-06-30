@@ -69,7 +69,7 @@ export default function BlogSection() {
     <section className="mx-auto max-w-7xl px-5 py-6 sm:px-8 lg:px-12 lg:py-12">
       <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <p className="text-sm font-extrabold uppercase text-[#28d1c2] sm:text-base">
+          <p className="text-sm font-extrabold uppercase text-dent-accent sm:text-base">
             Latest Blog
           </p>
           <h2 className="lg:mt-5 mt-2 max-w-[650px] text-2xl font-extrabold leading-[1.25] tracking-[-0.025em] text-[#2c7477] sm:text-[42px]">
@@ -90,7 +90,7 @@ export default function BlogSection() {
           type="button"
           onClick={() => move(-1)}
           aria-label="Previous blog posts"
-          className="smooth-hover button-hover hover-lift hidden h-10 w-10 shrink-0 items-center justify-center rounded-[5px] bg-[#28d1c2] text-white hover:bg-[#20c4b6] sm:flex"
+          className="smooth-hover button-hover hover-lift hidden h-10 w-10 shrink-0 items-center justify-center rounded-[5px] bg-dent-accent text-white hover:bg-dent-nav sm:flex"
         >
           <Arrow left />
         </button>
@@ -120,7 +120,7 @@ export default function BlogSection() {
                 </div>
                 <div className="absolute right-0 top-0 h-full w-[58%]">
                   <span className="absolute inset-y-0 left-0 z-10 w-24 bg-linear-to-r from-white to-transparent" />
-                  <span className="absolute -right-14 bottom-0 z-0 h-52 w-52 rounded-full bg-[#28d1c2]" />
+                  <span className="absolute -right-14 bottom-0 z-0 h-52 w-52 rounded-full bg-dent-accent" />
                   <Image
                     src={post.image}
                     alt=""
@@ -131,7 +131,7 @@ export default function BlogSection() {
                 </div>
               </div>
 
-              <div className={`${index === 0 ? "bg-[#28d1c2]" : "bg-[#2c7477]"} px-5 py-4 text-white`}>
+              <div className={`${index === 0 ? "bg-dent-accent" : "bg-[#2c7477]"} px-5 py-4 text-white`}>
                 <h3 className="text-sm font-extrabold sm:text-base">{post.title}</h3>
                 <p className="mt-1 truncate text-xs text-white/90 sm:text-sm">
                   {post.description}
@@ -163,7 +163,7 @@ export default function BlogSection() {
           type="button"
           onClick={() => move(-1)}
           aria-label="Previous blog post"
-          className="smooth-hover button-hover hover-lift flex h-11 w-12 items-center justify-center rounded-lg bg-[#28d1c2] text-white shadow-sm active:scale-95 focus:outline-none focus:ring-4 focus:ring-[#28d1c2]/25"
+          className="smooth-hover button-hover hover-lift flex h-11 w-12 items-center justify-center rounded-lg bg-dent-accent text-white shadow-sm active:scale-95 focus:outline-none focus:ring-4 focus:ring-dent-accent/25"
         >
           <Arrow left />
         </button>

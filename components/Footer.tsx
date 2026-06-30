@@ -27,7 +27,7 @@ const clinics = ["CALICUT", "KOCHI", "Kannur", "Coimbatore"];
 
 function SocialIcon({ type }: { type: "facebook" | "tiktok" | "instagram" | "whatsapp" }) {
   return (
-    <span className="smooth-hover flex h-8 w-8 items-center justify-center rounded-[5px] bg-[#28d1c2] text-[#064a50]">
+    <span className="smooth-hover flex h-10 w-10 items-center justify-center rounded-[6px] bg-dent-accent text-[#064a50] sm:h-8 sm:w-8">
       {type === "facebook" && <strong className="text-xl leading-none">f</strong>}
       {type === "tiktok" && <strong className="text-lg leading-none">♪</strong>}
       {type === "instagram" && (
@@ -49,24 +49,24 @@ function SocialIcon({ type }: { type: "facebook" | "tiktok" | "instagram" | "wha
 
 export default function Footer() {
   return (
-    <footer className="bg-[#03484d] text-white lg:mt-8">
-      <div className="mx-auto max-w-7xl px-5 py-8 sm:px-8 lg:px-12 lg:py-12">
-        <div className="grid gap-12 grid-cols-2 lg:grid-cols-[1.45fr_0.75fr_1.15fr_0.65fr] lg:gap-16">
+    <footer className="bg-dent-nav text-white lg:mt-8">
+      <div className="mx-auto max-w-7xl px-5 py-10 sm:px-8 lg:px-12 lg:py-12">
+        <div className="grid gap-9 sm:grid-cols-2 lg:grid-cols-[1.45fr_0.75fr_1.15fr_0.65fr] lg:gap-16">
 
-          <div>
+          <div className="sm:col-span-2 lg:col-span-1">
             <Image
               src="/home/logo-white.png"
               alt="Elite Dental Studio – A Complete Dental Center"
               width={340}
               height={120}
-              className="h-auto w-[270px] object-contain object-left"
+              className="mx-auto h-auto w-[230px] object-contain sm:mx-0 sm:w-[270px]"
             />
-            <p className="mt-10 max-w-[330px] text-base leading-[1.55] text-white">
+            <p className="mx-auto mt-7 max-w-[360px] text-center text-base leading-[1.65] text-white/90 sm:mx-0 sm:text-left">
               Elite Dental Studio dental clinic in Calicut, Kochi, Kannur and
               Coimbatore offers a comprehensive set of oral healthcare services
             </p>
-            <div className="mt-5 w-[340px] max-w-full border-t border-white/70" />
-            <div className="mt-8 flex gap-3">
+            <div className="mx-auto mt-6 w-full max-w-[360px] border-t border-white/45 sm:mx-0" />
+            <div className="mt-6 flex lg:justify-center justify-around gap-3 sm:justify-start">
               <a href="#" aria-label="Facebook" className="smooth-hover hover-lift"><SocialIcon type="facebook" /></a>
               <a href="#" aria-label="TikTok" className="smooth-hover hover-lift"><SocialIcon type="tiktok" /></a>
               <a href="#" aria-label="Instagram" className="smooth-hover hover-lift"><SocialIcon type="instagram" /></a>
@@ -74,11 +74,11 @@ export default function Footer() {
             </div>
           </div>
 
-          <div className="lg:pt-12">
-            <ul className="space-y-5">
+          <div className="border-t border-white/15 pt-7 sm:border-t-0 sm:pt-0 lg:pt-12 text-center lg:text-left">
+            <ul className="grid grid-cols-1 gap-x-5 gap-y-4 sm:block sm:space-y-5 mx-auto">
               {companyLinks.map((link) => (
                 <li key={link}>
-                  <Link href="#" className="smooth-hover link-hover text-base font-medium hover:text-[#28d1c2]">
+                  <Link href="#" className="smooth-hover link-hover text-center lg:text-left w-full text-base font-medium text-white/92 hover:text-dent-accent">
                     {link}
                   </Link>
                 </li>
@@ -86,14 +86,14 @@ export default function Footer() {
             </ul>
           </div>
 
-          <div className="lg:pt-4">
-            <h3 className="w-fit border-b border-white text-base font-extrabold">
+          <div className="border-t border-white/15 pt-7 sm:border-t-0 sm:pt-0 lg:pt-4 text-center lg:text-left">
+            <h3 className="lg:w-fit w-full lg:text-left text-center lg:border-b border-white text-2xl font-extrabold">
               Services
             </h3>
-            <ul className="mt-5 space-y-5">
+            <ul className="mt-5 space-y-4 lg:space-y-5">
               {serviceLinks.map((link) => (
                 <li key={link}>
-                  <Link href="#" className="smooth-hover link-hover text-base font-medium hover:text-[#28d1c2]">
+                  <Link href="#" className="smooth-hover link-hover text-base font-medium text-white/92 hover:text-dent-accent">
                     {link}
                   </Link>
                 </li>
@@ -101,14 +101,14 @@ export default function Footer() {
             </ul>
           </div>
 
-          <div className="lg:pt-4">
-            <h3 className="w-fit border-b border-white text-base font-extrabold">
+          <div className="border-t border-white/15 pt-7 sm:border-t-0 sm:pt-0 lg:pt-4 text-center lg:text-left">
+            <h3 className="lg:w-fit w-full lg:text-left text-center lg:border-b border-white text-2xl font-extrabold">
               Our Clinics
             </h3>
             <ul className="mt-5 space-y-5">
               {clinics.map((clinic) => (
                 <li key={clinic}>
-                  <Link href="#" className="smooth-hover link-hover text-base font-medium hover:text-[#28d1c2]">
+                  <Link href="#" className="smooth-hover link-hover text-base font-medium text-white/92 hover:text-dent-accent">
                     {clinic}
                   </Link>
                 </li>

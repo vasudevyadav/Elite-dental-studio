@@ -121,7 +121,7 @@ export default function NearestClinic() {
     <section id="clinics" className="mx-auto max-w-7xl px-5 py-8 sm:px-8 lg:px-12 ">
       <div className="lg:mb-10 mb-6 flex items-center gap-5">
         <h2 className="shrink-0 text-3xl font-bold tracking-[-0.02em] text-[#073f48] lg:text-[34px]">
-          Choose Your <span className="text-[#25cfc0]">Nearest Clinic</span>
+          Choose Your <span className="text-dent-accent">Nearest Clinic</span>
         </h2>
         <span className="hidden h-px flex-1 bg-[#2d7378] sm:block" />
       </div>
@@ -136,7 +136,7 @@ export default function NearestClinic() {
               <select
                 value={selectedClinic}
                 onChange={(event) => setSelectedClinic(event.target.value)}
-                className=" py-3 w-full appearance-none rounded-full border border-[#d9d9d9] bg-white px-8 pr-14 text-lg font-medium text-[#666] shadow-[inset_0_2px_7px_rgba(0,0,0,0.13)] outline-none transition focus:border-[#25cfc0] focus:ring-4 focus:ring-[#25cfc0]/20 "
+                className=" py-3 w-full appearance-none rounded-full border border-[#d9d9d9] bg-white px-8 pr-14 text-lg font-medium text-[#666] shadow-[inset_0_2px_7px_rgba(0,0,0,0.13)] outline-none transition focus:border-dent-accent focus:ring-4 focus:ring-dent-accent/20 "
               >
                 {Object.values(clinics).map(({ name }) => (
                   <option key={name} value={name}>
@@ -215,7 +215,7 @@ export default function NearestClinic() {
           </div>
         </article>
 
-        <article className="flex min-h-[560px] flex-col justify-around rounded-[28px] bg-[#25cfc0] px-7 py-10 text-center sm:px-12 lg:min-h-0 xl:px-16">
+        <article className="flex min-h-[560px] flex-col justify-around rounded-[28px] bg-dent-accent px-7 py-10 text-center sm:px-12 lg:min-h-0 xl:px-16">
           <div className="mx-auto max-w-[600px]">
             <div className="mb-3 flex justify-center">
               <Image src="/home/customer-care.png" alt="Customer Care Icon" width={80} height={80} />
