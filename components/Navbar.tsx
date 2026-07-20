@@ -45,7 +45,7 @@ const dropdowns: Record<
       {
         label: "About Our Clinic",
         description: "Our approach, experience and patient-first promise",
-        href: "/#about-us",
+        href: "/about",
       },
       {
         label: "Our Doctors",

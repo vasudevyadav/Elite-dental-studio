@@ -78,7 +78,7 @@ export default function Footer() {
             <ul className="grid grid-cols-1 gap-x-5 gap-y-4 sm:block sm:space-y-5 mx-auto">
               {companyLinks.map((link) => (
                 <li key={link}>
-                  <Link href="#" className="smooth-hover link-hover text-center lg:text-left w-full text-base font-medium text-white/92 hover:text-dent-accent">
+                  <Link href={link === "About Us" ? "/about" : "#"} className="smooth-hover link-hover text-center lg:text-left w-full text-base font-medium text-white/92 hover:text-dent-accent">
                     {link}
                   </Link>
                 </li>
