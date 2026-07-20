@@ -4,6 +4,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import FAQSection from "@/components/FAQSection";
 import BookAppointmentSection from "@/components/BookAppointmentSection";
+import HeroSection from "@/components/HeroSection";
 
 const directors = [
   { name: "Joseem Ammatticos", role: "Executive Director", image: "/home/doctors/dr-manu.jpg" },
@@ -41,23 +42,6 @@ function PersonCard({ person }: { person: (typeof directors)[number] }) {
   );
 }
 
-function CompactAppointmentForm() {
-  const fieldClass = "h-11 w-full rounded-[4px] border border-[#79a9aa] bg-[#f3fbfa] px-4 text-xs outline-none focus:border-dent-accent focus:ring-4 focus:ring-dent-accent/15";
-  return (
-    <div className="rounded-[22px] bg-white p-6 shadow-[0_18px_55px_rgba(9,69,72,.2)] sm:p-8">
-      <h2 className="text-center text-lg font-extrabold italic text-[#2c7477]">Book an Appointment</h2>
-      <form className="mt-6 space-y-4" onSubmit={(event) => event.preventDefault()}>
-        <input className={fieldClass} placeholder="Enter Your Name" aria-label="Name" />
-        <input className={fieldClass} placeholder="Enter Your Mobile No." type="tel" aria-label="Mobile number" />
-        <input className={fieldClass} placeholder="Enter Your Mail" type="email" aria-label="Email" />
-        <input className={fieldClass} placeholder="DD/MM/YYYY" aria-label="Preferred date" />
-        <select className={fieldClass} aria-label="Select clinic" defaultValue=""><option value="" disabled>Select Clinic</option><option>Calicut</option><option>Kochi</option><option>Kannur</option><option>Coimbatore</option></select>
-        <button className="smooth-hover button-hover mx-auto block w-1/2 min-w-40 rounded-[4px] bg-dent-accent py-3 text-sm font-extrabold text-white hover:bg-dent-nav">Book Now!</button>
-      </form>
-    </div>
-  );
-}
-
 export default function AboutPage() {
   return (
     <>
@@ -67,16 +51,7 @@ export default function AboutPage() {
       </Head>
       <Navbar />
       <main className="bg-white">
-        <section className="relative overflow-hidden bg-[#2c7477]">
-          <div className="absolute inset-x-0 top-0 h-[560px] lg:h-[620px]">
-            <Image src="/about-freepik-checkup.jpg" alt="Dentist caring for a patient" fill priority sizes="100vw" className="object-cover" />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#164f53]/30 via-transparent to-white/15" />
-          </div>
-          <div className="relative mx-auto flex min-h-[560px] max-w-7xl items-center justify-end px-5 py-10 sm:px-8 lg:min-h-[620px] lg:px-12">
-            <div className="w-full lg:w-[44%]"><CompactAppointmentForm /></div>
-          </div>
-          <div className="pointer-events-none absolute -bottom-1 left-[-5%] h-20 w-[110%] -rotate-2 bg-[#2c7477] ring-[8px] ring-dent-accent" />
-        </section>
+        <HeroSection />
 
         <section id="our-story" className="bg-[#2c7477] pb-16 pt-14 text-white lg:pb-24">
           <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-12">
