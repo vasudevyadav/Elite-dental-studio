@@ -24,7 +24,7 @@ export default function BookAppointmentSection() {
 
   return (
     <section id="appointment" className="px-5 py-6 sm:px-8 lg:py-12">
-      <div className="mx-auto max-w-7xl rounded-[28px] bg-[#2c7477] px-6 py-10 sm:px-10 lg:grid lg:grid-cols-[0.95fr_1.05fr] lg:gap-16 lg:px-16 lg:py-16">
+      <div className="mx-auto max-w-7xl rounded-[28px] bg-dent-panel px-6 py-10 sm:px-10 lg:grid lg:grid-cols-[0.95fr_1.05fr] lg:gap-16 lg:px-16 lg:py-16">
         <div className="text-white">
           <p className="text-sm font-extrabold uppercase text-dent-accent sm:text-base">
             Book Your Appointment
@@ -73,7 +73,7 @@ export default function BookAppointmentSection() {
         </div>
 
         <div className="lg:mt-12 mt-8 rounded-[22px] bg-white px-6 lg:py-10 py-6 lg:mt-0">
-          <h3 className="text-center text-xl font-bold italic text-[#2c7477]">
+          <h3 className="text-center text-xl font-bold italic text-[#29666b]">
             Book an Appointment
           </h3>
           <form

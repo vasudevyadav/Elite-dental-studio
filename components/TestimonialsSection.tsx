@@ -41,7 +41,7 @@ export default function TestimonialsSection() {
   return (
     <section id="testimonials" className="overflow-hidden px-5 py-6 sm:px-8 lg:py-12">
       <div className="mx-auto max-w-7xl">
-        <div className="relative rounded-[28px] bg-[#2c7477] px-6 pb-[170px] pt-10 sm:px-10 lg:px-16 lg:pb-[180px] lg:pt-12">
+        <div className="relative rounded-[28px] bg-dent-panel px-6 pb-[170px] pt-10 sm:px-10 lg:px-16 lg:pb-[180px] lg:pt-12">
           <Image
             src="/home/testimonial.png"
             alt=""
@@ -80,7 +80,7 @@ export default function TestimonialsSection() {
 
         <div className="relative z-20 mx-auto -mt-[135px] w-[94%] rounded-[22px] bg-[#f3fbfa] px-5 py-7 shadow-[0_18px_45px_rgba(36,91,94,0.12)] sm:w-[86%] sm:px-10 lg:w-[75%] lg:rounded-[26px] lg:px-14 lg:py-10">
           <div className="flex gap-3 sm:gap-5 lg:gap-8">
-            <span className="shrink-0 text-[46px] font-black leading-[0.75] text-[#2c7477] sm:text-[72px]">
+            <span className="shrink-0 text-[46px] font-black leading-[0.75] text-[#29666b] sm:text-[72px]">
               “
             </span>
             <div className="min-w-0 flex-1">
@@ -100,10 +100,10 @@ export default function TestimonialsSection() {
                     />
                   </div>
                   <div>
-                    <h3 className="lg:text-xl text-lg font-extrabold text-[#2c7477]">
+                    <h3 className="lg:text-xl text-lg font-extrabold text-[#29666b]">
                       {testimonial.name}
                     </h3>
-                    <p className="text-sm font-medium text-[#2c7477]">
+                    <p className="text-sm font-medium text-[#29666b]">
                       {testimonial.role}
                     </p>
                   </div>
@@ -122,7 +122,7 @@ export default function TestimonialsSection() {
                     type="button"
                     onClick={() => move(1)}
                     aria-label="Next testimonial"
-                    className="flex h-10 w-11 items-center justify-center bg-[#2c7477] text-white"
+                    className="flex h-10 w-11 items-center justify-center bg-dent-panel text-white"
                   >
                     <Arrow />
                   </button>

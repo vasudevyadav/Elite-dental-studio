@@ -16,7 +16,9 @@
 @theme {
   --color-dent-dark: #1a3535;
   --color-dent-nav: #07565a;
+  --color-dent-panel: #29666b;
   --color-dent-accent: #2ebfab;
+  --color-dent-surface: #f0faf8;
   --color-dent-mint: #ebf8f8;
   --color-dent-text: #1b3c42;
   --color-dent-border: #c5eaea;
@@ -51,12 +53,6 @@ video {
   display: block;
   max-width: 100%;
   height: auto;
-}
-
-/* Skip layout and paint work for content that is still far below the viewport. */
-main > section:not(:first-child) {
-  content-visibility: auto;
-  contain-intrinsic-size: auto 760px;
 }
 
 @layer utilities {

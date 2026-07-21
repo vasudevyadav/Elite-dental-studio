@@ -66,7 +66,7 @@ export default function HeroSection({ slides = HOME_SLIDES }: HeroSectionProps) 
     "h-11 w-full rounded-[5px] border border-[#8bb5b6] bg-[#f5fbfa] px-4 text-sm text-gray-700 placeholder-gray-500 focus:border-dent-accent focus:outline-none focus:ring-1 focus:ring-dent-accent sm:h-12 sm:px-5";
 
   return (
-    <section className="relative h-[430px] overflow-hidden sm:h-[560px] lg:h-[790px] xl:h-[850px]">
+    <section className="relative h-[430px] overflow-hidden sm:h-[560px] lg:h-[600px] xl:h-[700px]">
 
       {/* Background image slider */}
       {slides.map((s, i) => (
