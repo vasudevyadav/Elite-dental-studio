@@ -107,7 +107,7 @@ export default function DoctorsSection() {
           Our Doctors
         </h2>
 
-        <p className="mx-auto mt-3 max-w-[1120px] text-sm leading-[1.65] text-[#555] sm:text-lg lg:mt-5 lg:text-[20px]">
+        <p className="mx-auto mt-3 max-w-7xl text-sm leading-[1.65] text-[#555] sm:text-lg lg:mt-5 lg:text-[20px]">
           We are delighted to welcome you to Elite Dental Studio! At our office,
           every member of our team strives to make each patient feel welcome,
           comfortable, and valued – because you are the most important person in
