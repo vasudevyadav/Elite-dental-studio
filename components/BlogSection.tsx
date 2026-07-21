@@ -72,14 +72,14 @@ export default function BlogSection() {
           <p className="text-sm font-extrabold uppercase text-dent-accent sm:text-base">
             Latest Blog
           </p>
-          <h2 className="lg:mt-5 mt-2 max-w-[650px] text-2xl font-extrabold leading-[1.25] tracking-[-0.025em] text-[#2c7477] sm:text-[42px]">
+          <h2 className="lg:mt-5 mt-2 max-w-[650px] text-2xl font-extrabold leading-[1.25] tracking-[-0.025em] text-[#29666b] sm:text-[42px]">
             Latest dental news insights and
             <br className="hidden sm:block" /> oral health advice
           </h2>
         </div>
         <button className="smooth-hover button-hover hover-lift inline-flex w-fit items-center gap-4 rounded-[8px] bg-[#064a50] py-1.5 lg:py-3 pl-5 pr-3 text-sm font-bold uppercase text-white !hidden lg:block">
           View All Post
-          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-[#2c7477]">
+          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-[#29666b]">
             <Arrow />
           </span>
         </button>
@@ -131,7 +131,7 @@ export default function BlogSection() {
                 </div>
               </div>
 
-              <div className={`${index === 0 ? "bg-dent-accent" : "bg-[#2c7477]"} px-5 py-4 text-white`}>
+              <div className={`${index === 0 ? "bg-dent-accent" : "bg-dent-panel"} px-5 py-4 text-white`}>
                 <h3 className="text-sm font-extrabold sm:text-base">{post.title}</h3>
                 <p className="mt-1 truncate text-xs text-white/90 sm:text-sm">
                   {post.description}
@@ -152,7 +152,7 @@ export default function BlogSection() {
           type="button"
           onClick={() => move(1)}
           aria-label="Next blog posts"
-          className="smooth-hover button-hover hover-lift hidden h-10 w-10 shrink-0 items-center justify-center rounded-[5px] bg-[#2c7477] text-white hover:bg-[#205f63] sm:flex"
+          className="smooth-hover button-hover hover-lift hidden h-10 w-10 shrink-0 items-center justify-center rounded-[5px] bg-dent-panel text-white hover:bg-[#205f63] sm:flex"
         >
           <Arrow />
         </button>
@@ -173,7 +173,7 @@ export default function BlogSection() {
             <span
               key={`${post.title}-${index}`}
               className={`smooth-hover h-2 rounded-full ${
-                index === start ? "w-6 bg-[#2c7477]" : "w-2 bg-[#acd5d6]"
+                index === start ? "w-6 bg-dent-panel" : "w-2 bg-[#acd5d6]"
               }`}
             />
           ))}
@@ -183,7 +183,7 @@ export default function BlogSection() {
           type="button"
           onClick={() => move(1)}
           aria-label="Next blog post"
-          className="smooth-hover button-hover hover-lift flex h-11 w-12 items-center justify-center rounded-lg bg-[#2c7477] text-white shadow-sm active:scale-95 focus:outline-none focus:ring-4 focus:ring-[#2c7477]/25"
+          className="smooth-hover button-hover hover-lift flex h-11 w-12 items-center justify-center rounded-lg bg-dent-panel text-white shadow-sm active:scale-95 focus:outline-none focus:ring-4 focus:ring-dent-panel/25"
         >
           <Arrow />
         </button>

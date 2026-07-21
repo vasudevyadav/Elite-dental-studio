@@ -1,10 +1,16 @@
 import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 
-const SLIDES = [
+const HOME_SLIDES = [
   { img: "/home/slider-1.png", alt: "Dental Care 1" },
   { img: "/home/slider-2.png", alt: "Dental Care 2" },
 ];
+
+type HeroSlide = { img: string; alt: string };
+
+type HeroSectionProps = {
+  slides?: HeroSlide[];
+};
 
 const ChevronDown = () => (
   <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
@@ -12,18 +18,22 @@ const ChevronDown = () => (
   </svg>
 );
 
-export default function HeroSection() {
+export default function HeroSection({ slides = HOME_SLIDES }: HeroSectionProps) {
   const [slide, setSlide] = useState(0);
   const [modalOpen, setModalOpen] = useState(false);
   const [form, setForm] = useState({ name: "", phone: "", email: "", date: "", clinic: "" });
 
-  const total = SLIDES.length;
+  const total = slides.length;
   const next = useCallback(() => setSlide((p) => (p + 1) % total), [total]);
 
   useEffect(() => {
+    if (total < 2) {
+      return;
+    }
+
     const id = setInterval(next, 4500);
     return () => clearInterval(id);
-  }, [next]);
+  }, [next, total]);
 
   useEffect(() => {
     if (!modalOpen) {
@@ -56,10 +66,10 @@ export default function HeroSection() {
     "h-11 w-full rounded-[5px] border border-[#8bb5b6] bg-[#f5fbfa] px-4 text-sm text-gray-700 placeholder-gray-500 focus:border-dent-accent focus:outline-none focus:ring-1 focus:ring-dent-accent sm:h-12 sm:px-5";
 
   return (
-    <section className="relative h-[430px] overflow-hidden sm:h-[560px] lg:h-[790px] xl:h-[850px]">
+    <section className="relative h-[430px] overflow-hidden sm:h-[560px] lg:h-[600px] xl:h-[700px]">
 
       {/* Background image slider */}
-      {SLIDES.map((s, i) => (
+      {slides.map((s, i) => (
         <div
           key={i}
           className="absolute inset-0 transition-opacity duration-1000 ease-in-out"
@@ -69,6 +79,8 @@ export default function HeroSection() {
             src={s.img}
             alt={s.alt}
             fill
+            quality={72}
+            sizes="100vw"
             className="object-cover lg:object-center object-[-100px]"
             priority={i === 0}
           />
@@ -76,8 +88,8 @@ export default function HeroSection() {
       ))}
 
       {/* Slide dots */}
-      <div className="absolute bottom-5 left-1/2 z-40 flex -translate-x-1/2 items-center gap-2 lg:bottom-7">
-        {SLIDES.map((_, i) => (
+      {slides.length > 1 && <div className="absolute bottom-5 left-1/2 z-40 flex -translate-x-1/2 items-center gap-2 lg:bottom-7">
+        {slides.map((_, i) => (
           <button
             key={i}
             onClick={() => setSlide(i)}
@@ -86,7 +98,7 @@ export default function HeroSection() {
               }`}
           />
         ))}
-      </div>
+      </div>}
 
       {/* Mobile CTA – the full form lives in the appointment section below */}
       <div className="absolute inset-x-0 bottom-14 z-40 flex justify-center px-5 lg:hidden">

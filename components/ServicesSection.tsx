@@ -13,21 +13,21 @@ const services: Service[] = [
     title: "Laser Dentistry",
     description:
       "Advanced laser care for comfortable, precise and faster dental treatments.",
-    image: "/home/services/laser-dentistry.png",
+    image: "/home/services/laser-dentistry.jpg",
     icon: "laser",
   },
   {
     title: "Dental Fillings",
     description:
       "Natural-looking restorations that protect your tooth and bring back its strength.",
-    image: "/home/services/dental-fillings.png",
+    image: "/home/services/dental-fillings.jpg",
     icon: "tooth",
   },
   {
     title: "Invisible Aligners",
     description:
       "Clear, comfortable aligners thoughtfully designed to transform your smile.",
-    image: "/home/services/invisible-aligners.png",
+    image: "/home/services/invisible-aligners.jpg",
     icon: "aligner",
   },
 ];
@@ -116,7 +116,7 @@ export default function ServicesSection() {
   return (
     <section id="services" className="overflow-hidden px-5 py-6 sm:px-8 lg:py-12">
       <div className="mx-auto max-w-7xl">
-        <div className="relative rounded-[28px] bg-[#2c7477] px-5 pb-[250px] pt-8 sm:px-9 sm:pb-[240px] sm:pt-11 lg:px-12 lg:pb-[255px] lg:pt-14 xl:px-16">
+        <div className="relative rounded-[28px] bg-dent-panel px-5 pb-[250px] pt-8 sm:px-9 sm:pb-[240px] sm:pt-11 lg:px-12 lg:pb-[255px] lg:pt-14 xl:px-16">
           <div className="flex flex-col gap-7 lg:flex-row lg:items-center lg:justify-between">
             <div>
               <div className="mb-5 flex items-center gap-3">
@@ -217,7 +217,7 @@ export default function ServicesSection() {
                   type="button"
                   onClick={() => move(1)}
                   aria-label="Next service"
-                  className="smooth-hover button-hover hover-lift flex h-11 w-12 items-center justify-center bg-[#2c7477] text-white hover:bg-[#205f63] focus:outline-none focus:ring-4 focus:ring-[#2c7477]/25"
+                  className="smooth-hover button-hover hover-lift flex h-11 w-12 items-center justify-center bg-dent-panel text-white hover:bg-[#205f63] focus:outline-none focus:ring-4 focus:ring-dent-panel/25"
                 >
                   <Arrow />
                 </button>

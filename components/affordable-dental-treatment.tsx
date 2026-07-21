@@ -17,7 +17,7 @@ export default function AffordableDentalTreatment() {
           <p className="mb-2 text-sm font-extrabold uppercase tracking-widest text-dent-accent sm:text-base">
             Dental Tourism
           </p>
-          <h2 className="mb-5 text-3xl font-extrabold leading-[1.2] tracking-tight text-[#2c7477] sm:text-[38px]">
+          <h2 className="mb-5 text-3xl font-extrabold leading-[1.2] tracking-tight text-[#29666b] sm:text-[38px]">
             Need For Dental Tourism
           </h2>
           <p className="mb-3 text-sm leading-[1.75] text-[#555] lg:text-[17px]">
