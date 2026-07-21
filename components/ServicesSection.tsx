@@ -13,21 +13,21 @@ const services: Service[] = [
     title: "Laser Dentistry",
     description:
       "Advanced laser care for comfortable, precise and faster dental treatments.",
-    image: "/home/services/laser-dentistry.png",
+    image: "/home/services/laser-dentistry.jpg",
     icon: "laser",
   },
   {
     title: "Dental Fillings",
     description:
       "Natural-looking restorations that protect your tooth and bring back its strength.",
-    image: "/home/services/dental-fillings.png",
+    image: "/home/services/dental-fillings.jpg",
     icon: "tooth",
   },
   {
     title: "Invisible Aligners",
     description:
       "Clear, comfortable aligners thoughtfully designed to transform your smile.",
-    image: "/home/services/invisible-aligners.png",
+    image: "/home/services/invisible-aligners.jpg",
     icon: "aligner",
   },
 ];

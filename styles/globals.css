@@ -53,6 +53,12 @@ video {
   height: auto;
 }
 
+/* Skip layout and paint work for content that is still far below the viewport. */
+main > section:not(:first-child) {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 760px;
+}
+
 @layer utilities {
   .smooth-hover {
     transition-duration: 280ms;

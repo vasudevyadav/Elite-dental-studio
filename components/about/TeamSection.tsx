@@ -22,7 +22,7 @@ function DirectorCard({ person }: { person: (typeof directors)[number] }) {
 export default function TeamSection() {
   return (
     <section className="px-5 py-16 sm:px-8 lg:py-28">
-      <div className="mx-auto max-w-7xl rounded-[24px] bg-[#2c7477] px-5 py-8 sm:px-8 lg:px-12 lg:py-10">
+      <div className="mx-auto max-w-[1120px] rounded-[24px] bg-[#2c7477] px-5 py-8 sm:px-8 lg:px-10 lg:py-10">
         <h2 className="text-center text-2xl font-black text-white sm:text-3xl">Meet Our Directors</h2>
         <p className="mx-auto mt-3 max-w-2xl text-center text-xs leading-5 text-white/90">Our leadership combines clinical experience, thoughtful management and a shared commitment to exceptional patient care.</p>
         <div className="mx-auto mt-9 grid max-w-5xl grid-cols-2 gap-4 sm:grid-cols-4">{directors.map((person) => <DirectorCard key={person.name} person={person} />)}</div>

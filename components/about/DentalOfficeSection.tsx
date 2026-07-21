@@ -12,7 +12,7 @@ const promises = [
 export default function DentalOfficeSection() {
   return (
     <section className="bg-[#2c7477] px-5 pb-14 pt-10 text-[#344f51] sm:px-8 lg:pb-20 lg:pt-24">
-      <div className="mx-auto max-w-7xl">
+      <div className="mx-auto max-w-[1120px]">
         <div className="relative rounded-[18px] bg-[#f5fbfa] p-6 shadow-[0_8px_22px_rgba(9,57,60,.3)] sm:p-9 lg:min-h-[365px] lg:p-12 lg:pr-[36%]">
           <h1 className="text-xl font-black uppercase text-[#2c7477] sm:text-2xl">About Our Dental Office</h1>
           <p className="mt-5 text-sm leading-6">Elite Dental Studio is a distinctive dental clinic that keeps up with time and technology in treating dental ailments. Care and compassion are the two buzzwords that typify treatment at Elite Dental Studio. We give ears to the patients and understand their woes.</p>

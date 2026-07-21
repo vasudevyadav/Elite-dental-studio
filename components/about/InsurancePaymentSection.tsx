@@ -3,7 +3,7 @@ import Image from "next/image";
 export default function InsurancePaymentSection() {
   return (
     <section className="px-5 py-16 sm:px-8 lg:py-28">
-      <div className="mx-auto grid max-w-7xl items-center gap-10 lg:grid-cols-[.48fr_.52fr]">
+      <div className="mx-auto grid max-w-[1120px] items-center gap-10 lg:grid-cols-[.48fr_.52fr]">
         <Image src="/about/about-3.png" alt="Dentist explaining treatment benefits to a patient" width={836} height={856} className="w-full rounded-[24px] shadow-[0_10px_24px_rgba(31,91,94,.18)]" />
         <div>
           <h2 className="text-2xl font-black uppercase text-[#2c7477] sm:text-3xl">Insurance and Payment</h2>

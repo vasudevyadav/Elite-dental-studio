@@ -11,7 +11,7 @@ export default function MissionSection() {
   return (
     <section className="relative overflow-hidden bg-[#eef8f7]">
       <Image src="/about/about-5.png" alt="Modern dental technology" fill sizes="100vw" className="object-cover object-center" />
-      <div className="relative mx-auto grid min-h-[490px] max-w-7xl items-center gap-10 px-5 py-14 sm:px-8 lg:grid-cols-2 lg:px-12">
+      <div className="relative mx-auto grid min-h-[490px] max-w-[1120px] items-center gap-10 px-5 py-14 sm:px-8 lg:grid-cols-2 lg:px-0">
         <div>
           <h2 className="text-2xl font-black uppercase text-[#2c7477] sm:text-3xl">Our Mission</h2>
           <p className="mt-6 max-w-xl text-sm leading-6 text-[#4f6263]">We know there is more to good dental care than just the doctor. The support team and the facility make important contributions to each patient&apos;s sense of comfort and well-being. We place enormous value on the entire experience – from the first contact through your new smile and beyond.</p>
