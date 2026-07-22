@@ -23,6 +23,8 @@ const serviceLinks = [
   "Paediatric Dentistry",
 ];
 
+const serviceSlugs = ["laser-dentistry", "dental-fillings", "invisible-aligners", "clear-aligners-treatment", "maxillofacial-orthognathic-surgery", "dental-implant", "restorative-dentistry", "periodontics", "pediatric-dentistry"];
+
 const clinics = ["CALICUT", "KOCHI", "Kannur", "Coimbatore"];
 
 function SocialIcon({ type }: { type: "facebook" | "tiktok" | "instagram" | "whatsapp" }) {
@@ -78,7 +80,7 @@ export default function Footer() {
             <ul className="grid grid-cols-1 gap-x-5 gap-y-4 sm:block sm:space-y-5 mx-auto">
               {companyLinks.map((link) => (
                 <li key={link}>
-                  <Link href={link === "About Us" ? "/about" : "#"} className="smooth-hover link-hover text-center lg:text-left w-full text-base font-medium text-white/92 hover:text-dent-accent">
+                  <Link href={link === "About Us" ? "/about" : link === "Services" ? "/services" : "#"} className="smooth-hover link-hover text-center lg:text-left w-full text-base font-medium text-white/92 hover:text-dent-accent">
                     {link}
                   </Link>
                 </li>
@@ -91,9 +93,9 @@ export default function Footer() {
               Services
             </h3>
             <ul className="mt-5 space-y-4 lg:space-y-5">
-              {serviceLinks.map((link) => (
+              {serviceLinks.map((link, index) => (
                 <li key={link}>
-                  <Link href="#" className="smooth-hover link-hover text-base font-medium text-white/92 hover:text-dent-accent">
+                  <Link href={`/services/${serviceSlugs[index]}`} className="smooth-hover link-hover text-base font-medium text-white/92 hover:text-dent-accent">
                     {link}
                   </Link>
                 </li>

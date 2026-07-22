@@ -20,22 +20,22 @@ const dropdowns: Record<
       {
         label: "Dental Implants",
         description: "Long-lasting, natural-looking tooth replacement",
-        href: "/#services",
+        href: "/services/dental-implant",
       },
       {
         label: "Invisible Aligners",
         description: "A discreet and comfortable smile transformation",
-        href: "/#services-list",
+        href: "/services/invisible-aligners",
       },
       {
         label: "Root Canal Treatment",
         description: "Gentle care focused on saving your natural tooth",
-        href: "/#services",
+        href: "/services/endodontics",
       },
       {
         label: "Laser Dentistry",
         description: "Precise treatment with greater comfort",
-        href: "/#services-list",
+        href: "/services/laser-dentistry",
       },
     ],
   },
@@ -102,10 +102,10 @@ const subNavItems = [
   { label: "Our Doctors", img: "/navbar/doctor.png", href: "/#doctors" },
   { label: "Testimonials", img: "/navbar/icon02.png", href: "/#testimonials" },
   { label: "Awards", img: "/navbar/icon-3.png", href: "/#awards" },
-  { label: "Technology", img: "/navbar/icon-4.png", href: "/#services" },
-  { label: "Implant", img: "/navbar/icon-6.png", href: "/#services" },
-  { label: "Aligners", img: "/navbar/icon-7.png", href: "/#services-list" },
-  { label: "Root Canal", img: "/navbar/icon-8.png", href: "/#services" },
+  { label: "Technology", img: "/navbar/icon-4.png", href: "/services" },
+  { label: "Implant", img: "/navbar/icon-6.png", href: "/services/dental-implant" },
+  { label: "Aligners", img: "/navbar/icon-7.png", href: "/services/invisible-aligners" },
+  { label: "Root Canal", img: "/navbar/icon-8.png", href: "/services/endodontics" },
 ];
 
 export default function Navbar() {
