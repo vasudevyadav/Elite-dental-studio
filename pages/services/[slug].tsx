@@ -23,12 +23,12 @@ const steps = [
 ];
 
 const benefits = [
-  "More precise treatment focused on the affected area.",
-  "Less discomfort during suitable dental procedures.",
-  "Reduced need for extensive intervention in selected cases.",
-  "Faster recovery with a dentist-led aftercare plan.",
-  "Better appearance and natural-looking treatment results.",
-  "Lower risk of complications with careful clinical planning.",
+  "More precise soft tissue handling with less disruption to the area around it.",
+  "Often less bleeding during the procedure compared to conventional methods.",
+  "Reduced need for sutures in certain soft tissue procedures.",
+  "Faster soft tissue recovery in selected cases.",
+  "Better gum contour and appearance outcomes in cosmetic procedures.",
+  "Lower risk of post-procedure infection in suitable cases.",
 ];
 
 export default function ServiceDetailPage({ service }: Props) {
@@ -45,16 +45,16 @@ export default function ServiceDetailPage({ service }: Props) {
             <h1>{treatmentName}<br />in Kochi, Calicut &amp; Kannur</h1>
             <div className="rule" />
             <p>If you are searching for the best {service.title.toLowerCase()} clinic near me, you want two things confirmed: what the treatment actually involves and whether it applies to your condition.</p>
-            <p>{service.title} uses modern dental techniques to provide accurate, comfortable care. At Elite Dental Studio, each case is planned after a proper clinical check.</p>
-            <p>Not every condition needs the same approach. Your dentist confirms the right treatment for you before care begins.</p>
+            <p>{isLaser ? "Dental laser treatment uses focused light energy to support selected gum and soft tissue procedures with greater precision. At Elite Dental Studio, our periodontics and laser specialist team offers dental laser treatment in Calicut, Kochi and Kannur, with each case planned after a proper clinical check." : `${service.title} uses modern dental techniques to provide accurate, comfortable care. At Elite Dental Studio, each case is planned after a proper clinical check.`}</p>
+            <p>{isLaser ? "Not every condition needs laser. Your dentist confirms whether it is the right approach for you before treatment begins." : "Not every condition needs the same approach. Your dentist confirms the right treatment for you before care begins."}</p>
           </div>
-          <div className="detail-banner-image"><Image src={isLaser ? "/service/services-inner.png" : service.image} alt={`${service.title} procedure`} fill sizes="50vw" /></div>
+          <div className="detail-banner-image"><Image src="/service/services-inner.png" alt={`${service.title} procedure`} fill sizes="50vw" /></div>
         </section>
 
         <section className="detail-content">
           <div className="detail-two-col">
-            <div className="detail-photo"><Image src={isLaser ? "/service/services-inner-1.png" : service.image} alt={service.title} fill sizes="45vw" /></div>
-            <div><h2>What Is {treatmentName}?</h2><div className="rule dark" /><p>{service.title} is a clinical dental treatment focused on restoring oral health, comfort and confidence. Our dentists use careful diagnosis and modern equipment to plan treatment around your individual needs.</p><p>This approach gives the treating dentist greater control and helps produce predictable results in suitable cases.</p></div>
+            <div className="detail-photo"><Image src="/service/services-inner-1.png" alt={service.title} fill sizes="45vw" /></div>
+            <div><h2>What Is {treatmentName}?</h2><div className="rule dark" /><p>{isLaser ? "Laser dentistry is a clinical technique that uses a focused beam of light energy to treat selected gum and soft tissue conditions in the mouth. The laser delivers controlled energy to a specific area, allowing the dentist to work with more precision than conventional soft tissue methods in suitable cases." : `${service.title} is a clinical dental treatment focused on restoring oral health, comfort and confidence. Our dentists use careful diagnosis and modern equipment to plan treatment around your individual needs.`}</p><p>{isLaser ? "This technique gives the treating dentist greater control over soft tissue work, which is why it is used in selected gum and cosmetic dental procedures at Elite Dental Studio." : "This approach gives the treating dentist greater control and helps produce predictable results in suitable cases."}</p></div>
           </div>
 
           <div className="procedures">
@@ -68,20 +68,19 @@ export default function ServiceDetailPage({ service }: Props) {
           </div>
 
           <section className="candidate-panel">
-            <div><h2>Who Should Consider<br />{treatmentName}?</h2><p>Your dentist may recommend this treatment if you have:</p><div className="rule dark" /><ul><li>A dental condition needing precise clinical care.</li><li>Discomfort affecting normal eating or cleaning.</li><li>Cosmetic concerns you want addressed.</li><li>A condition confirmed during dental examination.</li><li>A need for specialist-led treatment planning.</li></ul><b>Suitability is confirmed after a clinical examination and dental X-ray at our clinic.</b></div>
-            <div className="candidate-photo"><Image src={isLaser ? "/service/services-inner-3.png" : service.image} alt={`${service.title} treatment examples`} fill sizes="40vw" /></div>
+            <div><h2>Who Should Consider<br />{treatmentName}?</h2><p>Your dentist may recommend laser support if you have:</p><div className="rule dark" /><ul><li>Gum disease with deeper pockets needing precise cleaning.</li><li>Excess gum tissue covering teeth or affecting cleaning access.</li><li>Dark gum pigmentation you want addressed cosmetically.</li><li>A tight frenum causing tongue tie, lip tie or tooth gaps.</li><li>Mouth ulcers or soft tissue growths needing clinical care.</li><li>A gummy smile requiring gum line reshaping.</li></ul><b>Suitability is confirmed after a clinical examination and dental X-ray at our clinic.</b></div>
+            <div className="candidate-photo"><Image src="/service/services-inner-3.png" alt={`${service.title} treatment examples`} fill sizes="40vw" /></div>
           </section>
 
-          <div className="detail-two-col treatment-expect"><div className="detail-photo"><Image src={isLaser ? "/service/services-inner-4.png" : service.image} alt={`${service.title} treatment`} fill sizes="45vw" /></div><div><h2>What to Expect During and<br />After {service.title}?</h2><div className="rule dark" /><p>Most treatments are completed with your comfort in mind. Local anaesthesia may be used where needed so you remain comfortable throughout the procedure.</p><p>After your session, mild soreness can be normal and typically settles within a few days. Your dentist will explain what to expect for your specific treatment.</p></div></div>
-          <div className="detail-two-col aftercare"><div><h2>Aftercare Following Your<br />Dental Procedure</h2><div className="rule dark" /><p>Your dentist gives you specific instructions based on your procedure. General guidance includes:</p><ul><li>Eat soft foods for the first two to three days.</li><li>Rinse gently with the solution your dentist recommends.</li><li>Avoid smoking during the healing period.</li><li>Attend your follow-up visit to check healing progress.</li></ul></div><div className="detail-photo"><Image src={isLaser ? "/service/services-inner-5.png" : service.image} alt={`${service.title} aftercare`} fill sizes="45vw" /></div></div>
+          <div className="detail-two-col treatment-expect"><div className="detail-photo"><Image src="/service/services-inner-4.png" alt={`${service.title} treatment`} fill sizes="45vw" /></div><div><h2>What to Expect During and<br />After {service.title}?</h2><div className="rule dark" /><p>Most treatments are completed with your comfort in mind. Local anaesthesia may be used where needed so you remain comfortable throughout the procedure.</p><p>After your session, mild soreness can be normal and typically settles within a few days. Your dentist will explain what to expect for your specific treatment.</p></div></div>
+          <div className="detail-two-col aftercare"><div><h2>Aftercare Following Your<br />Dental Procedure</h2><div className="rule dark" /><p>Your dentist gives you specific instructions based on your procedure. General guidance includes:</p><ul><li>Eat soft foods for the first two to three days.</li><li>Rinse gently with the solution your dentist recommends.</li><li>Avoid smoking during the healing period.</li><li>Attend your follow-up visit to check healing progress.</li></ul></div><div className="detail-photo"><Image src="/service/services-inner-5.png" alt={`${service.title} aftercare`} fill sizes="45vw" /></div></div>
 
           <section className="benefits">
             <h2>Benefits of<br />{treatmentName}</h2>
             <p>Where treatment is clinically suitable, it offers clear advantages:</p>
-            <div className="benefit-diagram">
-              {benefits.slice(0, 3).map((benefit, index) => <article className={`benefit-item benefit-${index + 1}`} key={benefit}><b>{index + 1}</b><span>{benefit}</span></article>)}
-              <div className="benefit-center"><span>♢</span><strong>{service.title}</strong></div>
-              {benefits.slice(3).map((benefit, index) => <article className={`benefit-item benefit-${index + 4}`} key={benefit}><b>{index + 4}</b><span>{benefit}</span></article>)}
+            <div className="benefit-wheel">
+              <Image src="/service/services-inner-6.png" alt={`Benefits of ${service.title}`} fill sizes="75vw" />
+              {benefits.map((benefit, index) => <span className={`benefit-copy benefit-copy-${index + 1}`} key={benefit}>{benefit}</span>)}
             </div>
           </section>
         </section>
