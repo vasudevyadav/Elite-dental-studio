@@ -40,7 +40,7 @@ export default function ServiceDetailPage({ service }: Props) {
       <Navbar />
       <main>
         <ServiceHero inner />
-        <section className="relative min-h-[650px] overflow-hidden bg-[#2a7478] px-5 py-[85px] text-white sm:px-8 lg:px-[max(28px,calc((100vw-1500px)/2))]">
+        <section className="relative min-h-[650px] overflow-hidden bg-[#2a686d] px-5 py-[85px] text-white sm:px-8 lg:px-[max(28px,calc((100vw-1500px)/2))]">
           <div className="relative z-2 w-full max-w-[735px] lg:w-1/2">
             <h1 className="m-0 text-[30px] font-extrabold leading-[1.3] sm:text-[36px] lg:text-[42px]">{treatmentName}<br />in Kochi, Calicut &amp; Kannur</h1>
             <div className="my-7 h-px bg-white/60" />
@@ -53,7 +53,7 @@ export default function ServiceDetailPage({ service }: Props) {
 
         <section className="mx-auto max-w-[1450px] px-5 pb-5 pt-16 text-[#303535] sm:px-8 lg:px-[42px] lg:pt-24">
           <div className="grid items-center gap-10 lg:grid-cols-[1fr_1.2fr] lg:gap-[65px]">
-            <div className="relative min-h-[260px] overflow-hidden rounded-[17px] shadow-[4px_4px_0_#2a7478]"><Image src="/service/services-inner-1.png" alt={service.title} fill sizes="45vw" className="object-cover" /></div>
+            <div className="relative min-h-[260px] overflow-hidden rounded-[17px] shadow-[4px_4px_0_#2a686d]"><Image src="/service/services-inner-1.png" alt={service.title} fill sizes="45vw" className="object-cover" /></div>
             <div><h2 className="m-0 text-[26px] font-extrabold leading-[1.2] text-[#2b7175] sm:text-[30px] lg:text-[35px]">What Is {treatmentName}?</h2><div className="my-5 h-px bg-[#777]" /><p className="text-sm leading-relaxed">{isLaser ? "Laser dentistry is a clinical technique that uses a focused beam of light energy to treat selected gum and soft tissue conditions in the mouth. The laser delivers controlled energy to a specific area, allowing the dentist to work with more precision than conventional soft tissue methods in suitable cases." : `${service.title} is a clinical dental treatment focused on restoring oral health, comfort and confidence. Our dentists use careful diagnosis and modern equipment to plan treatment around your individual needs.`}</p><p className="mt-4 text-sm leading-relaxed">{isLaser ? "This technique gives the treating dentist greater control over soft tissue work, which is why it is used in selected gum and cosmetic dental procedures at Elite Dental Studio." : "This approach gives the treating dentist greater control and helps produce predictable results in suitable cases."}</p></div>
           </div>
 
