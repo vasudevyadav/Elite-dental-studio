@@ -3,7 +3,6 @@ import Image from "next/image";
 
 const HOME_SLIDES = [
   { img: "/home/slider-1.png", alt: "Dental Care 1" },
-  { img: "/home/slider-2.png", alt: "Dental Care 2" },
 ];
 
 type HeroSlide = { img: string; alt: string };
@@ -79,10 +78,11 @@ export default function HeroSection({ slides = HOME_SLIDES }: HeroSectionProps) 
             src={s.img}
             alt={s.alt}
             fill
-            quality={72}
+            quality={60}
             sizes="100vw"
             className="object-cover lg:object-center object-[-100px]"
             priority={i === 0}
+            fetchPriority={i === 0 ? "high" : "auto"}
           />
         </div>
       ))}
@@ -140,7 +140,7 @@ export default function HeroSection({ slides = HOME_SLIDES }: HeroSectionProps) 
             />
 
             <div className="relative">
-              <select name="clinic" value={form.clinic} onChange={handleChange}
+              <select aria-label="Select clinic" name="clinic" value={form.clinic} onChange={handleChange}
                 className="h-11 w-full appearance-none rounded-[5px] border border-[#8bb5b6] bg-[#f5fbfa] px-4 pr-12 text-sm text-gray-500 focus:border-dent-accent focus:outline-none sm:h-12 sm:px-5">
                 <option value="">Select Clinic</option>
                 <option value="calicut">Calicut</option>
@@ -240,6 +240,7 @@ export default function HeroSection({ slides = HOME_SLIDES }: HeroSectionProps) 
 
               <div className="relative">
                 <select
+                  aria-label="Select clinic"
                   name="clinic"
                   value={form.clinic}
                   onChange={handleChange}

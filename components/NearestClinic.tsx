@@ -218,7 +218,7 @@ export default function NearestClinic() {
         <article className="flex min-h-[560px] flex-col justify-around rounded-[28px] bg-dent-accent px-7 py-10 text-center sm:px-12 lg:min-h-0 xl:px-16">
           <div className="mx-auto max-w-[600px]">
             <div className="mb-3 flex justify-center">
-              <Image src="/home/customer-care.png" alt="Customer Care Icon" width={80} height={80} />
+              <Image src="/home/customer-care.png" alt="" aria-hidden="true" width={80} height={80} />
             </div>
             <h3 className="mb-3 text-xl font-extrabold text-white lg:text-2xl">
               FOCUS ON CUSTOMER CARE
@@ -232,7 +232,7 @@ export default function NearestClinic() {
 
           <div className="mx-auto max-w-[650px]">
             <div className="mb-3 flex justify-center">
-              <Image src="/home/shine-teth.png" alt="Customer Care Icon" width={80} height={80} />
+              <Image src="/home/shine-teth.png" alt="" aria-hidden="true" width={80} height={80} />
             </div>
             <h3 className="mb-3 text-xl font-extrabold text-white lg:text-2xl">
               SHINE WITH HEALTHY SMILES &amp; ELITE CARE

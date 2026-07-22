@@ -17,7 +17,7 @@ export default function StatsBar() {
               <div className="relative h-9 w-9 shrink-0 max-[420px]:hidden sm:h-12 sm:w-12 lg:h-16 lg:w-16">
                 <Image
                   src={icon}
-                  alt={label}
+                  alt=""
                   fill
                   className="object-contain"
                 />

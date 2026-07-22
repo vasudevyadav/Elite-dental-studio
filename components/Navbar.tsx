@@ -215,7 +215,6 @@ export default function Navbar() {
 
                   <div
                     id={`${name}-desktop-menu`}
-                    aria-hidden={!isOpen}
                     className={`absolute left-1/2 top-[calc(100%+14px)] w-[340px] -translate-x-1/2 overflow-hidden rounded-2xl border border-[#d9eeee] bg-white p-2 shadow-[0_22px_55px_rgba(20,73,77,0.18)] transition-all duration-200 ${isOpen
                       ? "visible translate-y-0 opacity-100"
                       : "invisible -translate-y-2 pointer-events-none opacity-0"
@@ -329,7 +328,6 @@ export default function Navbar() {
         <div
           className={`fixed inset-0 z-[100] lg:hidden ${mobileOpen ? "pointer-events-auto" : "pointer-events-none"
             }`}
-          aria-hidden={!mobileOpen}
         >
           <button
             type="button"
