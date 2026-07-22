@@ -168,7 +168,7 @@ export default function Navbar() {
     <header ref={headerRef} className="relative z-50">
 
       {/* ── Top Bar ── */}
-      <div className="bg-white shadow-sm">
+      <div className="relative z-20 bg-white shadow-sm">
         <div className="mx-auto flex lg:h-[92px] h-[70px] max-w-7xl items-center justify-between px-5 sm:px-8 lg:h-[112px] lg:px-12">
 
           {/* Logo */}
@@ -215,7 +215,7 @@ export default function Navbar() {
 
                   <div
                     id={`${name}-desktop-menu`}
-                    className={`absolute left-1/2 top-[calc(100%+14px)] w-[340px] -translate-x-1/2 overflow-hidden rounded-2xl border border-[#d9eeee] bg-white p-2 shadow-[0_22px_55px_rgba(20,73,77,0.18)] transition-all duration-200 ${isOpen
+                    className={`absolute left-1/2 top-[calc(100%+14px)] z-[60] w-[340px] -translate-x-1/2 overflow-hidden rounded-2xl border border-[#d9eeee] bg-[#ffffff] p-2 text-[#1b4c50] shadow-[0_22px_55px_rgba(20,73,77,0.18)] transition-all duration-200 ${isOpen
                       ? "visible translate-y-0 opacity-100"
                       : "invisible -translate-y-2 pointer-events-none opacity-0"
                       }`}
@@ -483,7 +483,7 @@ export default function Navbar() {
       </div>
 
       {/* ── Sub Nav ── */}
-      <div className="hidden bg-dent-nav lg:block">
+      <div className="relative z-10 hidden bg-dent-nav lg:block">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-5 px-5 py-4 sm:px-8 lg:px-12 lg:py-5">
 
           {/* Icon links – scrollable on mobile */}
