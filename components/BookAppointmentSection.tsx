@@ -86,6 +86,7 @@ export default function BookAppointmentSection() {
             <input name="date" value={form.date} onChange={updateForm} placeholder="DD/MM/YYYY" className={fieldClass} />
             <div className="relative">
               <select
+                aria-label="Select clinic"
                 name="clinic"
                 value={form.clinic}
                 onChange={updateForm}
