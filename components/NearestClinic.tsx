@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { useState } from "react";
+import AnimatedArrowCta from "./AnimatedArrowCta";
 
 type Clinic = {
   name: string;
@@ -185,19 +186,13 @@ export default function NearestClinic() {
                     <div key={line}>{line}</div>
                   ))}
 
-                  <a
+                  <AnimatedArrowCta
+                    label="VIEW MAP"
                     href={mapPageUrl}
                     target="_blank"
-                    rel="noreferrer"
+                    arrowClassName="text-[#2d7378]"
                     className="smooth-hover button-hover hover-lift mt-5 inline-flex items-center gap-5 rounded-lg bg-[#064b52] py-2 pl-5 pr-2 text-sm font-bold text-white hover:bg-[#2d7378]"
-                  >
-                    VIEW MAP
-                    <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white text-[#2d7378]">
-                      <svg aria-hidden="true" viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="3">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14m-5-5 5 5-5 5" />
-                      </svg>
-                    </span>
-                  </a>
+                  />
                 </div>
               </div>
 

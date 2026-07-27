@@ -1,5 +1,6 @@
 import Image from "next/image";
 import AnimatedCounter from "./AnimatedCounter";
+import AnimatedArrowCta from "./AnimatedArrowCta";
 
 function ToothIcon() {
   return (
@@ -10,27 +11,6 @@ function ToothIcon() {
         className="lg:h-[18px] lg:w-[18px] fill-white"
       >
         <path d="M12 2.5c-1.7 0-2.8-.9-4.4-.9C4.7 1.6 3 4 3 7c0 2.6 1.2 4.8 2 7 .9 2.5 1.3 6.5 3.4 6.5 1.8 0 1.8-4.3 3.6-4.3s1.8 4.3 3.6 4.3c2.1 0 2.5-4 3.4-6.5.8-2.2 2-4.4 2-7 0-3-1.7-5.4-4.6-5.4-1.6 0-2.7.9-4.4.9Z" />
-      </svg>
-    </span>
-  );
-}
-
-function ArrowIcon() {
-  return (
-    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-[#07515a]">
-      <svg
-        aria-hidden="true"
-        viewBox="0 0 24 24"
-        className="h-4 w-4"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="3"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          d="M5 12h14m-5-5 5 5-5 5"
-        />
       </svg>
     </span>
   );
@@ -109,13 +89,11 @@ export default function AboutUs() {
             </div>
           </div>
 
-          <button
-            type="button"
-            className="smooth-hover button-hover hover-lift lg:mt-10 mt-6 inline-flex items-center gap-3 rounded-lg bg-[#07515a] lg:py-2.5 py-2 pl-5 pr-2.5 text-base font-bold text-white hover:bg-[#2d7378] focus:outline-none focus:ring-4 focus:ring-[#2bd0c0]/25"
-          >
-            MORE ABOUT
-            <ArrowIcon />
-          </button>
+          <AnimatedArrowCta
+            label="MORE ABOUT"
+            href="/about"
+            className="smooth-hover button-hover hover-lift lg:mt-10 mt-6 inline-flex items-center gap-3 overflow-hidden rounded-lg bg-[#07515a] lg:py-2.5 py-2 pl-5 pr-2.5 text-base font-bold text-white hover:bg-[#2d7378] focus:outline-none focus:ring-4 focus:ring-[#2bd0c0]/25"
+          />
         </div>
       </div>
     </section>

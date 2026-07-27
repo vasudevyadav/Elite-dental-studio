@@ -50,7 +50,7 @@ const dropdowns: Record<
       {
         label: "Our Doctors",
         description: "Get to know our experienced dental specialists",
-        href: "/#doctors",
+        href: "/doctors",
       },
       {
         label: "Clinic Locations",
@@ -99,7 +99,7 @@ const XIcon = () => (
 );
 
 const subNavItems = [
-  { label: "Our Doctors", img: "/navbar/doctor.png", href: "/#doctors" },
+  { label: "Our Doctors", img: "/navbar/doctor.png", href: "/doctors" },
   { label: "Testimonials", img: "/navbar/icon02.png", href: "/#testimonials" },
   { label: "Awards", img: "/navbar/icon-3.png", href: "/#awards" },
   { label: "Technology", img: "/navbar/icon-4.png", href: "/services" },

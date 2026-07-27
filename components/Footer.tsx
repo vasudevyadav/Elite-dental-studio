@@ -2,13 +2,13 @@ import Image from "next/image";
 import Link from "next/link";
 
 const companyLinks = [
-  "About Us",
-  "Services",
-  "Doctors",
-  "Facilities",
-  "Blog",
-  "Careers",
-  "Contact Us",
+  { label: "About Us", href: "/about" },
+  { label: "Services", href: "/services" },
+  { label: "Doctors", href: "/doctors" },
+  { label: "Facilities", href: "/about#facilities" },
+  { label: "Blog", href: "/#blog" },
+  { label: "Careers", href: "https://elitedentalstudio.co.in/careers/" },
+  { label: "Contact Us", href: "/#appointment" },
 ];
 
 const serviceLinks = [
@@ -69,19 +69,19 @@ export default function Footer() {
             </p>
             <div className="mx-auto mt-6 w-full max-w-[360px] border-t border-white/45 sm:mx-0" />
             <div className="mt-6 flex lg:justify-center justify-around gap-3 sm:justify-start">
-              <a href="#" aria-label="Facebook" className="smooth-hover hover-lift"><SocialIcon type="facebook" /></a>
-              <a href="#" aria-label="TikTok" className="smooth-hover hover-lift"><SocialIcon type="tiktok" /></a>
-              <a href="#" aria-label="Instagram" className="smooth-hover hover-lift"><SocialIcon type="instagram" /></a>
-              <a href="#" aria-label="WhatsApp" className="smooth-hover hover-lift"><SocialIcon type="whatsapp" /></a>
+              <a href="https://linktr.ee/Elitedentalclinic" target="_blank" rel="noreferrer" aria-label="Elite Dental Studio on Facebook" className="smooth-hover hover-lift"><SocialIcon type="facebook" /></a>
+              <a href="https://linktr.ee/Elitedentalclinic" target="_blank" rel="noreferrer" aria-label="Elite Dental Studio on TikTok" className="smooth-hover hover-lift"><SocialIcon type="tiktok" /></a>
+              <a href="https://linktr.ee/Elitedentalclinic" target="_blank" rel="noreferrer" aria-label="Elite Dental Studio on Instagram" className="smooth-hover hover-lift"><SocialIcon type="instagram" /></a>
+              <a href="https://wa.me/919048611911" target="_blank" rel="noreferrer" aria-label="Chat with Elite Dental Studio on WhatsApp" className="smooth-hover hover-lift"><SocialIcon type="whatsapp" /></a>
             </div>
           </div>
 
           <div className="border-t border-white/15 pt-7 sm:border-t-0 sm:pt-0 lg:pt-12 text-center lg:text-left">
             <ul className="grid grid-cols-1 gap-x-5 gap-y-4 sm:block sm:space-y-5 mx-auto">
               {companyLinks.map((link) => (
-                <li key={link}>
-                  <Link href={link === "About Us" ? "/about" : link === "Services" ? "/services" : "#"} className="smooth-hover link-hover text-center lg:text-left w-full text-base font-medium text-white/92 hover:text-dent-accent">
-                    {link}
+                <li key={link.label}>
+                  <Link href={link.href} className="smooth-hover link-hover text-center lg:text-left w-full text-base font-medium text-white/92 hover:text-dent-accent">
+                    {link.label}
                   </Link>
                 </li>
               ))}
@@ -110,7 +110,7 @@ export default function Footer() {
             <ul className="mt-5 space-y-5">
               {clinics.map((clinic) => (
                 <li key={clinic}>
-                  <Link href="#" className="smooth-hover link-hover text-base font-medium text-white/92 hover:text-dent-accent">
+                  <Link href="/#clinics" className="smooth-hover link-hover text-base font-medium text-white/92 hover:text-dent-accent">
                     {clinic}
                   </Link>
                 </li>

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { useState } from "react";
+import AnimatedArrowCta from "./AnimatedArrowCta";
 
 type Service = {
   title: string;
@@ -137,15 +138,12 @@ export default function ServicesSection() {
               </p>
             </div>
 
-            <a
-              href="#services-list"
+            <AnimatedArrowCta
+              label="ALL SERVICES"
+              href="/services"
+              arrowClassName="text-[#27bdb3]"
               className="smooth-hover button-hover hover-lift inline-flex w-fit items-center gap-4 rounded-[9px] bg-dent-accent py-3 pl-5 pr-3 text-sm font-extrabold uppercase text-white shadow-sm hover:bg-dent-nav focus:outline-none focus:ring-4 focus:ring-white/30 sm:text-base"
-            >
-              All Services
-              <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-[#27bdb3]">
-                <Arrow />
-              </span>
-            </a>
+            />
           </div>
         </div>
 

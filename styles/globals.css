@@ -37,6 +37,79 @@ html {
   scroll-behavior: smooth;
 }
 
+section[id] {
+  scroll-margin-top: 24px;
+}
+
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 650ms cubic-bezier(0.22, 1, 0.36, 1), transform 650ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.scroll-reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.slide-cta {
+  position: relative;
+  isolation: isolate;
+  contain: paint;
+  clip-path: inset(0 round 9px);
+}
+
+.slide-cta-label {
+  display: inline-flex;
+  white-space: nowrap;
+}
+
+.slide-cta-label > span {
+  display: inline-block;
+}
+
+.slide-cta-arrow {
+  display: block;
+}
+
+.slide-cta.is-running {
+  pointer-events: none;
+}
+
+.slide-cta.is-running .slide-cta-label > span {
+  animation: slide-cta-letter-type 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.slide-cta.is-running .slide-cta-arrow {
+  animation: slide-cta-arrow-sweep 1750ms cubic-bezier(0.45, 0, 0.55, 1) both;
+}
+
+@keyframes slide-cta-arrow-sweep {
+  0% {
+    opacity: 0.85;
+    transform: translateX(-105px) scale(0.88);
+  }
+  78% {
+    opacity: 1;
+    transform: translateX(4px) scale(1.04);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes slide-cta-letter-type {
+  0% {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
@@ -125,6 +198,24 @@ video {
   .image-hover {
     transition-duration: 1ms;
   }
+
+  .scroll-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .slide-cta,
+  .slide-cta-label,
+  .slide-cta-arrow {
+    transition: none;
+    animation: none;
+  }
+
+  .slide-cta-label > span {
+    animation: none;
+  }
+
 
   .hover-lift:hover,
   .card-hover:hover,
@@ -316,7 +407,7 @@ video {
 .detail-content {
   max-width: 1450px;
   margin: auto;
-  padding: 95px 42px 20px;
+  padding: 88px 42px 24px;
   color: #303535;
 }
 
@@ -331,7 +422,7 @@ video {
 .detail-content p,
 .detail-content li {
   font-size: 14px;
-  line-height: 1.6;
+  line-height: 1.68;
 }
 
 .detail-two-col {
@@ -393,6 +484,12 @@ video {
   font-size: 19px;
 }
 
+.procedure-list i img {
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+}
+
 .procedure-list p {
   margin: 0;
   font-size: 14px;
@@ -411,7 +508,7 @@ video {
   grid-template-columns: 1.1fr 1fr;
   gap: 38px;
   align-items: center;
-  padding: 45px;
+  padding: 46px 50px;
   border-radius: 22px;
   background: #ecfaf7;
 }
@@ -434,7 +531,7 @@ video {
 
 .treatment-expect,
 .aftercare {
-  margin-top: 95px;
+  margin-top: 105px;
 }
 
 .aftercare {
@@ -526,7 +623,7 @@ video {
   }
 
   .detail-content {
-    padding-top: 60px;
+    padding: 60px 28px 20px;
   }
 
   .detail-two-col,
@@ -536,6 +633,14 @@ video {
 
   .procedure-layout {
     grid-template-columns: 1fr;
+  }
+
+  .procedure-list.left {
+    order: 1;
+  }
+
+  .procedure-layout > .procedure-list:not(.left) {
+    order: 2;
   }
 
   .doctor-cutout {
@@ -599,7 +704,11 @@ video {
   }
 
   .detail-content {
-    padding-inline: 20px;
+    padding: 54px 20px 16px;
+  }
+
+  .detail-content h2 {
+    font-size: 25px;
   }
 
   .procedures {
@@ -612,6 +721,11 @@ video {
 
   .candidate-panel {
     padding: 24px 18px;
+  }
+
+  .candidate-panel ul,
+  .aftercare ul {
+    gap: 10px;
   }
 
   .candidate-photo {
