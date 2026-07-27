@@ -51,9 +51,9 @@ export default function ServiceDetailPage({ service }: Props) {
           <div className="absolute inset-0 z-1 mx-auto w-full max-w-[1700px]"><Image src="/service/services-inner.png" alt={`${service.title} procedure`} fill sizes="100vw" className="object-contain" /></div>
         </section>
 
-        <section className="mx-auto max-w-[1450px] px-5 pb-5 pt-16 text-[#303535] sm:px-8 lg:px-[42px] lg:pt-24">
+        <section className="detail-content">
           <div className="grid items-center gap-10 lg:grid-cols-[1fr_1.2fr] lg:gap-[65px]">
-            <div className="relative min-h-[260px] overflow-hidden rounded-[17px] shadow-[4px_4px_0_#2a686d]"><Image src="/service/services-inner-1.png" alt={service.title} fill sizes="45vw" className="object-cover" /></div>
+            <div className="relative min-h-[260px] overflow-hidden rounded-[17px] shadow-[4px_4px_0_#2a686d]"><Image src={isLaser ? "/service/services-inner-1.png" : service.image} alt={service.title} fill sizes="(max-width: 900px) 90vw, 45vw" className="object-cover" /></div>
             <div><h2 className="m-0 text-[26px] font-extrabold leading-[1.2] text-[#2b7175] sm:text-[30px] lg:text-[35px]">What Is {treatmentName}?</h2><div className="my-5 h-px bg-[#777]" /><p className="text-sm leading-relaxed">{isLaser ? "Laser dentistry is a clinical technique that uses a focused beam of light energy to treat selected gum and soft tissue conditions in the mouth. The laser delivers controlled energy to a specific area, allowing the dentist to work with more precision than conventional soft tissue methods in suitable cases." : `${service.title} is a clinical dental treatment focused on restoring oral health, comfort and confidence. Our dentists use careful diagnosis and modern equipment to plan treatment around your individual needs.`}</p><p className="mt-4 text-sm leading-relaxed">{isLaser ? "This technique gives the treating dentist greater control over soft tissue work, which is why it is used in selected gum and cosmetic dental procedures at Elite Dental Studio." : "This approach gives the treating dentist greater control and helps produce predictable results in suitable cases."}</p></div>
           </div>
 
@@ -61,9 +61,9 @@ export default function ServiceDetailPage({ service }: Props) {
             <h2>Which Dental Procedures<br />Use {isLaser ? "Laser Support" : "This Treatment"}?</h2>
             <p>At Elite Dental Studio, support is used in these procedures:</p>
             <div className="procedure-layout">
-              <div className="procedure-list left">{steps.slice(0, 3).map(([name, copy]) => <article key={name}><i>♢</i><div><h3>{isLaser ? name : name.replace("Laser", service.title)}</h3><p>{copy}</p></div></article>)}</div>
+              <div className="procedure-list left">{steps.slice(0, 3).map(([name, copy]) => <article key={name}><i><Image src={service.icon} alt="" width={34} height={34} /></i><div><h3>{isLaser ? name : name.replace("Laser", service.title)}</h3><p>{copy}</p></div></article>)}</div>
               <div className="doctor-cutout"><Image src="/service/services-inner-2.png" alt="Elite Dental Studio specialist" fill sizes="33vw" /></div>
-              <div className="procedure-list">{steps.slice(3).map(([name, copy]) => <article key={name}><i>♢</i><div><h3>{isLaser ? name : name.replace("Laser", service.title)}</h3><p>{copy}</p></div></article>)}<strong>Each procedure is planned after your dentist confirms your condition and treatment goals.</strong></div>
+              <div className="procedure-list">{steps.slice(3).map(([name, copy]) => <article key={name}><i><Image src={service.icon} alt="" width={34} height={34} /></i><div><h3>{isLaser ? name : name.replace("Laser", service.title)}</h3><p>{copy}</p></div></article>)}<strong>Each procedure is planned after your dentist confirms your condition and treatment goals.</strong></div>
             </div>
           </div>
 

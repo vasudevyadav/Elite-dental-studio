@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { useState } from "react";
+import AnimatedArrowCta from "./AnimatedArrowCta";
 
 const testimonials = [
   {
@@ -66,15 +67,12 @@ export default function TestimonialsSection() {
               </p>
             </div>
 
-            <button
-              type="button"
+            <AnimatedArrowCta
+              label="VIDEO REVIEW"
+              onAction={() => move(1)}
+              arrowClassName="text-[#28cabb]"
               className="inline-flex w-fit items-center gap-4 rounded-[8px] bg-dent-accent lg:py-3 py-1.5 pl-5 pr-3 text-sm font-bold uppercase text-white transition hover:-translate-y-0.5 hover:bg-dent-nav"
-            >
-              Video Review
-              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-[#28cabb]">
-                <Arrow />
-              </span>
-            </button>
+            />
           </div>
         </div>
 

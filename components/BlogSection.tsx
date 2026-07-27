@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { useRef, useState } from "react";
+import AnimatedArrowCta from "./AnimatedArrowCta";
 
 const posts = [
   {
@@ -66,7 +67,7 @@ export default function BlogSection() {
   };
 
   return (
-    <section className="mx-auto max-w-7xl px-5 py-6 sm:px-8 lg:px-12 lg:py-12">
+    <section id="blog" className="mx-auto max-w-7xl px-5 py-6 sm:px-8 lg:px-12 lg:py-12">
       <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <p className="text-sm font-extrabold uppercase text-dent-accent sm:text-base">
@@ -77,12 +78,12 @@ export default function BlogSection() {
             <br className="hidden sm:block" /> oral health advice
           </h2>
         </div>
-        <button className="smooth-hover button-hover hover-lift inline-flex w-fit items-center gap-4 rounded-[8px] bg-[#064a50] py-1.5 lg:py-3 pl-5 pr-3 text-sm font-bold uppercase text-white !hidden lg:block">
-          View All Post
-          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white text-[#29666b]">
-            <Arrow />
-          </span>
-        </button>
+        <AnimatedArrowCta
+          label="VIEW ALL POST"
+          href="https://elitedentalstudio.co.in/blog/"
+          arrowClassName="text-[#29666b]"
+          className="smooth-hover button-hover hover-lift hidden w-fit items-center gap-4 rounded-[8px] bg-[#064a50] py-3 pl-5 pr-3 text-sm font-bold uppercase text-white lg:inline-flex"
+        />
       </div>
     
       <div className="lg:mt-16 mt-8 flex items-center gap-4 lg:gap-8">
