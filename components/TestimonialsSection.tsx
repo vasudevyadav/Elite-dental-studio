@@ -42,7 +42,7 @@ export default function TestimonialsSection() {
   return (
     <section id="testimonials" className="overflow-hidden px-5 py-6 sm:px-8 lg:py-12">
       <div className="mx-auto max-w-7xl">
-        <div className="relative rounded-[28px] bg-dent-panel px-6 pb-[170px] pt-10 sm:px-10 lg:px-16 lg:pb-[180px] lg:pt-12">
+        <div className="relative rounded-[28px] bg-dent-panel px-6 pb-[100px] pt-10 sm:px-10 lg:px-16 lg:pb-[160px] lg:pt-12">
           <Image
             src="/home/testimonial.png"
             alt=""
@@ -54,14 +54,14 @@ export default function TestimonialsSection() {
 
           <div className="relative z-10 flex flex-col gap-7 lg:flex-row lg:items-start lg:justify-between">
             <div>
-              <p className="text-sm font-extrabold uppercase text-dent-accent sm:text-base">
+              <p className="text-sm font-semibold uppercase text-dent-accent sm:text-base">
                 Testimonial
               </p>
-              <h2 className="mt-5 max-w-[690px] text-2xl font-extrabold leading-[1.15] tracking-[-0.025em] text-white sm:text-[42px]">
+              <h2 className="mt-3 max-w-[690px] text-2xl font-bold leading-[1.15] tracking-[-0.025em] text-white sm:text-[42px]">
                 Real stories of exceptional care
                 <br className="hidden sm:block" /> and transformative smiles
               </h2>
-              <p className="mt-5 max-w-[790px] text-base leading-[1.55] text-white/95 sm:text-lg">
+              <p className="mt-3 max-w-[790px] text-base leading-[1.55] text-white/95 sm:text-lg">
                 Hear from our patients about the care, comfort and confidence they
                 discovered at Elite Dental Studio.
               </p>

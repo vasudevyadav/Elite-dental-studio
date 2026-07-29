@@ -111,7 +111,7 @@ function LocationIcon() {
   );
 }
 
-export default function NearestClinic() {
+export default function NearestClinic({ serviceName }: { serviceName?: string }) {
   const [selectedClinic, setSelectedClinic] = useState("CALICUT");
   const clinic = clinics[selectedClinic];
   const encodedMapQuery = encodeURIComponent(clinic.mapQuery);
@@ -211,31 +211,37 @@ export default function NearestClinic() {
         </article>
 
         <article className="flex min-h-[560px] flex-col justify-around rounded-[28px] bg-dent-accent px-7 py-10 text-center sm:px-12 lg:min-h-0 xl:px-16">
-          <div className="mx-auto max-w-[600px]">
-            <div className="mb-3 flex justify-center">
-              <Image src="/home/customer-care.png" alt="" aria-hidden="true" width={80} height={80} />
+          {serviceName ? <div className="mx-auto max-w-[650px]">
+            <div className="mb-8 flex justify-center"><Image src="/home/customer-care.png" alt="" aria-hidden="true" width={80} height={80} /></div>
+            <h3 className="text-2xl font-bold leading-[1.3] text-white lg:text-4xl">Book a {serviceName}<br />Consultation Now</h3>
+            <p className="mx-auto mt-6 text-base leading-9 text-white lg:text-xl">Elite Dental Studio is a specialist laser dental clinic serving patients across Kerala who are searching for a laser dental clinic near me in Calicut, Kochi or Kannur. Our periodontics and laser specialist team is available for consultations at all three branches.</p>
+          </div> : <>
+            <div className="mx-auto max-w-[600px]">
+              <div className="mb-3 flex justify-center">
+                <Image src="/home/customer-care.png" alt="" aria-hidden="true" width={80} height={80} />
+              </div>
+              <h3 className="mb-3 text-xl font-extrabold text-white lg:text-2xl">
+                FOCUS ON CUSTOMER CARE
+              </h3>
+              <p className="text-base leading-[1.35] text-[#064b52] lg:text-xl">
+                Elite dental studio is a dental specialist&apos;s centre with personalised patient care. We have been providing our patients with the best dental care services for several years.
+              </p>
             </div>
-            <h3 className="mb-3 text-xl font-extrabold text-white lg:text-2xl">
-              FOCUS ON CUSTOMER CARE
-            </h3>
-            <p className="text-base leading-[1.35] text-[#064b52] lg:text-xl">
-              Elite dental studio is a dental specialist&apos;s centre with personalised patient care. We have been providing our patients with the best dental care services for several years.
-            </p>
-          </div>
 
-          <div className="mx-auto my-5 h-px w-2/3 bg-[#064b52]/15 lg:hidden" />
+            <div className="mx-auto my-5 h-px w-2/3 bg-[#064b52]/15 lg:hidden" />
 
-          <div className="mx-auto max-w-[650px]">
-            <div className="mb-3 flex justify-center">
-              <Image src="/home/shine-teth.png" alt="" aria-hidden="true" width={80} height={80} />
+            <div className="mx-auto max-w-[650px]">
+              <div className="mb-3 flex justify-center">
+                <Image src="/home/shine-teth.png" alt="" aria-hidden="true" width={80} height={80} />
+              </div>
+              <h3 className="mb-3 text-xl font-extrabold text-white lg:text-2xl">
+                SHINE WITH HEALTHY SMILES &amp; ELITE CARE
+              </h3>
+              <p className="text-base leading-[1.35] text-[#064b52] lg:text-xl">
+                Healthy smiles are beautiful. However, if you&apos;re unhappy with the way your teeth or gums look, there&apos;s a lot of information available on how to improve your smile. Visit Elite Dental Studio
+              </p>
             </div>
-            <h3 className="mb-3 text-xl font-extrabold text-white lg:text-2xl">
-              SHINE WITH HEALTHY SMILES &amp; ELITE CARE
-            </h3>
-            <p className="text-base leading-[1.35] text-[#064b52] lg:text-xl">
-              Healthy smiles are beautiful. However, if you&apos;re unhappy with the way your teeth or gums look, there&apos;s a lot of information available on how to improve your smile. Visit Elite Dental Studio
-            </p>
-          </div>
+          </>}
         </article>
 
       </div>

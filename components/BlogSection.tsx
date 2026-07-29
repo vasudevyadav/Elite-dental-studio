@@ -68,12 +68,12 @@ export default function BlogSection() {
 
   return (
     <section id="blog" className="mx-auto max-w-7xl px-5 py-6 sm:px-8 lg:px-12 lg:py-12">
-      <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between lg:px-16">
         <div>
           <p className="text-sm font-extrabold uppercase text-dent-accent sm:text-base">
             Latest Blog
           </p>
-          <h2 className="lg:mt-5 mt-2 max-w-[650px] text-2xl font-extrabold leading-[1.25] tracking-[-0.025em] text-[#29666b] sm:text-[42px]">
+          <h2 className="lg:mt-5 mt-2 max-w-[650px] text-2xl font-bold leading-[1.25] tracking-[-0.025em] text-[#29666b] lg:text-[40px]">
             Latest dental news insights and
             <br className="hidden sm:block" /> oral health advice
           </h2>
@@ -85,7 +85,7 @@ export default function BlogSection() {
           className="smooth-hover button-hover hover-lift hidden w-fit items-center gap-4 rounded-[8px] bg-[#064a50] py-3 pl-5 pr-3 text-sm font-bold uppercase text-white lg:inline-flex"
         />
       </div>
-    
+
       <div className="lg:mt-16 mt-8 flex items-center gap-4 lg:gap-8">
         <button
           type="button"
@@ -110,7 +110,7 @@ export default function BlogSection() {
             >
               <div className="relative h-[270px] overflow-hidden bg-white sm:h-[285px]">
                 <div className="absolute left-0 top-0 z-10 flex h-full w-[52%] flex-col justify-center bg-white px-6 sm:px-8">
-                  <p className="text-[17px] font-medium leading-[1.3] text-[#292929] sm:text-[24px]">
+                  <p className="text-sm font-medium leading-[1.3] text-[#292929] lg:text-xl">
                     Common Problems
                     <br /> Associated with
                   </p>
@@ -133,16 +133,16 @@ export default function BlogSection() {
               </div>
 
               <div className={`${index === 0 ? "bg-dent-accent" : "bg-dent-panel"} px-5 py-4 text-white`}>
-                <h3 className="text-sm font-extrabold sm:text-base">{post.title}</h3>
-                <p className="mt-1 truncate text-xs text-white/90 sm:text-sm">
+                <h3 className="text-sm font-semibold sm:text-xl mb-2">{post.title}</h3>
+                <p className="mt-1 truncate text-xs text-white/90 lg:text-base">
                   {post.description}
                 </p>
-                <div className="mt-3 flex items-center justify-between gap-4 text-xs italic">
+                <div className="mt-4 flex items-center justify-between gap-4 text-base ">
                   <span>
                     Posted on <span className="mx-2 inline-block w-12 border-t border-white/70 align-middle" />{" "}
                     <strong>{post.date}</strong>
                   </span>
-                  <span className="link-hover shrink-0 font-bold">Read More →</span>
+                  <span className="link-hover shrink-0 font-semibold">Read More →</span>
                 </div>
               </div>
             </article>
@@ -173,9 +173,8 @@ export default function BlogSection() {
           {posts.map((post, index) => (
             <span
               key={`${post.title}-${index}`}
-              className={`smooth-hover h-2 rounded-full ${
-                index === start ? "w-6 bg-dent-panel" : "w-2 bg-[#acd5d6]"
-              }`}
+              className={`smooth-hover h-2 rounded-full ${index === start ? "w-6 bg-dent-panel" : "w-2 bg-[#acd5d6]"
+                }`}
             />
           ))}
         </div>

@@ -33,13 +33,13 @@ export default function FAQSection() {
   const [openIndex, setOpenIndex] = useState(0);
 
   return (
-    <section className="mx-auto max-w-7xl px-5 py-6 sm:px-8 lg:px-12 lg:py-10">
+    <section className="faq-section mx-auto max-w-7xl px-5 py-6 sm:px-8 lg:px-12 lg:py-10">
       <div className="rounded-[30px] bg-dent-surface px-6 py-10 sm:px-10 lg:grid lg:grid-cols-[0.9fr_1.1fr] lg:gap-14 lg:px-14 lg:py-10">
         <div>
           <p className="text-sm font-extrabold uppercase text-dent-accent sm:text-base">
             FAQs
           </p>
-          <h2 className="lg:mt-6 mt-3 text-3xl font-extrabold leading-[1.18] tracking-[-0.025em] text-[#29666b] sm:text-[42px]">
+          <h2 className="lg:mt-6 mt-3 text-2xl font-bold leading-[1.18] tracking-[-0.025em] text-[#29666b] sm:text-4xl">
             Everything you need to
             <br /> know about dental care
           </h2>
@@ -85,7 +85,7 @@ export default function FAQSection() {
                   aria-expanded={isOpen}
                   className="flex w-full items-center justify-between gap-5 lg:px-7 px-4 lg:py-5 py-3 text-left"
                 >
-                  <span className="text-sm font-bold lg:text-xl">{faq.question}</span>
+                  <span className="text-sm font-semibold lg:text-lg">{faq.question}</span>
                   <span className="text-2xl font-black">{isOpen ? "−" : "+"}</span>
                 </button>
                 <div
