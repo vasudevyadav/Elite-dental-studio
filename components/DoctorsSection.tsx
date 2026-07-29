@@ -100,14 +100,14 @@ export default function DoctorsSection() {
   return (
     <section
       id="doctors"
-      className="mx-auto max-w-7xl px-5 py-4 sm:px-8 lg:px-12 lg:py-8"
+      className="mx-auto max-w-7xl px-5 py-4 sm:px-8 lg:px-24 lg:py-8"
     >
       <div className="mx-auto max-w-[1240px] text-center">
-        <h2 className="text-3xl font-extrabold tracking-[-0.035em] text-[#286f73] lg:text-[48px]">
+        <h2 className="text-2xl font-semibold tracking-[-0.035em] text-[#286f73] lg:text-4xl">
           Our Doctors
         </h2>
 
-        <p className="mx-auto mt-3 max-w-7xl text-sm leading-[1.65] text-[#555] sm:text-lg lg:mt-5 lg:text-[20px]">
+        <p className="mx-auto mt-2 max-w-5xl text-sm leading-[1.65] text-[#555] lg:mt-5 lg:text-base">
           We are delighted to welcome you to Elite Dental Studio! At our office,
           every member of our team strives to make each patient feel welcome,
           comfortable, and valued – because you are the most important person in
@@ -138,15 +138,15 @@ export default function DoctorsSection() {
 
             <div>
               <h3 className="leading-tight">
-                <span className="text-2xl font-black text-[#29cfc0]">
+                <span className=" text-sm lg:text-lg font-semibold text-[#29cfc0]">
                   {highlight.stat}
                 </span>{" "}
-                <span className="text-xl font-extrabold text-[#414141] lg:text-2xl">
+                <span className="text-sm font-semibold text-[#414141] lg:text-lg">
                   {highlight.label}
                 </span>
               </h3>
 
-              <p className="mt-1 text-xs font-medium leading-[1.45] text-[#4f5353] lg:text-sm">
+              <p className="mt-1 text-[13px] font-medium leading-[1.45] text-[#4f5353] lg:text-[15px]">
                 {highlight.description}
               </p>
             </div>
@@ -160,33 +160,32 @@ export default function DoctorsSection() {
         role="region"
         aria-label="Our doctors carousel"
         tabIndex={0}
-        className="mt-16 flex snap-x snap-mandatory gap-5 overflow-x-auto scroll-smooth pb-5 outline-none focus-visible:ring-4 focus-visible:ring-[#29cfc0]/25 sm:grid sm:grid-cols-2 sm:overflow-visible sm:pb-0 lg:mt-20 lg:grid-cols-3 lg:gap-7 xl:grid-cols-5 [&::-webkit-scrollbar]:hidden [scrollbar-width:none]"
+        className="mt-12 flex snap-x snap-mandatory gap-5 overflow-x-auto scroll-smooth pb-5 outline-none focus-visible:ring-4 focus-visible:ring-[#29cfc0]/25 sm:grid sm:grid-cols-2 sm:overflow-visible sm:pb-0 lg:mt-20 lg:grid-cols-3 lg:gap-7 xl:grid-cols-5 [&::-webkit-scrollbar]:hidden [scrollbar-width:none]"
       >
         {doctors.map((doctor) => (
           <article
             key={doctor.name}
-            className="group smooth-hover card-hover flex w-[84%] max-w-[330px] shrink-0 snap-start flex-col overflow-hidden rounded-[28px] bg-[#2b7477] p-3 pb-0 shadow-[0_14px_35px_rgba(25,87,90,0.12)] sm:mx-auto sm:w-full sm:max-w-none"
+            className="group smooth-hover card-hover flex w-[84%] max-w-[330px] shrink-0 snap-start flex-col overflow-hidden rounded-3xl bg-[#2b7477] p-2 pb-0 shadow-[0_14px_35px_rgba(25,87,90,0.12)] sm:mx-auto sm:w-full sm:max-w-none"
           >
             <div className="relative aspect-[1.03/1] overflow-hidden rounded-[20px] bg-[#edf2f5]">
               <Image
                 src={doctor.image}
                 alt={doctor.name}
                 fill
-                sizes="(max-width: 639px) 90vw, (max-width: 767px) 45vw, (max-width: 1279px) 30vw, 250px"
-                className="image-hover object-cover object-[center_22%]"
+                className="image-hover object-cover object-[center_0%]"
               />
             </div>
 
             <div className="flex min-h-[142px] flex-1 flex-col items-center justify-start px-2 pb-5 pt-4 text-center text-white">
-              <h3 className="text-lg font-extrabold leading-tight lg:text-[19px]">
+              <h3 className="text-sm font-bold leading-tight lg:text-lg">
                 {doctor.name}
               </h3>
 
-              <p className="mt-3 text-xs font-semibold leading-[1.25] text-white/95">
+              <p className="mt-3 text-xs font-medium mb-2 leading-[1.25] text-white/95">
                 {doctor.qualification}
               </p>
 
-              <p className="mt-1 max-w-[235px] text-[11px] font-medium uppercase leading-[1.25] text-white/90">
+              <p className=" max-w-[235px] text-[11px] font-medium uppercase leading-[1.25] text-white/90 ">
                 {doctor.speciality}
               </p>
             </div>

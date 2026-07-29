@@ -23,30 +23,30 @@ export default function BookAppointmentSection() {
     "h-12 w-full rounded-[6px] border border-[#6b9fa1] bg-[#f4fbfa] px-5 text-sm text-[#3f4444] outline-none transition placeholder:text-[#555] focus:border-dent-accent focus:ring-4 focus:ring-dent-accent/15";
 
   return (
-    <section id="appointment" className="px-5 py-6 sm:px-8 lg:py-12">
+    <section id="appointment" className="px-5 py-6 lg:px-8 lg:py-8">
       <div className="mx-auto max-w-7xl rounded-[28px] bg-dent-panel px-6 py-10 sm:px-10 lg:grid lg:grid-cols-[0.95fr_1.05fr] lg:gap-16 lg:px-16 lg:py-16">
         <div className="text-white">
-          <p className="text-sm font-extrabold uppercase text-dent-accent sm:text-base">
+          <p className="text-sm font-bold uppercase text-dent-accent sm:text-base">
             Book Your Appointment
           </p>
-          <h2 className="lg:mt-5 mt-3 text-2xl font-extrabold leading-[1.35] tracking-[-0.025em] sm:text-[42px]">
+          <h2 className="lg:mt-2 text-2xl font-bold leading-[1.35] tracking-[-0.025em] sm:text-[42px]">
             Schedule Your Dental Visit
             <br /> Online at Elite Dental Studio
           </h2>
-          <p className="lg:mt-6 mt-3 max-w-[530px] text-base leading-[1.55] text-white/95 sm:text-lg">
+          <p className="lg:mt-3  max-w-[530px] text-base leading-[1.55] text-white/95 sm:text-lg">
             Ready to take the next step towards a healthier smile?
             <br /> Use our easy online booking system to schedule your dental appointment.
           </p>
 
           <div className="lg:mt-10 mt-6 max-w-[390px] rounded-[20px] bg-linear-to-br from-[#19d6c7] to-[#29cdbf] lg:px-8 px-5 lg:py-6 py-3">
-            <h3 className="lg:text-xl text-lg font-extrabold">Working Hours</h3>
+            <h3 className="lg:text-xl text-lg font-semibold">Working Hours</h3>
             <div className="lg:my-4 my-2 border-t border-white/70" />
             <div className="space-y-4 text-base font-bold">
-              <div className="flex flex-col gap-1 sm:flex-row sm:justify-between sm:gap-5">
+              <div className="flex flex-col gap-1 sm:flex-row sm:justify-between sm:gap-5 font-medium">
                 <span>Mon To Sat</span>
                 <span>09:30 am to 9:00 pm</span>
               </div>
-              <div className="flex flex-col gap-1 sm:flex-row sm:justify-between sm:gap-5">
+              <div className="flex flex-col gap-1 sm:flex-row sm:justify-between sm:gap-5 font-medium">
                 <span>Sunday</span>
                 <span>10:00 am to 7:00 pm</span>
               </div>

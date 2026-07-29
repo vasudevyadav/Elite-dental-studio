@@ -1,6 +1,13 @@
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
+import { Poppins } from "next/font/google";
 import { useEffect } from "react";
+
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
+  display: "swap",
+});
 
 export default function App({ Component, pageProps }: AppProps) {
   useEffect(() => {
@@ -30,5 +37,9 @@ export default function App({ Component, pageProps }: AppProps) {
     return () => observer.disconnect();
   }, []);
 
-  return <Component {...pageProps} />;
+  return (
+    <div className={poppins.className}>
+      <Component {...pageProps} />
+    </div>
+  );
 }

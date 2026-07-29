@@ -1,0 +1,46 @@
+import Image from "next/image";
+
+type ServiceIntroductionProps = {
+  isLaser: boolean;
+  serviceTitle: string;
+  treatmentName: string;
+};
+
+export default function ServiceIntroduction({
+  isLaser,
+  serviceTitle,
+  treatmentName,
+}: ServiceIntroductionProps) {
+  return (
+    <section className="grid items-center gap-10 lg:grid-cols-2 lg:gap-20">
+      <div className="relative overflow-hidden rounded-2xl lg:min-h-80">
+        <Image
+          src="/service/what-treatment.png"
+          alt={serviceTitle}
+          fill
+          sizes="(max-width: 900px) 90vw, 760px"
+          className="object-cover"
+        />
+      </div>
+
+      <div>
+        <h2 className="text-3xl font-extrabold leading-tight text-[#2b7175] sm:text-4xl lg:text-5xl">
+          What Is {treatmentName}?
+        </h2>
+        <div className="my-5 h-px bg-gray-500" />
+        <div className="space-y-5 text-base leading-7 lg:text-xl lg:leading-8">
+          <p>
+            {isLaser
+              ? "Laser dentistry is a clinical technique that uses a focused beam of light energy to treat selected gum and soft tissue conditions in the mouth. The laser delivers controlled energy to a specific area, allowing the dentist to work with more precision than conventional soft tissue methods in suitable cases."
+              : `${serviceTitle} is a clinical dental treatment focused on restoring oral health, comfort and confidence. Our dentists use careful diagnosis and modern equipment to plan treatment around your individual needs.`}
+          </p>
+          <p>
+            {isLaser
+              ? "This technique gives the treating dentist greater control over soft tissue work, which is why it is used in selected gum and cosmetic dental procedures at Elite Dental Studio."
+              : "This approach gives the treating dentist greater control and helps produce predictable results in suitable cases."}
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}
