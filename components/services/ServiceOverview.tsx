@@ -13,12 +13,13 @@ export default function ServiceOverview({
 }: ServiceOverviewProps) {
   return (
     <section className="relative overflow-hidden bg-[#2a686d] text-white">
-      <div className="relative z-10 mx-auto flex min-h-[620px] max-w-screen-2xl items-center px-5 py-16 sm:px-8 lg:min-h-[760px] lg:px-12 lg:py-24">
+      <div className="relative z-10 mx-auto flex min-h-[520px] max-w-screen-2xl items-center px-5 py-14 sm:px-8 lg:min-h-[670px] lg:px-12 lg:py-16">
         <div className="max-w-3xl">
-          <h1 className="text-3xl font-extrabold leading-tight sm:text-4xl lg:text-5xl">
+          <h1 className="text-3xl font-bold leading-tight lg:text-[45px]">
             {treatmentName}
             <br />
-            in Kochi, Calicut &amp; Kannur
+            <span className="lg:text-[34px] font-semibold">
+              in Kochi, Calicut &amp; Kannur </span>
           </h1>
 
           <div className="my-7 h-px bg-white/60" />
@@ -48,7 +49,7 @@ export default function ServiceOverview({
         alt={`${serviceTitle} procedure`}
         fill
         sizes="100vw"
-        className="pointer-events-none object-contain object-center"
+        className="pointer-events-none object-cover object-[62%_center] opacity-25 lg:object-contain lg:object-center lg:opacity-100"
       />
     </section>
   );

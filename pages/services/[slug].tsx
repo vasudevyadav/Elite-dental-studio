@@ -45,7 +45,7 @@ export default function ServiceDetailPage({ service }: Props) {
           isLaser={isLaser}
         />
 
-        <div className="mx-auto max-w-screen-2xl px-5 py-14 text-gray-800 sm:px-8 lg:px-28 lg:py-12">
+        <div className="mx-auto max-w-screen-2xl px-5 py-2 text-gray-800 sm:px-8 lg:px-28 lg:py-20">
           <ServiceIntroduction
             isLaser={isLaser}
             serviceTitle={service.title}

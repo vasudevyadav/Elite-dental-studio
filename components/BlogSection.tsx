@@ -70,10 +70,10 @@ export default function BlogSection() {
     <section id="blog" className="mx-auto max-w-7xl px-5 py-6 sm:px-8 lg:px-12 lg:py-12">
       <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between lg:px-16">
         <div>
-          <p className="text-sm font-extrabold uppercase text-dent-accent sm:text-base">
+          <p className="text-sm lg:font-extrabold font-semibold uppercase text-dent-accent lg:text-base">
             Latest Blog
           </p>
-          <h2 className="lg:mt-5 mt-2 max-w-[650px] text-2xl font-bold leading-[1.25] tracking-[-0.025em] text-[#29666b] lg:text-[40px]">
+          <h2 className="lg:mt-5 mt-2 max-w-[650px] text-xl font-bold leading-[1.25] tracking-[-0.025em] text-[#29666b] lg:text-[40px]">
             Latest dental news insights and
             <br className="hidden sm:block" /> oral health advice
           </h2>
@@ -108,7 +108,7 @@ export default function BlogSection() {
               className={`group smooth-hover card-hover overflow-hidden rounded-[22px] border-2 border-[#27cfc0] bg-white shadow-[0_12px_28px_rgba(32,103,106,0.08)] ${index === 1 ? "hidden md:block" : ""
                 }`}
             >
-              <div className="relative h-[270px] overflow-hidden bg-white sm:h-[285px]">
+              <div className="relative h-[200px] overflow-hidden bg-white lg:h-[285px]">
                 <div className="absolute left-0 top-0 z-10 flex h-full w-[52%] flex-col justify-center bg-white px-6 sm:px-8">
                   <p className="text-sm font-medium leading-[1.3] text-[#292929] lg:text-xl">
                     Common Problems
@@ -137,7 +137,7 @@ export default function BlogSection() {
                 <p className="mt-1 truncate text-xs text-white/90 lg:text-base">
                   {post.description}
                 </p>
-                <div className="mt-4 flex items-center justify-between gap-4 text-base ">
+                <div className="mt-4 flex items-center justify-between gap-4 lg:text-base text-xs ">
                   <span>
                     Posted on <span className="mx-2 inline-block w-12 border-t border-white/70 align-middle" />{" "}
                     <strong>{post.date}</strong>

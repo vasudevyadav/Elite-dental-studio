@@ -177,7 +177,7 @@ export default function DoctorsSection() {
             </div>
 
             <div className="flex min-h-[142px] flex-1 flex-col items-center justify-start px-2 pb-5 pt-4 text-center text-white">
-              <h3 className="text-sm font-bold leading-tight lg:text-lg">
+              <h3 className="text-base font-bold leading-tight lg:text-lg">
                 {doctor.name}
               </h3>
 

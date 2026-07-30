@@ -114,7 +114,7 @@ export default function HeroSection({ slides = HOME_SLIDES }: HeroSectionProps) 
       {/* Form – right side, on top of slider */}
       <div className="absolute inset-y-0 right-[7%] z-40 hidden w-full items-center lg:flex lg:px-0">
         <div className=" w-full rounded-[18px] bg-white/95 p-4 shadow-2xl backdrop-blur-sm sm:max-w-[470px] sm:p-6 lg:p-8 absolute right-10">
-          <h3 className="mb-4 text-center text-base font-bold italic text-dent-text sm:mb-6 sm:text-lg">
+          <h3 className="mb-4 text-center text-base font-bold text-[#039382] sm:mb-6 lg:text-xl">
             Book an Appointment
           </h3>
 
