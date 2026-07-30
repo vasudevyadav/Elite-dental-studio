@@ -57,7 +57,7 @@ export default function TestimonialsSection() {
               <p className="text-sm font-semibold uppercase text-dent-accent sm:text-base">
                 Testimonial
               </p>
-              <h2 className="mt-3 max-w-[690px] text-2xl font-bold leading-[1.15] tracking-[-0.025em] text-white sm:text-[42px]">
+              <h2 className="mt-3 max-w-[690px] text-2xl font-semibold leading-[1.15] tracking-[-0.025em] text-white lg:text-[39px]">
                 Real stories of exceptional care
                 <br className="hidden sm:block" /> and transformative smiles
               </h2>
