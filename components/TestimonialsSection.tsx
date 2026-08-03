@@ -58,12 +58,10 @@ export default function TestimonialsSection() {
                 Testimonial
               </p>
               <h2 className="mt-3 max-w-[690px] text-2xl font-semibold leading-[1.15] tracking-[-0.025em] text-white lg:text-[39px]">
-                Real stories of exceptional care
-                <br className="hidden sm:block" /> and transformative smiles
+                Real Stories of Exceptional Care &amp; Better Smiles
               </h2>
               <p className="mt-3 max-w-[790px] text-base leading-[1.55] text-white/95 sm:text-lg">
-                Hear from our patients about the care, comfort and confidence they
-                discovered at Elite Dental Studio.
+                Across dozens of Google reviews, one line repeats, the doctor explained what they were doing before they did it.
               </p>
             </div>
 

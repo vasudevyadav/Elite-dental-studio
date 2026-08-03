@@ -1,12 +1,16 @@
 import Image from "next/image";
 
 const promises = [
-  "Accurately assess your dental condition",
-  "Educate you about tooth replacement and other options",
-  "Care for your overall well-being",
-  "Provide safety, comfort and security in a warm and welcoming environment",
-  "Help you afford the treatment you want and deserve",
-  "Provide supportive hygiene care following treatment to help you maintain optimum results",
+  "Free Dental Consultation – No consultation charges for every patient.",
+  "Free Full Mouth Examination – Comprehensive oral health assessment before any treatment.",
+  "Free Digital OPG Scan – Full-mouth digital X-ray at no extra cost.",
+  "Free CBCT Scan (If Required) – Advanced 3D CBCT imaging provided free when clinically indicated.",
+  "All Dental Specialists Available Under One Roof – MDS specialists from every department are available across our clinics for comprehensive care.",
+  "Digital X-Rays Explained Before Treatment – Every scan is reviewed and clearly explained before your treatment plan is created.",
+  "Honest, Ethical Treatment Recommendations – We advise treatment only when it is truly necessary.",
+  "Easy Payment Options – EMI financing, insurance assistance, and 15+ payment methods available.",
+  "Consistent Quality Across All Clinics – The same high standard of dental care in Calicut, Kochi, Kannur, and Coimbatore.",
+  "One of the Most Affordable In-House Clear Aligner Treatments – Premium quality, personalised care, and exceptional value.",
 ];
 
 export default function DentalOfficeSection() {
@@ -14,10 +18,11 @@ export default function DentalOfficeSection() {
     <section id="facilities" className="bg-dent-panel px-5 pb-14 pt-10 text-[#344f51] sm:px-8 lg:pb-20 lg:pt-24">
       <div className="mx-auto max-w-7xl">
         <div className="relative rounded-[18px] bg-[#f5fbfa] p-6 shadow-[0_8px_22px_rgba(9,57,60,.3)] sm:p-9 lg:min-h-[365px] lg:p-12 lg:pr-[36%]">
-          <h1 className="text-xl font-black uppercase text-[#29666b] sm:text-2xl">About Our Dental Office</h1>
-          <p className="mt-5 text-sm lg:text-base leading-6">Elite Dental Studio is a distinctive dental clinic that keeps up with time and technology in treating dental ailments. Care and compassion are the two buzzwords that typify treatment at Elite Dental Studio. We give ears to the patients and understand their woes.</p>
-          <p className="mt-4 text-sm lg:text-base leading-6">They are the heart of our practice, so it makes sense that we go out of the way to provide comfortable treatment operatories and waiting lounges for them with best &amp; modern amenities that you would expect from a premier dental clinic. We take extra care and pleasure in explaining the dental condition of each patient and how best we are going to treat them with an outline of our treatment methods.</p>
-          <p className="mt-5 text-sm lg:text-base font-semibold italic leading-6">First communication with our team to enjoying your new smile with family and friends, we will make you feel like part of our family. Our primary responsibilities are to:</p>
+          <h1 className="text-xl font-black uppercase text-[#29666b] sm:text-2xl">About Elite Dental Studio</h1>
+          <p className="mt-5 text-sm lg:text-base leading-6">Elite Dental Studio was established in Calicut in 2020 with a clear mission: to change the way patients experience dental care. The clinic was founded after recognising a common problem—many patients had no way of knowing whether the dentist treating them had specialised training for their specific dental concern.</p>
+          <p className="mt-4 text-sm lg:text-base leading-6">A child with a milk tooth problem could be treated by the wrong specialist, while a complex root canal procedure might be performed by a general dentist instead of an experienced endodontist. Elite Dental Studio was built on a simple but powerful principle: every patient is treated by an MDS-qualified specialist in the exact field they need.</p>
+          <p className="mt-4 text-sm lg:text-base leading-6">Today, Elite Dental Studio has expanded to four advanced dental clinics across Calicut, Kochi, Kannur, and Coimbatore, while staying true to this specialist-first approach. Every treatment is delivered by dedicated experts using modern technology, evidence-based dentistry, and personalised care.</p>
+          <p className="mt-4 text-sm lg:text-base leading-6">Committed to the highest standards of quality and patient safety, Elite Dental Studio is ISO 9001 certified and has been recognised with the Famdent Excellence in Dentistry Award for clinical innovation and outstanding patient care. With a team of highly qualified dental specialists, the clinic continues to set new benchmarks in comprehensive, ethical, and specialised dental care in South India.</p>
           <Image src="/about/about-ab.png" alt="Elite Dental Studio interior" width={546} height={661} className="mt-7 w-full rounded-[15px] shadow-[0_8px_18px_rgba(15,58,61,.28)] lg:absolute lg:right-7 lg:-top-[60px] lg:mt-0 lg:w-[30%] xl:right-8" />
         </div>
         <div className="mt-20 grid items-center gap-8 px-2 lg:grid-cols-[.38fr_.62fr] lg:px-7">

@@ -13,24 +13,32 @@ const services: Service[] = [
   {
     title: "Laser Dentistry",
     description:
-      "Advanced laser care for comfortable, precise and faster dental treatments.",
+      "Treats gum infection and soft tissue with less bleeding than a scalpel, and faster healing afterward.",
     image: "/home/services/laser-dentistry.jpg",
     icon: "laser",
   },
   {
-    title: "Dental Fillings",
+    title: "Oral & Maxillofacial Surgery & Orthognathics",
     description:
-      "Natural-looking restorations that protect your tooth and bring back its strength.",
+      "Surgical correction of jaw position when braces alone cannot fix the bite.",
     image: "/home/services/dental-fillings.jpg",
     icon: "tooth",
   },
   {
-    title: "Invisible Aligners",
+    title: "Invisalign Treatment",
     description:
-      "Clear, comfortable aligners thoughtfully designed to transform your smile.",
+      "Clear plastic trays, changed every one to two weeks, gradually shift teeth into position without metal wires.",
     image: "/home/services/invisible-aligners.jpg",
     icon: "aligner",
   },
+  { title: "Periodontics", description: "Deep cleaning and gum surgery that treats bleeding gums and the bone loss that causes loose teeth.", image: "/home/services/laser-dentistry.jpg", icon: "laser" },
+  { title: "Pediatric Dentistry", description: "Cavity checks, sealants and fluoride treatment planned around your child's exact age and tooth count.", image: "/about-freepik-checkup.jpg", icon: "tooth" },
+  { title: "Oral Medicine & Radiology", description: "Digital X-rays that locate the exact source of jaw pain or a tooth that hurts without a visible cause.", image: "/about-freepik-consultation.jpg", icon: "tooth" },
+  { title: "Endodontics", description: "Root canal treatment that removes infected tissue from inside a tooth, so it can stay in your mouth instead of being pulled.", image: "/home/services/dental-fillings.jpg", icon: "tooth" },
+  { title: "Prosthodontics", description: "Crowns, bridges, dentures and implants built to replace one tooth or a full arch you've lost.", image: "/service/services-2.png", icon: "tooth" },
+  { title: "Orthodontics", description: "Braces or aligners that move crooked or gapped teeth into a corrected bite over a planned series of visits.", image: "/home/services/invisible-aligners.jpg", icon: "aligner" },
+  { title: "Restorative Dentistry", description: "Fillings that rebuild a tooth weakened by decay or a chip, matched to your natural tooth color.", image: "/home/services/dental-fillings.jpg", icon: "tooth" },
+  { title: "Cosmetic Treatments", description: "Whitening, veneers and reshaping for teeth that are healthy but don't look the way you want them to.", image: "/about-freepik-treatment.jpg", icon: "tooth" },
 ];
 
 function Arrow({ direction = "right" }: { direction?: "left" | "right" }) {
@@ -128,13 +136,11 @@ export default function ServicesSection() {
               </div>
 
               <h2 className="max-w-[760px] text-[29px] font-extrabold leading-[1.12] tracking-[-0.035em] text-white sm:text-[36px] lg:text-[46px]">
-                Comprehensive dental care tailored
-                <br className="hidden sm:block" /> services for every smile
+                11+ Specialities Under One Roof
               </h2>
 
               <p className="mt-5 max-w-[950px] text-base leading-relaxed text-white/90 sm:text-lg">
-                Elite Dental Studio offers a full spectrum of dental procedures
-                to help you explore what&apos;s best for your smile.
+                Each treatment at Elite Dental Studio is led by a specialist dentist, thoroughly checked by X-ray or examination before any work begins.
               </p>
             </div>
 
@@ -159,7 +165,6 @@ export default function ServicesSection() {
               <article
                 key={service.title}
                 className={`group smooth-hover card-hover overflow-hidden rounded-[28px] border bg-white p-5 shadow-[0_18px_45px_rgba(21,74,78,0.09)] sm:block sm:p-6 ${index !== activeService ? "hidden" : ""
-                  } ${index === services.length - 1 ? "sm:col-span-2 sm:mx-auto sm:w-[48%] lg:col-span-1 lg:mx-0 lg:w-auto" : ""
                   } ${index === activeService
                     ? "border-[#2b7f82] md:-translate-y-2"
                     : "border-[#8cb8ba]"

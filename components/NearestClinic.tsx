@@ -221,10 +221,10 @@ export default function NearestClinic({ serviceName }: { serviceName?: string })
                 <Image src="/home/customer-care.png" alt="" aria-hidden="true" width={80} height={80} />
               </div>
               <h3 className="mb-3 text-xl font-extrabold text-white lg:text-2xl">
-                FOCUS ON CUSTOMER CARE
+                WE DIAGNOSE BEFORE WE TREAT
               </h3>
               <p className="text-base leading-[1.35] text-[#064b52] lg:text-xl">
-                Elite dental studio is a dental specialist&apos;s centre with personalised patient care. We have been providing our patients with the best dental care services for several years.
+                At Elite Dental Studio, an X-ray comes before a quote, every time. If your tooth does not need treatment yet, our dentist will educate you instead of starting one.
               </p>
             </div>
 
@@ -235,10 +235,10 @@ export default function NearestClinic({ serviceName }: { serviceName?: string })
                 <Image src="/home/shine-teth.png" alt="" aria-hidden="true" width={80} height={80} />
               </div>
               <h3 className="mb-3 text-xl font-extrabold text-white lg:text-2xl">
-                SHINE WITH HEALTHY SMILES &amp; ELITE CARE
+                ONE SPECIALIST, ONE FIELD, EVERY TIME
               </h3>
               <p className="text-base leading-[1.35] text-[#064b52] lg:text-xl">
-                Healthy smiles are beautiful. However, if you&apos;re unhappy with the way your teeth or gums look, there&apos;s a lot of information available on how to improve your smile. Visit Elite Dental Studio
+                A root canal is done by our Endodontist. A child&apos;s cavity goes to our Pedodontist. At Elite Dental Studio, you are designated to the doctor trained for that exact problem, not whoever is free.
               </p>
             </div>
           </>}

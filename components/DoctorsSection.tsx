@@ -9,7 +9,7 @@ const highlights = [
     image: "/home/orthodontists.png",
   },
   {
-    stat: "70%",
+    stat: "80%",
     label: "Women Leading",
     description: "Leading with empathy, precision & clinical excellence",
     image: "/home/women-leading.png",
@@ -108,11 +108,7 @@ export default function DoctorsSection() {
         </h2>
 
         <p className="mx-auto mt-2 max-w-5xl text-sm leading-[1.65] text-[#555] lg:mt-5 lg:text-base">
-          We are delighted to welcome you to Elite Dental Studio! At our office,
-          every member of our team strives to make each patient feel welcome,
-          comfortable, and valued – because you are the most important person in
-          our office. We love helping patients who suffer from dental anxiety or
-          fear.
+          Our MDS certified specialists across Calicut, Kochi, Kannur and Coimbatore cover every specialty Elite Dental Studio offers, including implantology, orthodontics, pedodontics, endodontics, periodontics, prosthodontics, Oral Medicine, Oral Pathology and oral surgery. Book your appointment with experts trained specifically in the field treating you, not general dentistry stretched across every problem.
         </p>
       </div>
 
