@@ -6,7 +6,7 @@ const companyLinks = [
   { label: "Services", href: "/services" },
   { label: "Doctors", href: "/doctors" },
   { label: "Facilities", href: "/about#facilities" },
-  { label: "Blog", href: "/#blog" },
+  { label: "Blog", href: "/blog" },
   { label: "Careers", href: "https://elitedentalstudio.co.in/careers/" },
   { label: "Contact Us", href: "/#appointment" },
 ];
