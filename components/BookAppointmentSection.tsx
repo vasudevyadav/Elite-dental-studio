@@ -1,7 +1,8 @@
 import Image from "next/image";
 import { useState } from "react";
+import { appointmentContent, type AppointmentSectionContent } from "@/content/siteSections";
 
-export default function BookAppointmentSection() {
+export default function BookAppointmentSection({ content = appointmentContent }: { content?: AppointmentSectionContent }) {
   const [form, setForm] = useState({
     name: "",
     phone: "",
@@ -27,13 +28,13 @@ export default function BookAppointmentSection() {
       <div className="mx-auto max-w-7xl rounded-[28px] bg-dent-panel px-6 py-10 sm:px-10 lg:grid lg:grid-cols-[0.95fr_1.05fr] lg:gap-16 lg:px-16 lg:py-16">
         <div className="text-white">
           <p className="text-sm font-bold uppercase text-dent-accent sm:text-base">
-            Book Your Appointment
+            {content.eyebrow}
           </p>
           <h2 className="lg:mt-2 text-2xl font-bold leading-[1.35] tracking-[-0.025em] sm:text-[38px]">
-            Book Your Dental Appointment Online with Elite Dental Studio
+            {content.title}
           </h2>
           <p className="lg:mt-3  max-w-[530px] text-base leading-[1.55] text-white/95 sm:text-lg">
-            Ready to take the next step for your healthier smile? Book online or call us to schedule your dental appointment in Calicut, Kochi, Kannur or Coimbatore.
+            {content.description}
           </p>
 
           <div className="lg:mt-10 mt-6 max-w-[390px] rounded-[20px] bg-linear-to-br from-[#19d6c7] to-[#29cdbf] lg:px-8 px-5 lg:py-6 py-3">
@@ -72,7 +73,7 @@ export default function BookAppointmentSection() {
 
         <div className="lg:mt-12 mt-8 rounded-[22px] bg-white px-6 lg:py-10 py-6 lg:mt-0">
           <h3 className="text-center text-xl font-bold italic text-[#29666b]">
-            Book an Appointment
+            {content.formTitle}
           </h3>
           <form
             className="lg:mt-10 mt-6 space-y-7"

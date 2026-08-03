@@ -1,6 +1,3 @@
-import Head from "next/head";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import FAQSection from "@/components/FAQSection";
 import BookAppointmentSection from "@/components/BookAppointmentSection";
 import AboutHero from "@/components/about/AboutHero";
@@ -8,25 +5,19 @@ import DentalOfficeSection from "@/components/about/DentalOfficeSection";
 import InsurancePaymentSection from "@/components/about/InsurancePaymentSection";
 import MissionSection from "@/components/about/MissionSection";
 import TeamSection from "@/components/about/TeamSection";
+import { aboutFaqContent, appointmentContent } from "@/content/siteSections";
+import SitePage from "@/components/SitePage";
 
 export default function AboutPage() {
   return (
-    <>
-      <Head>
-        <title>About Us | Elite Dental Studio</title>
-        <meta name="description" content="Learn about Elite Dental Studio, our mission, leadership and patient-first approach to dental care." />
-      </Head>
-      <Navbar />
-      <main className="bg-white">
+    <SitePage title="About Us | Elite Dental Studio" description="Learn about Elite Dental Studio, our mission, leadership and patient-first approach to dental care." mainClassName="bg-white">
         <AboutHero />
         <DentalOfficeSection />
         <InsurancePaymentSection />
         <MissionSection />
         <TeamSection />
-        <div className="[&_.max-w-7xl]:max-w-7xl"><FAQSection variant="about" /></div>
-        <div className="[&_.max-w-7xl]:max-w-7xl"><BookAppointmentSection /></div>
-      </main>
-      <Footer />
-    </>
+        <div className="[&_.max-w-7xl]:max-w-7xl"><FAQSection content={aboutFaqContent} /></div>
+        <div className="[&_.max-w-7xl]:max-w-7xl"><BookAppointmentSection content={appointmentContent} /></div>
+    </SitePage>
   );
 }
