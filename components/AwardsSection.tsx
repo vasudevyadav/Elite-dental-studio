@@ -3,7 +3,7 @@ import { useState } from "react";
 
 const awards = [
   {
-    title: "Famdent Excellence in Dentistry Awards",
+    title: "Famdent Excellence in Dentistry Award",
     body: [
       "Elite Dental Studio was honoured at the Famdent Excellence in Dentistry Awards for outstanding contributions to patient care and clinical innovation.",
       "This recognition reflects our team’s commitment to advanced treatment, modern technology and a consistently comfortable patient experience.",
@@ -71,8 +71,7 @@ export default function AwardsSection() {
           </h2>
 
           <p className="mt-6 max-w-[670px] text-base leading-[1.6] text-[#555] sm:text-lg lg:text-[20px]">
-            Recognized by leading dental associations for clinical excellence,
-            patient care, and innovation in modern dentistry.
+            Elite Dental Studio has been honoured with industry recognition for clinical excellence, patient care and innovation in modern dentistry.
           </p>
 
           <div className="mt-12">

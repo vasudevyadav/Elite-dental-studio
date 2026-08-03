@@ -23,7 +23,7 @@ export default function AboutPage() {
         <InsurancePaymentSection />
         <MissionSection />
         <TeamSection />
-        <div className="[&_.max-w-7xl]:max-w-7xl"><FAQSection /></div>
+        <div className="[&_.max-w-7xl]:max-w-7xl"><FAQSection variant="about" /></div>
         <div className="[&_.max-w-7xl]:max-w-7xl"><BookAppointmentSection /></div>
       </main>
       <Footer />

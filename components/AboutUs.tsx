@@ -41,25 +41,16 @@ export default function AboutUs() {
           </div>
 
           <h2 className="mb-4 text-2xl font-extrabold leading-[1.3] tracking-[-0.025em] text-[#286d73] lg:text-4xl">
-            Best Dental Clinic in  Calicut, Kochi, Kannur &amp;
+            Best Dental Clinic in Calicut, Kochi, Kannur &amp;
             Coimbatore
           </h2>
 
           <div className="space-y-4 text-sm leading-[1.6] text-[#303436] sm:text-lg lg:text-lg">
             <p>
-              Elite Dental Studio, The Best Dental clinic in Calicut, Kochi,
-              Kannur, Kerala offers a comprehensive set of oral healthcare
-              services, ensures top-class armamentarium, and implements the
-              latest pain-management technology to provide affordable dental
-              care services including Dental implants, Pediatric dentistry,
-              Root canal therapy, Laser dentistry, Periodontics,
-              Prosthodontics, Cosmetic Treatments etc., all of the highest
-              quality.
+              Elite Dental Studio has been treating patients since 2020 as an ISO 9001 certified dental clinic in Calicut, Kochi, Kannur and Coimbatore. Every clinic runs on the same documented standard, so the care you receive in Calicut matches what a patient receives in Kochi, Kannur or Coimbatore.
             </p>
             <p>
-              Our vision is to exceed patient expectations in each service we
-              provide and ensure that each patient sustains a healthy smile
-              each time.
+              Our team includes MDS qualified specialists across implantology, orthodontics, pedodontics and oral surgery. Your case goes to the doctor trained in that exact field, not a single general dentist managing every problem. That structure, recognised through the Famdent Excellence in Dentistry Award for clinical innovation and patient care, is what patients mean when they call Elite Dental Studio the best dental clinic in Calicut, Kochi, Kannur &amp; Coimbatore.
             </p>
           </div>
 
@@ -67,12 +58,12 @@ export default function AboutUs() {
             <div className="grid gap-6 grid-cols-2 lg:gap-4">
               <div className="lg:flex grid items-center gap-2 ">
                 <strong className="shrink-0 text-2xl font-black leading-none text-[#2bd0c0] lg:text-5xl">
-                  <AnimatedCounter value={98} suffix="%" duration={1400} />
+                  <AnimatedCounter value={100} suffix="%" duration={1400} />
                 </strong>
                 <span className="text-sm leading-relaxed text-[#303436] sm:text-sm font-semibold">
                   Invisalign Treatment
                   <br />
-                  Complete
+                  Completed
                 </span>
               </div>
 

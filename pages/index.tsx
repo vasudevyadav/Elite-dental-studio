@@ -18,10 +18,10 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Elite Dental Studio | Complete Dental Care</title>
+        <title>Elite Dental Studio | Specialist Dental Care Across Calicut, Kochi, Kannur and Coimbatore</title>
         <meta
           name="description"
-          content="Elite Dental Studio offers advanced dental treatments, implants, invisible aligners, root canal care and more."
+          content="ISO 9001 certified specialist dental care across Calicut, Kochi, Kannur and Coimbatore, led by MDS qualified doctors since 2020."
         />
       </Head>
 
@@ -46,5 +46,4 @@ export default function Home() {
     </>
   );
 }
-
 

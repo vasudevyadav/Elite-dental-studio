@@ -29,13 +29,11 @@ export default function BookAppointmentSection() {
           <p className="text-sm font-bold uppercase text-dent-accent sm:text-base">
             Book Your Appointment
           </p>
-          <h2 className="lg:mt-2 text-2xl font-bold leading-[1.35] tracking-[-0.025em] sm:text-[42px]">
-            Schedule Your Dental Visit
-            <br /> Online at Elite Dental Studio
+          <h2 className="lg:mt-2 text-2xl font-bold leading-[1.35] tracking-[-0.025em] sm:text-[38px]">
+            Book Your Dental Appointment Online with Elite Dental Studio
           </h2>
           <p className="lg:mt-3  max-w-[530px] text-base leading-[1.55] text-white/95 sm:text-lg">
-            Ready to take the next step towards a healthier smile?
-            <br /> Use our easy online booking system to schedule your dental appointment.
+            Ready to take the next step for your healthier smile? Book online or call us to schedule your dental appointment in Calicut, Kochi, Kannur or Coimbatore.
           </p>
 
           <div className="lg:mt-10 mt-6 max-w-[390px] rounded-[20px] bg-linear-to-br from-[#19d6c7] to-[#29cdbf] lg:px-8 px-5 lg:py-6 py-3">
@@ -43,12 +41,12 @@ export default function BookAppointmentSection() {
             <div className="lg:my-4 my-2 border-t border-white/70" />
             <div className="space-y-4 text-base font-bold">
               <div className="flex flex-col gap-1 sm:flex-row sm:justify-between sm:gap-5 font-medium">
-                <span>Mon To Sat</span>
-                <span>09:30 am to 9:00 pm</span>
+                <span>Mon to Sat</span>
+                <span>09:30 AM to 9:00 PM</span>
               </div>
               <div className="flex flex-col gap-1 sm:flex-row sm:justify-between sm:gap-5 font-medium">
                 <span>Sunday</span>
-                <span>10:00 am to 7:00 pm</span>
+                <span>10:00 AM to 7:00 PM</span>
               </div>
             </div>
           </div>

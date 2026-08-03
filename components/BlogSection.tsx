@@ -74,13 +74,13 @@ export default function BlogSection() {
             Latest Blog
           </p>
           <h2 className="lg:mt-5 mt-2 max-w-[650px] text-xl font-bold leading-[1.25] tracking-[-0.025em] text-[#29666b] lg:text-[40px]">
-            Latest dental news insights and
-            <br className="hidden sm:block" /> oral health advice
+            Latest Dental News Insights &amp;
+            <br className="hidden sm:block" /> Oral Health Advice
           </h2>
         </div>
         <AnimatedArrowCta
           label="VIEW ALL POST"
-          href="https://elitedentalstudio.co.in/blog/"
+          href="/blog"
           arrowClassName="text-[#29666b]"
           className="smooth-hover button-hover hover-lift hidden w-fit items-center gap-4 rounded-[8px] bg-[#064a50] py-3 pl-5 pr-3 text-sm font-bold uppercase text-white lg:inline-flex"
         />
