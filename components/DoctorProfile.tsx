@@ -29,7 +29,7 @@ export default function DoctorProfile() {
             </div>
             <div className="absolute right-12 top-[322px] z-10 grid h-16 w-16 place-items-center bg-[#25d0bf] text-center text-xs font-black leading-tight [clip-path:polygon(0_0,100%_0,100%_100%,50%_84%,0_100%)] sm:top-[352px]">15 Yrs<br />Exp</div>
             <div className="px-3 pb-2 pt-7">
-              <h2 className="text-4xl font-extrabold">Dr. Amal</h2>
+              <h2 className="text-4xl font-bold">Dr. Amal</h2>
               <p className="mt-2 text-lg font-medium leading-snug">Pedodontics &amp; Preventive Dentistry<br />&amp; Managing Director</p>
               <p className="mt-4 text-lg"><strong>Qualification:</strong> BDS, MDS</p>
               <p className="mt-3 text-lg font-semibold"><span aria-hidden="true">●</span>&nbsp; Calicut Branch</p>
