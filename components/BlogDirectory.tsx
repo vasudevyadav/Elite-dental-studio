@@ -51,16 +51,16 @@ export default function BlogDirectory() {
         <h1 className="mb-6 text-2xl font-semibold text-[#343939]">Latest Posts</h1>
         <div className="grid items-start gap-12 lg:grid-cols-[minmax(0,1fr)_330px]">
           <div>
-            <article className="rounded-[16px] bg-[#eff9f7] p-5 shadow-[0_8px_25px_rgba(35,97,100,0.08)] sm:p-7">
+            <article className="rounded-[16px] bg-[#f1faf7] p-5 sm:p-7">
               <div className="relative h-[250px] overflow-hidden rounded-[14px] bg-white shadow-[0_5px_18px_rgba(25,73,76,0.12)] sm:h-[390px]">
-                <Image src="/home/services/invisible-aligners.jpg" alt="Invisalign clear aligners" fill priority sizes="(max-width: 1023px) 92vw, 820px" className="object-cover" />
+                <Image src="/home/services/invisible-aligners.jpg" alt="Invisalign clear aligners" fill priority sizes="(max-width: 1023px) 92vw, 820px" className="object-cover shadow-[0_8px_25px_rgba(35,97,100,0.50)]" />
                 <div className="absolute inset-y-0 left-0 flex w-[58%] flex-col justify-center bg-white/90 px-7 sm:px-12">
                   <p className="text-2xl font-black leading-tight text-[#16cdbc] [text-shadow:1px_1px_0_#164e52] sm:text-5xl">Invisalign<br />Clear Aligners</p>
                   <p className="mt-2 text-sm font-semibold text-[#333] sm:text-xl">At<br /><strong>Elite Dental Studio Kochi:</strong><br />Benefits, Process &amp; Cost</p>
                 </div>
               </div>
-              <h2 className="mt-6 text-xl font-extrabold leading-snug text-[#296f73] sm:text-2xl">Invisalign Clear Aligners At Elite Dental Studio Kochi: Benefits, Process &amp; Cost</h2>
-              <div className="mt-5 flex flex-wrap items-center justify-between gap-4 text-xs text-[#596565]">
+              <h2 className="mt-6 text-xl font-bold leading-snug text-[#296f73] sm:text-2xl">Invisalign Clear Aligners At Elite Dental Studio Kochi: Benefits, Process &amp; Cost</h2>
+              <div className="mt-5 flex flex-wrap items-center justify-between gap-4 text-base text-[#596565]">
                 <span className="rounded bg-[#25cdbd] px-3 py-2 text-white">eliteinfo@gmail.com</span>
                 <span>Published: 07 August 2026</span>
                 <button type="button" className="rounded bg-[#296f73] px-5 py-2 font-bold text-white">Read more</button>
@@ -87,13 +87,13 @@ export default function BlogDirectory() {
                 <article key={`${post.title}-${index}`} className="overflow-hidden rounded-[13px] border border-[#b7d3d1] bg-[#f5fbfa] shadow-[0_6px_18px_rgba(31,92,94,0.08)]">
                   <div className="relative h-[185px] overflow-hidden">
                     <Image src={post.image} alt="" fill sizes="(max-width: 639px) 92vw, 390px" className="object-cover" />
-                    <div className="absolute inset-x-0 bottom-0 bg-[#20cdbd] px-4 py-2 text-center text-xs font-bold text-white">{post.title}</div>
+                    <div className="absolute inset-x-0 bottom-0 bg-[#20cdbd] px-4 py-2 text-center text-sm font-semibold text-white">{post.title}</div>
                   </div>
                   <div className="px-4 pb-4 pt-3">
                     <h2 className="min-h-[50px] text-lg font-semibold leading-7 text-[#364343]">{post.title}</h2>
                     <div className="mt-2 flex items-end justify-between gap-3">
-                      <p className="text-[13px] leading-5 text-[#657171]">By eliteinfo@gmail.com<br />Published: 07 August 2026</p>
-                      <button type="button" className="shrink-0 rounded bg-[#296f73] px-4 py-2 text-xs font-semibold text-white">Read more</button>
+                      <p className="text-sm leading-5 text-[#657171]">By eliteinfo@gmail.com<br />Published: 07 August 2026</p>
+                      <button type="button" className="shrink-0 rounded bg-[#296f73] px-4 py-2 text-sm font-semibold text-white">Read more</button>
                     </div>
                   </div>
                 </article>
@@ -114,12 +114,12 @@ export default function BlogDirectory() {
 
           <aside className="space-y-12 lg:sticky lg:top-6">
             <div className="rounded-[16px] bg-[#2b7478] px-8 py-7 text-white">
-              <h2 className="border-b border-white/50 pb-4 text-2xl font-extrabold">Categories</h2>
-              <ul className="mt-5 space-y-4 text-sm font-semibold">{categories.map((category) => <li key={category} className="flex gap-3"><span>•</span><a href={`#${category.toLowerCase().replaceAll(" ", "-")}`} className="hover:text-[#25d2c1]">{category}</a></li>)}</ul>
+              <h2 className="border-b border-white/50 pb-4 text-2xl font-bold">Categories</h2>
+              <ul className="mt-5 space-y-4 text-base font-semibold">{categories.map((category) => <li key={category} className="flex gap-3"><span>•</span><a href={`#${category.toLowerCase().replaceAll(" ", "-")}`} className="hover:text-[#25d2c1]">{category}</a></li>)}</ul>
             </div>
             <div className="rounded-[16px] bg-[#25cebd] px-8 py-7 text-white">
-              <h2 className="border-b border-white/60 pb-4 text-2xl font-extrabold">Recent Posts</h2>
-              <ul className="mt-5 space-y-4 text-sm font-semibold leading-6">{recent.map((post) => <li key={post} className="flex gap-3"><span>•</span><a href="#" className="hover:text-[#185f64]">{post}</a></li>)}</ul>
+              <h2 className="border-b border-white/60 pb-4 text-2xl font-bold">Recent Posts</h2>
+              <ul className="mt-5 space-y-4 text-base font-semibold leading-6">{recent.map((post) => <li key={post} className="flex gap-3"><span>•</span><a href="#" className="hover:text-[#185f64]">{post}</a></li>)}</ul>
             </div>
           </aside>
         </div>
