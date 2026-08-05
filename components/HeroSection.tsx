@@ -108,12 +108,12 @@ export default function HeroSection({ slides = HOME_SLIDES, content }: HeroSecti
 
       {content && (
         <div className="pointer-events-none absolute inset-0 z-[35] mx-auto flex max-w-7xl items-center px-5 pb-24 sm:px-8 lg:px-12 lg:pb-0">
-          <div className="max-w-[610px] text-white [text-shadow:0_2px_20px_rgba(4,49,53,.35)]">
+          <div className="max-w-[610px] text-white [text-shadow:0_2px_20px_rgba(4,49,53,.35)] lg:max-w-[44%] xl:max-w-[610px]">
             <p className="text-xs font-bold uppercase tracking-[.18em] text-[#56e2d5] sm:text-sm">{content.eyebrow}</p>
-            <h1 className="mt-3 text-4xl font-semibold leading-[1.04] tracking-[-.045em] sm:text-6xl lg:text-[68px]">
+            <h1 className="mt-3 text-4xl font-semibold leading-[1.04] tracking-[-.045em] sm:text-6xl lg:text-[50px] xl:text-[68px]">
               {content.title}<br /><span className="text-[#45d8ca]">{content.accent}</span>
             </h1>
-            <p className="mt-5 max-w-[560px] text-sm font-medium leading-6 text-white/90 sm:text-lg sm:leading-8">{content.description}</p>
+            <p className="mt-5 max-w-[560px] text-sm font-medium leading-6 text-white/90 sm:text-lg sm:leading-8 lg:text-base xl:text-lg">{content.description}</p>
           </div>
         </div>
       )}

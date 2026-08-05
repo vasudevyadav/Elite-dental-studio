@@ -123,7 +123,7 @@ export default function NearestClinic({ serviceName }: { serviceName?: string })
   return (
     <section id="clinics" className="mx-auto max-w-7xl px-5 py-8 sm:px-8 lg:px-12 ">
       <div className="lg:mb-10 mb-6 flex items-center gap-5">
-        <h2 className="shrink-0 text-3xl font-bold tracking-[-0.02em] text-[#073f48] lg:text-[34px]">
+        <h2 className="shrink-0 text-2xl font-bold tracking-[-0.02em] text-[#073f48] lg:text-[34px]">
           Choose Your <span className="text-dent-accent">Nearest Clinic</span>
         </h2>
         <span className="hidden h-px flex-1 bg-[#2d7378] sm:block" />
@@ -162,7 +162,7 @@ export default function NearestClinic({ serviceName }: { serviceName?: string })
             </a>
           </div>
 
-          <div className="px-6 pb-7 sm:px-9 sm:pb-9 lg:px-12">
+          <div className="px-4 pb-7 sm:pb-9 lg:px-12">
             <div className="space-y-6 py-3 text-lg text-[#747b7c] sm:text-xl">
               <a href={`tel:${clinic.phone.replace(/\s/g, "")}`} className="smooth-hover hover-lift flex items-center gap-5 hover:text-[#2d7378]">
                 <PhoneIcon />

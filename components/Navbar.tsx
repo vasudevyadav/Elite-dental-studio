@@ -55,7 +55,7 @@ const dropdowns: Record<
       {
         label: "Clinic Locations",
         description: "Find the Elite Dental Studio nearest to you",
-        href: "/#clinics",
+        href: "/contact#locations",
       },
       {
         label: "Our Dental Office",

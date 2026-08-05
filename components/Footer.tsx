@@ -8,7 +8,7 @@ const companyLinks = [
   { label: "Our Dental Office", href: "/our-dental-office" },
   { label: "Blog", href: "/blog" },
   { label: "Careers", href: "https://elitedentalstudio.co.in/careers/" },
-  { label: "Contact Us", href: "/#appointment" },
+  { label: "Contact Us", href: "/contact" },
 ];
 
 const serviceLinks = [
