@@ -9,6 +9,7 @@ type Clinic = {
   email: string;
   addressLines: string[];
   mapQuery: string;
+  mapUrl?: string;
 };
 
 const clinics: Record<string, Clinic> = {
@@ -57,12 +58,13 @@ const clinics: Record<string, Clinic> = {
     landline: "0422 3552 222",
     email: "elitedentalstudiocbe@gmail.com",
     addressLines: [
-      "Ground Floor, Race Course Road",
-      "Near KG Hospital",
-      "Gopalapuram",
-      "Coimbatore, Tamil Nadu 641018",
+      "First Floor, Alankar Building",
+      "Diwan Bahadur Rd, opposite Tanishq",
+      "R.S. Puram",
+      "Coimbatore, Tamil Nadu 641002",
     ],
-    mapQuery: "Race Course Road, Coimbatore, Tamil Nadu",
+    mapQuery: "Alankar Building, Diwan Bahadur Road, R.S. Puram, Coimbatore, Tamil Nadu 641002",
+    mapUrl: "https://maps.app.goo.gl/Wx3n9HuttpszrQpy5",
   },
 };
 
@@ -116,7 +118,7 @@ export default function NearestClinic({ serviceName }: { serviceName?: string })
   const clinic = clinics[selectedClinic];
   const encodedMapQuery = encodeURIComponent(clinic.mapQuery);
   const mapEmbedUrl = `https://www.google.com/maps?q=${encodedMapQuery}&output=embed`;
-  const mapPageUrl = `https://www.google.com/maps/search/?api=1&query=${encodedMapQuery}`;
+  const mapPageUrl = clinic.mapUrl ?? `https://www.google.com/maps/search/?api=1&query=${encodedMapQuery}`;
 
   return (
     <section id="clinics" className="mx-auto max-w-7xl px-5 py-8 sm:px-8 lg:px-12 ">

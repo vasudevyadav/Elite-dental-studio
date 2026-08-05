@@ -58,9 +58,9 @@ const dropdowns: Record<
         href: "/#clinics",
       },
       {
-        label: "Awards & Recognition",
-        description: "A standard of care recognised across the industry",
-        href: "/#awards",
+        label: "Our Dental Office",
+        description: "Take a virtual tour of our modern clinics",
+        href: "/our-dental-office",
       },
     ],
   },

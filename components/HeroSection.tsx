@@ -9,6 +9,12 @@ type HeroSlide = { img: string; alt: string };
 
 type HeroSectionProps = {
   slides?: HeroSlide[];
+  content?: {
+    eyebrow: string;
+    title: string;
+    accent: string;
+    description: string;
+  };
 };
 
 const ChevronDown = () => (
@@ -17,7 +23,7 @@ const ChevronDown = () => (
   </svg>
 );
 
-export default function HeroSection({ slides = HOME_SLIDES }: HeroSectionProps) {
+export default function HeroSection({ slides = HOME_SLIDES, content }: HeroSectionProps) {
   const [slide, setSlide] = useState(0);
   const [modalOpen, setModalOpen] = useState(false);
   const [form, setForm] = useState({ name: "", phone: "", email: "", date: "", clinic: "" });
@@ -99,6 +105,18 @@ export default function HeroSection({ slides = HOME_SLIDES }: HeroSectionProps) 
           />
         ))}
       </div>}
+
+      {content && (
+        <div className="pointer-events-none absolute inset-0 z-[35] mx-auto flex max-w-7xl items-center px-5 pb-24 sm:px-8 lg:px-12 lg:pb-0">
+          <div className="max-w-[610px] text-white [text-shadow:0_2px_20px_rgba(4,49,53,.35)]">
+            <p className="text-xs font-bold uppercase tracking-[.18em] text-[#56e2d5] sm:text-sm">{content.eyebrow}</p>
+            <h1 className="mt-3 text-4xl font-semibold leading-[1.04] tracking-[-.045em] sm:text-6xl lg:text-[68px]">
+              {content.title}<br /><span className="text-[#45d8ca]">{content.accent}</span>
+            </h1>
+            <p className="mt-5 max-w-[560px] text-sm font-medium leading-6 text-white/90 sm:text-lg sm:leading-8">{content.description}</p>
+          </div>
+        </div>
+      )}
 
       {/* Mobile CTA – the full form lives in the appointment section below */}
       <div className="absolute inset-x-0 bottom-14 z-40 flex justify-center px-5 lg:hidden">
