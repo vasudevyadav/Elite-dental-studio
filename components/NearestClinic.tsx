@@ -9,6 +9,7 @@ type Clinic = {
   email: string;
   addressLines: string[];
   mapQuery: string;
+  mapUrl?: string;
 };
 
 const clinics: Record<string, Clinic> = {
@@ -57,12 +58,13 @@ const clinics: Record<string, Clinic> = {
     landline: "0422 3552 222",
     email: "elitedentalstudiocbe@gmail.com",
     addressLines: [
-      "Ground Floor, Race Course Road",
-      "Near KG Hospital",
-      "Gopalapuram",
-      "Coimbatore, Tamil Nadu 641018",
+      "First Floor, Alankar Building",
+      "Diwan Bahadur Rd, opposite Tanishq",
+      "R.S. Puram",
+      "Coimbatore, Tamil Nadu 641002",
     ],
-    mapQuery: "Race Course Road, Coimbatore, Tamil Nadu",
+    mapQuery: "Alankar Building, Diwan Bahadur Road, R.S. Puram, Coimbatore, Tamil Nadu 641002",
+    mapUrl: "https://maps.app.goo.gl/Wx3n9HuttpszrQpy5",
   },
 };
 
@@ -116,12 +118,12 @@ export default function NearestClinic({ serviceName }: { serviceName?: string })
   const clinic = clinics[selectedClinic];
   const encodedMapQuery = encodeURIComponent(clinic.mapQuery);
   const mapEmbedUrl = `https://www.google.com/maps?q=${encodedMapQuery}&output=embed`;
-  const mapPageUrl = `https://www.google.com/maps/search/?api=1&query=${encodedMapQuery}`;
+  const mapPageUrl = clinic.mapUrl ?? `https://www.google.com/maps/search/?api=1&query=${encodedMapQuery}`;
 
   return (
     <section id="clinics" className="mx-auto max-w-7xl px-5 py-8 sm:px-8 lg:px-12 ">
       <div className="lg:mb-10 mb-6 flex items-center gap-5">
-        <h2 className="shrink-0 text-3xl font-bold tracking-[-0.02em] text-[#073f48] lg:text-[34px]">
+        <h2 className="shrink-0 text-2xl font-bold tracking-[-0.02em] text-[#073f48] lg:text-[34px]">
           Choose Your <span className="text-dent-accent">Nearest Clinic</span>
         </h2>
         <span className="hidden h-px flex-1 bg-[#2d7378] sm:block" />
@@ -160,7 +162,7 @@ export default function NearestClinic({ serviceName }: { serviceName?: string })
             </a>
           </div>
 
-          <div className="px-6 pb-7 sm:px-9 sm:pb-9 lg:px-12">
+          <div className="px-4 pb-7 sm:pb-9 lg:px-12">
             <div className="space-y-6 py-3 text-lg text-[#747b7c] sm:text-xl">
               <a href={`tel:${clinic.phone.replace(/\s/g, "")}`} className="smooth-hover hover-lift flex items-center gap-5 hover:text-[#2d7378]">
                 <PhoneIcon />

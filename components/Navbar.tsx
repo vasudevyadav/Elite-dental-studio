@@ -55,12 +55,12 @@ const dropdowns: Record<
       {
         label: "Clinic Locations",
         description: "Find the Elite Dental Studio nearest to you",
-        href: "/#clinics",
+        href: "/contact#locations",
       },
       {
-        label: "Awards & Recognition",
-        description: "A standard of care recognised across the industry",
-        href: "/#awards",
+        label: "Our Dental Office",
+        description: "Take a virtual tour of our modern clinics",
+        href: "/our-dental-office",
       },
     ],
   },
