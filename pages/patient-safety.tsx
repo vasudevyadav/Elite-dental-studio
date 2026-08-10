@@ -91,59 +91,58 @@ export default function PatientSafetyPage() {
       title="Patient Safety at Elite Dental Studio"
       description="Learn about instrument sterilisation, digital imaging, conscious sedation and clinical safety protocols across Elite Dental Studio clinics."
     >
-      <section className="relative isolate overflow-hidden bg-[#0b4549] text-white">
+      <section className="relative isolate overflow-hidden bg-[#083f43] text-white">
         <Image
-          src="/office/kochi-02.webp"
-          alt="Clean modern treatment room at Elite Dental Studio"
+          src="/safety/patient-safety-hero.png"
+          alt="Dental specialist presenting a sealed sterile instrument pouch to a patient"
           fill
           priority
-          className="-z-20 object-cover object-center"
+          className="-z-20 object-cover object-[72%_center] sm:object-center"
           sizes="100vw"
         />
-        <div className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(4,45,49,.98)_0%,rgba(5,61,65,.9)_52%,rgba(5,61,65,.3)_100%)]" />
-        <div className="mx-auto flex min-h-[590px] max-w-7xl items-center px-5 py-20 sm:px-8 lg:px-12">
-          <div className="max-w-[760px]">
-            <p className="flex items-center gap-3 text-xs font-bold tracking-[.22em] text-[#55dfd2] uppercase">
-              <span className="h-px w-9 bg-[#55dfd2]" /> Safety without compromise
+        <div className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(3,42,46,.98)_0%,rgba(4,53,57,.91)_43%,rgba(4,53,57,.35)_72%,rgba(4,53,57,.08)_100%)] max-sm:bg-[linear-gradient(90deg,rgba(3,42,46,.98)_0%,rgba(4,53,57,.88)_68%,rgba(4,53,57,.48)_100%)]" />
+        <div className="pointer-events-none absolute top-10 -left-32 -z-10 h-96 w-96 rounded-full bg-[#25bfae]/15 blur-3xl" />
+        <div className="mx-auto flex min-h-[650px] max-w-7xl items-center px-5 py-20 sm:min-h-[690px] sm:px-8 lg:px-12 lg:py-24">
+          <div className="max-w-[720px]">
+            <p className="text-xs font-bold tracking-[.22em] text-[#47d9cb] uppercase sm:text-sm">
+              ISO 9001 certified care
             </p>
-            <h1 className="mt-5 text-[40px] leading-[1.08] font-bold tracking-[-.045em] sm:text-6xl lg:text-[68px]">
-              Patient Safety at <span className="text-[#50d9cc]">Elite Dental Studio</span>
+            <h1 className="mt-2.5 text-[38px] leading-[1.08] font-bold tracking-[-.045em] sm:text-5xl lg:text-6xl">
+              Patient Safety at Elite Dental Studio
             </h1>
-            <p className="mt-6 max-w-[680px] text-base leading-8 text-white/82 sm:text-lg">
-              Safety runs through every instrument we sterilise, every image we take, every sedation
-              procedure we monitor and every team member we train.
+            <h2 className="mt-3 text-xl font-medium text-[#66e0d5] sm:text-2xl">
+              Safety you can see. Care you can trust.
+            </h2>
+            <p className="mt-6 max-w-[650px] text-base leading-8 text-white/85 sm:text-lg">
+              From sealed instruments and Class B sterilisation to digital diagnosis and monitored
+              sedation, every detail is prepared around your protection, comfort and confidence.
             </p>
+            <div className="mt-6 flex flex-wrap gap-2.5">
+              {["Class B sterilisation", "Digital imaging", "Consistent across 4 clinics"].map(
+                (item) => (
+                  <span
+                    key={item}
+                    className="rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-semibold backdrop-blur"
+                  >
+                    {item}
+                  </span>
+                ),
+              )}
+            </div>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link
                 href="#safety-process"
-                className="rounded-full bg-[#25bfae] px-7 py-3.5 text-center text-sm font-bold transition hover:bg-[#1ba99d]"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-[#25bfae] px-7 py-3.5 text-center text-sm font-bold transition hover:bg-[#1ba99d]"
               >
-                Explore our safety process
+                <ShieldIcon /> See our safety process
               </Link>
               <Link
                 href="#book-safely"
-                className="rounded-full border border-white/35 bg-white/10 px-7 py-3.5 text-center text-sm font-bold backdrop-blur transition hover:bg-white hover:text-[#174e53]"
+                className="inline-flex items-center justify-center gap-2 rounded-full border border-white/35 bg-white/10 px-7 py-3.5 text-center text-sm font-bold backdrop-blur transition hover:bg-white hover:text-[#174e53]"
               >
-                Ask our care team
+                <PhoneIcon /> Talk to our care team
               </Link>
             </div>
-          </div>
-        </div>
-        <div className="border-t border-white/10 bg-[#07383c]/80 backdrop-blur">
-          <div className="mx-auto grid max-w-7xl grid-cols-2 sm:grid-cols-4">
-            {[
-              ["ISO 9001", "Certified processes"],
-              ["100K+", "Patients treated"],
-              ["4", "Clinic locations"],
-              ["Class B", "Autoclave standard"],
-            ].map(([value, label]) => (
-              <div key={label} className="border-r border-white/10 px-3 py-5 text-center">
-                <strong className="block text-lg text-[#59dfd3] sm:text-xl">{value}</strong>
-                <span className="mt-1 block text-[10px] tracking-[.12em] text-white/55 uppercase">
-                  {label}
-                </span>
-              </div>
-            ))}
           </div>
         </div>
       </section>
@@ -166,91 +165,164 @@ export default function PatientSafetyPage() {
               apply at every branch, so the quality of your care does not change with location.
             </p>
           </div>
-          <div className="relative min-h-[340px] overflow-hidden rounded-[28px] sm:min-h-[430px]">
+          <div className="relative min-h-[500px] overflow-hidden rounded-[28px] bg-[#174e53] shadow-[0_22px_60px_rgba(18,73,77,.14)] sm:min-h-[560px]">
             <Image
-              src="/office/calicut-04.webp"
-              alt="Elite Dental Studio clinical team"
+              src="/safety/clinic-safety-team.png"
+              alt="Dental professionals in a modern Elite Dental Studio treatment room"
               fill
-              className="object-cover"
+              className="object-cover object-center"
               sizes="(max-width:1024px) 100vw,45vw"
             />
-            <div className="absolute right-5 bottom-5 left-5 flex items-center gap-4 rounded-2xl bg-[#174e53]/95 p-5 text-white backdrop-blur">
-              <span className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-[#25bfae]">
+            <div className="absolute inset-0 bg-gradient-to-t from-[#073c40]/90 via-[#073c40]/10 to-transparent" />
+
+            <div className="absolute top-5 left-5 flex items-center gap-3 rounded-2xl border border-white/20 bg-[#0d4a4e]/85 p-3.5 text-white shadow-xl backdrop-blur-md sm:top-7 sm:left-7">
+              <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-[#25bfae]">
                 <ShieldIcon />
               </span>
-              <p className="text-sm leading-6 text-white/80">
-                <b className="block text-base text-white">Documented and maintained</b>ISO-aligned
-                processes across our network.
+              <p className="text-xs leading-5 text-white/70">
+                <b className="block text-sm text-white">Documented and maintained</b>
+                One standard across our network
               </p>
+            </div>
+
+            <div className="absolute right-4 bottom-4 left-4 grid grid-cols-2 gap-2 sm:right-6 sm:bottom-6 sm:left-6 sm:gap-3">
+              {[
+                ["ISO 9001", "Certified processes"],
+                ["100K+", "Patients treated"],
+                ["4", "Clinic locations"],
+                ["Class B", "Autoclave standard"],
+              ].map(([value, label]) => (
+                <div
+                  key={label}
+                  className="rounded-xl border border-white/80 bg-[#0b4549]/85 px-3 py-3 text-white shadow-lg backdrop-blur-md sm:rounded-2xl sm:px-4 sm:py-4"
+                >
+                  <strong className="block text-base text-[#60e1d5] sm:text-xl">{value}</strong>
+                  <span className="mt-1 block text-[8px] tracking-[.1em] text-white/60 uppercase sm:text-[10px]">
+                    {label}
+                  </span>
+                </div>
+              ))}
             </div>
           </div>
         </div>
       </section>
 
-      <section id="safety-process" className="bg-[#eff8f6] px-5 py-14 sm:px-8 lg:py-20">
+      <section
+        id="safety-process"
+        className="overflow-hidden bg-[#103f43] px-5 py-8 text-white sm:px-8 lg:py-16"
+      >
         <div className="mx-auto max-w-7xl lg:px-12">
-          <div className="grid gap-8 lg:grid-cols-[.85fr_1.15fr]">
-            <div>
-              <p className="text-xs font-bold tracking-[.2em] text-[#20aa9e] uppercase">
+          <div className="grid gap-12 lg:grid-cols-[.8fr_1.2fr] lg:gap-20">
+            <div className="lg:sticky lg:top-24 lg:self-start">
+              <p className="text-xs font-bold tracking-[.2em] text-[#55ded2] uppercase">
                 Instrument sterilisation
               </p>
-              <h2 className="mt-3 text-3xl font-semibold tracking-[-.04em] text-[#174e53] sm:text-5xl">
-                How we sterilise every instrument
+              <h2 className="mt-3 text-3xl font-semibold tracking-[-.045em] sm:text-5xl">
+                A complete sterile cycle—not a quick clean.
               </h2>
-              <p className="mt-5 text-base leading-8 text-[#607275]">
+              <p className="mt-6 text-base leading-8 text-white/65">
                 Every instrument passes through the W&amp;H Lina Eco, a Class B autoclave from an
                 international manufacturer. It reaches every surface, including hollow and wrapped
                 instruments—not only the exterior.
               </p>
-              <p className="mt-5 rounded-xl bg-[#174e53] px-5 py-4 text-sm leading-6 font-semibold text-white">
-                Nothing reaches you unless it has completed the full cycle.
-              </p>
+              <div className="mt-8 flex items-center gap-4 rounded-2xl border border-[#58d9ce]/25 bg-white/5 p-5">
+                <span className="grid h-14 w-14 shrink-0 place-items-center rounded-2xl bg-[#25bfae] text-xl font-bold">
+                  B
+                </span>
+                <p className="text-sm leading-6 text-white/70">
+                  <b className="block text-base text-white">Class B standard</b>Built for hollow,
+                  wrapped and solid instruments.
+                </p>
+              </div>
             </div>
-            <div className="grid gap-4 sm:grid-cols-2">
+            <div className="relative space-y-4 before:absolute before:top-8 before:bottom-8 before:left-6 before:w-px before:bg-gradient-to-b before:from-[#56ded2] before:via-[#56ded2]/50 before:to-transparent sm:before:left-8">
               {sterilisationSteps.map(([title, text], index) => (
                 <article
                   key={title}
-                  className="rounded-2xl border border-[#d6e9e6] bg-white p-5 shadow-[0_10px_30px_rgba(20,84,87,.06)]"
+                  className="group relative ml-14 rounded-[22px] border border-white/10 bg-white/[.06] p-5 transition duration-500 hover:translate-x-1 hover:border-[#58d9ce]/40 hover:bg-white/[.09] sm:ml-20 lg:p-4"
                 >
-                  <span className="grid h-10 w-10 place-items-center rounded-xl bg-[#dcf5f1] text-sm font-bold text-[#188e84]">
+                  <span className="absolute top-5 -left-[3.55rem] z-10 grid h-12 w-12 place-items-center rounded-full border-4 border-[#103f43] bg-[#25bfae] text-sm font-bold text-white shadow-[0_0_0_1px_rgba(88,217,206,.35)] sm:top-6 sm:-left-[5rem] sm:h-16 sm:w-16 sm:text-base">
                     {String(index + 1).padStart(2, "0")}
                   </span>
-                  <h3 className="mt-4 text-lg font-semibold text-[#174e53]">{title}</h3>
-                  <p className="mt-2 text-sm leading-6 text-[#647678]">{text}</p>
+                  <span className="text-xs font-bold tracking-[.16em] text-[#55ded2] uppercase">
+                    Safety checkpoint
+                  </span>
+                  <h3 className="mt-1 text-xl font-semibold text-white">{title}</h3>
+                  <p className=" text-sm leading-7 text-white/60">{text}</p>
                 </article>
               ))}
+              <div className="relative ml-14 rounded-[22px] bg-[#25bfae] p-5 text-sm leading-6 font-semibold text-white sm:ml-20 sm:p-6">
+                ✓ Nothing reaches your treatment tray unless it has completed the full cycle.
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       <section className="bg-white px-5 py-8 sm:px-8 lg:py-14">
-        <div className="mx-auto grid max-w-7xl items-center gap-10 lg:grid-cols-[.9fr_1.1fr] lg:px-12">
-          <div className="relative min-h-[350px] overflow-hidden rounded-[28px] sm:min-h-[470px]">
-            <Image
-              src="/office/kochi-04.webp"
-              alt="Prepared Elite Dental Studio operatory"
-              fill
-              className="object-cover"
-              sizes="(max-width:1024px) 100vw,45vw"
-            />
-          </div>
-          <div>
-            <p className="text-xs font-bold tracking-[.2em] text-[#20aa9e] uppercase">
-              Prepared for every patient
-            </p>
-            <h2 className="mt-3 text-3xl font-semibold tracking-[-.04em] text-[#174e53] sm:text-5xl">
-              Protective equipment and a clean operatory
-            </h2>
-            <div className="mt-7 grid gap-3">
-              {protectiveMeasures.map((item) => (
-                <div key={item} className="flex items-center gap-4 rounded-xl bg-[#f2f9f8] p-4">
-                  <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-[#25bfae] text-sm font-bold text-white">
+        <div className="mx-auto max-w-7xl lg:px-12">
+          <div className="relative overflow-hidden rounded-[32px] bg-[#eef9f7] p-5 sm:p-8 lg:p-12">
+            <div className="absolute -top-28 -left-28 h-80 w-80 rounded-full bg-[#68e0d3]/20 blur-3xl" />
+            <div className="relative grid items-center gap-10 lg:grid-cols-[.88fr_1.12fr] lg:gap-12">
+              <div className="order-2 lg:order-1">
+                <div className="inline-flex items-center gap-2 rounded-full border border-[#c6e5e1] bg-white px-4 py-2 text-[10px] font-bold tracking-[.16em] text-[#168d84] uppercase shadow-sm">
+                  <span className="text-[#25bfae]">✦</span>
+                  Prepared for every patient
+                </div>
+                <h2 className="mt-5 text-3xl leading-[1.08] font-semibold tracking-[-.045em] text-[#174e53] sm:text-5xl lg:text-[56px]">
+                  A clean operatory, <span className="text-[#20b9aa]">reset for you.</span>
+                </h2>
+                <p className="mt-5 max-w-xl text-base leading-8 text-[#607275]">
+                  The chair, surfaces and protective equipment are prepared again between every
+                  appointment—so your treatment begins in a clean, carefully controlled space.
+                </p>
+                <div className="mt-7 grid gap-3 sm:grid-cols-2">
+                  {protectiveMeasures.map((item) => (
+                    <div
+                      key={item}
+                      className="flex items-start gap-3 rounded-2xl border border-[#d8ebe8] bg-white/85 p-4 shadow-[0_8px_24px_rgba(20,84,87,.05)] backdrop-blur transition duration-300 hover:-translate-y-0.5 hover:border-[#83d8d0]"
+                    >
+                      <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-[#dcf6f2] text-sm font-bold text-[#168d84]">
+                        ✓
+                      </span>
+                      <p className="text-sm leading-5 font-semibold text-[#315c60] lg:text-base">
+                        {item}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="relative order-1 min-h-[350px] lg:order-2 lg:min-h-[600px]">
+                <div className="absolute inset-0 overflow-hidden rounded-[28px] bg-[#174e53] shadow-[0_28px_70px_rgba(15,72,76,.18)] sm:rounded-[40px]">
+                  <Image
+                    src="/office/kochi-04.webp"
+                    alt="Prepared Elite Dental Studio operatory"
+                    fill
+                    className="object-cover transition duration-700 hover:scale-[1.02]"
+                    sizes="(max-width:1024px) 100vw,54vw"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#083e42]/60 via-transparent to-transparent" />
+                </div>
+                <div className="absolute right-4 bottom-4 left-4 flex items-center gap-4 rounded-2xl border border-white/20 bg-[#0e4a4e]/88 p-4 text-white shadow-xl backdrop-blur-md sm:right-7 sm:bottom-7 sm:left-7 sm:p-5">
+                  <span className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-[#25bfae]">
+                    <ShieldIcon />
+                  </span>
+                  <p className="text-sm leading-6 text-white/70">
+                    <b className="block text-base text-white">Protection at every touchpoint</b>
+                    Cleaned, disinfected and prepared before you arrive.
+                  </p>
+                </div>
+                <div className="absolute -top-4 -right-2 hidden items-center gap-3 rounded-2xl bg-white p-4 text-[#174e53] shadow-[0_16px_45px_rgba(16,72,76,.15)] sm:flex lg:-right-5">
+                  <span className="grid h-10 w-10 place-items-center rounded-xl bg-[#dcf6f2] text-lg text-[#168d84]">
                     ✓
                   </span>
-                  <p className="text-sm leading-6 text-[#50696b] sm:text-base">{item}</p>
+                  <span className="text-sm leading-5 font-semibold">
+                    Reset between
+                    <br /> every appointment
+                  </span>
                 </div>
-              ))}
+              </div>
             </div>
           </div>
         </div>
@@ -343,8 +415,8 @@ export default function PatientSafetyPage() {
         </div>
       </section>
 
-      <section className="bg-[#edf8f6] px-5 py-14 sm:px-8 lg:py-20">
-        <div className="mx-auto max-w-4xl">
+      <section className="bg-[#edf8f6] px-5 py-8 sm:px-8 lg:py-14">
+        <div className="mx-auto max-w-6xl">
           <div className="text-center">
             <p className="text-xs font-bold tracking-[.2em] text-[#20aa9e] uppercase">
               Frequently asked questions

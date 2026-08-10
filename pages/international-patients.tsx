@@ -522,7 +522,7 @@ export default function InternationalPatientsPage() {
       </section>
 
       <section className="bg-[#edf8f6] px-5 py-8 sm:px-8 lg:py-14">
-        <div className="mx-auto max-w-4xl">
+        <div className="mx-auto max-w-6xl">
           <div className="text-center">
             <p className="text-xs font-bold tracking-[.2em] text-[#20aa9e] uppercase">
               Frequently asked questions
