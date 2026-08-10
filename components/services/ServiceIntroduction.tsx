@@ -13,7 +13,7 @@ export default function ServiceIntroduction({
 }: ServiceIntroductionProps) {
   return (
     <section className="grid items-center gap-10 lg:grid-cols-2 lg:gap-20">
-      <div className="relative min-h-[170px] overflow-hidden rounded-2xl sm:min-h-[340px] lg:min-h-80 mt-6 lg:mt-0">
+      <div className="relative mt-6 min-h-[170px] overflow-hidden rounded-2xl sm:min-h-[340px] lg:mt-0 lg:min-h-80">
         <Image
           src="/service/what-treatment.png"
           alt={serviceTitle}
@@ -24,7 +24,7 @@ export default function ServiceIntroduction({
       </div>
 
       <div>
-        <h2 className="text-3xl font-bold leading-tight text-[#2b7175] lg:text-[42px]">
+        <h2 className="text-3xl leading-tight font-bold text-[#2b7175] lg:text-[42px]">
           What Is {treatmentName}?
         </h2>
         <div className="my-5 h-px bg-gray-500" />

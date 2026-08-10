@@ -9,7 +9,8 @@ export default function OfficeHero() {
           eyebrow: "A modern space for better smiles",
           title: "Our Dental",
           accent: "Office",
-          description: "Step inside a calm, technology-led environment designed around clinical precision, patient comfort and care for every age.",
+          description:
+            "Step inside a calm, technology-led environment designed around clinical precision, patient comfort and care for every age.",
         }}
       />
     </div>

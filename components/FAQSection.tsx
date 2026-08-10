@@ -7,19 +7,19 @@ export default function FAQSection({ content = homeFaqContent }: { content?: FAQ
 
   return (
     <section className="faq-section mx-auto max-w-7xl px-5 py-6 sm:px-8 lg:px-12 lg:py-10">
-      <div className="rounded-[30px] bg-dent-surface px-6 py-10 sm:px-10 lg:grid lg:grid-cols-[0.9fr_1.1fr] lg:gap-14 lg:px-14 lg:py-10">
+      <div className="bg-dent-surface rounded-[30px] px-6 py-10 sm:px-10 lg:grid lg:grid-cols-[0.9fr_1.1fr] lg:gap-14 lg:px-14 lg:py-10">
         <div>
-          <p className="text-sm font-extrabold uppercase text-dent-accent sm:text-base">
+          <p className="text-dent-accent text-sm font-extrabold uppercase sm:text-base">
             {content.eyebrow}
           </p>
-          <h2 className="lg:mt-6 mt-3 text-2xl font-bold leading-[1.18] tracking-[-0.025em] text-[#29666b] sm:text-4xl">
+          <h2 className="mt-3 text-2xl leading-[1.18] font-bold tracking-[-0.025em] text-[#29666b] sm:text-4xl lg:mt-6">
             {content.title}
           </h2>
-          <p className="lg:mt-8 mt-3 max-w-[550px] text-base leading-[1.55] text-[#555] sm:text-lg">
+          <p className="mt-3 max-w-[550px] text-base leading-[1.55] text-[#555] sm:text-lg lg:mt-8">
             {content.description}
           </p>
 
-          <div className="lg:mt-12 mt-6 flex w-full max-w-[430px] items-center gap-3 rounded-[14px] bg-white px-4 py-4 shadow-[0_12px_30px_rgba(31,92,94,0.08)] sm:gap-5 sm:px-6 sm:py-5">
+          <div className="mt-6 flex w-full max-w-[430px] items-center gap-3 rounded-[14px] bg-white px-4 py-4 shadow-[0_12px_30px_rgba(31,92,94,0.08)] sm:gap-5 sm:px-6 sm:py-5 lg:mt-12">
             <Image
               src="/home/faqs-call.png"
               alt=""
@@ -47,24 +47,26 @@ export default function FAQSection({ content = homeFaqContent }: { content?: FAQ
             return (
               <article
                 key={faq.question}
-                className={`overflow-hidden rounded-[14px] transition ${isOpen ? "bg-dent-panel text-white" : "bg-white text-dent-panel"
-                  }`}
+                className={`overflow-hidden rounded-[14px] transition ${
+                  isOpen ? "bg-dent-panel text-white" : "text-dent-panel bg-white"
+                }`}
               >
                 <button
                   type="button"
                   onClick={() => setOpenIndex(isOpen ? -1 : index)}
                   aria-expanded={isOpen}
-                  className="flex w-full items-center justify-between gap-5 lg:px-7 px-4 lg:py-5 py-3 text-left"
+                  className="flex w-full items-center justify-between gap-5 px-4 py-3 text-left lg:px-7 lg:py-5"
                 >
                   <span className="text-sm font-semibold lg:text-lg">{faq.question}</span>
                   <span className="text-2xl font-black">{isOpen ? "−" : "+"}</span>
                 </button>
                 <div
-                  className={`grid transition-[grid-template-rows] duration-300 ${isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
-                    }`}
+                  className={`grid transition-[grid-template-rows] duration-300 ${
+                    isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+                  }`}
                 >
                   <div className="overflow-hidden">
-                    <div className="lg:mx-7 mx-4 border-t border-white/60 lg:pb-5 pb-2 pt-3 text-sm leading-[1.5] text-white/95 sm:text-base">
+                    <div className="mx-4 border-t border-white/60 pt-3 pb-2 text-sm leading-[1.5] text-white/95 sm:text-base lg:mx-7 lg:pb-5">
                       {faq.answer}
                     </div>
                   </div>

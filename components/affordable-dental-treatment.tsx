@@ -23,18 +23,49 @@ export default function AffordableDentalTreatment() {
   return (
     <section className="mx-auto max-w-7xl px-5 py-8 sm:px-8 lg:px-12 lg:py-14">
       <div className="rounded-[28px] bg-[#f0faf8] px-6 py-9 sm:px-10 lg:px-14 lg:py-12">
-        <h2 className="text-3xl font-semibold leading-[1.2] tracking-tight text-[#29666b] sm:text-[38px]">Elite Dental Studio: Specialist Dental Care Across Calicut, Kochi, Kannur and Coimbatore</h2>
+        <h2 className="text-3xl leading-[1.2] font-semibold tracking-tight text-[#29666b] sm:text-[38px]">
+          Elite Dental Studio: Specialist Dental Care Across Calicut, Kochi, Kannur and Coimbatore
+        </h2>
         <div className="mt-6 space-y-5 text-sm leading-[1.8] text-[#4a5555] lg:text-[17px]">
-          <p>Elite Dental Studio opened in Calicut in 2020 with a 4.8 star Google rating earned across 6 years and four ISO 9001 certified clinics in Calicut, Kochi, Kannur and Coimbatore. Over 10,000 dental implants placed. Over 15,000 aligner treatments completed. Over 8,000 Invisalign cases finished with a 98% treatment completion rate. Every one of those cases started with a digital X-ray and a full mouth examination before a plan was written.</p>
-          <p className="font-semibold text-[#29666b]">11 specialties. Each one handled by the team that trained for it, not reassigned to whoever is free:</p>
+          <p>
+            Elite Dental Studio opened in Calicut in 2020 with a 4.8 star Google rating earned
+            across 6 years and four ISO 9001 certified clinics in Calicut, Kochi, Kannur and
+            Coimbatore. Over 10,000 dental implants placed. Over 15,000 aligner treatments
+            completed. Over 8,000 Invisalign cases finished with a 98% treatment completion rate.
+            Every one of those cases started with a digital X-ray and a full mouth examination
+            before a plan was written.
+          </p>
+          <p className="font-semibold text-[#29666b]">
+            11 specialties. Each one handled by the team that trained for it, not reassigned to
+            whoever is free:
+          </p>
           <ul className="grid gap-3 lg:grid-cols-2 lg:gap-x-10">
-            {specialities.map((item) => <li key={item} className="flex items-start gap-3"><span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-dent-accent" /><span>{item}</span></li>)}
+            {specialities.map((item) => (
+              <li key={item} className="flex items-start gap-3">
+                <span className="bg-dent-accent mt-2 h-2 w-2 shrink-0 rounded-full" />
+                <span>{item}</span>
+              </li>
+            ))}
           </ul>
-          <p>90% of Elite Dental Studio&apos;s clinical leadership is women. The Famdent Excellence in Dentistry Award recognised the clinic for clinical innovation and patient care, making Elite Dental Studio one of the few dental chains in Kerala with national industry recognition for its clinical standards.</p>
+          <p>
+            90% of Elite Dental Studio&apos;s clinical leadership is women. The Famdent Excellence
+            in Dentistry Award recognised the clinic for clinical innovation and patient care,
+            making Elite Dental Studio one of the few dental chains in Kerala with national industry
+            recognition for its clinical standards.
+          </p>
           <ul className="space-y-3">
-            {clinicAreas.map((item) => <li key={item} className="flex items-start gap-3"><span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-dent-accent" /><span>{item}</span></li>)}
+            {clinicAreas.map((item) => (
+              <li key={item} className="flex items-start gap-3">
+                <span className="bg-dent-accent mt-2 h-2 w-2 shrink-0 rounded-full" />
+                <span>{item}</span>
+              </li>
+            ))}
           </ul>
-          <p className="font-semibold text-[#29666b]">The best dental clinic in Calicut gives you a diagnosis before it gives you a bill. Elite Dental Studio has done that since 2020. Book a consultation at the dental clinic in Calicut, Kochi, Kannur and Coimbatore now.</p>
+          <p className="font-semibold text-[#29666b]">
+            The best dental clinic in Calicut gives you a diagnosis before it gives you a bill.
+            Elite Dental Studio has done that since 2020. Book a consultation at the dental clinic
+            in Calicut, Kochi, Kannur and Coimbatore now.
+          </p>
         </div>
       </div>
     </section>

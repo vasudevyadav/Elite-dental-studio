@@ -20,7 +20,10 @@ const trustPoints = [
 
 export default function StatsBar() {
   return (
-    <section aria-label="Elite Dental Studio highlights" className="w-full bg-[#29696d] py-7 lg:py-9">
+    <section
+      aria-label="Elite Dental Studio highlights"
+      className="w-full bg-[#29696d] py-7 lg:py-9"
+    >
       <div className="mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-20">
         <div className="grid grid-cols-1 items-center gap-7 sm:grid-cols-3 sm:gap-4 lg:gap-8">
           {trustPoints.map(({ icon, title, subtitle }) => (
@@ -29,8 +32,10 @@ export default function StatsBar() {
                 <Image src={icon} alt="" fill aria-hidden="true" className="object-contain" />
               </div>
               <div className="max-w-[300px] text-white">
-                <h2 className="text-sm font-bold leading-[1.25] lg:text-base">{title}</h2>
-                <p className="mt-1 text-xs font-medium leading-[1.4] text-white/90 lg:text-sm">{subtitle}</p>
+                <h2 className="text-sm leading-[1.25] font-bold lg:text-base">{title}</h2>
+                <p className="mt-1 text-xs leading-[1.4] font-medium text-white/90 lg:text-sm">
+                  {subtitle}
+                </p>
               </div>
             </article>
           ))}

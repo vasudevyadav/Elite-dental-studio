@@ -5,10 +5,13 @@ import SitePage from "@/components/SitePage";
 
 export default function DoctorsPage() {
   return (
-    <SitePage title="Our Doctors | Elite Dental Studio" description="Meet the experienced dental specialists at Elite Dental Studio and book your appointment.">
-          <DoctorsDirectory />
-          <FAQSection />
-          <BookAppointmentSection />
+    <SitePage
+      title="Our Doctors | Elite Dental Studio"
+      description="Meet the experienced dental specialists at Elite Dental Studio and book your appointment."
+    >
+      <DoctorsDirectory />
+      <FAQSection />
+      <BookAppointmentSection />
     </SitePage>
   );
 }

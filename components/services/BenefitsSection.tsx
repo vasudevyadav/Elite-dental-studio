@@ -10,44 +10,70 @@ const benefits = [
 ];
 
 const positions = [
-  "left-[32%] top-[20%]", "left-[13.5%] top-[42%]", "left-[32.5%] top-[64%]",
-  "left-[68%] top-[20%]", "left-[87%] top-[42%]", "left-[68%] top-[64%]",
+  "left-[32%] top-[20%]",
+  "left-[13.5%] top-[42%]",
+  "left-[32.5%] top-[64%]",
+  "left-[68%] top-[20%]",
+  "left-[87%] top-[42%]",
+  "left-[68%] top-[64%]",
 ];
 
 export default function BenefitsSection({ treatmentName }: { treatmentName: string }) {
   return (
-    <section className="lg:pb-12 lg:pt-20 pb-2 pt-10 text-center">
-      <h2 className="text-2xl font-bold leading-tight text-[#2b7175] lg:text-[40px]">Benefits of<br />{treatmentName}</h2>
-      <p className="mt-5 text-sm font-medium leading-7 lg:text-lg lg:leading-8">Where laser treatment is clinically suitable, it offers clear advantages over conventional <br className="hidden lg:block" /> soft tissue methods:</p>
+    <section className="pt-10 pb-2 text-center lg:pt-20 lg:pb-12">
+      <h2 className="text-2xl leading-tight font-bold text-[#2b7175] lg:text-[40px]">
+        Benefits of
+        <br />
+        {treatmentName}
+      </h2>
+      <p className="mt-5 text-sm leading-7 font-medium lg:text-lg lg:leading-8">
+        Where laser treatment is clinically suitable, it offers clear advantages over conventional{" "}
+        <br className="hidden lg:block" /> soft tissue methods:
+      </p>
 
       <div
-        className="-mx-5 mt-8 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-5 text-left [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:hidden"
+        className="-mx-5 mt-8 flex snap-x snap-mandatory [scrollbar-width:none] gap-4 overflow-x-auto px-5 pb-5 text-left lg:hidden [&::-webkit-scrollbar]:hidden"
         role="region"
         aria-label={`Benefits of ${treatmentName}`}
         tabIndex={0}
       >
         {benefits.map((benefit, index) => (
-          <article className="w-[78vw] max-w-[310px] shrink-0 snap-start rounded-2xl border border-[#a8d9d5] bg-[#ecfaf7] p-5" key={benefit}>
+          <article
+            className="w-[78vw] max-w-[310px] shrink-0 snap-start rounded-2xl border border-[#a8d9d5] bg-[#ecfaf7] p-5"
+            key={benefit}
+          >
             <span className="mb-4 grid h-10 w-10 place-items-center rounded-full bg-[#25d0c0] text-sm font-bold text-white">
               {String(index + 1).padStart(2, "0")}
             </span>
-            <p className="text-sm font-medium leading-6 text-[#454b4b]">{benefit}</p>
+            <p className="text-sm leading-6 font-medium text-[#454b4b]">{benefit}</p>
           </article>
         ))}
       </div>
       <p className="text-xs font-semibold text-[#2b7175] lg:hidden">Swipe to see all benefits →</p>
 
       <div className="relative mx-auto mt-8 hidden aspect-[1605/865] w-full max-w-[1605px] lg:block">
-        <Image src="/service/services-inner-6.png" alt={`Benefits of ${treatmentName}`} fill sizes="100vw" className="object-contain" />
+        <Image
+          src="/service/services-inner-6.png"
+          alt={`Benefits of ${treatmentName}`}
+          fill
+          sizes="100vw"
+          className="object-contain"
+        />
         {benefits.map((benefit, index) => (
-          <span className={`absolute z-10 w-[12%] -translate-x-1/2 -translate-y-1/2 text-[clamp(9px,.78vw,13px)] leading-[1.35] text-[#454b4b] ${positions[index]}`} key={benefit}>{benefit}</span>
+          <span
+            className={`absolute z-10 w-[12%] -translate-x-1/2 -translate-y-1/2 text-[clamp(9px,.78vw,13px)] leading-[1.35] text-[#454b4b] ${positions[index]}`}
+            key={benefit}
+          >
+            {benefit}
+          </span>
         ))}
       </div>
 
-      <p className="mx-auto mt-5 w-full max-w-5xl px-1 text-sm font-semibold leading-7 sm:w-10/12 lg:mt-4 lg:text-xl lg:leading-normal">
-        Patients seeking advanced dental laser treatment in Kochi and Kannur trust Elite Dental Studio for safe, precise, and specialist-led care, ensuring faster healing, minimal discomfort, and outstanding clinical outcomes.
+      <p className="mx-auto mt-5 w-full max-w-5xl px-1 text-sm leading-7 font-semibold sm:w-10/12 lg:mt-4 lg:text-xl lg:leading-normal">
+        Patients seeking advanced dental laser treatment in Kochi and Kannur trust Elite Dental
+        Studio for safe, precise, and specialist-led care, ensuring faster healing, minimal
+        discomfort, and outstanding clinical outcomes.
       </p>
-
     </section>
   );
 }

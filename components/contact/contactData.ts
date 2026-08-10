@@ -13,7 +13,11 @@ export const contactClinics: ContactClinic[] = [
   {
     name: "Calicut Clinic",
     shortName: "Calicut",
-    address: ["The Mezzanine Floor, Apollo Tower", "Opposite Swapna Nagari, Mini Bypass Rd", "Eranhipalam P.O, Kozhikode, Kerala 673006"],
+    address: [
+      "The Mezzanine Floor, Apollo Tower",
+      "Opposite Swapna Nagari, Mini Bypass Rd",
+      "Eranhipalam P.O, Kozhikode, Kerala 673006",
+    ],
     phone: "+91 9745 072 555",
     landline: "0495 3552 555",
     email: "elitedentalstudioreception@gmail.com",
@@ -23,7 +27,11 @@ export const contactClinics: ContactClinic[] = [
   {
     name: "Kochi Clinic",
     shortName: "Kochi",
-    address: ["5/981 A, Main Avenue Road", "Near Manorama Junction, Panampilly Nagar", "Kochi, Kerala 682036"],
+    address: [
+      "5/981 A, Main Avenue Road",
+      "Near Manorama Junction, Panampilly Nagar",
+      "Kochi, Kerala 682036",
+    ],
     phone: "+91 9567 124 888",
     landline: "0484 4024 888",
     email: "elitedentalkochireception@gmail.com",
@@ -41,7 +49,11 @@ export const contactClinics: ContactClinic[] = [
   {
     name: "Coimbatore Clinic",
     shortName: "Coimbatore",
-    address: ["First Floor, Alankar Building", "Diwan Bahadur Rd, opposite Tanishq", "R.S. Puram, Coimbatore, Tamil Nadu 641002"],
+    address: [
+      "First Floor, Alankar Building",
+      "Diwan Bahadur Rd, opposite Tanishq",
+      "R.S. Puram, Coimbatore, Tamil Nadu 641002",
+    ],
     phone: "+91 9633 694999",
     mapUrl: "https://maps.app.goo.gl/Wx3n9HuttpszrQpy5",
     mapQuery: "Alankar Building, Diwan Bahadur Road, R.S. Puram, Coimbatore, Tamil Nadu 641002",

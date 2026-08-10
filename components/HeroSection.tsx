@@ -1,9 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 
-const HOME_SLIDES = [
-  { img: "/home/slider-1.png", alt: "Dental Care 1" },
-];
+const HOME_SLIDES = [{ img: "/home/slider-1.png", alt: "Dental Care 1" }];
 
 type HeroSlide = { img: string; alt: string };
 
@@ -19,7 +17,13 @@ type HeroSectionProps = {
 
 const ChevronDown = () => (
   <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-    <path d="M3 5l4 4 4-4" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+    <path
+      d="M3 5l4 4 4-4"
+      stroke="white"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
   </svg>
 );
 
@@ -72,7 +76,6 @@ export default function HeroSection({ slides = HOME_SLIDES, content }: HeroSecti
 
   return (
     <section className="relative h-[430px] overflow-hidden sm:h-[560px] lg:h-[clamp(560px,42.51vw,700px)]">
-
       {/* Background image slider */}
       {slides.map((s, i) => (
         <div
@@ -86,7 +89,7 @@ export default function HeroSection({ slides = HOME_SLIDES, content }: HeroSecti
             fill
             quality={60}
             sizes="100vw"
-            className="object-cover lg:object-center object-[-100px]"
+            className="object-cover object-[-100px] lg:object-center"
             priority={i === 0}
             fetchPriority={i === 0 ? "high" : "auto"}
           />
@@ -94,26 +97,35 @@ export default function HeroSection({ slides = HOME_SLIDES, content }: HeroSecti
       ))}
 
       {/* Slide dots */}
-      {slides.length > 1 && <div className="absolute bottom-5 left-1/2 z-40 flex -translate-x-1/2 items-center gap-2 lg:bottom-7">
-        {slides.map((_, i) => (
-          <button
-            key={i}
-            onClick={() => setSlide(i)}
-            aria-label={`Slide ${i + 1}`}
-            className={`smooth-hover h-2.5 rounded-full ${i === slide ? "bg-dent-accent w-7" : "bg-white/60 w-2.5 hover:bg-white"
+      {slides.length > 1 && (
+        <div className="absolute bottom-5 left-1/2 z-40 flex -translate-x-1/2 items-center gap-2 lg:bottom-7">
+          {slides.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setSlide(i)}
+              aria-label={`Slide ${i + 1}`}
+              className={`smooth-hover h-2.5 rounded-full ${
+                i === slide ? "bg-dent-accent w-7" : "w-2.5 bg-white/60 hover:bg-white"
               }`}
-          />
-        ))}
-      </div>}
+            />
+          ))}
+        </div>
+      )}
 
       {content && (
         <div className="pointer-events-none absolute inset-0 z-[35] mx-auto flex max-w-7xl items-center px-5 pb-24 sm:px-8 lg:px-12 lg:pb-0">
           <div className="max-w-[610px] text-white [text-shadow:0_2px_20px_rgba(4,49,53,.35)] lg:max-w-[44%] xl:max-w-[610px]">
-            <p className="text-xs font-bold uppercase tracking-[.18em] text-[#56e2d5] sm:text-sm">{content.eyebrow}</p>
-            <h1 className="mt-3 text-4xl font-semibold leading-[1.04] tracking-[-.045em] sm:text-6xl lg:text-[50px] xl:text-[68px]">
-              {content.title}<br /><span className="text-[#45d8ca]">{content.accent}</span>
+            <p className="text-xs font-bold tracking-[.18em] text-[#56e2d5] uppercase sm:text-sm">
+              {content.eyebrow}
+            </p>
+            <h1 className="mt-3 text-4xl leading-[1.04] font-semibold tracking-[-.045em] sm:text-6xl lg:text-[50px] xl:text-[68px]">
+              {content.title}
+              <br />
+              <span className="text-[#45d8ca]">{content.accent}</span>
             </h1>
-            <p className="mt-5 max-w-[560px] text-sm font-medium leading-6 text-white/90 sm:text-lg sm:leading-8 lg:text-base xl:text-lg">{content.description}</p>
+            <p className="mt-5 max-w-[560px] text-sm leading-6 font-medium text-white/90 sm:text-lg sm:leading-8 lg:text-base xl:text-lg">
+              {content.description}
+            </p>
           </div>
         </div>
       )}
@@ -123,7 +135,7 @@ export default function HeroSection({ slides = HOME_SLIDES, content }: HeroSecti
         <button
           type="button"
           onClick={() => setModalOpen(true)}
-          className="smooth-hover button-hover hover-lift inline-flex min-w-[220px] items-center justify-center rounded-lg bg-dent-accent px-7 py-3.5 text-sm font-extrabold uppercase tracking-wide text-white shadow-[0_12px_30px_rgba(7,86,90,0.28)] active:scale-[0.98] focus:outline-none focus:ring-4 focus:ring-white/40"
+          className="smooth-hover button-hover hover-lift bg-dent-accent inline-flex min-w-[220px] items-center justify-center rounded-lg px-7 py-3.5 text-sm font-extrabold tracking-wide text-white uppercase shadow-[0_12px_30px_rgba(7,86,90,0.28)] focus:ring-4 focus:ring-white/40 focus:outline-none active:scale-[0.98]"
         >
           Book an Appointment
         </button>
@@ -131,20 +143,38 @@ export default function HeroSection({ slides = HOME_SLIDES, content }: HeroSecti
 
       {/* Form – right side, on top of slider */}
       <div className="absolute inset-y-0 right-[7%] z-40 hidden w-full items-center lg:flex lg:px-0">
-        <div className=" w-full rounded-[18px] bg-white/95 p-4 shadow-2xl backdrop-blur-sm sm:max-w-[470px] sm:p-6 lg:p-8 absolute right-10">
+        <div className="absolute right-10 w-full rounded-[18px] bg-white/95 p-4 shadow-2xl backdrop-blur-sm sm:max-w-[470px] sm:p-6 lg:p-8">
           <h3 className="mb-4 text-center text-base font-bold text-[#039382] sm:mb-6 lg:text-xl">
             Book an Appointment
           </h3>
 
           <form onSubmit={handleSubmit} className="flex flex-col gap-3 sm:gap-5">
-            <input type="text" name="name" value={form.name} onChange={handleChange}
-              placeholder="Enter Your Name" className={inputClass} />
+            <input
+              type="text"
+              name="name"
+              value={form.name}
+              onChange={handleChange}
+              placeholder="Enter Your Name"
+              className={inputClass}
+            />
 
-            <input type="tel" name="phone" value={form.phone} onChange={handleChange}
-              placeholder="Enter Your Mobile No." className={inputClass} />
+            <input
+              type="tel"
+              name="phone"
+              value={form.phone}
+              onChange={handleChange}
+              placeholder="Enter Your Mobile No."
+              className={inputClass}
+            />
 
-            <input type="email" name="email" value={form.email} onChange={handleChange}
-              placeholder="Enter Your Mail" className={inputClass} />
+            <input
+              type="email"
+              name="email"
+              value={form.email}
+              onChange={handleChange}
+              placeholder="Enter Your Mail"
+              className={inputClass}
+            />
 
             <input
               type="text"
@@ -154,32 +184,48 @@ export default function HeroSection({ slides = HOME_SLIDES, content }: HeroSecti
               placeholder="DD/MM/YYYY"
               className={inputClass}
               onFocus={(e) => (e.target.type = "date")}
-              onBlur={(e) => { if (!e.target.value) e.target.type = "text"; }}
+              onBlur={(e) => {
+                if (!e.target.value) e.target.type = "text";
+              }}
             />
 
             <div className="relative">
-              <select aria-label="Select clinic" name="clinic" value={form.clinic} onChange={handleChange}
-                className="h-11 w-full appearance-none rounded-[5px] border border-[#8bb5b6] bg-[#f5fbfa] px-4 pr-12 text-sm text-gray-500 focus:border-dent-accent focus:outline-none sm:h-12 sm:px-5">
+              <select
+                aria-label="Select clinic"
+                name="clinic"
+                value={form.clinic}
+                onChange={handleChange}
+                className="focus:border-dent-accent h-11 w-full appearance-none rounded-[5px] border border-[#8bb5b6] bg-[#f5fbfa] px-4 pr-12 text-sm text-gray-500 focus:outline-none sm:h-12 sm:px-5"
+              >
                 <option value="">Select Clinic</option>
                 <option value="calicut">Calicut</option>
                 <option value="kochi">Kochi</option>
                 <option value="kannur">Kannur</option>
                 <option value="coimbatore">Coimbatore</option>
               </select>
-              <div className="absolute right-0 top-0 h-full w-11 bg-dent-nav rounded-r-lg flex items-center justify-center pointer-events-none">
+              <div className="bg-dent-nav pointer-events-none absolute top-0 right-0 flex h-full w-11 items-center justify-center rounded-r-lg">
                 <ChevronDown />
               </div>
             </div>
 
-            <button type="submit"
-              className="smooth-hover button-hover hover-lift mx-auto mt-2 w-full max-w-[245px] rounded-[5px] bg-dent-accent py-3 text-sm font-bold text-white hover:bg-dent-nav">
+            <button
+              type="submit"
+              className="smooth-hover button-hover hover-lift bg-dent-accent hover:bg-dent-nav mx-auto mt-2 w-full max-w-[245px] rounded-[5px] py-3 text-sm font-bold text-white"
+            >
               Book Now!
             </button>
           </form>
         </div>
       </div>
       <div>
-        <Image src="/home/hero-sha.png" alt="" width={2056} height={456} aria-hidden="true" className="absolute bottom-0 left-0 z-30 h-auto w-full" />
+        <Image
+          src="/home/hero-sha.png"
+          alt=""
+          width={2056}
+          height={456}
+          aria-hidden="true"
+          className="absolute bottom-0 left-0 z-30 h-auto w-full"
+        />
       </div>
 
       {/* Mobile appointment modal */}
@@ -203,14 +249,14 @@ export default function HeroSection({ slides = HOME_SLIDES, content }: HeroSecti
               type="button"
               onClick={() => setModalOpen(false)}
               aria-label="Close appointment form"
-              className="smooth-hover hover-lift absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full bg-[#e8f8f6] text-xl font-bold text-dent-nav hover:bg-[#d5f3ef] focus:outline-none focus:ring-4 focus:ring-dent-accent/20"
+              className="smooth-hover hover-lift text-dent-nav focus:ring-dent-accent/20 absolute top-4 right-4 flex h-9 w-9 items-center justify-center rounded-full bg-[#e8f8f6] text-xl font-bold hover:bg-[#d5f3ef] focus:ring-4 focus:outline-none"
             >
               ×
             </button>
 
             <h3
               id="mobile-appointment-title"
-              className="mb-5 pr-10 text-center text-lg font-bold italic text-dent-text"
+              className="text-dent-text mb-5 pr-10 text-center text-lg font-bold italic"
             >
               Book an Appointment
             </h3>
@@ -262,7 +308,7 @@ export default function HeroSection({ slides = HOME_SLIDES, content }: HeroSecti
                   name="clinic"
                   value={form.clinic}
                   onChange={handleChange}
-                  className="h-11 w-full appearance-none rounded-[5px] border border-[#8bb5b6] bg-[#f5fbfa] px-4 pr-12 text-sm text-gray-500 focus:border-dent-accent focus:outline-none focus:ring-1 focus:ring-dent-accent sm:h-12 sm:px-5"
+                  className="focus:border-dent-accent focus:ring-dent-accent h-11 w-full appearance-none rounded-[5px] border border-[#8bb5b6] bg-[#f5fbfa] px-4 pr-12 text-sm text-gray-500 focus:ring-1 focus:outline-none sm:h-12 sm:px-5"
                   required
                 >
                   <option value="">Select Clinic</option>
@@ -271,14 +317,14 @@ export default function HeroSection({ slides = HOME_SLIDES, content }: HeroSecti
                   <option value="kannur">Kannur</option>
                   <option value="coimbatore">Coimbatore</option>
                 </select>
-                <div className="pointer-events-none absolute right-0 top-0 flex h-full w-11 items-center justify-center rounded-r-lg bg-dent-nav">
+                <div className="bg-dent-nav pointer-events-none absolute top-0 right-0 flex h-full w-11 items-center justify-center rounded-r-lg">
                   <ChevronDown />
                 </div>
               </div>
 
               <button
                 type="submit"
-                className="smooth-hover button-hover hover-lift mx-auto mt-2 w-full max-w-[260px] rounded-[6px] bg-dent-accent py-3 text-sm font-bold text-white hover:bg-dent-nav focus:outline-none focus:ring-4 focus:ring-dent-accent/25"
+                className="smooth-hover button-hover hover-lift bg-dent-accent hover:bg-dent-nav focus:ring-dent-accent/25 mx-auto mt-2 w-full max-w-[260px] rounded-[6px] py-3 text-sm font-bold text-white focus:ring-4 focus:outline-none"
               >
                 Book Now!
               </button>
@@ -286,7 +332,6 @@ export default function HeroSection({ slides = HOME_SLIDES, content }: HeroSecti
           </div>
         </div>
       )}
-
     </section>
   );
 }

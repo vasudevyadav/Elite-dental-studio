@@ -1,247 +1,190 @@
 import type { GetStaticPaths, GetStaticProps } from "next";
 import Image from "next/image";
-import Link from "next/link";
-import Head from "next/head";
 import SitePage from "@/components/SitePage";
 import FAQSection from "@/components/FAQSection";
 import BookAppointmentSection from "@/components/BookAppointmentSection";
-import { blogPosts, blogCategories, findBlogPost, recentPosts } from "@/components/blogData";
+import BlogSidebar from "@/components/BlogSidebar";
+import { blogPosts, findBlogPost } from "@/components/blogData";
 
-type Props = {
-  post: (typeof blogPosts)[number];
-};
+type Props = { post: (typeof blogPosts)[number] };
+
+const benefits = [
+  [
+    "Near-Invisible Look For Work And Social Life",
+    "Invisalign trays stay almost unnoticeable in normal lighting beyond 1.5 feet. This helps when you attend meetings, interviews, college classes or video calls. You can speak, smile and interact without worrying about metal brackets showing in photos.",
+  ],
+  [
+    "Comfortable Fit Without Wires Or Brackets",
+    "Invisalign uses smooth, custom-made plastic trays. There are no wires that poke your cheeks and no brackets that rub against your lips. Most people adjust to the trays within 48 hours.",
+  ],
+  [
+    "Easier Eating Without Food Restrictions",
+    "You remove Invisalign before eating. Fixed braces often need you to avoid hard or sticky foods. With Invisalign, you can eat normally, then brush and wear your trays again.",
+  ],
+  [
+    "Better Brushing And Flossing Every Day",
+    "Invisalign makes oral hygiene easier because you remove the trays before cleaning your teeth. This helps reduce plaque buildup, gum irritation and food trapping during treatment.",
+  ],
+  [
+    "Digital Planning For Predictable Smile Correction",
+    "Invisalign treatment uses advanced imaging and 3D scanning to plan tooth movement before you start. The scan helps your dentist check your bite, tooth position and expected smile changes.",
+  ],
+];
 
 export default function BlogPostPage({ post }: Props) {
-  const isInvisalignPost = post.slug === "invisalign-clear-aligners-elite-dental-studio-kochi-benefits-process-cost";
-
   return (
     <SitePage title={`${post.title} | Elite Dental Studio`} description={post.excerpt}>
-      <section className="px-5 pb-14 pt-10 sm:px-8 lg:px-12 lg:pb-24">
-        <div className="mx-auto max-w-[1240px]">
-          <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_330px] lg:items-start">
-            <main className="space-y-10">
-              <article className="rounded-[28px] bg-[#f0faf8] p-6 shadow-[0_24px_70px_rgba(22,110,113,0.12)] sm:p-10">
-                <div className="grid gap-10 lg:grid-cols-[1fr_420px] lg:items-center">
-                  <div>
-                    <p className="text-sm font-extrabold uppercase tracking-[0.24em] text-[#1f8f83]">Latest Posts</p>
-                    <h1 className="mt-4 text-4xl font-black leading-tight text-[#164e52] sm:text-5xl">
-                      {post.title}
-                    </h1>
-                    <p className="mt-5 max-w-3xl text-base leading-8 text-[#47595a] sm:text-lg">
-                      {post.excerpt}
-                    </p>
-                    <div className="mt-8 flex flex-wrap items-center gap-4">
-                      <span className="rounded-full bg-[#25cdbd] px-4 py-2 text-sm font-semibold text-white">{post.author}</span>
-                      <span className="text-sm text-[#47595a]">Published: {post.date}</span>
-                    </div>
-                    <Link href="/blog" className="mt-6 inline-flex rounded-full bg-[#296f73] px-6 py-3 text-sm font-bold text-white shadow-lg shadow-[#234f51]/15 transition hover:bg-[#205c60]">
-                      Back to Blog
-                    </Link>
-                  </div>
-                  <div className="relative overflow-hidden rounded-[28px] bg-white shadow-[0_18px_35px_rgba(22,110,113,0.1)]">
-                    <Image src={post.image} alt={post.title} width={640} height={520} className="h-full w-full object-cover" />
-                  </div>
-                </div>
-              </article>
-
-              <article className="rounded-[28px] bg-white p-6 shadow-[0_20px_60px_rgba(22,110,113,0.08)] sm:p-10">
-                <div className="space-y-8 text-[#395554]">
-                  {post.content.map((paragraph, index) => (
-                    <p key={index} className="text-base leading-8 sm:text-lg">
-                      {paragraph}
-                    </p>
-                  ))}
-
-                  {isInvisalignPost && (
-                    <>
-                      <div className="rounded-[24px] bg-[#e5f8fb] p-7">
-                        <h2 className="text-2xl font-bold text-[#164e52]">Why Invisalign Leads The Clear Aligner Category?</h2>
-                        <ul className="mt-5 space-y-4 text-[#334f51]">
-                          <li>• Invisalign combines advanced material with precise digital planning.</li>
-                          <li>• SmartTrack material is more elastic than generic aligner plastic.</li>
-                          <li>• Attachments help guide tooth movement with better control.</li>
-                          <li>• Aligners are changed in stages for smoother progress.</li>
-                          <li>• 20-22 hour wear delivers consistent results.</li>
-                          <li>• Retainers protect the final alignment long-term.</li>
-                        </ul>
-                      </div>
-
-                      <div>
-                        <h2 className="text-2xl font-bold text-[#164e52]">5 Benefits Of Invisalign Clear Aligners</h2>
-                        <div className="mt-6 space-y-6">
-                          <div>
-                            <h3 className="text-lg font-bold text-[#1f4c4d]">1. Near-Invisible Look For Work And Social Life</h3>
-                            <p className="mt-2 text-base leading-8">
-                              Invisalign trays stay unnoticeable at typical meeting or conversation distance, even in college classes or video calls. You can speak, smile and interact without worrying about visible brackets.
-                            </p>
-                          </div>
-                          <div>
-                            <h3 className="text-lg font-bold text-[#1f4c4d]">2. Comfortable Fit Without Wires Or Brackets</h3>
-                            <p className="mt-2 text-base leading-8">
-                              There are no wires that poke your cheeks or brackets that rub your lips. Most people adjust to the smooth, custom-made trays within 48 hours.
-                            </p>
-                          </div>
-                          <div>
-                            <h3 className="text-lg font-bold text-[#1f4c4d]">3. Easier Eating Without Food Restrictions</h3>
-                            <p className="mt-2 text-base leading-8">
-                              You remove Invisalign before eating. Fixed braces often mean you avoid 30+ foods. Flossing with threaders can take 8 to 10 minutes.
-                            </p>
-                            <p className="mt-2 text-base leading-8">
-                              With Invisalign, you do not need to avoid sticky, hard or crunchy foods the way you often do with braces. You can eat normally, then brush and wear your trays again.
-                            </p>
-                            <p className="mt-2 text-base leading-8">
-                              This is one of the most practical benefits of Invisalign in Kochi for busy students, professionals and people who eat out often.
-                            </p>
-                          </div>
-                          <div>
-                            <h3 className="text-lg font-bold text-[#1f4c4d]">4. Better Brushing And Flossing Every Day</h3>
-                            <p className="mt-2 text-base leading-8">
-                              Invisalign makes oral hygiene easier because you remove the trays before cleaning your teeth.
-                            </p>
-                            <p className="mt-2 text-base leading-8">
-                              This helps reduce plaque buildup, gum irritation and food trapping during treatment.
-                            </p>
-                          </div>
-                          <div>
-                            <h3 className="text-lg font-bold text-[#1f4c4d]">5. Digital Planning For Predictable Smile Correction</h3>
-                            <p className="mt-2 text-base leading-8">
-                              Invisalign treatment uses advanced imaging and 3D scanning to plan tooth movement before you start.
-                            </p>
-                            <p className="mt-2 text-base leading-8">
-                              The scan lets your dentist check your bite, tooth position and expected smile changes. This gives you a clearer idea of the treatment path before the first aligner arrives.
-                            </p>
-                          </div>
-                        </div>
-                        <p className="mt-6 text-base leading-8">
-                          These practical benefits of Invisalign in Kochi matter for students, professionals and busy parents.
-                        </p>
-                      </div>
-
-                      <div className="rounded-[24px] bg-[#f0faf8] p-7">
-                        <h2 className="text-2xl font-bold text-[#164e52]">Your Invisalign Journey At Elite Dental Studio Kochi</h2>
-                        <p className="mt-4 text-base leading-8">
-                          Your Invisalign journey at Elite Dental Studio Kochi starts with a scan, moves into digital planning and continues with regular progress checks.
-                        </p>
-                        <ul className="mt-5 space-y-4 text-[#334f51]">
-                          <li>• Consultation takes around 45 minutes.</li>
-                          <li>• Digital photos and X-rays guide assessment.</li>
-                          <li>• Intra-oral scans take about 12 minutes.</li>
-                          <li>• Both arches get scanned accurately.</li>
-                          <li>• ClinCheck shows your future smile.</li>
-                          <li>• First aligners arrive in 10-14 days.</li>
-                          <li>• Check-ups happen every 6-8 weeks.</li>
-                          <li>• Virtual scans support progress monitoring.</li>
-                        </ul>
-                      </div>
-
-                      <div>
-                        <p className="text-base leading-8">
-                          Your first visit helps us understand your teeth, bite and smile goals. The digital 3D scan creates a map of your mouth without messy impressions.
-                        </p>
-                        <p className="mt-4 text-base leading-8">
-                          ClinCheck treatment simulation lets you visualize the planned result before treatment starts. This helps you make a clear decision about clear aligner treatment in Kochi.
-                        </p>
-                      </div>
-
-                      <div className="rounded-[24px] bg-[#d8f9fb] p-7">
-                        <h2 className="text-2xl font-bold text-[#164e52]">What Makes Invisalign Work?</h2>
-                        <div className="grid gap-6 lg:grid-cols-[1fr_280px] lg:items-center">
-                          <div>
-                            <ul className="space-y-4 text-[#334f51]">
-                              <li>• SmartTrack material supports steady force.</li>
-                              <li>• 3D scans map tooth movement precisely.</li>
-                              <li>• SmartForce attachments improve grip.</li>
-                              <li>• Aligners move teeth in stages.</li>
-                              <li>• 20-22 hour wear drives results.</li>
-                              <li>• Retainers protect final alignment.</li>
-                            </ul>
-                          </div>
-                          <div className="overflow-hidden rounded-[24px] bg-white p-4">
-                            <Image src="/home/services/invisible-aligners.jpg" alt="Invisalign aligner" width={280} height={240} className="h-full w-full object-cover" />
-                          </div>
-                        </div>
-                        <div className="mt-6 rounded-[16px] bg-[#164e52] px-5 py-4 text-white">
-                          <p className="text-sm uppercase tracking-[0.2em] text-white/80">Understand your Invisalign suitability</p>
-                          <p className="mt-3 text-lg font-bold">Call: +91 9567124888</p>
-                        </div>
-                      </div>
-
-                      <div className="rounded-[24px] bg-[#f4fbfa] p-7">
-                        <h2 className="text-2xl font-bold text-[#164e52]">Your Invisalign Timeline At Elite Dental Kochi</h2>
-                        <ul className="mt-5 space-y-3 text-[#334f51]">
-                          <li>• Day 1: Consultation and 3D scan</li>
-                          <li>• Week 3: Receive first aligner sets</li>
-                          <li>• Week 4-8: Attachments placed if needed</li>
-                          <li>• Month 3-6: Progress check</li>
-                          <li>• Month 18-24: Complete active treatment</li>
-                          <li>• Final phase: Start retainers for stability</li>
-                        </ul>
-                      </div>
-
-                      <p className="text-base font-semibold leading-8 text-[#164e52]">
-                        Start your Invisalign journey in Kochi. Visit Elite Dental Studio for a complimentary 3D scan and treatment preview.
-                      </p>
-                    </>
-                  )}
-                </div>
-              </article>
-            </main>
-
-            <aside className="space-y-10">
-              <div className="rounded-[24px] bg-[#2b7478] px-7 py-7 text-white shadow-[0_18px_40px_rgba(15,67,69,0.18)]">
-                <h2 className="border-b border-white/50 pb-4 text-2xl font-bold">Categories</h2>
-                <ul className="mt-5 space-y-4 text-base font-semibold">
-                  <li className="flex gap-3">
-                    <span>•</span>
-                    <Link href="/blog" className="text-white/90 transition hover:text-white">
-                      All
-                    </Link>
-                  </li>
-                  {blogCategories.map((category) => (
-                    <li key={category} className="flex gap-3">
-                      <span>•</span>
-                      <Link href="/blog" className="text-white/90 transition hover:text-white">
-                        {category}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
+      <section className="mx-auto max-w-[1240px] px-4 pt-8 pb-[34px] text-[#333] sm:px-8 sm:pt-10 lg:px-[34px] lg:pt-12">
+        <p className="-mb-8 text-lg font-medium text-[#282828] sm:-mb-[26px] sm:text-xl">
+          Latest Posts
+        </p>
+        <div className="grid min-w-0 items-start gap-9 lg:grid-cols-[minmax(0,820px)_270px] lg:gap-10 xl:gap-[70px]">
+          <main>
+            <header className="relative mt-[50px] h-[250px] overflow-hidden rounded-[10px] bg-white after:absolute after:inset-0 after:z-[1] after:bg-[linear-gradient(90deg,#fff_0%,rgba(255,255,255,.9)_52%,transparent_100%)] sm:h-[330px] lg:h-[390px] lg:after:bg-[linear-gradient(90deg,#fff_0%,#fff_42%,rgba(255,255,255,.5)_55%,transparent_74%)]">
+              <div className="absolute top-6 left-5 z-[2] max-w-[70%] sm:top-[26px] sm:left-[30px] sm:max-w-[390px]">
+                <strong className="block text-[27px] leading-[1.1] font-extrabold tracking-[-.04em] text-[#18cfc1] [text-shadow:2px_2px_0_#19585c] sm:text-[39px] lg:text-[49px]">
+                  Invisalign
+                  <br />
+                  Clear Aligners
+                </strong>
+                <span className="mt-2 block text-sm leading-[1.4] text-[#2c2b2b] sm:text-xl lg:mt-2.5 lg:text-2xl">
+                  At
+                  <br />
+                  <b>Elite Dental Studio Kochi:</b>
+                  <br />
+                  Benefits, Process &amp; Cost
+                </span>
               </div>
+              <Image
+                className="z-0 object-cover object-[60%_center]"
+                src={post.image}
+                alt={post.title}
+                fill
+                priority
+                sizes="800px"
+              />
+            </header>
+            <article className="text-[15px] leading-[1.72] text-[#4c5555] sm:text-base [&_h1]:mt-8 [&_h1]:mb-5 [&_h1]:text-[22px] [&_h1]:leading-[1.35] [&_h1]:font-semibold [&_h1]:text-[#277579] sm:[&_h1]:text-[25px] [&_h2]:mt-8 [&_h2]:mb-3.5 [&_h2]:text-xl [&_h2]:leading-[1.35] [&_h2]:font-semibold [&_h2]:text-[#278184] sm:[&_h2]:mt-9 sm:[&_h2]:text-[23px] [&_h3]:mt-6 [&_h3]:mb-[7px] [&_h3]:text-base [&_h3]:leading-[1.4] [&_h3]:font-semibold [&_h3]:text-[#437f81] sm:[&_h3]:text-lg [&_li]:my-1 [&_p]:mb-[17px] [&_ul]:mt-2 [&_ul]:mb-[18px] [&_ul]:list-disc [&_ul]:pl-[18px]">
+              <h1>{post.title}</h1>
+              <p>
+                If you want straighter teeth but feel unsure about metal braces, Invisalign can feel
+                like the cleaner and more comfortable choice. You may worry about visibility during
+                meetings, food limits, speech changes or the final price. Invisalign in Kochi helps
+                solve these concerns with clear removable aligners that move teeth through planned
+                digital stages.
+              </p>
+              <p>
+                At Elite Dental Studio, we support your smile journey with an in-house iTero
+                scanner, certified Invisalign provider support and an orthodontist with 8+ years of
+                aligner experience.
+              </p>
 
-              <div className="rounded-[24px] bg-[#25cdbd] px-7 py-7 text-white shadow-[0_18px_40px_rgba(37,205,189,0.18)]">
-                <h2 className="border-b border-white/60 pb-4 text-2xl font-bold">Recent Posts</h2>
-                <ul className="mt-5 space-y-4 text-base font-semibold leading-6">
-                  {blogPosts.slice(0, 5).map((recentPostItem) => (
-                    <li key={recentPostItem.slug} className="flex gap-3">
-                      <span>•</span>
-                      <Link href={`/blog/${recentPostItem.slug}`} className="text-white/90 transition hover:text-white">
-                        {recentPostItem.title}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </aside>
-          </div>
+              <h2>Why Invisalign Leads The Clear Aligner Category?</h2>
+              <ul>
+                <li>
+                  Invisalign leads the clear aligner category because it combines advanced material,
+                  precise digital planning and global treatment data.
+                </li>
+                <li>
+                  Its SmartTrack material is around 30% more elastic than generic aligner plastic.
+                </li>
+                <li>
+                  SmartForce attachments and precision wings help guide tooth movement more
+                  accurately.
+                </li>
+                <li>Aligners are changed every one to two weeks for controlled movement.</li>
+              </ul>
 
-          <FAQSection />
-          <BookAppointmentSection />
+              <h2>5 Benefits Of Invisalign Clear Aligners</h2>
+              <p>
+                Invisalign helps you straighten your teeth with a discreet look, better comfort,
+                easier cleaning, fewer food restrictions and a treatment routine that fits daily
+                life.
+              </p>
+              {benefits.map(([title, body], index) => (
+                <section key={title}>
+                  <h3>
+                    {index + 1}. {title}
+                  </h3>
+                  <p>{body}</p>
+                </section>
+              ))}
+
+              <h2>Your Invisalign Journey At Elite Dental Studio Kochi</h2>
+              <p>
+                Your Invisalign journey at Elite Dental Studio Kochi starts with a scan, moves into
+                digital planning and continues with regular progress checks.
+              </p>
+              <ul>
+                <li>Consultation takes around 45 minutes.</li>
+                <li>Digital photos and X-rays guide assessment.</li>
+                <li>Intra-oral scans take about 12 minutes.</li>
+                <li>ClinCheck shows your future smile.</li>
+                <li>First aligners arrive in 10–14 days.</li>
+                <li>Check-ups happen every 6–8 weeks.</li>
+              </ul>
+              <p>
+                Your first visit helps us understand your teeth, bite and smile goals. The digital
+                3D scan creates a map of your mouth without messy impressions.
+              </p>
+
+              <section className="relative my-7 grid min-h-[300px] grid-cols-1 overflow-hidden rounded-xl bg-[#a9eafa] px-5 pt-5 pb-12 text-[#255b67] sm:my-[34px] sm:grid-cols-[1.25fr_.75fr] sm:px-7 sm:pt-7">
+                <div>
+                  <h2 className="!mt-0 !text-2xl !font-extrabold !text-[#20b4ad]">
+                    WHAT MAKES INVISALIGN WORK?
+                  </h2>
+                  <ul>
+                    <li>SmartTrack Material Supports Steady Force</li>
+                    <li>3d Scans Map Tooth Movement</li>
+                    <li>Smartforce Attachments Improve Grip</li>
+                    <li>Aligners Move Teeth In Stages</li>
+                    <li>20-22 Hour Wear Drives Results</li>
+                    <li>Retainers Protect Final Alignment</li>
+                  </ul>
+                </div>
+                <Image
+                  className="mx-auto my-[15px] h-[180px] w-[180px] self-center rounded-full object-cover sm:mx-0 sm:my-0 sm:h-[220px] sm:w-[220px]"
+                  src="/home/services/invisible-aligners.jpg"
+                  alt="Clear aligner treatment"
+                  width={280}
+                  height={250}
+                />
+                <strong className="absolute inset-x-0 bottom-0 bg-[#25bfb9] p-2 text-center text-[17px] text-white">
+                  Call: +91 9567124888
+                </strong>
+              </section>
+
+              <h2>Your Invisalign Timeline At Elite Dental Kochi</h2>
+              <ul>
+                <li>Day 1: Consultation and 3D scan</li>
+                <li>Week 3: Receive first aligner set</li>
+                <li>Week 4–8: Attachments placed if needed</li>
+                <li>Month 3–6: First progress check</li>
+                <li>Month 18–24: Complete active treatment</li>
+                <li>Final Phase: Start retainers for stability</li>
+              </ul>
+              <p>
+                Start your Invisalign journey in Kochi. Visit Elite Dental Studio for a
+                complimentary 3D scan and treatment preview.
+              </p>
+            </article>
+          </main>
+          <BlogSidebar />
         </div>
       </section>
+      <div className="mx-auto max-w-[1240px] [&_#appointment]:px-5 sm:[&_#appointment]:px-8 lg:[&_#appointment]:px-[34px] [&_.faq-section]:px-5 sm:[&_.faq-section]:px-8 lg:[&_.faq-section]:px-[34px]">
+        <FAQSection />
+        <BookAppointmentSection />
+      </div>
     </SitePage>
   );
 }
 
 export const getStaticPaths: GetStaticPaths = async () => ({
-  paths: blogPosts.map((post) => ({ params: { slug: post.slug } })),
+  paths: blogPosts.map(({ slug }) => ({ params: { slug } })),
   fallback: false,
 });
-
 export const getStaticProps: GetStaticProps<Props> = async ({ params }) => {
   const post = findBlogPost(String(params?.slug));
-  if (!post) {
-    return { notFound: true };
-  }
-
-  return { props: { post } };
+  return post ? { props: { post } } : { notFound: true };
 };

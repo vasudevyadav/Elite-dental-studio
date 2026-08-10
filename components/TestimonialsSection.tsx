@@ -42,26 +42,27 @@ export default function TestimonialsSection() {
   return (
     <section id="testimonials" className="overflow-hidden px-5 py-6 sm:px-8 lg:py-12">
       <div className="mx-auto max-w-7xl">
-        <div className="relative rounded-[28px] bg-dent-panel px-6 pb-[100px] pt-10 sm:px-10 lg:px-16 lg:pb-[160px] lg:pt-12">
+        <div className="bg-dent-panel relative rounded-[28px] px-6 pt-10 pb-[100px] sm:px-10 lg:px-16 lg:pt-12 lg:pb-[160px]">
           <Image
             src="/home/testimonial.png"
             alt=""
             width={251}
             height={266}
             aria-hidden="true"
-            className="pointer-events-none absolute right-[19%] top-[25%] hidden h-[190px] w-[180px] object-contain opacity-20 lg:block"
+            className="pointer-events-none absolute top-[25%] right-[19%] hidden h-[190px] w-[180px] object-contain opacity-20 lg:block"
           />
 
           <div className="relative z-10 flex flex-col gap-7 lg:flex-row lg:items-start lg:justify-between">
             <div>
-              <p className="text-sm font-semibold uppercase text-dent-accent sm:text-base">
+              <p className="text-dent-accent text-sm font-semibold uppercase sm:text-base">
                 Testimonial
               </p>
-              <h2 className="mt-3 max-w-[690px] text-2xl font-semibold leading-[1.15] tracking-[-0.025em] text-white lg:text-[39px]">
+              <h2 className="mt-3 max-w-[690px] text-2xl leading-[1.15] font-semibold tracking-[-0.025em] text-white lg:text-[39px]">
                 Real Stories of Exceptional Care &amp; Better Smiles
               </h2>
               <p className="mt-3 max-w-[790px] text-base leading-[1.55] text-white/95 sm:text-lg">
-                Across dozens of Google reviews, one line repeats, the doctor explained what they were doing before they did it.
+                Across dozens of Google reviews, one line repeats, the doctor explained what they
+                were doing before they did it.
               </p>
             </div>
 
@@ -69,18 +70,18 @@ export default function TestimonialsSection() {
               label="VIDEO REVIEW"
               onAction={() => move(1)}
               arrowClassName="text-[#28cabb]"
-              className="inline-flex w-fit items-center gap-4 rounded-[8px] bg-dent-accent lg:py-3 py-1.5 pl-5 pr-3 text-sm font-bold uppercase text-white transition hover:-translate-y-0.5 hover:bg-dent-nav"
+              className="bg-dent-accent hover:bg-dent-nav inline-flex w-fit items-center gap-4 rounded-[8px] py-1.5 pr-3 pl-5 text-sm font-bold text-white uppercase transition hover:-translate-y-0.5 lg:py-3"
             />
           </div>
         </div>
 
         <div className="relative z-20 mx-auto -mt-[135px] w-[94%] rounded-[22px] bg-[#f3fbfa] px-5 py-7 shadow-[0_18px_45px_rgba(36,91,94,0.12)] sm:w-[86%] sm:px-10 lg:w-[75%] lg:rounded-[26px] lg:px-14 lg:py-10">
           <div className="flex gap-3 sm:gap-5 lg:gap-8">
-            <span className="shrink-0 text-[46px] font-black leading-[0.75] text-[#29666b] sm:text-[72px]">
+            <span className="shrink-0 text-[46px] leading-[0.75] font-black text-[#29666b] sm:text-[72px]">
               “
             </span>
             <div className="min-w-0 flex-1">
-              <p className="text-sm italic leading-[1.55] text-[#343737] sm:text-lg">
+              <p className="text-sm leading-[1.55] text-[#343737] italic sm:text-lg">
                 {testimonial.text}
               </p>
 
@@ -96,12 +97,10 @@ export default function TestimonialsSection() {
                     />
                   </div>
                   <div>
-                    <h3 className="lg:text-xl text-lg font-extrabold text-[#29666b]">
+                    <h3 className="text-lg font-extrabold text-[#29666b] lg:text-xl">
                       {testimonial.name}
                     </h3>
-                    <p className="text-sm font-medium text-[#29666b]">
-                      {testimonial.role}
-                    </p>
+                    <p className="text-sm font-medium text-[#29666b]">{testimonial.role}</p>
                   </div>
                 </div>
 
@@ -110,7 +109,7 @@ export default function TestimonialsSection() {
                     type="button"
                     onClick={() => move(-1)}
                     aria-label="Previous testimonial"
-                    className="flex h-10 w-11 items-center justify-center bg-dent-accent text-white"
+                    className="bg-dent-accent flex h-10 w-11 items-center justify-center text-white"
                   >
                     <Arrow left />
                   </button>
@@ -118,7 +117,7 @@ export default function TestimonialsSection() {
                     type="button"
                     onClick={() => move(1)}
                     aria-label="Next testimonial"
-                    className="flex h-10 w-11 items-center justify-center bg-dent-panel text-white"
+                    className="bg-dent-panel flex h-10 w-11 items-center justify-center text-white"
                   >
                     <Arrow />
                   </button>

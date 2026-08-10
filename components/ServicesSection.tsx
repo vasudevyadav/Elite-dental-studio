@@ -19,8 +19,7 @@ const services: Service[] = [
   },
   {
     title: "Oral & Maxillofacial Surgery & Orthognathics",
-    description:
-      "Surgical correction of jaw position when braces alone cannot fix the bite.",
+    description: "Surgical correction of jaw position when braces alone cannot fix the bite.",
     image: "/home/services/dental-fillings.jpg",
     icon: "tooth",
   },
@@ -31,14 +30,62 @@ const services: Service[] = [
     image: "/home/services/invisible-aligners.jpg",
     icon: "aligner",
   },
-  { title: "Periodontics", description: "Deep cleaning and gum surgery that treats bleeding gums and the bone loss that causes loose teeth.", image: "/home/services/laser-dentistry.jpg", icon: "laser" },
-  { title: "Pediatric Dentistry", description: "Cavity checks, sealants and fluoride treatment planned around your child's exact age and tooth count.", image: "/about-freepik-checkup.jpg", icon: "tooth" },
-  { title: "Oral Medicine & Radiology", description: "Digital X-rays that locate the exact source of jaw pain or a tooth that hurts without a visible cause.", image: "/about-freepik-consultation.jpg", icon: "tooth" },
-  { title: "Endodontics", description: "Root canal treatment that removes infected tissue from inside a tooth, so it can stay in your mouth instead of being pulled.", image: "/home/services/dental-fillings.jpg", icon: "tooth" },
-  { title: "Prosthodontics", description: "Crowns, bridges, dentures and implants built to replace one tooth or a full arch you've lost.", image: "/service/services-2.png", icon: "tooth" },
-  { title: "Orthodontics", description: "Braces or aligners that move crooked or gapped teeth into a corrected bite over a planned series of visits.", image: "/home/services/invisible-aligners.jpg", icon: "aligner" },
-  { title: "Restorative Dentistry", description: "Fillings that rebuild a tooth weakened by decay or a chip, matched to your natural tooth color.", image: "/home/services/dental-fillings.jpg", icon: "tooth" },
-  { title: "Cosmetic Treatments", description: "Whitening, veneers and reshaping for teeth that are healthy but don't look the way you want them to.", image: "/about-freepik-treatment.jpg", icon: "tooth" },
+  {
+    title: "Periodontics",
+    description:
+      "Deep cleaning and gum surgery that treats bleeding gums and the bone loss that causes loose teeth.",
+    image: "/home/services/laser-dentistry.jpg",
+    icon: "laser",
+  },
+  {
+    title: "Pediatric Dentistry",
+    description:
+      "Cavity checks, sealants and fluoride treatment planned around your child's exact age and tooth count.",
+    image: "/about-freepik-checkup.jpg",
+    icon: "tooth",
+  },
+  {
+    title: "Oral Medicine & Radiology",
+    description:
+      "Digital X-rays that locate the exact source of jaw pain or a tooth that hurts without a visible cause.",
+    image: "/about-freepik-consultation.jpg",
+    icon: "tooth",
+  },
+  {
+    title: "Endodontics",
+    description:
+      "Root canal treatment that removes infected tissue from inside a tooth, so it can stay in your mouth instead of being pulled.",
+    image: "/home/services/dental-fillings.jpg",
+    icon: "tooth",
+  },
+  {
+    title: "Prosthodontics",
+    description:
+      "Crowns, bridges, dentures and implants built to replace one tooth or a full arch you've lost.",
+    image: "/service/services-2.png",
+    icon: "tooth",
+  },
+  {
+    title: "Orthodontics",
+    description:
+      "Braces or aligners that move crooked or gapped teeth into a corrected bite over a planned series of visits.",
+    image: "/home/services/invisible-aligners.jpg",
+    icon: "aligner",
+  },
+  {
+    title: "Restorative Dentistry",
+    description:
+      "Fillings that rebuild a tooth weakened by decay or a chip, matched to your natural tooth color.",
+    image: "/home/services/dental-fillings.jpg",
+    icon: "tooth",
+  },
+  {
+    title: "Cosmetic Treatments",
+    description:
+      "Whitening, veneers and reshaping for teeth that are healthy but don't look the way you want them to.",
+    image: "/about-freepik-treatment.jpg",
+    icon: "tooth",
+  },
 ];
 
 function Arrow({ direction = "right" }: { direction?: "left" | "right" }) {
@@ -51,11 +98,7 @@ function Arrow({ direction = "right" }: { direction?: "left" | "right" }) {
       stroke="currentColor"
       strokeWidth="2.8"
     >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M5 12h14m-5-5 5 5-5 5"
-      />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14m-5-5 5 5-5 5" />
     </svg>
   );
 }
@@ -117,30 +160,29 @@ export default function ServicesSection() {
   const [activeService, setActiveService] = useState(0);
 
   const move = (step: number) => {
-    setActiveService(
-      (current) => (current + step + services.length) % services.length,
-    );
+    setActiveService((current) => (current + step + services.length) % services.length);
   };
 
   return (
     <section id="services" className="overflow-hidden px-5 py-6 sm:px-8 lg:py-12">
       <div className="mx-auto max-w-7xl">
-        <div className="relative rounded-[28px] bg-dent-panel px-5 pb-[250px] pt-8 sm:px-9 sm:pb-[240px] sm:pt-11 lg:px-12 lg:pb-[255px] lg:pt-14 xl:px-16">
+        <div className="bg-dent-panel relative rounded-[28px] px-5 pt-8 pb-[250px] sm:px-9 sm:pt-11 sm:pb-[240px] lg:px-12 lg:pt-14 lg:pb-[255px] xl:px-16">
           <div className="flex flex-col gap-7 lg:flex-row lg:items-center lg:justify-between">
             <div>
               <div className="mb-5 flex items-center gap-3">
                 <ToothMark />
-                <span className="text-sm font-extrabold uppercase tracking-[0.03em] text-[#25d3c4] sm:text-base">
+                <span className="text-sm font-extrabold tracking-[0.03em] text-[#25d3c4] uppercase sm:text-base">
                   Our Services
                 </span>
               </div>
 
-              <h2 className="max-w-[760px] text-[29px] font-extrabold leading-[1.12] tracking-[-0.035em] text-white sm:text-[36px] lg:text-[46px]">
+              <h2 className="max-w-[760px] text-[29px] leading-[1.12] font-extrabold tracking-[-0.035em] text-white sm:text-[36px] lg:text-[46px]">
                 11+ Specialities Under One Roof
               </h2>
 
               <p className="mt-5 max-w-[950px] text-base leading-relaxed text-white/90 sm:text-lg">
-                Each treatment at Elite Dental Studio is led by a specialist dentist, thoroughly checked by X-ray or examination before any work begins.
+                Each treatment at Elite Dental Studio is led by a specialist dentist, thoroughly
+                checked by X-ray or examination before any work begins.
               </p>
             </div>
 
@@ -148,7 +190,7 @@ export default function ServicesSection() {
               label="ALL SERVICES"
               href="/services"
               arrowClassName="text-[#27bdb3]"
-              className="smooth-hover button-hover hover-lift inline-flex w-fit items-center gap-4 rounded-[9px] bg-dent-accent py-3 pl-5 pr-3 text-sm font-extrabold uppercase text-white shadow-sm hover:bg-dent-nav focus:outline-none focus:ring-4 focus:ring-white/30 sm:text-base"
+              className="smooth-hover button-hover hover-lift bg-dent-accent hover:bg-dent-nav inline-flex w-fit items-center gap-4 rounded-[9px] py-3 pr-3 pl-5 text-sm font-extrabold text-white uppercase shadow-sm focus:ring-4 focus:ring-white/30 focus:outline-none sm:text-base"
             />
           </div>
         </div>
@@ -157,29 +199,28 @@ export default function ServicesSection() {
           id="services-list"
           className="relative z-10 -mt-[190px] px-2 sm:-mt-[180px] sm:px-8 lg:-mt-[190px] lg:px-12"
         >
-          <div
-            className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8"
-            aria-live="polite"
-          >
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8" aria-live="polite">
             {services.map((service, index) => (
               <article
                 key={service.title}
-                className={`group smooth-hover card-hover overflow-hidden rounded-[28px] border bg-white p-5 shadow-[0_18px_45px_rgba(21,74,78,0.09)] sm:block sm:p-6 ${index !== activeService ? "hidden" : ""
-                  } ${index === activeService
+                className={`group smooth-hover card-hover overflow-hidden rounded-[28px] border bg-white p-5 shadow-[0_18px_45px_rgba(21,74,78,0.09)] sm:block sm:p-6 ${
+                  index !== activeService ? "hidden" : ""
+                } ${
+                  index === activeService
                     ? "border-[#2b7f82] md:-translate-y-2"
                     : "border-[#8cb8ba]"
-                  }`}
+                }`}
               >
                 <div className="flex min-h-[58px] items-center gap-4">
                   <ServiceIcon type={service.icon} />
-                  <h3 className="min-w-0 flex-1 text-xl font-bold leading-tight tracking-[-0.025em] text-[#343434] lg:text-[25px]">
+                  <h3 className="min-w-0 flex-1 text-xl leading-tight font-bold tracking-[-0.025em] text-[#343434] lg:text-[25px]">
                     {service.title}
                   </h3>
                   <button
                     type="button"
                     onClick={() => setActiveService(index)}
                     aria-label={`View ${service.title}`}
-                    className="smooth-hover hover-lift flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-[#287579] hover:bg-[#e7f8f6] hover:text-[#20cbbb] focus:outline-none focus:ring-4 focus:ring-[#25d3c4]/20"
+                    className="smooth-hover hover-lift flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-[#287579] hover:bg-[#e7f8f6] hover:text-[#20cbbb] focus:ring-4 focus:ring-[#25d3c4]/20 focus:outline-none"
                   >
                     <Arrow />
                   </button>
@@ -206,13 +247,12 @@ export default function ServicesSection() {
 
           <div className="mt-7 flex items-center justify-center">
             <div className="flex items-center gap-3">
-
               <div className="flex overflow-hidden rounded-[8px] shadow-sm">
                 <button
                   type="button"
                   onClick={() => move(-1)}
                   aria-label="Previous service"
-                  className="smooth-hover button-hover hover-lift flex h-11 w-12 items-center justify-center bg-dent-accent text-white hover:bg-dent-nav focus:outline-none focus:ring-4 focus:ring-dent-accent/25"
+                  className="smooth-hover button-hover hover-lift bg-dent-accent hover:bg-dent-nav focus:ring-dent-accent/25 flex h-11 w-12 items-center justify-center text-white focus:ring-4 focus:outline-none"
                 >
                   <Arrow direction="left" />
                 </button>
@@ -220,7 +260,7 @@ export default function ServicesSection() {
                   type="button"
                   onClick={() => move(1)}
                   aria-label="Next service"
-                  className="smooth-hover button-hover hover-lift flex h-11 w-12 items-center justify-center bg-dent-panel text-white hover:bg-[#205f63] focus:outline-none focus:ring-4 focus:ring-dent-panel/25"
+                  className="smooth-hover button-hover hover-lift bg-dent-panel focus:ring-dent-panel/25 flex h-11 w-12 items-center justify-center text-white hover:bg-[#205f63] focus:ring-4 focus:outline-none"
                 >
                   <Arrow />
                 </button>
