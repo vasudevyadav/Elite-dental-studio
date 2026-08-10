@@ -14,19 +14,22 @@ import SitePage from "@/components/SitePage";
 
 export default function Home() {
   return (
-    <SitePage title="Elite Dental Studio | Specialist Dental Care Across Calicut, Kochi, Kannur and Coimbatore" description="ISO 9001 certified specialist dental care across Calicut, Kochi, Kannur and Coimbatore, led by MDS qualified doctors since 2020.">
-          <HeroSection />
-          <StatsBar />
-          <NearestClinic />
-          <AboutUs />
-          <ServicesSection />
-          <DoctorsSection />
-          <AwardsSection />
-          <TestimonialsSection />
-          <BlogSection />
-          <FAQSection />
-          <BookAppointmentSection />
-          <AffordableDentalTreatment />
+    <SitePage
+      title="Elite Dental Studio | Specialist Dental Care Across Calicut, Kochi, Kannur and Coimbatore"
+      description="ISO 9001 certified specialist dental care across Calicut, Kochi, Kannur and Coimbatore, led by MDS qualified doctors since 2020."
+    >
+      <HeroSection />
+      <StatsBar />
+      <NearestClinic />
+      <AboutUs />
+      <ServicesSection />
+      <DoctorsSection />
+      <AwardsSection />
+      <TestimonialsSection />
+      <BlogSection />
+      <FAQSection />
+      <BookAppointmentSection />
+      <AffordableDentalTreatment />
     </SitePage>
   );
 }

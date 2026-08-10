@@ -66,11 +66,7 @@ function Arrow({ direction }: { direction: "left" | "right" }) {
       stroke="currentColor"
       strokeWidth="2.5"
     >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M5 12h14m-5-5 5 5-5 5"
-      />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14m-5-5 5 5-5 5" />
     </svg>
   );
 }
@@ -89,26 +85,24 @@ export default function DoctorsSection() {
     const gap = Number.parseFloat(getComputedStyle(track).columnGap) || 24;
 
     track.scrollBy({
-      left:
-        direction === "right"
-          ? firstCard.offsetWidth + gap
-          : -(firstCard.offsetWidth + gap),
+      left: direction === "right" ? firstCard.offsetWidth + gap : -(firstCard.offsetWidth + gap),
       behavior: "smooth",
     });
   };
 
   return (
-    <section
-      id="doctors"
-      className="mx-auto max-w-7xl px-5 py-4 sm:px-8 lg:px-24 lg:py-8"
-    >
+    <section id="doctors" className="mx-auto max-w-7xl px-5 py-4 sm:px-8 lg:px-24 lg:py-8">
       <div className="mx-auto max-w-[1240px] text-center">
         <h2 className="text-2xl font-semibold tracking-[-0.035em] text-[#286f73] lg:text-4xl">
           Our Doctors
         </h2>
 
         <p className="mx-auto mt-2 max-w-5xl text-sm leading-[1.65] text-[#555] lg:mt-5 lg:text-base">
-          Our MDS certified specialists across Calicut, Kochi, Kannur and Coimbatore cover every specialty Elite Dental Studio offers, including implantology, orthodontics, pedodontics, endodontics, periodontics, prosthodontics, Oral Medicine, Oral Pathology and oral surgery. Book your appointment with experts trained specifically in the field treating you, not general dentistry stretched across every problem.
+          Our MDS certified specialists across Calicut, Kochi, Kannur and Coimbatore cover every
+          specialty Elite Dental Studio offers, including implantology, orthodontics, pedodontics,
+          endodontics, periodontics, prosthodontics, Oral Medicine, Oral Pathology and oral surgery.
+          Book your appointment with experts trained specifically in the field treating you, not
+          general dentistry stretched across every problem.
         </p>
       </div>
 
@@ -117,10 +111,11 @@ export default function DoctorsSection() {
         {highlights.map((highlight, index) => (
           <article
             key={highlight.label}
-            className={`smooth-hover card-hover flex min-h-[120px] items-center gap-5 rounded-[20px] border-2 border-[#8ab7b8] bg-[#f4fbfa] px-5 py-3 hover:border-[#2acfc1] lg:px-7 ${index === highlights.length - 1
-              ? "sm:col-span-2 sm:mx-auto sm:w-[48%] lg:col-span-1 lg:mx-0 lg:w-auto"
-              : ""
-              }`}
+            className={`smooth-hover card-hover flex min-h-[120px] items-center gap-5 rounded-[20px] border-2 border-[#8ab7b8] bg-[#f4fbfa] px-5 py-3 hover:border-[#2acfc1] lg:px-7 ${
+              index === highlights.length - 1
+                ? "sm:col-span-2 sm:mx-auto sm:w-[48%] lg:col-span-1 lg:mx-0 lg:w-auto"
+                : ""
+            }`}
           >
             <div className="flex-shrink-0">
               <Image
@@ -134,7 +129,7 @@ export default function DoctorsSection() {
 
             <div>
               <h3 className="leading-tight">
-                <span className=" text-sm lg:text-lg font-semibold text-[#29cfc0]">
+                <span className="text-sm font-semibold text-[#29cfc0] lg:text-lg">
                   {highlight.stat}
                 </span>{" "}
                 <span className="text-sm font-semibold text-[#414141] lg:text-lg">
@@ -142,7 +137,7 @@ export default function DoctorsSection() {
                 </span>
               </h3>
 
-              <p className="mt-1 text-[13px] font-medium leading-[1.45] text-[#4f5353] lg:text-[15px]">
+              <p className="mt-1 text-[13px] leading-[1.45] font-medium text-[#4f5353] lg:text-[15px]">
                 {highlight.description}
               </p>
             </div>
@@ -156,7 +151,7 @@ export default function DoctorsSection() {
         role="region"
         aria-label="Our doctors carousel"
         tabIndex={0}
-        className="mt-12 flex snap-x snap-mandatory gap-5 overflow-x-auto scroll-smooth pb-5 outline-none focus-visible:ring-4 focus-visible:ring-[#29cfc0]/25 sm:grid sm:grid-cols-2 sm:overflow-visible sm:pb-0 lg:mt-20 lg:grid-cols-3 lg:gap-7 xl:grid-cols-5 [&::-webkit-scrollbar]:hidden [scrollbar-width:none]"
+        className="mt-12 flex snap-x snap-mandatory [scrollbar-width:none] gap-5 overflow-x-auto scroll-smooth pb-5 outline-none focus-visible:ring-4 focus-visible:ring-[#29cfc0]/25 sm:grid sm:grid-cols-2 sm:overflow-visible sm:pb-0 lg:mt-20 lg:grid-cols-3 lg:gap-7 xl:grid-cols-5 [&::-webkit-scrollbar]:hidden"
       >
         {doctors.map((doctor) => (
           <article
@@ -172,16 +167,14 @@ export default function DoctorsSection() {
               />
             </div>
 
-            <div className="flex min-h-[142px] flex-1 flex-col items-center justify-start px-2 pb-5 pt-4 text-center text-white">
-              <h3 className="text-base font-bold leading-tight lg:text-lg">
-                {doctor.name}
-              </h3>
+            <div className="flex min-h-[142px] flex-1 flex-col items-center justify-start px-2 pt-4 pb-5 text-center text-white">
+              <h3 className="text-base leading-tight font-bold lg:text-lg">{doctor.name}</h3>
 
-              <p className="mt-3 text-xs font-medium mb-2 leading-[1.25] text-white/95">
+              <p className="mt-3 mb-2 text-xs leading-[1.25] font-medium text-white/95">
                 {doctor.qualification}
               </p>
 
-              <p className=" max-w-[235px] text-[11px] font-medium uppercase leading-[1.25] text-white/90 ">
+              <p className="max-w-[235px] text-[11px] leading-[1.25] font-medium text-white/90 uppercase">
                 {doctor.speciality}
               </p>
             </div>
@@ -194,7 +187,7 @@ export default function DoctorsSection() {
           type="button"
           onClick={() => scrollDoctors("left")}
           aria-label="View previous doctors"
-          className="smooth-hover button-hover hover-lift flex h-11 w-12 items-center justify-center rounded-lg bg-[#29cfc0] text-white shadow-sm hover:bg-[#20bfb1] focus:outline-none focus:ring-4 focus:ring-[#29cfc0]/25"
+          className="smooth-hover button-hover hover-lift flex h-11 w-12 items-center justify-center rounded-lg bg-[#29cfc0] text-white shadow-sm hover:bg-[#20bfb1] focus:ring-4 focus:ring-[#29cfc0]/25 focus:outline-none"
         >
           <Arrow direction="left" />
         </button>
@@ -202,7 +195,7 @@ export default function DoctorsSection() {
           type="button"
           onClick={() => scrollDoctors("right")}
           aria-label="View next doctors"
-          className="smooth-hover button-hover hover-lift flex h-11 w-12 items-center justify-center rounded-lg bg-[#2b7477] text-white shadow-sm hover:bg-[#205f63] focus:outline-none focus:ring-4 focus:ring-[#2b7477]/25"
+          className="smooth-hover button-hover hover-lift flex h-11 w-12 items-center justify-center rounded-lg bg-[#2b7477] text-white shadow-sm hover:bg-[#205f63] focus:ring-4 focus:ring-[#2b7477]/25 focus:outline-none"
         >
           <Arrow direction="right" />
         </button>

@@ -10,5 +10,10 @@ export default function AnimatedCounter({
   duration: _duration = 1800,
 }: AnimatedCounterProps) {
   void _duration;
-  return <span className="tabular-nums">{value}{suffix}</span>;
+  return (
+    <span className="tabular-nums">
+      {value}
+      {suffix}
+    </span>
+  );
 }

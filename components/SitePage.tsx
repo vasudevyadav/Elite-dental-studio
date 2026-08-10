@@ -10,7 +10,12 @@ type SitePageProps = {
   mainClassName?: string;
 };
 
-export default function SitePage({ title, description, children, mainClassName = "" }: SitePageProps) {
+export default function SitePage({
+  title,
+  description,
+  children,
+  mainClassName = "",
+}: SitePageProps) {
   return (
     <>
       <Head>

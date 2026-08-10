@@ -10,14 +10,22 @@ import SitePage from "@/components/SitePage";
 
 export default function AboutPage() {
   return (
-    <SitePage title="About Us | Elite Dental Studio" description="Learn about Elite Dental Studio, our mission, leadership and patient-first approach to dental care." mainClassName="bg-white">
-        <AboutHero />
-        <DentalOfficeSection />
-        <InsurancePaymentSection />
-        <MissionSection />
-        <TeamSection />
-        <div className="[&_.max-w-7xl]:max-w-7xl"><FAQSection content={aboutFaqContent} /></div>
-        <div className="[&_.max-w-7xl]:max-w-7xl"><BookAppointmentSection content={appointmentContent} /></div>
+    <SitePage
+      title="About Us | Elite Dental Studio"
+      description="Learn about Elite Dental Studio, our mission, leadership and patient-first approach to dental care."
+      mainClassName="bg-white"
+    >
+      <AboutHero />
+      <DentalOfficeSection />
+      <InsurancePaymentSection />
+      <MissionSection />
+      <TeamSection />
+      <div className="[&_.max-w-7xl]:max-w-7xl">
+        <FAQSection content={aboutFaqContent} />
+      </div>
+      <div className="[&_.max-w-7xl]:max-w-7xl">
+        <BookAppointmentSection content={appointmentContent} />
+      </div>
     </SitePage>
   );
 }

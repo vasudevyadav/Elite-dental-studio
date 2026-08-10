@@ -62,8 +62,16 @@ export default function AnimatedArrowCta({
         ))}
       </span>
       <span className="slide-cta-arrow" aria-hidden="true">
-        <span className={`flex h-8 w-8 items-center justify-center rounded-full bg-white ${arrowClassName}`}>
-          <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="3">
+        <span
+          className={`flex h-8 w-8 items-center justify-center rounded-full bg-white ${arrowClassName}`}
+        >
+          <svg
+            viewBox="0 0 24 24"
+            className="h-4 w-4"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="3"
+          >
             <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14m-5-5 5 5-5 5" />
           </svg>
         </span>

@@ -15,20 +15,19 @@ export default function ServiceOverview({
     <section className="relative overflow-hidden bg-[#2a686d] text-white">
       <div className="relative z-10 mx-auto flex min-h-[520px] max-w-screen-2xl items-center px-5 py-14 sm:px-8 lg:min-h-[670px] lg:px-12 lg:py-16">
         <div className="max-w-3xl">
-          <h1 className="text-3xl font-bold leading-tight lg:text-[45px]">
+          <h1 className="text-3xl leading-tight font-bold lg:text-[45px]">
             {treatmentName}
             <br />
-            <span className="lg:text-[34px] font-semibold">
-              in Kochi, Calicut &amp; Kannur </span>
+            <span className="font-semibold lg:text-[34px]">in Kochi, Calicut &amp; Kannur </span>
           </h1>
 
           <div className="my-7 h-px bg-white/60" />
 
           <div className="space-y-5 text-base leading-7 lg:text-xl lg:leading-8">
             <p>
-              If you are searching for the best {serviceTitle.toLowerCase()} clinic near me,
-              you want two things confirmed: what the treatment actually involves and whether
-              it applies to your condition.
+              If you are searching for the best {serviceTitle.toLowerCase()} clinic near me, you
+              want two things confirmed: what the treatment actually involves and whether it applies
+              to your condition.
             </p>
             <p>
               {isLaser
