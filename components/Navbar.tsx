@@ -69,6 +69,11 @@ const dropdowns: Record<DropdownName, { eyebrow: string; items: DropdownItem[] }
         description: "Dental tourism, travel support and treatment planning",
         href: "/international-patients",
       },
+      {
+        label: "Patient Safety",
+        description: "Sterilisation, technology and clinical safety standards",
+        href: "/patient-safety",
+      },
     ],
   },
 };

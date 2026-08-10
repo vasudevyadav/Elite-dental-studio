@@ -39,7 +39,7 @@ export default function OfficeGallery() {
   }, [activeImage]);
 
   return (
-    <section id="office-tour" className="bg-[#f7fbfa] px-5 py-8 sm:px-8 lg:py-16">
+    <section id="office-tour" className="bg-[#f7fbfa] px-5 py-8 sm:px-8 lg:py-14">
       <div className="mx-auto max-w-7xl lg:px-12">
         <div className="flex flex-col gap-7 lg:flex-row lg:items-end lg:justify-between">
           <div>

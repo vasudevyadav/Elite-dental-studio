@@ -295,7 +295,7 @@ export default function InternationalPatientsPage() {
         </div>
       </section>
 
-      <section className="bg-white px-5 py-16 sm:px-8 lg:py-16">
+      <section className="bg-white px-5 py-8 sm:px-8 lg:py-14">
         <div className="mx-auto grid max-w-7xl items-center gap-10 lg:grid-cols-[.9fr_1.1fr] lg:gap-16 lg:px-12">
           <div className="relative min-h-[360px] overflow-hidden rounded-[28px] sm:min-h-[480px]">
             <Image
@@ -414,7 +414,7 @@ export default function InternationalPatientsPage() {
         </div>
       </section>
 
-      <section className="bg-[#174e53] px-5 py-10 text-white sm:px-8 lg:py-16">
+      <section className="bg-[#174e53] px-5 py-8 text-white sm:px-8 lg:py-14">
         <BookingJourney />
       </section>
 
@@ -521,7 +521,7 @@ export default function InternationalPatientsPage() {
         </div>
       </section>
 
-      <section className="bg-[#edf8f6] px-5 py-10 sm:px-8 lg:py-16">
+      <section className="bg-[#edf8f6] px-5 py-8 sm:px-8 lg:py-14">
         <div className="mx-auto max-w-4xl">
           <div className="text-center">
             <p className="text-xs font-bold tracking-[.2em] text-[#20aa9e] uppercase">
@@ -553,7 +553,7 @@ export default function InternationalPatientsPage() {
         </div>
       </section>
 
-      <section className="bg-white px-5 py-10 sm:px-8 lg:py-16">
+      <section className="bg-white px-5 py-8 sm:px-8 lg:py-14">
         <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-7 rounded-[28px] bg-[linear-gradient(135deg,#174e53,#28777a)] p-7 text-white sm:p-10 lg:flex-row lg:items-center lg:px-12">
           <div>
             <p className="text-xs font-bold tracking-[.18em] text-[#55ded2] uppercase">
@@ -749,10 +749,7 @@ function InternationalEnquiryForm() {
   const fieldClass =
     "h-10 w-full rounded-[9px] border border-[#c9dfdc] bg-[#f8fcfb] px-3.5 text-[13px] text-[#304f52] outline-none transition placeholder:text-[#899798] focus:border-[#25bfae] focus:bg-white focus:ring-4 focus:ring-[#25bfae]/15";
   return (
-    <section
-      id="international-enquiry"
-      className="scroll-mt-8 bg-white px-5 py-12 sm:px-8 lg:py-16"
-    >
+    <section id="international-enquiry" className="scroll-mt-8 bg-white px-5 py-8 sm:px-8 lg:py-14">
       <div className="mx-auto grid max-w-[1300px] items-center overflow-hidden rounded-[24px] bg-[#174e53] shadow-[0_20px_55px_rgba(18,75,79,.14)] lg:grid-cols-2">
         <div className="relative overflow-hidden p-6 text-white sm:p-8 lg:p-10">
           <div className="absolute -bottom-32 -left-28 h-64 w-64 rounded-full border-[40px] border-[#25bfae]/10" />

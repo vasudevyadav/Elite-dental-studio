@@ -7,6 +7,7 @@ const companyLinks = [
   { label: "Doctors", href: "/doctors" },
   { label: "Our Dental Office", href: "/our-dental-office" },
   { label: "International Patients", href: "/international-patients" },
+  { label: "Patient Safety", href: "/patient-safety" },
   { label: "Blog", href: "/blog" },
   { label: "Careers", href: "https://elitedentalstudio.co.in/careers/" },
   { label: "Contact Us", href: "/contact" },

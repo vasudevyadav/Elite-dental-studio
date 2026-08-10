@@ -6,7 +6,7 @@ const stats = [
 
 export default function OfficeIntroduction() {
   return (
-    <section className="bg-[#2a686d] px-5 py-10 text-white sm:px-8 lg:py-16">
+    <section className="bg-[#2a686d] px-5 py-8 text-white sm:px-8 lg:py-14">
       <div className="mx-auto grid max-w-7xl gap-9 sm:gap-12 lg:grid-cols-[.82fr_1.18fr] lg:items-center lg:gap-16 lg:px-12 xl:gap-24">
         <div>
           <p className="text-sm font-bold tracking-[.16em] text-[#52e0d2] uppercase">

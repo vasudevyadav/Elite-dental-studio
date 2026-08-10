@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function OfficeComfort() {
   return (
-    <section className="bg-[#07565a] px-5 py-10 text-white sm:px-8 lg:py-16">
+    <section className="bg-[#07565a] px-5 py-8 text-white sm:px-8 lg:py-14">
       <div className="mx-auto grid max-w-7xl overflow-hidden rounded-[22px] bg-[#0b676b] sm:rounded-[30px] lg:grid-cols-2 lg:items-center">
         <div className="relative aspect-[4/3] min-h-[260px] sm:aspect-[16/9] lg:aspect-auto lg:min-h-[520px]">
           <Image
