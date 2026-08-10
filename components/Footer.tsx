@@ -51,7 +51,7 @@ function SocialIcon({ type }: { type: "facebook" | "tiktok" | "instagram" | "wha
 
 export default function Footer() {
   return (
-    <footer className="bg-dent-nav text-white lg:mt-8">
+    <footer className="bg-dent-nav text-white lg:mt-2">
       <div className="mx-auto max-w-7xl px-5 py-10 sm:px-8 lg:px-12 lg:py-12">
         <div className="grid gap-9 sm:grid-cols-2 lg:grid-cols-[1.45fr_0.75fr_1.15fr_0.65fr] lg:gap-16">
 
