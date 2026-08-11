@@ -118,12 +118,12 @@ export default function HeroSection({ slides = HOME_SLIDES, content }: HeroSecti
             <p className="text-xs font-bold tracking-[.18em] text-[#56e2d5] uppercase sm:text-sm">
               {content.eyebrow}
             </p>
-            <h1 className="mt-3 text-4xl leading-[1.04] font-semibold tracking-[-.045em] sm:text-6xl lg:text-[50px] xl:text-[68px]">
+            <h1 className="mt-3 text-4xl leading-light font-semibold  lg:text-[49px]">
               {content.title}
               <br />
               <span className="text-[#45d8ca]">{content.accent}</span>
             </h1>
-            <p className="mt-5 max-w-[560px] text-sm leading-6 font-medium text-white/90 sm:text-lg sm:leading-8 lg:text-base xl:text-lg">
+            <p className="mt-5 max-w-[560px] text-sm leading-6 font-medium text-white/90 sm:text-lg sm:leading-8 lg:text-lg">
               {content.description}
             </p>
           </div>

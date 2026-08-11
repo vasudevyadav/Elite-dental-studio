@@ -60,6 +60,16 @@ const dropdowns: Record<DropdownName, { eyebrow: string; items: DropdownItem[] }
         href: "/our-dental-office",
       },
       {
+        label: "Facilities",
+        description: "Explore our technology, comfort and safety systems",
+        href: "/facilities",
+      },
+      {
+        label: "Smile Gallery",
+        description: "See a curated selection of treatment results",
+        href: "/gallery/cases",
+      },
+      {
         label: "Dental Blog",
         description: "Dental care tips, treatment guides and clinic news",
         href: "/blog",

@@ -248,7 +248,7 @@ export default function PatientSafetyPage() {
                     Safety checkpoint
                   </span>
                   <h3 className="mt-1 text-xl font-semibold text-white">{title}</h3>
-                  <p className=" text-sm leading-7 text-white/60">{text}</p>
+                  <p className="text-sm leading-7 text-white/60">{text}</p>
                 </article>
               ))}
               <div className="relative ml-14 rounded-[22px] bg-[#25bfae] p-5 text-sm leading-6 font-semibold text-white sm:ml-20 sm:p-6">
