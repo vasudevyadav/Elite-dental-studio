@@ -285,7 +285,6 @@ export default function FacilitiesExperience() {
                     <span className="rounded-full border border-white/25 bg-[#0b4448]/65 px-4 py-2 text-[11px] font-bold tracking-[.14em] uppercase backdrop-blur">
                       {facility.tag}
                     </span>
-                  
                   </div>
                 </div>
                 <div className={`${reversed ? "lg:order-1" : ""} text-left`}>

@@ -156,17 +156,32 @@ function ServiceIcon({ type }: { type: Service["icon"] }) {
   );
 }
 
-export default function ServicesSection() {
+export default function ServicesSection({
+  title = "11+ Specialities Under One Roof",
+  description = "Each treatment at Elite Dental Studio is led by a specialist dentist, thoroughly checked by X-ray or examination before any work begins.",
+  compact = false,
+}: {
+  title?: string;
+  description?: string;
+  compact?: boolean;
+}) {
   const [activeService, setActiveService] = useState(0);
 
   const move = (step: number) => {
     setActiveService((current) => (current + step + services.length) % services.length);
   };
 
+  const visibleServices = [0, 1, 2].map((offset) => ({
+    service: services[(activeService + offset) % services.length],
+    offset,
+  }));
+
   return (
     <section id="services" className="overflow-hidden px-5 py-6 sm:px-8 lg:py-12">
-      <div className="mx-auto max-w-7xl">
-        <div className="bg-dent-panel relative rounded-[28px] px-5 pt-8 pb-[250px] sm:px-9 sm:pt-11 sm:pb-[240px] lg:px-12 lg:pt-14 lg:pb-[255px] xl:px-16">
+      <div className={`mx-auto ${compact ? "max-w-6xl" : "max-w-7xl"}`}>
+        <div
+          className={`relative rounded-[28px] ${compact ? "bg-[#276368] px-6 pt-8 pb-[190px] lg:px-8 lg:pt-9" : "bg-dent-panel px-5 pt-8 pb-[250px] sm:px-9 sm:pt-11 sm:pb-[240px] lg:px-12 lg:pt-14 lg:pb-[255px] xl:px-16"}`}
+        >
           <div className="flex flex-col gap-7 lg:flex-row lg:items-center lg:justify-between">
             <div>
               <div className="mb-5 flex items-center gap-3">
@@ -176,13 +191,16 @@ export default function ServicesSection() {
                 </span>
               </div>
 
-              <h2 className="max-w-[760px] text-[29px] leading-[1.12] font-extrabold tracking-[-0.035em] text-white sm:text-[36px] lg:text-[46px]">
-                11+ Specialities Under One Roof
+              <h2
+                className={`max-w-[760px] leading-[1.12] font-extrabold tracking-[-0.035em] text-white ${compact ? "text-[24px]" : "text-[29px] sm:text-[36px] lg:text-[46px]"}`}
+              >
+                {title}
               </h2>
 
-              <p className="mt-5 max-w-[950px] text-base leading-relaxed text-white/90 sm:text-lg">
-                Each treatment at Elite Dental Studio is led by a specialist dentist, thoroughly
-                checked by X-ray or examination before any work begins.
+              <p
+                className={`mt-5 max-w-[950px] leading-relaxed text-white/90 ${compact ? "text-xs" : "text-base sm:text-lg"}`}
+              >
+                {description}
               </p>
             </div>
 
@@ -197,28 +215,26 @@ export default function ServicesSection() {
 
         <div
           id="services-list"
-          className="relative z-10 -mt-[190px] px-2 sm:-mt-[180px] sm:px-8 lg:-mt-[190px] lg:px-12"
+          className={`relative z-10 px-2 ${compact ? "-mt-[145px] sm:px-9" : "-mt-[190px] sm:-mt-[180px] sm:px-8 lg:-mt-[190px] lg:px-12"}`}
         >
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8" aria-live="polite">
-            {services.map((service, index) => (
+            {visibleServices.map(({ service, offset }) => (
               <article
                 key={service.title}
-                className={`group smooth-hover card-hover overflow-hidden rounded-[28px] border bg-white p-5 shadow-[0_18px_45px_rgba(21,74,78,0.09)] sm:block sm:p-6 ${
-                  index !== activeService ? "hidden" : ""
-                } ${
-                  index === activeService
-                    ? "border-[#2b7f82] md:-translate-y-2"
-                    : "border-[#8cb8ba]"
+                className={`group smooth-hover card-hover overflow-hidden border bg-white shadow-[0_18px_45px_rgba(21,74,78,0.09)] sm:block ${compact ? "rounded-[18px] p-4" : "rounded-[28px] p-5 sm:p-6"} ${offset !== 0 ? "hidden sm:block" : ""} ${
+                  offset === 0 ? "border-[#2b7f82] md:-translate-y-2" : "border-[#8cb8ba]"
                 }`}
               >
                 <div className="flex min-h-[58px] items-center gap-4">
                   <ServiceIcon type={service.icon} />
-                  <h3 className="min-w-0 flex-1 text-xl leading-tight font-bold tracking-[-0.025em] text-[#343434] lg:text-[25px]">
+                  <h3
+                    className={`min-w-0 flex-1 leading-tight font-bold tracking-[-0.025em] text-[#343434] ${compact ? "text-base" : "text-xl lg:text-[25px]"}`}
+                  >
                     {service.title}
                   </h3>
                   <button
                     type="button"
-                    onClick={() => setActiveService(index)}
+                    onClick={() => setActiveService((activeService + offset) % services.length)}
                     aria-label={`View ${service.title}`}
                     className="smooth-hover hover-lift flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-[#287579] hover:bg-[#e7f8f6] hover:text-[#20cbbb] focus:ring-4 focus:ring-[#25d3c4]/20 focus:outline-none"
                   >
@@ -228,11 +244,15 @@ export default function ServicesSection() {
 
                 <div className="my-5 h-px bg-[#c8cccc]" />
 
-                <p className="min-h-[58px] text-base leading-[1.55] text-[#555] lg:text-[17px]">
+                <p
+                  className={`min-h-[58px] leading-[1.55] text-[#555] ${compact ? "text-xs" : "text-base lg:text-[17px]"}`}
+                >
                   {service.description}
                 </p>
 
-                <div className="relative mt-5 h-[185px] overflow-hidden rounded-[24px] bg-[#edf6f5] lg:h-[205px]">
+                <div
+                  className={`relative mt-5 overflow-hidden bg-[#edf6f5] ${compact ? "h-[112px] rounded-[14px]" : "h-[185px] rounded-[24px] lg:h-[205px]"}`}
+                >
                   <Image
                     src={service.image}
                     alt={`${service.title} treatment demonstration`}

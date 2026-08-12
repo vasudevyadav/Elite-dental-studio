@@ -52,7 +52,7 @@ const dropdowns: Record<DropdownName, { eyebrow: string; items: DropdownItem[] }
       {
         label: "Clinic Locations",
         description: "Find the Elite Dental Studio nearest to you",
-        href: "/contact#locations",
+        href: "/locations/kannur",
       },
       {
         label: "Our Dental Office",
