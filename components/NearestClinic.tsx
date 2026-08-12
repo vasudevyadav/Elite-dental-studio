@@ -41,16 +41,12 @@ const clinics: Record<string, Clinic> = {
   },
   KANNUR: {
     name: "KANNUR",
-    phone: "+91 9745 072 333",
-    landline: "0497 3552 333",
+    phone: "+91 96458 74777",
+    landline: "0497 271 6555",
     email: "elitedentalstudiokannur@gmail.com",
-    addressLines: [
-      "1st Floor, Town Square",
-      "Kannur Road",
-      "Near City Centre",
-      "Kannur, Kerala 670001",
-    ],
-    mapQuery: "Town Square, Kannur, Kerala",
+    addressLines: ["Nyma Tower", "Opposite Koyili Hospital", "Talap, Kannur", "Kerala 670002"],
+    mapQuery: "Nyma Tower, opposite Koyili Hospital, Talap, Kannur, Kerala 670002",
+    mapUrl: "https://maps.app.goo.gl/87myjWP7xWiPiDfaA",
   },
   COIMBATORE: {
     name: "COIMBATORE",
@@ -142,8 +138,14 @@ function LocationIcon() {
   );
 }
 
-export default function NearestClinic({ serviceName }: { serviceName?: string }) {
-  const [selectedClinic, setSelectedClinic] = useState("CALICUT");
+export default function NearestClinic({
+  serviceName,
+  initialClinic = "CALICUT",
+}: {
+  serviceName?: string;
+  initialClinic?: keyof typeof clinics;
+}) {
+  const [selectedClinic, setSelectedClinic] = useState(initialClinic);
   const clinic = clinics[selectedClinic];
   const encodedMapQuery = encodeURIComponent(clinic.mapQuery);
   const mapEmbedUrl = `https://www.google.com/maps?q=${encodedMapQuery}&output=embed`;

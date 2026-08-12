@@ -9,7 +9,7 @@ const highlights = [
     image: "/home/orthodontists.png",
   },
   {
-    stat: "80%",
+    stat: "70%",
     label: "Women Leading",
     description: "Leading with empathy, precision & clinical excellence",
     image: "/home/women-leading.png",
@@ -71,7 +71,7 @@ function Arrow({ direction }: { direction: "left" | "right" }) {
   );
 }
 
-export default function DoctorsSection() {
+export default function DoctorsSection({ compact = false }: { compact?: boolean }) {
   const doctorsTrackRef = useRef<HTMLDivElement>(null);
 
   const scrollDoctors = (direction: "left" | "right") => {
@@ -91,7 +91,10 @@ export default function DoctorsSection() {
   };
 
   return (
-    <section id="doctors" className="mx-auto max-w-7xl px-5 py-4 sm:px-8 lg:px-24 lg:py-8">
+    <section
+      id="doctors"
+      className={`mx-auto px-5 py-4 sm:px-8 lg:py-8 ${compact ? "max-w-6xl lg:px-0" : "max-w-7xl lg:px-24"}`}
+    >
       <div className="mx-auto max-w-[1240px] text-center">
         <h2 className="text-2xl font-semibold tracking-[-0.035em] text-[#286f73] lg:text-4xl">
           Our Doctors
@@ -151,7 +154,7 @@ export default function DoctorsSection() {
         role="region"
         aria-label="Our doctors carousel"
         tabIndex={0}
-        className="mt-12 flex snap-x snap-mandatory [scrollbar-width:none] gap-5 overflow-x-auto scroll-smooth pb-5 outline-none focus-visible:ring-4 focus-visible:ring-[#29cfc0]/25 sm:grid sm:grid-cols-2 sm:overflow-visible sm:pb-0 lg:mt-20 lg:grid-cols-3 lg:gap-7 xl:grid-cols-5 [&::-webkit-scrollbar]:hidden"
+        className={`mt-12 flex snap-x snap-mandatory [scrollbar-width:none] gap-5 overflow-x-auto scroll-smooth pb-5 outline-none focus-visible:ring-4 focus-visible:ring-[#29cfc0]/25 sm:grid sm:grid-cols-2 sm:overflow-visible sm:pb-0 lg:mt-20 [&::-webkit-scrollbar]:hidden ${compact ? "lg:grid-cols-5 lg:gap-4" : "lg:grid-cols-3 lg:gap-7 xl:grid-cols-5"}`}
       >
         {doctors.map((doctor) => (
           <article

@@ -52,12 +52,22 @@ const dropdowns: Record<DropdownName, { eyebrow: string; items: DropdownItem[] }
       {
         label: "Clinic Locations",
         description: "Find the Elite Dental Studio nearest to you",
-        href: "/contact#locations",
+        href: "/locations/kannur",
       },
       {
         label: "Our Dental Office",
         description: "Take a virtual tour of our modern clinics",
         href: "/our-dental-office",
+      },
+      {
+        label: "Facilities",
+        description: "Explore our technology, comfort and safety systems",
+        href: "/facilities",
+      },
+      {
+        label: "Smile Gallery",
+        description: "See a curated selection of treatment results",
+        href: "/gallery/cases",
       },
       {
         label: "Dental Blog",
