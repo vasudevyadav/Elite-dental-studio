@@ -16,6 +16,7 @@ import CandidateSection from "@/components/services/CandidateSection";
 import TreatmentExpectationSection from "@/components/services/TreatmentExpectationSection";
 import AftercareSection from "@/components/services/AftercareSection";
 import BenefitsSection from "@/components/services/BenefitsSection";
+import TreatmentResults from "@/components/services/TreatmentResults";
 import { findService, services, type Service } from "@/components/services/serviceData";
 
 type Props = { service: Service };
@@ -56,6 +57,8 @@ export default function ServiceDetailPage({ service }: Props) {
           <AftercareSection />
           <BenefitsSection treatmentName={treatmentName} />
         </div>
+
+        <TreatmentResults serviceTitle={service.title} />
 
         <NearestClinic serviceName={treatmentName} />
         <DoctorsSection />
