@@ -1,65 +1,133 @@
 import Image from "next/image";
+import Link from "next/link";
+import { useRef, useState } from "react";
 
 const results = [
-  {
-    before: "/home/services/laser-dentistry.jpg",
-    after: "/service/services-inner-1.png",
-    alt: "Dental laser treatment result",
-  },
-  {
-    before: "/home/services/invisible-aligners.jpg",
-    after: "/home/services/dental-fillings.jpg",
-    alt: "Smile treatment result",
-  },
-];
+  { src: "/cases/case-01.webp", label: "Smile rehabilitation" },
+  { src: "/cases/case-09.webp", label: "Alignment correction" },
+  { src: "/cases/case-02.webp", label: "Aesthetic restoration" },
+] as const;
 
-export default function TreatmentResults() {
+function ResultImage({
+  src,
+  label,
+  side,
+}: {
+  src: string;
+  label: string;
+  side: "before" | "after";
+}) {
   return (
-    <section className="mx-auto max-w-6xl overflow-hidden px-5 py-8 text-center sm:px-8 lg:px-0 lg:py-6">
-      <p className="m-0 text-xs font-semibold text-[#25cdbd] uppercase lg:text-lg">
-        See the Transformation
-      </p>
-      <h2 className="mt-3 text-2xl leading-[1.25] font-bold text-[#2b7175] lg:text-4xl">
-        Stunning Results That Showcase
-        <br className="hidden sm:block" />
-        The Lifechanging Impact
-      </h2>
-      <div className="-mx-5 mt-9 flex snap-x snap-mandatory [scrollbar-width:none] gap-4 overflow-x-auto px-5 pb-5 text-left sm:-mx-8 sm:px-8 lg:mx-0 lg:mt-16 lg:grid lg:grid-cols-2 lg:gap-20 lg:overflow-visible lg:px-0 lg:pb-0">
-        {results.map((result) => (
-          <article
-            key={result.alt}
-            className="relative grid aspect-[1.52/1] w-[86vw] max-w-[520px] shrink-0 snap-start grid-cols-2 overflow-hidden rounded-[20px] border-2 border-[#2b7175] bg-[#eefafa] lg:w-auto lg:max-w-none lg:rounded-[35px]"
-          >
-            <div className="relative overflow-hidden">
-              <Image
-                src={result.before}
-                alt={`${result.alt} before`}
-                fill
-                sizes="(max-width: 900px) 90vw, 420px"
-                className="object-cover"
-              />
-            </div>
-            <div className="relative overflow-hidden border-l-[3px] border-white">
-              <Image
-                src={result.after}
-                alt={`${result.alt} after`}
-                fill
-                sizes="(max-width: 900px) 90vw, 420px"
-                className="object-cover"
-              />
-            </div>
-            <span
-              aria-hidden="true"
-              className="absolute top-1/2 left-1/2 z-[2] grid h-[54px] w-[54px] -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border-[3px] border-white bg-white/20 text-[13px] text-white"
-            >
-              ◀▶
-            </span>
-          </article>
-        ))}
+    <Image
+      src={src}
+      alt={`${label} ${side}`}
+      width={1440}
+      height={1440}
+      className={`absolute left-0 h-[200%] w-full max-w-none object-cover ${side === "before" ? "top-0 object-top" : "bottom-0 object-bottom"}`}
+      sizes="(max-width: 768px) 88vw, 33vw"
+    />
+  );
+}
+
+function ComparisonCard({ src, label }: { src: string; label: string }) {
+  const [position, setPosition] = useState(50);
+  const frameRef = useRef<HTMLDivElement>(null);
+  const updatePosition = (clientX: number) => {
+    const bounds = frameRef.current?.getBoundingClientRect();
+    if (!bounds) return;
+    setPosition(Math.max(0, Math.min(100, ((clientX - bounds.left) / bounds.width) * 100)));
+  };
+
+  return (
+    <article className="overflow-hidden rounded-[22px] border border-[#c6dfdc] bg-white shadow-[0_16px_40px_rgba(18,75,79,.09)]">
+      <div ref={frameRef} className="relative aspect-[1.32/1] overflow-hidden bg-[#174e53]">
+        <ResultImage src={src} label={label} side="after" />
+        <div
+          className="absolute inset-0 overflow-hidden"
+          style={{ clipPath: `inset(0 ${100 - position}% 0 0)` }}
+        >
+          <ResultImage src={src} label={label} side="before" />
+        </div>
+        <span className="pointer-events-none absolute top-4 left-4 z-10 rounded-full bg-[#174e53]/85 px-3 py-1.5 text-[10px] font-bold tracking-[.12em] text-white uppercase backdrop-blur">
+          Before
+        </span>
+        <span className="pointer-events-none absolute top-4 right-4 z-10 rounded-full bg-[#25bfae]/90 px-3 py-1.5 text-[10px] font-bold tracking-[.12em] text-white uppercase backdrop-blur">
+          After
+        </span>
+        <span
+          className="pointer-events-none absolute inset-y-0 z-10 w-0.5 -translate-x-1/2 bg-white shadow"
+          style={{ left: `${position}%` }}
+        />
+        <span
+          className="pointer-events-none absolute top-1/2 z-20 grid h-11 w-11 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border-2 border-white bg-[#25bfae] text-sm font-black text-white shadow-lg"
+          style={{ left: `${position}%` }}
+        >
+          ↔
+        </span>
+        <div
+          role="slider"
+          tabIndex={0}
+          aria-label={`Compare before and after — ${label}`}
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-valuenow={Math.round(position)}
+          onPointerDown={(event) => {
+            event.currentTarget.setPointerCapture(event.pointerId);
+            updatePosition(event.clientX);
+          }}
+          onPointerMove={(event) => {
+            if (event.currentTarget.hasPointerCapture(event.pointerId))
+              updatePosition(event.clientX);
+          }}
+          onKeyDown={(event) => {
+            if (event.key === "ArrowLeft") setPosition((value) => Math.max(0, value - 3));
+            if (event.key === "ArrowRight") setPosition((value) => Math.min(100, value + 3));
+          }}
+          className="absolute inset-0 z-30 cursor-ew-resize touch-none focus:outline-none focus-visible:ring-4 focus-visible:ring-[#25bfae] focus-visible:ring-inset"
+        />
       </div>
-      <p className="mt-1 text-xs font-semibold text-[#2b7175] lg:hidden">
-        Swipe to view more results →
-      </p>
+    </article>
+  );
+}
+
+export default function TreatmentResults({ serviceTitle }: { serviceTitle: string }) {
+  return (
+    <section className="bg-[#f2f9f8] px-5 py-16 sm:px-8 sm:py-20 lg:px-12">
+      <div className="mx-auto max-w-7xl">
+        <div className="grid gap-6 lg:grid-cols-[1fr_.75fr] lg:items-end">
+          <div>
+            <p className="text-xs font-bold tracking-[.18em] text-[#1da99d] uppercase">
+              Before &amp; after
+            </p>
+            <h2 className="mt-3 text-3xl font-semibold tracking-[-.04em] text-[#174e53] sm:text-5xl">
+              See what thoughtful care can achieve.
+            </h2>
+          </div>
+          <p className="text-sm leading-7 text-[#607779]">
+            Explore selected patient transformations from Elite Dental Studio. Your{" "}
+            {serviceTitle.toLowerCase()} result will depend on your individual clinical condition
+            and treatment plan.
+          </p>
+        </div>
+        <div className="-mx-5 mt-10 flex snap-x [scrollbar-width:none] gap-5 overflow-x-auto px-5 pb-5 sm:mx-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-3 [&::-webkit-scrollbar]:hidden">
+          {results.map((result) => (
+            <div
+              key={result.src}
+              className="w-[86vw] max-w-[390px] shrink-0 snap-center sm:w-auto sm:max-w-none"
+            >
+              <ComparisonCard {...result} />
+            </div>
+          ))}
+        </div>
+        <div className="mt-14 flex w-full justify-center text-center">
+          <Link
+            href="/gallery/cases"
+            className="rounded-xl bg-[#168f85] px-10 py-2 text-lg font-semibold text-white"
+          >
+            View all smile transformations →
+          </Link>
+        </div>
+      </div>
     </section>
   );
 }
