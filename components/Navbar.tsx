@@ -84,6 +84,11 @@ const dropdowns: Record<DropdownName, { eyebrow: string; items: DropdownItem[] }
         description: "Sterilisation, technology and clinical safety standards",
         href: "/patient-safety",
       },
+      {
+        label: "Careers",
+        description: "Grow your career with our specialist dental team",
+        href: "/careers",
+      },
     ],
   },
 };
@@ -249,17 +254,14 @@ export default function Navbar() {
                           key={item.label}
                           href={item.href}
                           onClick={closeMenus}
-                          className="group smooth-hover hover-lift focus:ring-dent-accent flex items-center gap-3 rounded-xl px-4 py-3 hover:bg-[#effafa] focus:ring-2 focus:outline-none focus:ring-inset"
+                          className="group smooth-hover hover-lift focus:ring-dent-accent flex items-center gap-3 rounded-xl px-4 py-2 hover:bg-[#effafa] focus:ring-2 focus:outline-none focus:ring-inset"
                         >
                           <span className="smooth-hover group-hover:bg-dent-accent flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#e2f8f5] text-[#247378] group-hover:text-white">
                             <span aria-hidden="true">→</span>
                           </span>
                           <span>
-                            <span className="block text-sm font-bold text-[#1b4c50]">
+                            <span className="block text-sm font-semibold text-[#1b4c50]">
                               {item.label}
-                            </span>
-                            <span className="mt-0.5 block text-xs leading-5 text-gray-500">
-                              {item.description}
                             </span>
                           </span>
                         </Link>
