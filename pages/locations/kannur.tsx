@@ -141,7 +141,7 @@ export default function KannurLocationPage() {
       description="Visit Elite Dental Studio in Talap, Kannur for specialist-led dental care, modern technology and comfortable treatment."
       mainClassName="[&_.scroll-reveal]:!translate-y-0 [&_.scroll-reveal]:!opacity-100"
     >
-      <div className="[&>section]:h-[380px] sm:[&>section]:h-[500px] lg:[&>section]:h-[clamp(560px,42.51vw,700px)] [&>section]:after:pointer-events-none [&>section]:after:absolute [&>section]:after:inset-0 [&>section]:after:z-20 [&>section]:after:bg-[linear-gradient(90deg,rgba(4,55,60,.08),rgba(4,55,60,.02)_55%,rgba(4,55,60,.35))]">
+      <div className="[&>section]:h-[380px] [&>section]:after:pointer-events-none [&>section]:after:absolute [&>section]:after:inset-0 [&>section]:after:z-20 [&>section]:after:bg-[linear-gradient(90deg,rgba(4,55,60,.08),rgba(4,55,60,.02)_55%,rgba(4,55,60,.35))] sm:[&>section]:h-[500px] lg:[&>section]:h-[clamp(560px,42.51vw,700px)]">
         <HeroSection
           slides={[
             {
@@ -236,7 +236,7 @@ export default function KannurLocationPage() {
               <div className="grid gap-4 sm:grid-cols-[1fr_170px]">
                 <select
                   aria-label="Choose clinic"
-                  defaultValue="CALICUT"
+                  defaultValue="KANNUR"
                   className="h-12 rounded-full border border-[#d5e2e0] bg-white px-6 text-[#667]"
                 >
                   <option value="CALICUT">CALICUT</option>
@@ -245,7 +245,7 @@ export default function KannurLocationPage() {
                   <option>COIMBATORE</option>
                 </select>
                 <a
-                  href="https://goo.gl/maps/46qQV1nCHcXRQp3fA"
+                  href="https://share.google/hqWjVESaLgEvGCPDX"
                   target="_blank"
                   rel="noreferrer"
                   className="grid min-h-12 place-items-center rounded-full bg-[#276368] font-bold text-white"
@@ -254,25 +254,25 @@ export default function KannurLocationPage() {
                 </a>
               </div>
               <div className="mt-8 space-y-4 text-sm text-[#617477] sm:text-base">
-                <a className="block" href="tel:+919745072555">
-                  ● &nbsp; +91 9745 072 555
+                <a className="block" href="tel:+919645874777">
+                  ● &nbsp; +91 96458 74777
                 </a>
-                <span className="block">☎ &nbsp; 0495 3552 555</span>
-                <a className="block break-all" href="mailto:elitedentalstudioreception@gmail.com">
-                  ✉ &nbsp; elitedentalstudioreception@gmail.com
+                <span className="block">☎ &nbsp; 0497 271 6555</span>
+                <a className="block break-all" href="mailto:elitedentalstudiokannur@gmail.com">
+                  ✉ &nbsp; elitedentalstudiokannur@gmail.com
                 </a>
               </div>
               <div className="my-6 h-px bg-[#86a4a4]" />
               <div className="flex gap-4 text-sm leading-6 font-semibold text-[#566b6d]">
                 <span>●</span>
                 <p>
-                  The Mezzanine Floor Apollo Tower, Opposite Swapna Nagari
+                  Nyma Tower, Opposite Koyili Hospital
                   <br />
-                  Mini Bypass Rd, Eranhipalam P.O, Kozhikode, Kerala 673006
+                  Talap, Kannur, Kerala 670002
                 </p>
               </div>
               <a
-                href="https://goo.gl/maps/46qQV1nCHcXRQp3fA"
+                href="https://share.google/hqWjVESaLgEvGCPDX"
                 target="_blank"
                 rel="noreferrer"
                 className="mt-6 inline-flex rounded bg-[#064b52] px-5 py-2 text-xs font-bold text-white"
@@ -282,8 +282,8 @@ export default function KannurLocationPage() {
             </div>
             <iframe
               title="Elite Dental Studio Kannur map"
-              src="https://www.google.com/maps?q=Apollo%20Tower%2C%20Mini%20Bypass%20Road%2C%20Eranhipalam%2C%20Kozhikode%2C%20Kerala%20673006&output=embed"
-                className="min-h-[300px] w-full border-0 sm:min-h-[380px]"
+              src="https://www.google.com/maps?q=Nyma%20Tower%2C%20opposite%20Koyili%20Hospital%2C%20Talap%2C%20Kannur%2C%20Kerala%20670002&output=embed"
+              className="min-h-[300px] w-full border-0 sm:min-h-[380px]"
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
             />
@@ -333,7 +333,10 @@ export default function KannurLocationPage() {
 
       <LocationFaq />
 
-      <section id="appointment" className="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-10 lg:px-12 lg:py-12">
+      <section
+        id="appointment"
+        className="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-10 lg:px-12 lg:py-12"
+      >
         <div className="mx-auto grid max-w-6xl gap-8 rounded-[18px] bg-[#276368] p-5 text-white sm:rounded-[28px] sm:p-8 lg:grid-cols-2 lg:gap-10 lg:p-12">
           <div>
             <p className="text-xs font-bold tracking-[.15em] text-[#40ddcf] uppercase">

@@ -25,6 +25,7 @@ const clinics: Record<string, Clinic> = {
       "Kozhikode, Kerala 673006",
     ],
     mapQuery: "Apollo Tower, Mini Bypass Road, Eranhipalam, Kozhikode, Kerala",
+    mapUrl: "https://share.google/Fwtkjjfxd6VB0I8Pg",
   },
   KOCHI: {
     name: "KOCHI",
@@ -38,6 +39,7 @@ const clinics: Record<string, Clinic> = {
       "Kochi, Kerala 682031",
     ],
     mapQuery: "Marine Drive Road, Ernakulam, Kochi, Kerala",
+    mapUrl: "https://share.google/rBjee9uoOFuyUrBiN",
   },
   KANNUR: {
     name: "KANNUR",
@@ -46,7 +48,7 @@ const clinics: Record<string, Clinic> = {
     email: "elitedentalstudiokannur@gmail.com",
     addressLines: ["Nyma Tower", "Opposite Koyili Hospital", "Talap, Kannur", "Kerala 670002"],
     mapQuery: "Nyma Tower, opposite Koyili Hospital, Talap, Kannur, Kerala 670002",
-    mapUrl: "https://maps.app.goo.gl/87myjWP7xWiPiDfaA",
+    mapUrl: "https://share.google/hqWjVESaLgEvGCPDX",
   },
   COIMBATORE: {
     name: "COIMBATORE",
