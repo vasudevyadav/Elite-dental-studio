@@ -12,7 +12,7 @@ const procedures = [
   ],
 ];
 
-type Props = { service: Service; isLaser: boolean };
+type Props = { service: Service; isLaser: boolean; data?: Record<string, unknown> };
 
 function ProcedureItem({
   name,
@@ -40,18 +40,25 @@ function ProcedureItem({
   );
 }
 
-export default function ProceduresSection({ service, isLaser }: Props) {
-  const mobileProcedures = procedures.map(([name, copy]) => ({ name, copy }));
+export default function ProceduresSection({ service, isLaser, data }: Props) {
+  const apiItems = data?.items as { title: string; description: string }[] | undefined;
+  const activeProcedures = apiItems?.map((item) => [item.title, item.description]) || procedures;
+  const mobileProcedures = activeProcedures.map(([name, copy]) => ({ name, copy }));
 
   return (
     <section className="py-10 text-center lg:py-20">
       <h2 className="text-xl leading-tight font-bold text-[#2b7175] lg:text-[40px]">
-        Which Dental Procedures
-        <br />
-        Use {isLaser ? "Laser Support" : "This Treatment"}?
+        {(data?.title as string) || (
+          <>
+            <span>Which Dental Procedures</span>
+            <br />
+            <span>Use {isLaser ? "Laser Support" : "This Treatment"}?</span>
+          </>
+        )}
       </h2>
       <p className="mt-2 text-sm leading-7 font-medium lg:text-[23px] lg:leading-8">
-        At Elite Dental Studio, support is used in these procedures:
+        {(data?.subtitle as string) ||
+          "At Elite Dental Studio, support is used in these procedures:"}
       </p>
 
       <div
@@ -72,14 +79,17 @@ export default function ProceduresSection({ service, isLaser }: Props) {
 
       <div className="mt-12 hidden items-center gap-8 text-left lg:grid lg:grid-cols-3 lg:gap-0">
         <div className="order-2 grid gap-7 lg:order-1 lg:gap-28">
-          {procedures.slice(0, 3).map(([name, copy]) => (
+          {activeProcedures.slice(0, 3).map(([name, copy]) => (
             <ProcedureItem key={name} name={name} copy={copy} service={service} isLaser={isLaser} />
           ))}
         </div>
 
         <div className="relative order-1 min-h-[350px] lg:order-2 lg:min-h-[550px]">
           <Image
-            src="/service/services-inner-2.png"
+            src={
+              (data?.centerImage as { url?: string } | undefined)?.url ||
+              "/service/services-inner-2.png"
+            }
             alt="Elite Dental Studio specialist"
             fill
             sizes="(max-width: 1024px) 90vw, 560px"
@@ -88,12 +98,12 @@ export default function ProceduresSection({ service, isLaser }: Props) {
         </div>
 
         <div className="order-3 grid gap-8 lg:gap-14 lg:pl-12">
-          {procedures.slice(3).map(([name, copy]) => (
+          {activeProcedures.slice(3).map(([name, copy]) => (
             <ProcedureItem key={name} name={name} copy={copy} service={service} isLaser={isLaser} />
           ))}
           <strong className="max-w-sm rounded-lg bg-[#25d0c0] px-6 py-3 text-lg leading-7 font-normal text-white">
-            Each procedure is planned after your dentist confirms your condition and treatment
-            goals.
+            {(data?.note as string) ||
+              "Each procedure is planned after your dentist confirms your condition and treatment goals."}
           </strong>
         </div>
       </div>

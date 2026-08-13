@@ -90,23 +90,28 @@ function ComparisonCard({ src, label }: { src: string; label: string }) {
   );
 }
 
-export default function TreatmentResults({ serviceTitle }: { serviceTitle: string }) {
+export default function TreatmentResults({
+  serviceTitle,
+  data,
+}: {
+  serviceTitle: string;
+  data?: Record<string, unknown>;
+}) {
   return (
     <section className="bg-[#f2f9f8] px-5 py-16 sm:px-8 sm:py-20 lg:px-12">
       <div className="mx-auto max-w-7xl">
         <div className="grid gap-6 lg:grid-cols-[1fr_.75fr] lg:items-end">
           <div>
             <p className="text-xs font-bold tracking-[.18em] text-[#1da99d] uppercase">
-              Before &amp; after
+              {(data?.eyebrow as string) || "Before & after"}
             </p>
             <h2 className="mt-3 text-3xl font-semibold tracking-[-.04em] text-[#174e53] sm:text-5xl">
-              See what thoughtful care can achieve.
+              {(data?.title as string) || "See what thoughtful care can achieve."}
             </h2>
           </div>
           <p className="text-sm leading-7 text-[#607779]">
-            Explore selected patient transformations from Elite Dental Studio. Your{" "}
-            {serviceTitle.toLowerCase()} result will depend on your individual clinical condition
-            and treatment plan.
+            {(data?.description as string) ||
+              `Explore selected patient transformations from Elite Dental Studio. Your ${serviceTitle.toLowerCase()} result will depend on your individual clinical condition and treatment plan.`}
           </p>
         </div>
         <div className="-mx-5 mt-10 flex snap-x [scrollbar-width:none] gap-5 overflow-x-auto px-5 pb-5 sm:mx-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-3 [&::-webkit-scrollbar]:hidden">

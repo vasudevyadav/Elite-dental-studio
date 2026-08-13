@@ -379,3 +379,54 @@ video {
     font-size: 18px;
   }
 }
+.wordpress-blog-content table {
+  display: table !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  table-layout: fixed;
+}
+
+.wordpress-blog-content thead {
+  display: table-header-group;
+}
+
+.wordpress-blog-content tbody {
+  display: table-row-group;
+  width: 100%;
+}
+
+.wordpress-blog-content tr {
+  display: table-row;
+  width: 100%;
+}
+
+.wordpress-blog-content th,
+.wordpress-blog-content td {
+  overflow-wrap: anywhere;
+}
+
+.wordpress-blog-content table:has(tr > :nth-child(3):last-child) th:nth-child(1),
+.wordpress-blog-content table:has(tr > :nth-child(3):last-child) td:nth-child(1) {
+  width: 25% !important;
+}
+
+.wordpress-blog-content table:has(tr > :nth-child(3):last-child) th:nth-child(2),
+.wordpress-blog-content table:has(tr > :nth-child(3):last-child) td:nth-child(2) {
+  width: 30% !important;
+}
+
+.wordpress-blog-content table:has(tr > :nth-child(3):last-child) th:nth-child(3),
+.wordpress-blog-content table:has(tr > :nth-child(3):last-child) td:nth-child(3) {
+  width: 45% !important;
+}
+
+@media (max-width: 767px) {
+  .wordpress-blog-content table {
+    min-width: 680px !important;
+  }
+
+  .wordpress-blog-content {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+}

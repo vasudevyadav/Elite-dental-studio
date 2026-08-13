@@ -1,4 +1,4 @@
-import type { GetStaticPaths, GetStaticProps } from "next";
+import type { GetServerSideProps } from "next";
 import Head from "next/head";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -17,21 +17,34 @@ import TreatmentExpectationSection from "@/components/services/TreatmentExpectat
 import AftercareSection from "@/components/services/AftercareSection";
 import BenefitsSection from "@/components/services/BenefitsSection";
 import TreatmentResults from "@/components/services/TreatmentResults";
-import { findService, services, type Service } from "@/components/services/serviceData";
+import {
+  getService,
+  toLegacyService,
+  type ServiceDetail,
+  type ServiceSection,
+} from "@/lib/servicesApi";
 
-type Props = { service: Service };
+type Props = { service: ServiceDetail };
+
+const sectionContent = (sections: ServiceSection[], type: ServiceSection["type"]) =>
+  sections.find((section) => section.type === type)?.content;
 
 export default function ServiceDetailPage({ service }: Props) {
   const isLaser = service.slug === "laser-dentistry";
-  const treatmentName = isLaser ? "Dental Laser Treatment" : service.title;
+  const treatmentName = service.treatmentName || service.title;
+  const legacyService = toLegacyService(service);
+  const content = (type: ServiceSection["type"]) => sectionContent(service.sections, type);
 
   return (
     <>
       <Head>
-        <title>{service.title} | Elite Dental Studio</title>
+        <title>{service.seo?.metaTitle || `${service.title} | Elite Dental Studio`}</title>
         <meta
           name="description"
-          content={`${service.title} consultation and treatment at Elite Dental Studio.`}
+          content={
+            service.seo?.metaDescription ||
+            `${service.title} consultation and treatment at Elite Dental Studio.`
+          }
         />
       </Head>
 
@@ -43,6 +56,7 @@ export default function ServiceDetailPage({ service }: Props) {
           serviceTitle={service.title}
           treatmentName={treatmentName}
           isLaser={isLaser}
+          data={content("overview")}
         />
 
         <div className="mx-auto max-w-screen-2xl px-5 py-2 text-gray-800 sm:px-8 lg:px-28 lg:py-20">
@@ -50,15 +64,20 @@ export default function ServiceDetailPage({ service }: Props) {
             isLaser={isLaser}
             serviceTitle={service.title}
             treatmentName={treatmentName}
+            data={content("introduction")}
           />
-          <ProceduresSection service={service} isLaser={isLaser} />
-          <CandidateSection treatmentName={treatmentName} />
-          <TreatmentExpectationSection />
-          <AftercareSection />
-          <BenefitsSection treatmentName={treatmentName} />
+          <ProceduresSection
+            service={legacyService}
+            isLaser={isLaser}
+            data={content("procedures")}
+          />
+          <CandidateSection treatmentName={treatmentName} data={content("candidate")} />
+          <TreatmentExpectationSection data={content("expectation")} />
+          <AftercareSection data={content("aftercare")} />
+          <BenefitsSection treatmentName={treatmentName} data={content("benefits")} />
         </div>
 
-        <TreatmentResults serviceTitle={service.title} />
+        <TreatmentResults serviceTitle={service.title} data={content("results")} />
 
         <NearestClinic serviceName={treatmentName} />
         <DoctorsSection />
@@ -73,13 +92,9 @@ export default function ServiceDetailPage({ service }: Props) {
   );
 }
 
-export const getStaticPaths: GetStaticPaths = async () => ({
-  paths: services.map(({ slug }) => ({ params: { slug } })),
-  fallback: false,
-});
-
-export const getStaticProps: GetStaticProps<Props> = async ({ params }) => {
-  const service = findService(String(params?.slug));
+export const getServerSideProps: GetServerSideProps<Props> = async ({ params, res }) => {
+  const service = await getService(String(params?.slug));
   if (!service) return { notFound: true };
+  res.setHeader("Cache-Control", "public, s-maxage=60, stale-while-revalidate=300");
   return { props: { service } };
 };

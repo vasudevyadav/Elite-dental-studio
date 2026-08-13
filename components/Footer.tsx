@@ -37,7 +37,7 @@ const serviceSlugs = [
   "pediatric-dentistry",
 ];
 
-const clinics = ["CALICUT", "KOCHI", "Kannur", "Coimbatore"];
+const clinics = ["Calicut", "Kochi", "Kannur", "Coimbatore"];
 
 function SocialIcon({ type }: { type: "facebook" | "tiktok" | "instagram" | "whatsapp" }) {
   return (
