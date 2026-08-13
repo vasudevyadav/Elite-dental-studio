@@ -37,7 +37,12 @@ const serviceSlugs = [
   "pediatric-dentistry",
 ];
 
-const clinics = ["Calicut", "Kochi", "Kannur", "Coimbatore"];
+const clinics = [
+  { name: "Calicut", href: "https://share.google/Fwtkjjfxd6VB0I8Pg" },
+  { name: "Kochi", href: "https://share.google/rBjee9uoOFuyUrBiN" },
+  { name: "Kannur", href: "https://share.google/hqWjVESaLgEvGCPDX" },
+  { name: "Coimbatore", href: "/#clinics" },
+];
 
 function SocialIcon({ type }: { type: "facebook" | "tiktok" | "instagram" | "whatsapp" }) {
   return (
@@ -172,12 +177,14 @@ export default function Footer() {
             </h3>
             <ul className="mt-5 space-y-5">
               {clinics.map((clinic) => (
-                <li key={clinic}>
+                <li key={clinic.name}>
                   <Link
-                    href="/#clinics"
+                    href={clinic.href}
+                    target={clinic.href.startsWith("https://") ? "_blank" : undefined}
+                    rel={clinic.href.startsWith("https://") ? "noreferrer" : undefined}
                     className="smooth-hover link-hover hover:text-dent-accent text-base font-medium text-white/92"
                   >
-                    {clinic}
+                    {clinic.name}
                   </Link>
                 </li>
               ))}

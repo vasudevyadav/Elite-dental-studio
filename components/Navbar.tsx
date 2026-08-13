@@ -140,12 +140,16 @@ const XIcon = () => (
 
 const subNavItems = [
   { label: "Our Doctors", img: "/navbar/doctor.png", href: "/doctors" },
-  { label: "Testimonials", img: "/navbar/icon02.png", href: "/#testimonials" },
-  { label: "Awards", img: "/navbar/icon-3.png", href: "/#awards" },
+  { label: "About Us", img: "/navbar/icon02.png", href: "/about" },
+  { label: "Our Dental Office", img: "/navbar/icon-3.png", href: "/our-dental-office" },
   { label: "Technology", img: "/navbar/icon-4.png", href: "/services" },
-  { label: "Implant", img: "/navbar/icon-6.png", href: "/services/dental-implant" },
-  { label: "Aligners", img: "/navbar/icon-7.png", href: "/services/invisible-aligners" },
-  { label: "Root Canal", img: "/navbar/icon-8.png", href: "/services/endodontics" },
+  {
+    label: "International Patients",
+    img: "/navbar/icon-6.png",
+    href: "/international-patients",
+  },
+  { label: "Blogs", img: "/navbar/icon-7.png", href: "/blog" },
+  { label: "Facilities", img: "/navbar/icon-8.png", href: "/facilities" },
 ];
 
 export default function Navbar() {

@@ -21,7 +21,7 @@ export const contactClinics: ContactClinic[] = [
     phone: "+91 9745 072 555",
     landline: "0495 3552 555",
     email: "elitedentalstudioreception@gmail.com",
-    mapUrl: "https://goo.gl/maps/46qQV1nCHcXRQp3fA",
+    mapUrl: "https://share.google/Fwtkjjfxd6VB0I8Pg",
     mapQuery: "Apollo Tower, Mini Bypass Road, Eranhipalam, Kozhikode, Kerala 673006",
   },
   {
@@ -35,7 +35,7 @@ export const contactClinics: ContactClinic[] = [
     phone: "+91 9567 124 888",
     landline: "0484 4024 888",
     email: "elitedentalkochireception@gmail.com",
-    mapUrl: "https://goo.gl/maps/4bCqLAUVMzxBc9z98",
+    mapUrl: "https://share.google/rBjee9uoOFuyUrBiN",
     mapQuery: "5/981 A Main Avenue Road, Panampilly Nagar, Kochi, Kerala",
   },
   {
@@ -43,7 +43,7 @@ export const contactClinics: ContactClinic[] = [
     shortName: "Kannur",
     address: ["Nyma Tower, opposite Koyili Hospital", "Talap, Kannur", "Kerala 670002"],
     phone: "+91 96458 74777",
-    mapUrl: "https://maps.app.goo.gl/87myjWP7xWiPiDfaA",
+    mapUrl: "https://share.google/hqWjVESaLgEvGCPDX",
     mapQuery: "Nyma Tower, opposite Koyili Hospital, Talap, Kannur, Kerala 670002",
   },
   {

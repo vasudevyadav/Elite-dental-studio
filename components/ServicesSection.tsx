@@ -1,8 +1,10 @@
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 import AnimatedArrowCta from "./AnimatedArrowCta";
 
 type Service = {
+  slug: string;
   title: string;
   description: string;
   image: string;
@@ -11,6 +13,7 @@ type Service = {
 
 const services: Service[] = [
   {
+    slug: "laser-dentistry",
     title: "Laser Dentistry",
     description:
       "Treats gum infection and soft tissue with less bleeding than a scalpel, and faster healing afterward.",
@@ -18,12 +21,14 @@ const services: Service[] = [
     icon: "laser",
   },
   {
+    slug: "maxillofacial-orthognathic-surgery",
     title: "Oral & Maxillofacial Surgery & Orthognathics",
     description: "Surgical correction of jaw position when braces alone cannot fix the bite.",
     image: "/home/services/dental-fillings.jpg",
     icon: "tooth",
   },
   {
+    slug: "invisible-aligners",
     title: "Invisalign Treatment",
     description:
       "Clear plastic trays, changed every one to two weeks, gradually shift teeth into position without metal wires.",
@@ -31,6 +36,7 @@ const services: Service[] = [
     icon: "aligner",
   },
   {
+    slug: "periodontics",
     title: "Periodontics",
     description:
       "Deep cleaning and gum surgery that treats bleeding gums and the bone loss that causes loose teeth.",
@@ -38,6 +44,7 @@ const services: Service[] = [
     icon: "laser",
   },
   {
+    slug: "pediatric-dentistry",
     title: "Pediatric Dentistry",
     description:
       "Cavity checks, sealants and fluoride treatment planned around your child's exact age and tooth count.",
@@ -45,6 +52,7 @@ const services: Service[] = [
     icon: "tooth",
   },
   {
+    slug: "oral-medicine-radiology",
     title: "Oral Medicine & Radiology",
     description:
       "Digital X-rays that locate the exact source of jaw pain or a tooth that hurts without a visible cause.",
@@ -52,6 +60,7 @@ const services: Service[] = [
     icon: "tooth",
   },
   {
+    slug: "endodontics",
     title: "Endodontics",
     description:
       "Root canal treatment that removes infected tissue from inside a tooth, so it can stay in your mouth instead of being pulled.",
@@ -59,6 +68,7 @@ const services: Service[] = [
     icon: "tooth",
   },
   {
+    slug: "prosthodontics",
     title: "Prosthodontics",
     description:
       "Crowns, bridges, dentures and implants built to replace one tooth or a full arch you've lost.",
@@ -66,6 +76,7 @@ const services: Service[] = [
     icon: "tooth",
   },
   {
+    slug: "orthodontics",
     title: "Orthodontics",
     description:
       "Braces or aligners that move crooked or gapped teeth into a corrected bite over a planned series of visits.",
@@ -73,6 +84,7 @@ const services: Service[] = [
     icon: "aligner",
   },
   {
+    slug: "restorative-dentistry",
     title: "Restorative Dentistry",
     description:
       "Fillings that rebuild a tooth weakened by decay or a chip, matched to your natural tooth color.",
@@ -80,6 +92,7 @@ const services: Service[] = [
     icon: "tooth",
   },
   {
+    slug: "cosmetic-treatments",
     title: "Cosmetic Treatments",
     description:
       "Whitening, veneers and reshaping for teeth that are healthy but don't look the way you want them to.",
@@ -219,7 +232,8 @@ export default function ServicesSection({
         >
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8" aria-live="polite">
             {visibleServices.map(({ service, offset }) => (
-              <article
+              <Link
+                href={`/services/${service.slug}`}
                 key={service.title}
                 className={`group smooth-hover card-hover overflow-hidden border bg-white shadow-[0_18px_45px_rgba(21,74,78,0.09)] sm:block ${compact ? "rounded-[18px] p-4" : "rounded-[28px] p-5 sm:p-6"} ${offset !== 0 ? "hidden sm:block" : ""} ${
                   offset === 0 ? "border-[#2b7f82] md:-translate-y-2" : "border-[#8cb8ba]"
@@ -232,14 +246,12 @@ export default function ServicesSection({
                   >
                     {service.title}
                   </h3>
-                  <button
-                    type="button"
-                    onClick={() => setActiveService((activeService + offset) % services.length)}
-                    aria-label={`View ${service.title}`}
+                  <span
+                    aria-hidden="true"
                     className="smooth-hover hover-lift flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-[#287579] hover:bg-[#e7f8f6] hover:text-[#20cbbb] focus:ring-4 focus:ring-[#25d3c4]/20 focus:outline-none"
                   >
                     <Arrow />
-                  </button>
+                  </span>
                 </div>
 
                 <div className="my-5 h-px bg-[#c8cccc]" />
@@ -261,7 +273,7 @@ export default function ServicesSection({
                     className="image-hover object-cover"
                   />
                 </div>
-              </article>
+              </Link>
             ))}
           </div>
 
