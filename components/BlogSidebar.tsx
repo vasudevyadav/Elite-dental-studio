@@ -1,16 +1,20 @@
 import Link from "next/link";
-import { blogCategories, recentPosts } from "@/components/blogData";
+import type { BlogApiPost, BlogCategory } from "@/lib/blogsApi";
 
-type Props = { onCategory?: (category: string) => void };
+type Props = {
+  onCategory?: (category: string) => void;
+  categories?: BlogCategory[];
+  recentPosts?: BlogApiPost[];
+};
 
-export default function BlogSidebar({ onCategory }: Props) {
-  const categoryLink = (category: string) =>
+export default function BlogSidebar({ onCategory, categories = [], recentPosts = [] }: Props) {
+  const categoryLink = (category: BlogCategory) =>
     onCategory ? (
-      <button type="button" onClick={() => onCategory(category)}>
-        {category}
+      <button type="button" onClick={() => onCategory(category.slug)}>
+        {category.name}
       </button>
     ) : (
-      <Link href="/blog">{category}</Link>
+      <Link href={`/blog?category=${category.slug}`}>{category.name}</Link>
     );
 
   return (
@@ -20,10 +24,10 @@ export default function BlogSidebar({ onCategory }: Props) {
           Categories
         </h2>
         <ul className="mt-[18px] list-none p-0">
-          {blogCategories.map((category) => (
+          {categories.map((category) => (
             <li
               className="[&_button]:font-inherit relative mb-4 pl-[18px] text-base leading-[1.55] font-semibold before:absolute before:left-0 before:content-['•'] [&_a]:text-inherit [&_button]:cursor-pointer [&_button]:border-0 [&_button]:bg-transparent [&_button]:text-left [&_button]:text-inherit"
-              key={category}
+              key={category.slug}
             >
               {categoryLink(category)}
             </li>
@@ -38,9 +42,9 @@ export default function BlogSidebar({ onCategory }: Props) {
           {recentPosts.map((post) => (
             <li
               className="relative mb-4 pl-[18px] text-base leading-[1.55] font-semibold before:absolute before:left-0 before:content-['•']"
-              key={post}
+              key={post.slug}
             >
-              {post}
+              <Link href={`/blog/${post.slug}`}>{post.title}</Link>
             </li>
           ))}
         </ul>
