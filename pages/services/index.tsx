@@ -1,4 +1,5 @@
 import Head from "next/head";
+import type { GetServerSideProps } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
@@ -6,9 +7,11 @@ import FAQSection from "@/components/FAQSection";
 import BookAppointmentSection from "@/components/BookAppointmentSection";
 import Footer from "@/components/Footer";
 import ServiceHero from "@/components/services/ServiceHero";
-import { services } from "@/components/services/serviceData";
+import { getServices, type ServiceListItem } from "@/lib/servicesApi";
 
-export default function ServicesPage() {
+type Props = { services: ServiceListItem[] };
+
+export default function ServicesPage({ services }: Props) {
   return (
     <>
       <Head>
@@ -54,7 +57,7 @@ export default function ServicesPage() {
                   <div className="grid min-h-[58px] grid-cols-[46px_1fr_24px] items-center gap-3.5 border-b border-[#ccc] pb-3.5">
                     <span className="grid h-[46px] w-[46px] place-items-center overflow-hidden rounded-[7px] bg-[#25d3c4]">
                       <Image
-                        src={service.icon}
+                        src={service.icon.url}
                         alt=""
                         width={55}
                         height={55}
@@ -67,11 +70,11 @@ export default function ServicesPage() {
                     <b className="text-[27px] text-[#287377]">→</b>
                   </div>
                   <p className="my-3 min-h-[51px] text-base leading-normal">
-                    We are excited to meet you and provide the best dental care for your family.
+                    {service.shortDescription}
                   </p>
                   <div className="relative aspect-2/1 w-full overflow-hidden rounded-[18px] bg-[#eee]">
                     <Image
-                      src={service.image}
+                      src={service.cardImage.url}
                       alt={service.title}
                       fill
                       sizes="(max-width: 700px) 90vw, 30vw"
@@ -92,3 +95,8 @@ export default function ServicesPage() {
     </>
   );
 }
+
+export const getServerSideProps: GetServerSideProps<Props> = async ({ res }) => {
+  res.setHeader("Cache-Control", "public, s-maxage=60, stale-while-revalidate=300");
+  return { props: { services: await getServices() } };
+};

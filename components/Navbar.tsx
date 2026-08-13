@@ -10,6 +10,13 @@ type DropdownItem = {
   href: string;
 };
 
+type ApiService = {
+  slug: string;
+  title: string;
+  shortDescription?: string;
+  sortOrder?: number;
+};
+
 const dropdowns: Record<DropdownName, { eyebrow: string; items: DropdownItem[] }> = {
   treatments: {
     eyebrow: "Explore our care",
@@ -145,6 +152,15 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<DropdownName | null>(null);
   const headerRef = useRef<HTMLElement>(null);
+  const [treatmentItems, setTreatmentItems] = useState<DropdownItem[]>([]);
+
+  const navigationDropdowns = {
+    ...dropdowns,
+    treatments: {
+      ...dropdowns.treatments,
+      items: treatmentItems,
+    },
+  };
 
   const closeMenus = () => {
     setActiveDropdown(null);
@@ -154,6 +170,41 @@ export default function Navbar() {
   const toggleDropdown = (name: DropdownName) => {
     setActiveDropdown((current) => (current === name ? null : name));
   };
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    const loadServices = async () => {
+      try {
+        const response = await fetch("/api/services", { signal: controller.signal });
+        if (!response.ok) return;
+        const payload = (await response.json()) as {
+          success: boolean;
+          data?: { items?: ApiService[] };
+        };
+        const services = payload.data?.items;
+        if (!payload.success || !Array.isArray(services)) return;
+
+        setTreatmentItems(
+          services
+            .filter((service) => service.slug && service.title)
+            .sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0))
+            .map((service) => ({
+              label: service.title,
+              description: service.shortDescription || "Explore this dental treatment",
+              href: `/services/${service.slug}`,
+            })),
+        );
+      } catch (error) {
+        if ((error as Error).name !== "AbortError") {
+          console.error("Unable to load services navigation.", error);
+        }
+      }
+    };
+
+    void loadServices();
+    return () => controller.abort();
+  }, []);
 
   useEffect(() => {
     const handlePointerDown = (event: PointerEvent) => {
@@ -218,7 +269,7 @@ export default function Navbar() {
               ] as const
             ).map(([name, label]) => {
               const isOpen = activeDropdown === name;
-              const menu = dropdowns[name];
+              const menu = navigationDropdowns[name];
 
               return (
                 <div key={name} className="relative">
@@ -419,7 +470,7 @@ export default function Navbar() {
                           id={`${name}-mobile-menu`}
                           className="space-y-1 border-t border-[#d9eeee] bg-[#fbfefe] p-2"
                         >
-                          {dropdowns[name].items.map((item) => (
+                          {navigationDropdowns[name].items.map((item) => (
                             <Link
                               key={item.label}
                               href={item.href}

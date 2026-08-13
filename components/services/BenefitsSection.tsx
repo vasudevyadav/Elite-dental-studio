@@ -18,17 +18,28 @@ const positions = [
   "left-[68%] top-[64%]",
 ];
 
-export default function BenefitsSection({ treatmentName }: { treatmentName: string }) {
+export default function BenefitsSection({
+  treatmentName,
+  data,
+}: {
+  treatmentName: string;
+  data?: Record<string, unknown>;
+}) {
+  const activeBenefits = (data?.items as string[] | undefined) || benefits;
   return (
     <section className="pt-10 pb-2 text-center lg:pt-20 lg:pb-12">
       <h2 className="text-2xl leading-tight font-bold text-[#2b7175] lg:text-[40px]">
-        Benefits of
-        <br />
-        {treatmentName}
+        {(data?.title as string) || (
+          <>
+            <span>Benefits of</span>
+            <br />
+            <span>{treatmentName}</span>
+          </>
+        )}
       </h2>
       <p className="mt-5 text-sm leading-7 font-medium lg:text-lg lg:leading-8">
-        Where laser treatment is clinically suitable, it offers clear advantages over conventional{" "}
-        <br className="hidden lg:block" /> soft tissue methods:
+        {(data?.description as string) ||
+          "Where laser treatment is clinically suitable, it offers clear advantages over conventional soft tissue methods:"}
       </p>
 
       <div
@@ -37,7 +48,7 @@ export default function BenefitsSection({ treatmentName }: { treatmentName: stri
         aria-label={`Benefits of ${treatmentName}`}
         tabIndex={0}
       >
-        {benefits.map((benefit, index) => (
+        {activeBenefits.map((benefit, index) => (
           <article
             className="w-[78vw] max-w-[310px] shrink-0 snap-start rounded-2xl border border-[#a8d9d5] bg-[#ecfaf7] p-5"
             key={benefit}
@@ -53,13 +64,15 @@ export default function BenefitsSection({ treatmentName }: { treatmentName: stri
 
       <div className="relative mx-auto mt-8 hidden aspect-[1605/865] w-full max-w-[1605px] lg:block">
         <Image
-          src="/service/services-inner-6.png"
+          src={
+            (data?.image as { url?: string } | undefined)?.url || "/service/services-inner-6.png"
+          }
           alt={`Benefits of ${treatmentName}`}
           fill
           sizes="100vw"
           className="object-contain"
         />
-        {benefits.map((benefit, index) => (
+        {activeBenefits.map((benefit, index) => (
           <span
             className={`absolute z-10 w-[12%] -translate-x-1/2 -translate-y-1/2 text-[clamp(9px,.78vw,13px)] leading-[1.35] text-[#454b4b] ${positions[index]}`}
             key={benefit}
@@ -70,9 +83,8 @@ export default function BenefitsSection({ treatmentName }: { treatmentName: stri
       </div>
 
       <p className="mx-auto mt-5 w-full max-w-5xl px-1 text-sm leading-7 font-semibold sm:w-10/12 lg:mt-4 lg:text-xl lg:leading-normal">
-        Patients seeking advanced dental laser treatment in Kochi and Kannur trust Elite Dental
-        Studio for safe, precise, and specialist-led care, ensuring faster healing, minimal
-        discomfort, and outstanding clinical outcomes.
+        {(data?.footerText as string) ||
+          "Patients seeking advanced dental laser treatment in Kochi and Kannur trust Elite Dental Studio for safe, precise, and specialist-led care, ensuring faster healing, minimal discomfort, and outstanding clinical outcomes."}
       </p>
     </section>
   );
