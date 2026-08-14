@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 const companyLinks = [
   { label: "About Us", href: "/about" },
@@ -37,7 +38,7 @@ const serviceSlugs = [
   "pediatric-dentistry",
 ];
 
-const clinics = [
+const fallbackClinics = [
   { name: "Calicut", href: "https://share.google/Fwtkjjfxd6VB0I8Pg" },
   { name: "Kochi", href: "https://share.google/rBjee9uoOFuyUrBiN" },
   { name: "Kannur", href: "https://share.google/hqWjVESaLgEvGCPDX" },
@@ -81,6 +82,28 @@ function SocialIcon({ type }: { type: "facebook" | "tiktok" | "instagram" | "wha
 }
 
 export default function Footer() {
+  const [clinics, setClinics] = useState(fallbackClinics);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    fetch("/api/locations", { signal: controller.signal })
+      .then((response) => (response.ok ? response.json() : null))
+      .then((payload) => {
+        const items = payload?.data?.items;
+        if (!Array.isArray(items)) return;
+        const mapLinks: Record<string, string> = Object.fromEntries(
+          fallbackClinics.map((item) => [item.name.toLowerCase(), item.href]),
+        );
+        setClinics(
+          items.map((item: { name: string; slug: string }) => ({
+            name: item.name,
+            href: mapLinks[item.slug] || `/locations/${item.slug}`,
+          })),
+        );
+      })
+      .catch(() => undefined);
+    return () => controller.abort();
+  }, []);
   return (
     <footer className="bg-dent-nav text-white">
       <div className="mx-auto max-w-7xl px-5 py-10 sm:px-8 lg:px-12 lg:py-12">

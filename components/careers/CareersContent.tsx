@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useRef, useState } from "react";
 import HeroSection from "@/components/HeroSection";
 
@@ -22,7 +23,16 @@ const opportunities = [
   ],
 ] as const;
 
-export default function CareersContent() {
+export default function CareersContent({ data }: { data: Record<string, any> }) {
+  const jobs =
+    data.jobs ||
+    opportunities.map(([title, label, description, number]) => ({
+      title,
+      department: { name: label },
+      description,
+      number,
+    }));
+  const heroImage = data.hero?.slides?.[0]?.image;
   const [fileName, setFileName] = useState("");
   const fileRef = useRef<HTMLInputElement>(null);
   const fieldClass =
@@ -34,15 +44,16 @@ export default function CareersContent() {
         <HeroSection
           slides={[
             {
-              img: "/safety/clinic-safety-team.png",
-              alt: "Dental professionals at Elite Dental Studio",
+              img: heroImage?.url || "/safety/clinic-safety-team.png",
+              alt: heroImage?.alt || "Dental professionals at Elite Dental Studio",
             },
           ]}
           content={{
-            eyebrow: "Careers at Elite",
-            title: "Build your career",
-            accent: "around better care.",
+            eyebrow: data.hero?.eyebrow || "Careers at Elite",
+            title: data.hero?.title || "Build your career",
+            accent: data.hero?.accent || "around better care.",
             description:
+              data.hero?.description ||
               "Join a multidisciplinary dental team where skill, empathy and continuous learning shape every patient experience.",
           }}
         />
@@ -52,21 +63,16 @@ export default function CareersContent() {
         <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[.9fr_1.1fr] lg:gap-24">
           <div>
             <p className="text-xs font-bold tracking-[.18em] text-[#1da99d] uppercase">
-              Life at Elite
+              {data.introduction?.eyebrow || "Life at Elite"}
             </p>
             <h2 className="mt-4 text-3xl leading-tight font-semibold tracking-[-.04em] text-[#174e53] sm:text-5xl">
-              Good people make exceptional care possible.
+              {data.introduction?.title || "Good people make exceptional care possible."}
             </h2>
           </div>
           <div className="grid gap-6 text-sm leading-7 text-[#607779] sm:grid-cols-2">
-            <p>
-              We are a growing team of clinicians and care professionals united by high standards,
-              thoughtful service and respect for every patient.
-            </p>
-            <p>
-              Across our clinics, you will find modern technology, collaborative specialists and
-              opportunities to keep learning while doing meaningful work.
-            </p>
+            {(data.introduction?.paragraphs || []).map((paragraph: string) => (
+              <p key={paragraph}>{paragraph}</p>
+            ))}
           </div>
         </div>
       </section>
@@ -75,26 +81,30 @@ export default function CareersContent() {
         <div className="mx-auto max-w-7xl">
           <div className="max-w-2xl">
             <p className="text-xs font-bold tracking-[.18em] text-[#1da99d] uppercase">
-              Opportunities
+              {data.jobsSection?.eyebrow || "Opportunities"}
             </p>
             <h2 className="mt-3 text-3xl font-semibold tracking-[-.04em] text-[#174e53] sm:text-4xl">
-              Find where you fit.
+              {data.jobsSection?.title || "Find where you fit."}
             </h2>
           </div>
           <div className="mt-9 grid gap-5 md:grid-cols-3">
-            {opportunities.map(([title, label, copy, number]) => (
+            {jobs.map((job: Record<string, any>, index: number) => (
               <article
-                key={title}
+                key={job.id || job.title}
                 className="group flex min-h-[290px] flex-col rounded-[22px] border border-[#cfe2df] bg-white p-6 shadow-[0_14px_35px_rgba(19,78,82,.06)] transition duration-300 hover:-translate-y-1 hover:border-[#88c7c1] hover:shadow-[0_20px_45px_rgba(19,78,82,.12)] sm:p-7"
               >
                 <div className="flex items-center justify-between">
                   <span className="rounded-full bg-[#e5f6f3] px-3 py-1.5 text-[10px] font-bold tracking-[.12em] text-[#168f85] uppercase">
-                    {label}
+                    {job.department?.name}
                   </span>
-                  <span className="text-sm font-semibold text-[#9ab5b3]">{number}</span>
+                  <span className="text-sm font-semibold text-[#9ab5b3]">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
                 </div>
-                <h3 className="mt-8 text-xl leading-snug font-semibold text-[#174e53]">{title}</h3>
-                <p className="mt-4 text-sm leading-7 text-[#667d7f]">{copy}</p>
+                <h3 className="mt-8 text-xl leading-snug font-semibold text-[#174e53]">
+                  {job.title}
+                </h3>
+                <p className="mt-4 text-sm leading-7 text-[#667d7f]">{job.description}</p>
                 <a
                   href="#apply"
                   className="mt-auto flex items-center justify-between border-t border-[#dceae8] pt-5 text-sm font-bold text-[#168f85]"

@@ -1,10 +1,13 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Image from "next/image";
 import Link from "next/link";
+import type { GetServerSideProps } from "next";
 import { useState } from "react";
 import DoctorsSection from "@/components/DoctorsSection";
 import HeroSection from "@/components/HeroSection";
 import ServicesSection from "@/components/ServicesSection";
 import SitePage from "@/components/SitePage";
+import { getContent, section, type DynamicSection } from "@/lib/contentApi";
 
 const benefits = [
   ["⌘", "Expert Multi-Speciality", "Dental Team"],
@@ -85,60 +88,81 @@ function AppointmentForm({ compact = false }: { compact?: boolean }) {
   );
 }
 
-function LocationFaq() {
+function LocationFaq({ data, phone }: { data: Record<string, any>; phone: string }) {
   const [open, setOpen] = useState(0);
   return (
     <section className="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-10 lg:px-12 lg:py-12">
       <div className="mx-auto grid max-w-6xl gap-8 rounded-[18px] bg-[#effaf8] p-5 sm:rounded-[22px] sm:p-7 lg:grid-cols-[.9fr_1.1fr] lg:gap-[50px] lg:p-[52px]">
         <div>
-          <p className="text-xs font-bold tracking-[.16em] text-[#22bdae] uppercase">FAQs</p>
+          <p className="text-xs font-bold tracking-[.16em] text-[#22bdae] uppercase">
+            {data.eyebrow || "FAQs"}
+          </p>
           <h2 className="mt-3 max-w-[300px] text-[24px] leading-[1.25] font-bold text-[#296d72]">
-            Everything you need to know about dental care
+            {data.title}
           </h2>
           <p className="mt-7 max-w-[320px] text-[13px] leading-5 text-[#687879]">
-            Find quick answers to common questions about our dental services, appointments and
-            patient care in our Kannur clinic.
+            {data.description}
           </p>
           <a
             href="tel:+919645874777"
             className="mt-8 inline-flex rounded-lg bg-white px-5 py-3 text-sm font-bold text-[#286f73] shadow-sm lg:mt-14"
           >
-            ☎ +91 96458 74777
+            ☎ {phone}
           </a>
         </div>
         <div className="space-y-[13px]">
-          {faqs.map(([question, answer], index) => (
-            <article
-              key={question}
-              className={`overflow-hidden rounded-xl ${open === index ? "bg-[#276368] text-white" : "bg-white text-[#276368]"}`}
-            >
-              <button
-                type="button"
-                onClick={() => setOpen(open === index ? -1 : index)}
-                aria-expanded={open === index}
-                className="flex min-h-11 w-full items-center justify-between gap-4 px-4 py-3 text-left text-sm font-semibold sm:px-6"
+          {(data.items || faqs.map(([question, answer]) => ({ question, answer }))).map(
+            ({ question, answer }: { question: string; answer: string }, index: number) => (
+              <article
+                key={question}
+                className={`overflow-hidden rounded-xl ${open === index ? "bg-[#276368] text-white" : "bg-white text-[#276368]"}`}
               >
-                <span>{question}</span>
-                <span>{open === index ? "−" : "+"}</span>
-              </button>
-              {open === index && (
-                <p className="mx-4 border-t border-white/40 py-3 text-xs leading-5 text-white/90 sm:mx-6">
-                  {answer}
-                </p>
-              )}
-            </article>
-          ))}
+                <button
+                  type="button"
+                  onClick={() => setOpen(open === index ? -1 : index)}
+                  aria-expanded={open === index}
+                  className="flex min-h-11 w-full items-center justify-between gap-4 px-4 py-3 text-left text-sm font-semibold sm:px-6"
+                >
+                  <span>{question}</span>
+                  <span>{open === index ? "−" : "+"}</span>
+                </button>
+                {open === index && (
+                  <p className="mx-4 border-t border-white/40 py-3 text-xs leading-5 text-white/90 sm:mx-6">
+                    {answer}
+                  </p>
+                )}
+              </article>
+            ),
+          )}
         </div>
       </div>
     </section>
   );
 }
 
-export default function KannurLocationPage() {
+type LocationData = {
+  seo: Record<string, string>;
+  contact: Record<string, any>;
+  workingHours: Array<Record<string, string>>;
+  sections: DynamicSection[];
+};
+
+export default function KannurLocationPage({ data }: { data: LocationData }) {
+  const intro = section(data.sections, "introduction") || {};
+  const benefitSection = section(data.sections, "benefits") || {};
+  const serviceSection = section(data.sections, "services") || {};
+  const doctorsSection = section(data.sections, "doctors") || {};
+  const travelSection = section(data.sections, "travel") || {};
+  const faqSection = section(data.sections, "faq") || {};
+  const appointmentSection = section(data.sections, "appointment") || {};
+  const activeBenefits =
+    benefitSection.items || benefits.map(([icon, title, text]) => ({ icon, title, text }));
+  const activeTravel =
+    travelSection.items || travel.map(([icon, title, text]) => ({ icon, title, text }));
   return (
     <SitePage
-      title="Dental Clinic in Kannur | Elite Dental Studio"
-      description="Visit Elite Dental Studio in Talap, Kannur for specialist-led dental care, modern technology and comfortable treatment."
+      title={data.seo.metaTitle}
+      description={data.seo.metaDescription}
       mainClassName="[&_.scroll-reveal]:!translate-y-0 [&_.scroll-reveal]:!opacity-100"
     >
       <div className="[&>section]:h-[380px] [&>section]:after:pointer-events-none [&>section]:after:absolute [&>section]:after:inset-0 [&>section]:after:z-20 [&>section]:after:bg-[linear-gradient(90deg,rgba(4,55,60,.08),rgba(4,55,60,.02)_55%,rgba(4,55,60,.35))] sm:[&>section]:h-[500px] lg:[&>section]:h-[clamp(560px,42.51vw,700px)]">
@@ -156,15 +180,10 @@ export default function KannurLocationPage() {
         <div className="relative mx-auto max-w-6xl">
           <div className="rounded-[15px] bg-[#f5fbfa] p-5 shadow-[0_8px_24px_rgba(0,0,0,.15)] sm:p-8 lg:min-h-[322px] lg:p-12 lg:pr-[370px]">
             <h2 className="text-xl leading-[1.35] font-bold text-[#276368] sm:text-2xl">
-              Get the Trusted Dental Care in Kannur with Elite Dental Studio
+              {intro.title}
             </h2>
             <p className="mt-4 text-sm leading-6 text-[#677778] sm:mt-5 sm:leading-7">
-              Elite Dental Studio at Talap, Kannur is a multi-speciality dental clinic opposite
-              Koyili Hospital, Nyma Tower. We offer specialist-led dental care for Kannur patients,
-              covering everything from root canal treatment and dental implants to Invisalign, clear
-              aligners, pediatric dentistry and smile designing. Our team covers endodontics,
-              prosthodontics, orthodontics, periodontics and laser dentistry, all under one roof at
-              our dental clinic in Talap.
+              {intro.paragraphs?.[0]}
             </p>
           </div>
           <div className="relative mx-3 -mt-2 h-[230px] overflow-hidden rounded-[14px] border-4 border-[#f2fbfa] shadow-xl sm:mx-8 sm:-mt-4 sm:h-[320px] sm:border-8 lg:absolute lg:top-[-50px] lg:right-[24px] lg:mx-0 lg:mt-0 lg:h-[334px] lg:w-[340px]">
@@ -188,18 +207,12 @@ export default function KannurLocationPage() {
             />
           </div>
           <div className="text-sm text-white/85 sm:text-base">
-            <p className="leading-6 sm:leading-7">
-              Every treatment is planned after a proper check-up, clear diagnosis and an honest
-              conversation about your options. We are the Famdent Clinic of the Year 2026, and we
-              have treated over 1,00,000 patients across our clinics since 2020. Our Kannur clinic
-              offers free first consultation and free OPG scan, so your diagnosis starts without any
-              cost.
-            </p>
+            <p className="leading-6 sm:leading-7">{intro.paragraphs?.[1]}</p>
             <Link
               href="#appointment"
               className="mt-6 inline-flex rounded bg-[#24ccbd] px-6 py-3 text-sm font-bold text-white"
             >
-              Book Your Appointment
+              {intro.cta?.label || "Book Your Appointment"}
             </Link>
           </div>
         </div>
@@ -207,9 +220,11 @@ export default function KannurLocationPage() {
 
       <section className="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-10 lg:px-12 lg:py-12">
         <div className="mx-auto max-w-6xl rounded-[18px] bg-[#24cdbd] p-5 sm:rounded-[28px] sm:p-7 lg:p-10">
-          <h2 className="text-center text-2xl font-bold text-white">Why Choose Us?</h2>
+          <h2 className="text-center text-2xl font-bold text-white">
+            {benefitSection.title || "Why Choose Us?"}
+          </h2>
           <div className="mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {benefits.map(([icon, title, text], index) => (
+            {activeBenefits.map(({ icon, title, text }: Record<string, string>, index: number) => (
               <article
                 key={title}
                 className={`rounded-xl border border-white/50 p-5 text-center sm:p-6 ${index % 2 ? "bg-[#276368] text-white" : "bg-white text-[#286f73]"}`}
@@ -245,7 +260,7 @@ export default function KannurLocationPage() {
                   <option>COIMBATORE</option>
                 </select>
                 <a
-                  href="https://share.google/hqWjVESaLgEvGCPDX"
+                  href={data.contact.mapUrl}
                   target="_blank"
                   rel="noreferrer"
                   className="grid min-h-12 place-items-center rounded-full bg-[#276368] font-bold text-white"
@@ -254,25 +269,27 @@ export default function KannurLocationPage() {
                 </a>
               </div>
               <div className="mt-8 space-y-4 text-sm text-[#617477] sm:text-base">
-                <a className="block" href="tel:+919645874777">
-                  ● &nbsp; +91 96458 74777
+                <a className="block" href={`tel:${data.contact.mobileHref}`}>
+                  ● &nbsp; {data.contact.mobile}
                 </a>
                 <span className="block">☎ &nbsp; 0497 271 6555</span>
-                <a className="block break-all" href="mailto:elitedentalstudiokannur@gmail.com">
-                  ✉ &nbsp; elitedentalstudiokannur@gmail.com
+                <a className="block break-all" href={`mailto:${data.contact.email}`}>
+                  ✉ &nbsp; {data.contact.email}
                 </a>
               </div>
               <div className="my-6 h-px bg-[#86a4a4]" />
               <div className="flex gap-4 text-sm leading-6 font-semibold text-[#566b6d]">
                 <span>●</span>
                 <p>
-                  Nyma Tower, Opposite Koyili Hospital
-                  <br />
-                  Talap, Kannur, Kerala 670002
+                  {data.contact.addressLines.map((line: string) => (
+                    <span className="block" key={line}>
+                      {line}
+                    </span>
+                  ))}
                 </p>
               </div>
               <a
-                href="https://share.google/hqWjVESaLgEvGCPDX"
+                href={data.contact.mapUrl}
                 target="_blank"
                 rel="noreferrer"
                 className="mt-6 inline-flex rounded bg-[#064b52] px-5 py-2 text-xs font-bold text-white"
@@ -282,7 +299,7 @@ export default function KannurLocationPage() {
             </div>
             <iframe
               title="Elite Dental Studio Kannur map"
-              src="https://www.google.com/maps?q=Nyma%20Tower%2C%20opposite%20Koyili%20Hospital%2C%20Talap%2C%20Kannur%2C%20Kerala%20670002&output=embed"
+              src={data.contact.mapEmbedUrl}
               className="min-h-[300px] w-full border-0 sm:min-h-[380px]"
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
@@ -292,28 +309,26 @@ export default function KannurLocationPage() {
       </section>
       <ServicesSection
         compact
-        title="Comprehensive dental care tailored services for every smile"
-        description="Elite Dental Studio offers a full spectrum of dental procedures to help you explore what's best for your smile."
+        title={serviceSection.title}
+        description={serviceSection.description}
       />
       <div className="[&_h2]:!text-[24px]">
-        <DoctorsSection compact />
+        <DoctorsSection compact clinicSlug={doctorsSection.clinicSlug} />
       </div>
 
       <section className="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-10 lg:px-12 lg:py-12">
         <div className="mx-auto max-w-6xl rounded-[18px] bg-[#24cdbd] p-5 sm:rounded-[28px] sm:p-8 lg:p-12">
           <p className="text-center text-xs font-bold tracking-[.16em] text-white/80 uppercase">
-            How to reach
+            {travelSection.eyebrow}
           </p>
           <h2 className="mt-2 text-center text-2xl font-bold text-white sm:text-3xl">
-            Elite Dental Studio in Kannur?
+            {travelSection.title}
           </h2>
           <p className="mx-auto mt-4 max-w-4xl text-center text-sm leading-6 text-[#145f63]">
-            Located at Nyma Tower, opposite Koyili Hospital in Talap, Kannur. The clinic is
-            accessible from Payyambalam, Pallikkunnu, South Bazar, Thana and surrounding
-            neighbourhoods.
+            {travelSection.description}
           </p>
           <div className="mt-8 grid gap-5 md:grid-cols-3">
-            {travel.map(([icon, title, text]) => (
+            {activeTravel.map(({ icon, title, text }: Record<string, string>) => (
               <article
                 key={title}
                 className="group rounded-xl border-2 border-white bg-white p-5 text-center text-[#286f73] shadow-sm transition duration-300 hover:-translate-y-1 hover:border-[#276368] hover:bg-[#276368] hover:text-white hover:shadow-xl sm:p-7"
@@ -331,7 +346,7 @@ export default function KannurLocationPage() {
         </div>
       </section>
 
-      <LocationFaq />
+      <LocationFaq data={faqSection} phone={data.contact.mobile} />
 
       <section
         id="appointment"
@@ -340,14 +355,11 @@ export default function KannurLocationPage() {
         <div className="mx-auto grid max-w-6xl gap-8 rounded-[18px] bg-[#276368] p-5 text-white sm:rounded-[28px] sm:p-8 lg:grid-cols-2 lg:gap-10 lg:p-12">
           <div>
             <p className="text-xs font-bold tracking-[.15em] text-[#40ddcf] uppercase">
-              Book your appointment
+              {appointmentSection.eyebrow}
             </p>
-            <h2 className="mt-3 text-2xl font-bold sm:text-3xl">
-              Schedule Your Dental Visit Online at Elite Dental Studio
-            </h2>
+            <h2 className="mt-3 text-2xl font-bold sm:text-3xl">{appointmentSection.title}</h2>
             <p className="mt-5 max-w-xl leading-7 text-white/75">
-              Ready to take the next step towards a healthier smile? Use our easy online booking
-              system to schedule your Kannur appointment.
+              {appointmentSection.description}
             </p>
             <div className="mt-7 w-full rounded-xl bg-[#25cdbd] p-5 sm:w-auto">
               <strong>Working Hours</strong>
@@ -358,7 +370,7 @@ export default function KannurLocationPage() {
               href="tel:+919645874777"
               className="mt-5 block w-full rounded-xl bg-white px-5 py-4 text-center font-bold text-[#286f73] sm:w-fit"
             >
-              ☎ +91 96458 74777
+              ☎ {data.contact.mobile}
             </a>
           </div>
           <div className="min-w-0 rounded-2xl bg-white p-5 text-[#286f73] sm:p-7">
@@ -370,3 +382,10 @@ export default function KannurLocationPage() {
     </SitePage>
   );
 }
+
+export const getServerSideProps: GetServerSideProps<{ data: LocationData }> = async ({ res }) => {
+  const data = await getContent<LocationData>("locations/kannur");
+  data.contact.mapUrl = "https://share.google/hqWjVESaLgEvGCPDX";
+  res.setHeader("Cache-Control", "public, s-maxage=60, stale-while-revalidate=300");
+  return { props: { data } };
+};

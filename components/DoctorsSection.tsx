@@ -1,5 +1,7 @@
 import Image from "next/image";
-import { useRef } from "react";
+import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
+import { localDoctorImage, type DoctorListItem } from "@/lib/contentApi";
 
 const highlights = [
   {
@@ -71,12 +73,45 @@ function Arrow({ direction }: { direction: "left" | "right" }) {
   );
 }
 
-export default function DoctorsSection({ compact = false }: { compact?: boolean }) {
+export default function DoctorsSection({
+  compact = false,
+  clinicSlug,
+}: {
+  compact?: boolean;
+  clinicSlug?: string;
+}) {
   const doctorsTrackRef = useRef<HTMLDivElement>(null);
+  const [apiDoctors, setApiDoctors] = useState<DoctorListItem[] | null>(null);
+  const visibleDoctors =
+    apiDoctors?.filter(
+      (doctor) => !clinicSlug || doctor.clinics.some((clinic) => clinic.slug === clinicSlug),
+    ) ||
+    doctors.map((doctor, index) => ({
+      ...doctor,
+      id: String(index),
+      slug: "dr-amal",
+      experienceYears: 0,
+      experienceLabel: "",
+      image: { url: doctor.image, alt: doctor.name },
+      clinics: [],
+      profileUrl: "/doctors/dr-amal",
+      sortOrder: index,
+    }));
+
+  useEffect(() => {
+    const controller = new AbortController();
+    fetch("/api/doctors", { signal: controller.signal })
+      .then((response) => (response.ok ? response.json() : null))
+      .then((payload) => {
+        if (Array.isArray(payload?.data?.items)) setApiDoctors(payload.data.items);
+      })
+      .catch(() => undefined);
+    return () => controller.abort();
+  }, []);
 
   const scrollDoctors = (direction: "left" | "right") => {
     const track = doctorsTrackRef.current;
-    const firstCard = track?.querySelector<HTMLElement>("article");
+    const firstCard = track?.querySelector<HTMLElement>("a");
 
     if (!track || !firstCard) {
       return;
@@ -156,14 +191,15 @@ export default function DoctorsSection({ compact = false }: { compact?: boolean 
         tabIndex={0}
         className={`mt-12 flex snap-x snap-mandatory [scrollbar-width:none] gap-5 overflow-x-auto scroll-smooth pb-5 outline-none focus-visible:ring-4 focus-visible:ring-[#29cfc0]/25 sm:grid sm:grid-cols-2 sm:overflow-visible sm:pb-0 lg:mt-20 [&::-webkit-scrollbar]:hidden ${compact ? "lg:grid-cols-5 lg:gap-4" : "lg:grid-cols-3 lg:gap-7 xl:grid-cols-5"}`}
       >
-        {doctors.map((doctor) => (
-          <article
+        {visibleDoctors.map((doctor) => (
+          <Link
+            href={doctor.profileUrl || `/doctors/${doctor.slug}`}
             key={doctor.name}
             className="group smooth-hover card-hover flex w-[84%] max-w-[330px] shrink-0 snap-start flex-col overflow-hidden rounded-3xl bg-[#2b7477] p-2 pb-0 shadow-[0_14px_35px_rgba(25,87,90,0.12)] sm:mx-auto sm:w-full sm:max-w-none"
           >
             <div className="relative aspect-[1.03/1] overflow-hidden rounded-[20px] bg-[#edf2f5]">
               <Image
-                src={doctor.image}
+                src={doctor.image.url || localDoctorImage(doctor.slug)}
                 alt={doctor.name}
                 fill
                 className="image-hover object-cover object-[center_0%]"
@@ -181,7 +217,7 @@ export default function DoctorsSection({ compact = false }: { compact?: boolean 
                 {doctor.speciality}
               </p>
             </div>
-          </article>
+          </Link>
         ))}
       </div>
 

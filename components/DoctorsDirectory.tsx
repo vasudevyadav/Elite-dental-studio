@@ -1,86 +1,27 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState } from "react";
+import { localDoctorImage, type DoctorsData } from "@/lib/contentApi";
 
-type Doctor = {
-  name: string;
-  qualification: string;
-  speciality: string;
-  clinic: string;
-  experience: string;
-  image: string;
-};
-
-const doctors: Doctor[] = [
-  {
-    name: "Dr. Amal",
-    qualification: "BDS, MDS",
-    speciality: "Pedodontics & Preventive Dentistry · Managing Director",
-    clinic: "Calicut",
-    experience: "15 Yrs",
-    image: "/home/doctors/dr-amal.jpg",
-  },
-  {
-    name: "Dr. Amrita Sathianathan",
-    qualification: "BDS, MDS",
-    speciality: "Prosthodontics & Implantology",
-    clinic: "Kochi",
-    experience: "12 Yrs",
-    image: "/home/doctors/dr-amrita.jpg",
-  },
-  {
-    name: "Dr. Vidhu S",
-    qualification: "BDS, MDS",
-    speciality: "Invisalign Certified Orthodontist",
-    clinic: "Calicut",
-    experience: "10 Yrs",
-    image: "/home/doctors/dr-vidhu.jpg",
-  },
-  {
-    name: "Dr. Manu Mathew",
-    qualification: "BDS, MDS (Orthodontics)",
-    speciality: "Orthodontics · Aligner Specialist",
-    clinic: "Kannur",
-    experience: "10 Yrs",
-    image: "/home/doctors/dr-manu.jpg",
-  },
-  {
-    name: "Dr. Megha Mohan",
-    qualification: "BDS, MDS",
-    speciality: "Pedodontics & Preventive Dentistry",
-    clinic: "Coimbatore",
-    experience: "8 Yrs",
-    image: "/home/doctors/dr-megha.jpg",
-  },
-  {
-    name: "Dr. Amal",
-    qualification: "BDS, MDS",
-    speciality: "Paediatric Dentistry · Smile Care",
-    clinic: "Kochi",
-    experience: "15 Yrs",
-    image: "/home/doctors/dr-amal.jpg",
-  },
-];
-
-const clinics = ["All Clinics", "Calicut", "Kochi", "Kannur", "Coimbatore"];
-
-export default function DoctorsDirectory() {
-  const [clinic, setClinic] = useState("Calicut");
+export default function DoctorsDirectory({ data }: { data: DoctorsData }) {
+  const doctors = data.items;
+  const clinics = ["All Clinics", ...data.clinics.map((item) => item.name)];
+  const [clinic, setClinic] = useState(data.clinics[0]?.name || "Calicut");
   const [activeClinic, setActiveClinic] = useState("All Clinics");
 
   const visibleDoctors = useMemo(
     () =>
       activeClinic === "All Clinics"
         ? doctors
-        : doctors.filter((doctor) => doctor.clinic === activeClinic),
-    [activeClinic],
+        : doctors.filter((doctor) => doctor.clinics.some((item) => item.name === activeClinic)),
+    [activeClinic, doctors],
   );
 
   return (
     <section className="px-5 pt-10 pb-16 sm:px-8 lg:px-12 lg:pt-12 lg:pb-24">
       <div className="mx-auto max-w-[1240px]">
         <h1 className="text-center text-3xl font-extrabold tracking-[-0.03em] text-[#286f73] sm:text-4xl">
-          Our Doctors
+          {data.pageHeader.title}
         </h1>
 
         <div className="mt-8 grid grid-cols-1 items-center gap-3 sm:grid-cols-[1fr_230px_auto_1fr] sm:gap-7">
@@ -123,13 +64,13 @@ export default function DoctorsDirectory() {
         <div className="mt-14 grid gap-9 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-16 lg:gap-y-16">
           {visibleDoctors.map((doctor, index) => (
             <article
-              key={`${doctor.name}-${doctor.clinic}-${index}`}
+              key={`${doctor.name}-${doctor.slug}-${index}`}
               className="smooth-hover card-hover mx-auto flex w-full max-w-[350px] flex-col overflow-hidden rounded-[16px] border border-[#75aaaa] bg-[#eff9f7] shadow-[0_10px_24px_rgba(28,92,95,0.06)]"
             >
               <div className="relative h-[238px] bg-[#296f73] px-9 pt-3">
                 <div className="relative h-[285px] overflow-hidden rounded-[17px] border-[3px] border-white bg-[#e9edf3] shadow-[0_8px_18px_rgba(25,68,72,0.18)]">
                   <Image
-                    src={doctor.image}
+                    src={doctor.image.url || localDoctorImage(doctor.slug)}
                     alt={doctor.name}
                     fill
                     sizes="(max-width: 639px) 90vw, (max-width: 1023px) 44vw, 350px"
@@ -137,7 +78,7 @@ export default function DoctorsDirectory() {
                   />
                 </div>
                 <div className="absolute top-2 right-9 z-10 grid h-14 w-14 place-items-center bg-[#24d1c0] text-center text-[11px] leading-tight font-black text-white [clip-path:polygon(0_0,100%_0,100%_100%,50%_82%,0_100%)]">
-                  {doctor.experience}
+                  {doctor.experienceLabel}
                   <br />
                   Exp
                 </div>
@@ -158,7 +99,7 @@ export default function DoctorsDirectory() {
                 </div>
                 <div className="mt-5 flex items-center justify-between gap-3">
                   <Link
-                    href="/doctors/dr-amal"
+                    href={doctor.profileUrl || `/doctors/${doctor.slug}`}
                     className="smooth-hover button-hover rounded-md bg-[#296f73] px-4 py-2 text-xs font-extrabold text-white hover:bg-[#205e62]"
                   >
                     View Profile
