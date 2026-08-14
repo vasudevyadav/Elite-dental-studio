@@ -1,10 +1,13 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Image from "next/image";
 import Link from "next/link";
+import type { GetServerSideProps } from "next";
 import { useEffect, useRef, useState } from "react";
 import HeroSection from "@/components/HeroSection";
 import SitePage from "@/components/SitePage";
+import { getContent } from "@/lib/contentApi";
 
-const cases = Array.from({ length: 12 }, (_, index) => ({
+const fallbackCases = Array.from({ length: 12 }, (_, index) => ({
   src: `/cases/case-${String(index + 1).padStart(2, "0")}.webp`,
   title: `Smile transformation ${String(index + 1).padStart(2, "0")}`,
   label:
@@ -12,7 +15,7 @@ const cases = Array.from({ length: 12 }, (_, index) => ({
   location: index < 4 ? "Calicut" : index < 8 ? "Kochi" : "Kannur",
 }));
 
-const locations = ["All", "Calicut", "Kochi", "Kannur"] as const;
+type GalleryCase = (typeof fallbackCases)[number];
 
 const ArrowIcon = ({ reverse = false }: { reverse?: boolean }) => (
   <svg
@@ -118,7 +121,22 @@ function BeforeAfterSlider({
   );
 }
 
-export default function CasesPage() {
+export default function CasesPage({ data }: { data: Record<string, any> }) {
+  const cases: GalleryCase[] = data.items?.length
+    ? data.items.map((item: Record<string, any>, index: number) => ({
+        src:
+          item.combinedImage?.url ||
+          item.beforeImage?.url ||
+          `/cases/case-${String(index + 1).padStart(2, "0")}.webp`,
+        title: item.title,
+        label: item.category?.name,
+        location: item.location?.name,
+      }))
+    : fallbackCases;
+  const locations = [
+    "All",
+    ...(data.filters?.locations || []).map((item: Record<string, string>) => item.name),
+  ];
   const [selected, setSelected] = useState<number | null>(null);
   const [activeLocation, setActiveLocation] = useState<string>("All");
 
@@ -138,7 +156,7 @@ export default function CasesPage() {
       document.body.style.overflow = previousOverflow;
       window.removeEventListener("keydown", onKeyDown);
     };
-  }, [selected]);
+  }, [selected, cases.length]);
 
   const move = (direction: number) =>
     setSelected((value) =>
@@ -146,8 +164,11 @@ export default function CasesPage() {
     );
 
   const visibleCases = cases
-    .map((item, index) => ({ ...item, originalIndex: index }))
-    .filter((item) => activeLocation === "All" || item.location === activeLocation);
+    .map((item: GalleryCase, index: number) => ({ ...item, originalIndex: index }))
+    .filter(
+      (item: GalleryCase & { originalIndex: number }) =>
+        activeLocation === "All" || item.location === activeLocation,
+    );
 
   const caseCard = (item: (typeof visibleCases)[number], className = "") => (
     <article
@@ -169,18 +190,21 @@ export default function CasesPage() {
   );
 
   return (
-    <SitePage
-      title="Dental Cases & Smile Gallery | Elite Dental Studio"
-      description="View a curated selection of dental treatment results from Elite Dental Studio."
-    >
+    <SitePage title={data.seo.metaTitle} description={data.seo.metaDescription}>
       <div className="[&>section]:after:pointer-events-none [&>section]:after:absolute [&>section]:after:inset-0 [&>section]:after:z-20 [&>section]:after:bg-[rgba(23,78,83,.60)]">
         <HeroSection
-          slides={[{ img: "/about/about-hero.png", alt: "Elite Dental Studio smile gallery" }]}
+          slides={[
+            {
+              img: data.hero?.slides?.[0]?.image?.url || "/about/about-hero.png",
+              alt: data.hero?.slides?.[0]?.image?.alt || "Elite Dental Studio smile gallery",
+            },
+          ]}
           content={{
-            eyebrow: "Real care · Real results",
-            title: "Every smile",
-            accent: "has a story.",
+            eyebrow: data.hero.eyebrow,
+            title: data.hero.title,
+            accent: data.hero.accent,
             description:
+              data.hero.description ||
               "Explore real transformations shaped by precise planning, modern dentistry and care personal to every patient.",
           }}
         />
@@ -191,15 +215,13 @@ export default function CasesPage() {
           <div className="mb-12 grid gap-5 border-b border-white/15 pb-8 sm:grid-cols-[1fr_auto] sm:items-end">
             <div>
               <p className="text-[11px] font-bold tracking-[.2em] text-[#5eddd1] uppercase">
-                The case archive
+                {data.archive.eyebrow}
               </p>
               <h2 className="mt-2 text-3xl font-semibold tracking-[-.04em] text-white sm:text-4xl">
-                Details worth seeing.
+                {data.archive.title}
               </h2>
             </div>
-            <p className="max-w-sm text-sm leading-6 text-white/55">
-              Open any frame for a distraction-free, full-screen look.
-            </p>
+            <p className="max-w-sm text-sm leading-6 text-white/55">{data.archive.description}</p>
           </div>
 
           <div className="mb-8 rounded-2xl border border-white/12 bg-white/[.06] p-3 lg:p-4">
@@ -244,22 +266,20 @@ export default function CasesPage() {
           <div className="mt-14 border-t border-white/15 pt-10 text-white lg:flex lg:items-center lg:justify-between">
             <div>
               <p className="text-sm font-semibold tracking-[.18em] text-[#5de2d4] uppercase">
-                Your smile, thoughtfully planned
+                {data.disclaimer.eyebrow}
               </p>
               <h2 className="mt-2 text-2xl font-semibold tracking-[-.03em] lg:text-4xl">
-                Ready to discuss what is possible for you?
+                {data.disclaimer.title}
               </h2>
               <p className="mt-4 max-w-3xl text-sm leading-6 text-white">
-                Treatment results vary for every patient. Images are shown for educational
-                reference; your dentist will recommend a personalised plan after clinical
-                assessment.
+                {data.disclaimer.description}
               </p>
             </div>
             <Link
-              href="/contact"
+              href={data.disclaimer.cta.url}
               className="mt-6 inline-flex rounded-full bg-[#25bfae] px-7 py-3.5 text-sm font-bold transition hover:bg-[#45d2c4] lg:mt-0"
             >
-              Book a consultation
+              {data.disclaimer.cta.label}
             </Link>
           </div>
         </div>
@@ -323,3 +343,11 @@ export default function CasesPage() {
     </SitePage>
   );
 }
+
+export const getServerSideProps: GetServerSideProps<{ data: Record<string, any> }> = async ({
+  res,
+}) => {
+  const data = await getContent<Record<string, any>>("gallery");
+  res.setHeader("Cache-Control", "public, s-maxage=60, stale-while-revalidate=300");
+  return { props: { data } };
+};

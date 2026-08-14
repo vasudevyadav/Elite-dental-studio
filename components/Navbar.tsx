@@ -157,12 +157,26 @@ export default function Navbar() {
   const [activeDropdown, setActiveDropdown] = useState<DropdownName | null>(null);
   const headerRef = useRef<HTMLElement>(null);
   const [treatmentItems, setTreatmentItems] = useState<DropdownItem[]>([]);
+  const [locationItems, setLocationItems] = useState<DropdownItem[]>([]);
 
   const navigationDropdowns = {
     ...dropdowns,
     treatments: {
       ...dropdowns.treatments,
       items: treatmentItems,
+    },
+    clinic: {
+      ...dropdowns.clinic,
+      eyebrow: "Choose your nearest clinic",
+      items: locationItems.length
+        ? locationItems
+        : [
+            {
+              label: "Clinic Locations",
+              description: "Find the Elite Dental Studio nearest to you",
+              href: "/locations/kannur",
+            },
+          ],
     },
   };
 
@@ -207,6 +221,25 @@ export default function Navbar() {
     };
 
     void loadServices();
+    return () => controller.abort();
+  }, []);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    fetch("/api/locations", { signal: controller.signal })
+      .then((response) => (response.ok ? response.json() : null))
+      .then((payload) => {
+        const items = payload?.data?.items;
+        if (!Array.isArray(items)) return;
+        setLocationItems(
+          items.map((item: { name: string; slug: string }) => ({
+            label: `${item.name} Clinic`,
+            description: `Visit Elite Dental Studio in ${item.name}`,
+            href: `/locations/${item.slug}`,
+          })),
+        );
+      })
+      .catch(() => undefined);
     return () => controller.abort();
   }, []);
 

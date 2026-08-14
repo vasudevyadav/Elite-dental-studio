@@ -1,15 +1,33 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { officeImages, type OfficeImage, type OfficeLocation } from "./officeData";
 
-const locations: OfficeLocation[] = ["All", "Calicut", "Kochi", "Kannur", "Coimbatore"];
-
-export default function OfficeGallery() {
+export default function OfficeGallery({ data }: { data?: Record<string, any> }) {
+  const apiItems = data?.items as Array<Record<string, any>> | undefined;
+  const galleryImages: OfficeImage[] = apiItems?.length
+    ? apiItems.map((item, index) => ({
+        src: item.image?.url || officeImages[index % officeImages.length].src,
+        label: item.label,
+        location: (data?.locations?.find(
+          (location: Record<string, string>) => location.slug === item.locationSlug,
+        )?.name || item.locationSlug) as OfficeImage["location"],
+      }))
+    : officeImages;
+  const locations: OfficeLocation[] = [
+    "All",
+    ...(data?.locations?.map((item: Record<string, string>) => item.name) || [
+      "Calicut",
+      "Kochi",
+      "Kannur",
+      "Coimbatore",
+    ]),
+  ] as OfficeLocation[];
   const [filter, setFilter] = useState<OfficeLocation>("All");
   const [activeImage, setActiveImage] = useState<OfficeImage | null>(null);
   const mobileTrackRef = useRef<HTMLDivElement>(null);
   const visibleImages =
-    filter === "All" ? officeImages : officeImages.filter((image) => image.location === filter);
+    filter === "All" ? galleryImages : galleryImages.filter((image) => image.location === filter);
 
   const moveMobileSlider = (direction: "previous" | "next") => {
     const track = mobileTrackRef.current;
@@ -44,10 +62,10 @@ export default function OfficeGallery() {
         <div className="flex flex-col gap-7 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <p className="text-base font-semibold tracking-[.16em] text-[#25bfae] uppercase">
-              Virtual tour
+              {data?.eyebrow || "Virtual tour"}
             </p>
             <h2 className="mt-3 text-3xl font-semibold tracking-[-.035em] text-[#174e53] sm:text-5xl">
-              A closer look inside
+              {data?.title || "A closer look inside"}
             </h2>
           </div>
           <div
