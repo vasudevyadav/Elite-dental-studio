@@ -24,7 +24,7 @@ const clinics: Record<string, Clinic> = {
       "Mini Bypass Rd, Eranhipalam P.O",
       "Kozhikode, Kerala 673006",
     ],
-    mapQuery: "Apollo Tower, Mini Bypass Road, Eranhipalam, Kozhikode, Kerala",
+    mapQuery: "Elite Dental Studio | Dental Clinic in Calicut",
     mapUrl: "https://share.google/Fwtkjjfxd6VB0I8Pg",
   },
   KOCHI: {
@@ -38,7 +38,7 @@ const clinics: Record<string, Clinic> = {
       "Ernakulam",
       "Kochi, Kerala 682031",
     ],
-    mapQuery: "Marine Drive Road, Ernakulam, Kochi, Kerala",
+    mapQuery: "Elite Dental Studio | Dental Clinic In Kochi",
     mapUrl: "https://share.google/rBjee9uoOFuyUrBiN",
   },
   KANNUR: {
@@ -47,7 +47,7 @@ const clinics: Record<string, Clinic> = {
     landline: "0497 271 6555",
     email: "elitedentalstudiokannur@gmail.com",
     addressLines: ["Nyma Tower", "Opposite Koyili Hospital", "Talap, Kannur", "Kerala 670002"],
-    mapQuery: "Nyma Tower, opposite Koyili Hospital, Talap, Kannur, Kerala 670002",
+    mapQuery: "Elite Dental Studio | Best Dental Clinic in Kannur",
     mapUrl: "https://share.google/hqWjVESaLgEvGCPDX",
   },
   COIMBATORE: {

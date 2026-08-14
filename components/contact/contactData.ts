@@ -22,7 +22,7 @@ export const contactClinics: ContactClinic[] = [
     landline: "0495 3552 555",
     email: "elitedentalstudioreception@gmail.com",
     mapUrl: "https://share.google/Fwtkjjfxd6VB0I8Pg",
-    mapQuery: "Apollo Tower, Mini Bypass Road, Eranhipalam, Kozhikode, Kerala 673006",
+    mapQuery: "Elite Dental Studio | Dental Clinic in Calicut",
   },
   {
     name: "Kochi Clinic",
@@ -36,7 +36,7 @@ export const contactClinics: ContactClinic[] = [
     landline: "0484 4024 888",
     email: "elitedentalkochireception@gmail.com",
     mapUrl: "https://share.google/rBjee9uoOFuyUrBiN",
-    mapQuery: "5/981 A Main Avenue Road, Panampilly Nagar, Kochi, Kerala",
+    mapQuery: "Elite Dental Studio | Dental Clinic In Kochi",
   },
   {
     name: "Kannur Clinic",
@@ -44,7 +44,7 @@ export const contactClinics: ContactClinic[] = [
     address: ["Nyma Tower, opposite Koyili Hospital", "Talap, Kannur", "Kerala 670002"],
     phone: "+91 96458 74777",
     mapUrl: "https://share.google/hqWjVESaLgEvGCPDX",
-    mapQuery: "Nyma Tower, opposite Koyili Hospital, Talap, Kannur, Kerala 670002",
+    mapQuery: "Elite Dental Studio | Best Dental Clinic in Kannur",
   },
   {
     name: "Coimbatore Clinic",

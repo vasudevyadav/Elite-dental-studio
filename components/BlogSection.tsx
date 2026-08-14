@@ -1,25 +1,42 @@
 import Image from "next/image";
-import { useRef, useState } from "react";
+import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
+import { formatBlogDate, type BlogApiPost } from "@/lib/blogsApi";
 import AnimatedArrowCta from "./AnimatedArrowCta";
 
-const posts = [
+type HomeBlogPost = {
+  slug: string;
+  title: string;
+  description: string;
+  date: string;
+  image: string;
+  category: string;
+};
+
+const fallbackPosts: HomeBlogPost[] = [
   {
+    slug: "common-problems-associated-with-teeth-and-gums",
     title: "Common Problems Associated with Teeth and Gums",
     description: "Is it serious, or can it wait? That’s what most people ask when they notice...",
     date: "16 Jun 2026",
     image: "/home/services/invisible-aligners.png",
+    category: "Oral Health",
   },
   {
+    slug: "common-problems-associated-with-teeth-and-gums",
     title: "Common Problems Associated with Teeth and Gums",
     description: "Is it serious, or can it wait? That’s what most people ask when they notice...",
     date: "16 Jun 2026",
     image: "/home/services/dental-fillings.png",
+    category: "Dental Care",
   },
   {
+    slug: "modern-care-for-a-healthier-stronger-smile",
     title: "Modern Care for a Healthier, Stronger Smile",
     description: "Simple preventive steps can protect your teeth and gums for years to come...",
     date: "18 Jun 2026",
     image: "/home/services/laser-dentistry.png",
+    category: "Healthy Smile",
   },
 ];
 
@@ -40,8 +57,35 @@ function Arrow({ left = false }: { left?: boolean }) {
 
 export default function BlogSection() {
   const [start, setStart] = useState(0);
+  const [apiPosts, setApiPosts] = useState<HomeBlogPost[] | null>(null);
   const touchStartX = useRef<number | null>(null);
+  const posts = apiPosts?.length ? apiPosts : fallbackPosts;
   const visiblePosts = [posts[start], posts[(start + 1) % posts.length]];
+
+  useEffect(() => {
+    const controller = new AbortController();
+    fetch("/api/blogs", { signal: controller.signal })
+      .then((response) => (response.ok ? response.json() : null))
+      .then((payload) => {
+        const items = payload?.data?.items;
+        if (!Array.isArray(items) || !items.length) return;
+
+        setApiPosts(
+          items.map((post: BlogApiPost, index: number) => ({
+            slug: post.slug,
+            title: post.title,
+            description: post.excerpt,
+            date: formatBlogDate(post.publishedAt),
+            image: post.image?.url || fallbackPosts[index % fallbackPosts.length].image,
+            category: post.categories?.[0]?.name || "Dental Care",
+          })),
+        );
+        setStart(0);
+      })
+      .catch(() => undefined);
+
+    return () => controller.abort();
+  }, []);
 
   const move = (step: number) => {
     setStart((current) => (current + step + posts.length) % posts.length);
@@ -112,12 +156,11 @@ export default function BlogSection() {
               <div className="relative h-[200px] overflow-hidden bg-white lg:h-[285px]">
                 <div className="absolute top-0 left-0 z-10 flex h-full w-[52%] flex-col justify-center bg-white px-6 sm:px-8">
                   <p className="text-sm leading-[1.3] font-medium text-[#292929] lg:text-xl">
-                    Common Problems
-                    <br /> Associated with
+                    Latest Insights
+                    <br /> About
                   </p>
-                  <p className="mt-2 text-[29px] leading-[1.05] font-black text-[#27cfc0] [text-shadow:1px_1px_0_#143f43] sm:text-[42px]">
-                    Teeth &amp;
-                    <br /> Gums
+                  <p className="mt-2 line-clamp-2 text-[29px] leading-[1.05] font-black text-[#27cfc0] [text-shadow:1px_1px_0_#143f43] sm:text-[42px]">
+                    {post.category}
                   </p>
                 </div>
                 <div className="absolute top-0 right-0 h-full w-[58%]">
@@ -146,7 +189,9 @@ export default function BlogSection() {
                     <span className="mx-2 inline-block w-12 border-t border-white/70 align-middle" />{" "}
                     <strong>{post.date}</strong>
                   </span>
-                  <span className="link-hover shrink-0 font-semibold">Read More →</span>
+                  <Link href={`/blog/${post.slug}`} className="link-hover shrink-0 font-semibold">
+                    Read More →
+                  </Link>
                 </div>
               </div>
             </article>

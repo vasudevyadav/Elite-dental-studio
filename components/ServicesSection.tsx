@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AnimatedArrowCta from "./AnimatedArrowCta";
 
 type Service = {
@@ -9,6 +9,13 @@ type Service = {
   description: string;
   image: string;
   icon: "laser" | "tooth" | "aligner";
+};
+
+type ApiService = {
+  slug: string;
+  title: string;
+  shortDescription: string;
+  cardImage?: { url?: string };
 };
 
 const services: Service[] = [
@@ -179,13 +186,44 @@ export default function ServicesSection({
   compact?: boolean;
 }) {
   const [activeService, setActiveService] = useState(0);
+  const [apiServices, setApiServices] = useState<Service[] | null>(null);
+  const activeServices = apiServices?.length ? apiServices : services;
+
+  useEffect(() => {
+    const controller = new AbortController();
+    fetch("/api/services", { signal: controller.signal })
+      .then((response) => (response.ok ? response.json() : null))
+      .then((payload) => {
+        const items = payload?.data?.items;
+        if (!Array.isArray(items)) return;
+        setApiServices(
+          items.map((item: ApiService) => ({
+            slug: item.slug,
+            title: item.title,
+            description: item.shortDescription,
+            image:
+              item.cardImage?.url ||
+              services.find((service) => service.slug === item.slug)?.image ||
+              "/service/services-1.png",
+            icon:
+              item.slug.includes("aligner") || item.slug === "orthodontics"
+                ? "aligner"
+                : item.slug.includes("laser") || item.slug === "periodontics"
+                  ? "laser"
+                  : "tooth",
+          })),
+        );
+      })
+      .catch(() => undefined);
+    return () => controller.abort();
+  }, []);
 
   const move = (step: number) => {
-    setActiveService((current) => (current + step + services.length) % services.length);
+    setActiveService((current) => (current + step + activeServices.length) % activeServices.length);
   };
 
   const visibleServices = [0, 1, 2].map((offset) => ({
-    service: services[(activeService + offset) % services.length],
+    service: activeServices[(activeService + offset) % activeServices.length],
     offset,
   }));
 
@@ -235,14 +273,14 @@ export default function ServicesSection({
               <Link
                 href={`/services/${service.slug}`}
                 key={service.title}
-                className={`group smooth-hover card-hover overflow-hidden border bg-white shadow-[0_18px_45px_rgba(21,74,78,0.09)] sm:block ${compact ? "rounded-[18px] p-4" : "rounded-[28px] p-5 sm:p-6"} ${offset !== 0 ? "hidden sm:block" : ""} ${
+                className={`group smooth-hover card-hover block overflow-hidden border bg-white no-underline shadow-[0_18px_45px_rgba(21,74,78,0.09)] ${compact ? "rounded-[18px] p-4" : "rounded-[28px] p-5 sm:p-6"} ${offset !== 0 ? "hidden sm:block" : ""} ${
                   offset === 0 ? "border-[#2b7f82] md:-translate-y-2" : "border-[#8cb8ba]"
                 }`}
               >
                 <div className="flex min-h-[58px] items-center gap-4">
                   <ServiceIcon type={service.icon} />
                   <h3
-                    className={`min-w-0 flex-1 leading-tight font-bold tracking-[-0.025em] text-[#343434] ${compact ? "text-base" : "text-xl lg:text-[25px]"}`}
+                    className={`min-w-0 flex-1 leading-tight font-semibold tracking-[-0.025em] text-[#343434] ${compact ? "text-base" : "text-lg lg:text-[22px]"}`}
                   >
                     {service.title}
                   </h3>
