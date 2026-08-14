@@ -33,7 +33,7 @@ export default function AboutUs() {
             <span className="text-lg font-bold text-[#2bd0c0] lg:text-xl">About Us</span>
           </div>
 
-          <h2 className="mb-4 text-2xl leading-[1.3] font-extrabold tracking-[-0.025em] text-[#286d73] lg:text-4xl">
+          <h2 className="mb-4 text-2xl leading-[1.3] font-bold tracking-[-0.025em] text-[#286d73] lg:text-4xl">
             Best Dental Clinic in Calicut, Kochi, Kannur &amp; Coimbatore
           </h2>
 
