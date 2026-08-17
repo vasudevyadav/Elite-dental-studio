@@ -2,7 +2,7 @@ import Image from "next/image";
 import { useState } from "react";
 import AnimatedArrowCta from "./AnimatedArrowCta";
 
-type Clinic = {
+export type Clinic = {
   name: string;
   phone: string;
   landline: string;
@@ -12,7 +12,7 @@ type Clinic = {
   mapUrl?: string;
 };
 
-const clinics: Record<string, Clinic> = {
+export const defaultClinics: Record<string, Clinic> = {
   CALICUT: {
     name: "CALICUT",
     phone: "+91 9745 072 555",
@@ -143,12 +143,18 @@ function LocationIcon() {
 export default function NearestClinic({
   serviceName,
   initialClinic = "CALICUT",
+  clinics = defaultClinics,
 }: {
   serviceName?: string;
-  initialClinic?: keyof typeof clinics;
+  initialClinic?: string;
+  clinics?: Record<string, Clinic>;
 }) {
-  const [selectedClinic, setSelectedClinic] = useState(initialClinic);
-  const clinic = clinics[selectedClinic];
+  const availableClinics = Object.keys(clinics).length ? clinics : defaultClinics;
+  const firstClinic = Object.keys(availableClinics)[0] || "CALICUT";
+  const [selectedClinic, setSelectedClinic] = useState(
+    availableClinics[initialClinic] ? initialClinic : firstClinic,
+  );
+  const clinic = availableClinics[selectedClinic] || availableClinics[firstClinic];
   const encodedMapQuery = encodeURIComponent(clinic.mapQuery);
   const mapEmbedUrl = `https://www.google.com/maps?q=${encodedMapQuery}&output=embed`;
   const mapPageUrl =
@@ -173,7 +179,7 @@ export default function NearestClinic({
                 onChange={(event) => setSelectedClinic(event.target.value)}
                 className="focus:border-dent-accent focus:ring-dent-accent/20 w-full appearance-none rounded-full border border-[#d9d9d9] bg-white px-8 py-3 pr-14 text-lg font-medium text-[#666] shadow-[inset_0_2px_7px_rgba(0,0,0,0.13)] transition outline-none focus:ring-4"
               >
-                {Object.values(clinics).map(({ name }) => (
+                {Object.values(availableClinics).map(({ name }) => (
                   <option key={name} value={name}>
                     {name}
                   </option>

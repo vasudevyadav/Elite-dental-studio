@@ -14,10 +14,11 @@ export type BlogApiPost = {
 };
 
 type Envelope<T> = { success: boolean; message?: string; data: T };
-type BlogListData = { items: BlogApiPost[]; pagination: Record<string, unknown> };
-
-const API_BASE =
-  process.env.EDS_API_BASE_URL ?? "https://reinventmedia.in/elitedentalstudio/wp-json/eds/v1";
+export type BlogListData = {
+  items: BlogApiPost[];
+  pageSeo?: { metaTitle?: string; metaDescription?: string };
+  pagination: Record<string, unknown>;
+};
 
 export function decodeHtml(value: string): string {
   return value
@@ -42,7 +43,9 @@ function normalizePost(post: BlogApiPost): BlogApiPost {
 }
 
 async function request<T>(path: string): Promise<T> {
-  const response = await fetch(`${API_BASE}${path}`, { headers: { Accept: "application/json" } });
+  const response = await fetch(`${getEdsApiBaseUrl()}${path}`, {
+    headers: { Accept: "application/json" },
+  });
   if (!response.ok) throw new Error(`Blogs API returned ${response.status}`);
   const payload = (await response.json()) as Envelope<T>;
   if (!payload.success) throw new Error(payload.message || "Blogs API request failed");
@@ -50,8 +53,12 @@ async function request<T>(path: string): Promise<T> {
 }
 
 export async function getBlogs(): Promise<BlogApiPost[]> {
+  return (await getBlogsData()).items;
+}
+
+export async function getBlogsData(): Promise<BlogListData> {
   const data = await request<BlogListData>("/blogs?page=1&perPage=200");
-  return (data.items ?? []).map(normalizePost);
+  return { ...data, items: (data.items ?? []).map(normalizePost) };
 }
 
 export async function getBlog(slug: string): Promise<BlogApiPost | null> {
@@ -81,3 +88,4 @@ export function sanitizeWordPressHtml(html: string): string {
     .replace(/\sstyle\s*=\s*("[^"]*"|'[^']*')/gi, "")
     .replace(/javascript:/gi, "");
 }
+import { getEdsApiBaseUrl } from "@/lib/apiConfig";

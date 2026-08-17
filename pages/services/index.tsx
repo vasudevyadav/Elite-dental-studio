@@ -7,45 +7,38 @@ import FAQSection from "@/components/FAQSection";
 import BookAppointmentSection from "@/components/BookAppointmentSection";
 import Footer from "@/components/Footer";
 import ServiceHero from "@/components/services/ServiceHero";
-import { getServices, type ServiceListItem } from "@/lib/servicesApi";
+import { getServicesPage, type ServicesPageData } from "@/lib/servicesApi";
 
-type Props = { services: ServiceListItem[] };
+type Props = { data: ServicesPageData };
 
-export default function ServicesPage({ services }: Props) {
+export default function ServicesPage({ data }: Props) {
+  const { items: services, pageSeo, section, hero } = data;
   return (
     <>
       <Head>
-        <title>Dental Services | Elite Dental Studio</title>
-        <meta
-          name="description"
-          content="Explore comprehensive dental treatments at Elite Dental Studio."
-        />
+        <title>{pageSeo.metaTitle}</title>
+        <meta name="description" content={pageSeo.metaDescription} />
       </Head>
       <Navbar />
       <main>
-        <ServiceHero />
+        <ServiceHero image={hero?.image?.url} alt={hero?.image?.alt} />
         <section className="bg-[linear-gradient(#2a686d_0_390px,#fff_390px)] px-5 pt-14 pb-10 sm:px-8 lg:px-12">
           <div className="mx-auto max-w-[1320px]">
             <div className="text-white">
               <p className="flex items-center gap-2.5 text-base font-bold text-[#25d5c4]">
                 <Image
-                  src="/service/our-services.png"
-                  alt=""
+                  src={section?.icon?.url || "/service/our-services.png"}
+                  alt={section?.icon?.alt || ""}
                   width={30}
                   height={28}
                   className="h-7 w-[30px] shrink-0 object-contain"
                 />
-                <span>OUR SERVICES</span>
+                <span>{section?.eyebrow}</span>
               </p>
               <h1 className="my-4 text-2xl leading-[1.14] font-bold lg:text-[40px]">
-                {" "}
-                Comprehensive dental care tailored
-                <br className="hidden sm:block" /> services for every smile
+                {section?.title}
               </h1>
-              <span className="text-sm lg:text-lg">
-                Elite Dental Studio offers a full spectrum of dental procedures to help you explore
-                what&apos;s best for your smile.
-              </span>
+              <span className="text-sm lg:text-lg">{section?.description}</span>
             </div>
             <div className="mt-[72px] grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-x-[46px] lg:gap-y-[42px]">
               {services.map((service) => (
@@ -98,5 +91,5 @@ export default function ServicesPage({ services }: Props) {
 
 export const getServerSideProps: GetServerSideProps<Props> = async ({ res }) => {
   res.setHeader("Cache-Control", "public, s-maxage=60, stale-while-revalidate=300");
-  return { props: { services: await getServices() } };
+  return { props: { data: await getServicesPage() } };
 };

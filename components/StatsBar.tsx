@@ -29,7 +29,14 @@ export default function StatsBar() {
           {trustPoints.map(({ icon, title, subtitle }) => (
             <article key={title} className="flex items-center justify-center gap-3 lg:gap-5">
               <div className="relative h-10 w-10 shrink-0 sm:h-12 sm:w-12 lg:h-16 lg:w-16">
-                <Image src={icon} alt="" fill aria-hidden="true" className="object-contain" />
+                <Image
+                  src={icon}
+                  alt=""
+                  fill
+                  sizes="64px"
+                  aria-hidden="true"
+                  className="object-contain"
+                />
               </div>
               <div className="max-w-[300px] text-white">
                 <h2 className="text-sm leading-[1.25] font-bold lg:text-base">{title}</h2>

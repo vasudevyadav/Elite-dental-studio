@@ -13,6 +13,9 @@ const fallbackCases = Array.from({ length: 12 }, (_, index) => ({
   label:
     index % 3 === 0 ? "Smile Design" : index % 3 === 1 ? "Restorative Care" : "Advanced Dentistry",
   location: index < 4 ? "Calicut" : index < 8 ? "Kochi" : "Kannur",
+  treatmentSlug:
+    index % 3 === 0 ? "smile-design" : index % 3 === 1 ? "restorative-care" : "advanced-dentistry",
+  locationSlug: index < 4 ? "calicut" : index < 8 ? "kochi" : "kannur",
 }));
 
 type GalleryCase = (typeof fallbackCases)[number];
@@ -131,14 +134,15 @@ export default function CasesPage({ data }: { data: Record<string, any> }) {
         title: item.title,
         label: item.category?.name,
         location: item.location?.name,
+        treatmentSlug: item.category?.slug,
+        locationSlug: item.location?.slug,
       }))
     : fallbackCases;
-  const locations = [
-    "All",
-    ...(data.filters?.locations || []).map((item: Record<string, string>) => item.name),
-  ];
+  const locations = data.filters?.locations || [];
+  const treatments = data.filters?.treatments || [];
   const [selected, setSelected] = useState<number | null>(null);
-  const [activeLocation, setActiveLocation] = useState<string>("All");
+  const [activeLocation, setActiveLocation] = useState<string>("");
+  const [activeTreatment, setActiveTreatment] = useState<string>("");
 
   useEffect(() => {
     if (selected === null) return;
@@ -167,7 +171,8 @@ export default function CasesPage({ data }: { data: Record<string, any> }) {
     .map((item: GalleryCase, index: number) => ({ ...item, originalIndex: index }))
     .filter(
       (item: GalleryCase & { originalIndex: number }) =>
-        activeLocation === "All" || item.location === activeLocation,
+        (!activeLocation || item.locationSlug === activeLocation) &&
+        (!activeTreatment || item.treatmentSlug === activeTreatment),
     );
 
   const caseCard = (item: (typeof visibleCases)[number], className = "") => (
@@ -230,19 +235,55 @@ export default function CasesPage({ data }: { data: Record<string, any> }) {
                 Filter by location
               </span>
               <div className="grid grid-cols-2 gap-2 sm:flex">
-                {locations.map((location) => (
+                <button
+                  type="button"
+                  onClick={() => setActiveLocation("")}
+                  aria-pressed={!activeLocation}
+                  className={`rounded-xl px-7 py-3 text-sm font-bold transition ${!activeLocation ? "bg-[#25bfae] text-white shadow-[0_8px_20px_rgba(37,191,174,.22)]" : "bg-white/[.08] text-white/90 hover:bg-white/15 hover:text-white"}`}
+                >
+                  All
+                </button>
+                {locations.map((location: Record<string, string>) => (
                   <button
-                    key={location}
+                    key={location.slug}
                     type="button"
-                    onClick={() => setActiveLocation(location)}
-                    aria-pressed={activeLocation === location}
-                    className={`rounded-xl px-7 py-3 text-sm font-bold transition ${activeLocation === location ? "bg-[#25bfae] text-white shadow-[0_8px_20px_rgba(37,191,174,.22)]" : "bg-white/[.08] text-white/90 hover:bg-white/15 hover:text-white"}`}
+                    onClick={() => setActiveLocation(location.slug)}
+                    aria-pressed={activeLocation === location.slug}
+                    className={`rounded-xl px-7 py-3 text-sm font-bold transition ${activeLocation === location.slug ? "bg-[#25bfae] text-white shadow-[0_8px_20px_rgba(37,191,174,.22)]" : "bg-white/[.08] text-white/90 hover:bg-white/15 hover:text-white"}`}
                   >
-                    {location}
+                    {location.name}
                   </button>
                 ))}
               </div>
             </div>
+            {treatments.length > 0 && (
+              <div className="mt-5 border-t border-white/10 pt-4">
+                <span className="mb-3 block px-2 text-xs font-bold tracking-[.18em] text-white/85 uppercase">
+                  Filter by treatment
+                </span>
+                <div className="grid grid-cols-2 gap-2 sm:flex">
+                  <button
+                    type="button"
+                    onClick={() => setActiveTreatment("")}
+                    aria-pressed={!activeTreatment}
+                    className={`rounded-xl px-7 py-3 text-sm font-bold transition ${!activeTreatment ? "bg-[#25bfae] text-white" : "bg-white/[.08] text-white/90 hover:bg-white/15"}`}
+                  >
+                    All
+                  </button>
+                  {treatments.map((treatment: Record<string, string>) => (
+                    <button
+                      key={treatment.slug}
+                      type="button"
+                      onClick={() => setActiveTreatment(treatment.slug)}
+                      aria-pressed={activeTreatment === treatment.slug}
+                      className={`rounded-xl px-7 py-3 text-sm font-bold transition ${activeTreatment === treatment.slug ? "bg-[#25bfae] text-white" : "bg-white/[.08] text-white/90 hover:bg-white/15"}`}
+                    >
+                      {treatment.name}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
 
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:grid-rows-2">

@@ -28,7 +28,7 @@ export default function BlogPostPage({ post, relatedPosts }: Props) {
           Latest Posts
         </p>
         <div className="grid min-w-0 items-start gap-9 lg:grid-cols-[minmax(0,820px)_270px] lg:gap-10 xl:gap-[70px]">
-          <main>
+          <main className="min-w-0">
             <header className="relative mt-[50px] h-[250px] overflow-hidden rounded-[10px] bg-[#174e53] sm:h-[330px] lg:h-[390px]">
               <Image
                 className="object-cover"

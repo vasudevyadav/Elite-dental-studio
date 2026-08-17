@@ -1,4 +1,5 @@
 import { services as fallbackServices, type Service } from "@/components/services/serviceData";
+import { getEdsApiBaseUrl } from "@/lib/apiConfig";
 
 export type Media = { url: string; alt: string; width?: number | null; height?: number | null };
 
@@ -40,10 +41,19 @@ export type ServiceDetail = ServiceListItem & {
   sections: ServiceSection[];
 };
 
-type Envelope<T> = { success: boolean; message?: string; data: T };
+export type ServicesPageData = {
+  pageSeo: { metaTitle: string; metaDescription: string };
+  hero?: { image?: Media };
+  section?: {
+    eyebrow?: string;
+    icon?: Media;
+    title?: string;
+    description?: string;
+  };
+  items: ServiceListItem[];
+};
 
-const API_BASE =
-  process.env.EDS_API_BASE_URL ?? "https://reinventmedia.in/elitedentalstudio/wp-json/eds/v1";
+type Envelope<T> = { success: boolean; message?: string; data: T };
 
 const fallbackItems: ServiceListItem[] = fallbackServices.map((service, index) => ({
   ...service,
@@ -91,7 +101,7 @@ function normalizeListItem(item: ServiceListItem, index: number): ServiceListIte
 }
 
 async function request<T>(path: string): Promise<T> {
-  const response = await fetch(`${API_BASE}${path}`, {
+  const response = await fetch(`${getEdsApiBaseUrl()}${path}`, {
     headers: { Accept: "application/json" },
   });
   if (!response.ok) throw new Error(`Services API returned ${response.status}`);
@@ -105,6 +115,17 @@ export async function getServicesStrict(): Promise<ServiceListItem[]> {
     .filter((item) => item?.slug && item?.title)
     .map(normalizeListItem)
     .sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
+}
+
+export async function getServicesPage(): Promise<ServicesPageData> {
+  const data = await request<ServicesPageData>("/services");
+  return {
+    ...data,
+    items: (data.items ?? [])
+      .filter((item) => item?.slug && item?.title)
+      .map(normalizeListItem)
+      .sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0)),
+  };
 }
 
 export async function getServices(): Promise<ServiceListItem[]> {

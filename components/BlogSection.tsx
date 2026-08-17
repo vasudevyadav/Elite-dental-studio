@@ -55,9 +55,20 @@ function Arrow({ left = false }: { left?: boolean }) {
   );
 }
 
-export default function BlogSection() {
+export default function BlogSection({ initialPosts }: { initialPosts?: BlogApiPost[] }) {
   const [start, setStart] = useState(0);
-  const [apiPosts, setApiPosts] = useState<HomeBlogPost[] | null>(null);
+  const toHomePosts = (items: BlogApiPost[]): HomeBlogPost[] =>
+    items.map((post, index) => ({
+      slug: post.slug,
+      title: post.title,
+      description: post.excerpt,
+      date: formatBlogDate(post.publishedAt),
+      image: post.image?.url || fallbackPosts[index % fallbackPosts.length].image,
+      category: post.categories?.[0]?.name || "Dental Care",
+    }));
+  const [apiPosts, setApiPosts] = useState<HomeBlogPost[] | null>(() =>
+    initialPosts?.length ? toHomePosts(initialPosts) : null,
+  );
   const touchStartX = useRef<number | null>(null);
   const posts = apiPosts?.length ? apiPosts : fallbackPosts;
   const visiblePosts = [posts[start], posts[(start + 1) % posts.length]];
@@ -70,16 +81,7 @@ export default function BlogSection() {
         const items = payload?.data?.items;
         if (!Array.isArray(items) || !items.length) return;
 
-        setApiPosts(
-          items.map((post: BlogApiPost, index: number) => ({
-            slug: post.slug,
-            title: post.title,
-            description: post.excerpt,
-            date: formatBlogDate(post.publishedAt),
-            image: post.image?.url || fallbackPosts[index % fallbackPosts.length].image,
-            category: post.categories?.[0]?.name || "Dental Care",
-          })),
-        );
+        setApiPosts(toHomePosts(items));
         setStart(0);
       })
       .catch(() => undefined);
@@ -219,11 +221,13 @@ export default function BlogSection() {
         </button>
 
         <div className="flex items-center gap-1.5" aria-hidden="true">
-          {posts.map((post, index) => (
+          {Array.from({ length: Math.min(posts.length, 8) }, (_, index) => index).map((index) => (
             <span
-              key={`${post.title}-${index}`}
+              key={index}
               className={`smooth-hover h-2 rounded-full ${
-                index === start ? "bg-dent-panel w-6" : "w-2 bg-[#acd5d6]"
+                index === start % Math.min(posts.length, 8)
+                  ? "bg-dent-panel w-6"
+                  : "w-2 bg-[#acd5d6]"
               }`}
             />
           ))}

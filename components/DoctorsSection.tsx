@@ -76,12 +76,14 @@ function Arrow({ direction }: { direction: "left" | "right" }) {
 export default function DoctorsSection({
   compact = false,
   clinicSlug,
+  initialDoctors,
 }: {
   compact?: boolean;
   clinicSlug?: string;
+  initialDoctors?: DoctorListItem[];
 }) {
   const doctorsTrackRef = useRef<HTMLDivElement>(null);
-  const [apiDoctors, setApiDoctors] = useState<DoctorListItem[] | null>(null);
+  const [apiDoctors, setApiDoctors] = useState<DoctorListItem[] | null>(initialDoctors || null);
   const visibleDoctors =
     apiDoctors?.filter(
       (doctor) => !clinicSlug || doctor.clinics.some((clinic) => clinic.slug === clinicSlug),

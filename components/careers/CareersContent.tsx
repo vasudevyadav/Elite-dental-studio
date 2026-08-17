@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useRef, useState } from "react";
+import { FormEvent, useMemo, useRef, useState } from "react";
 import HeroSection from "@/components/HeroSection";
 
 const opportunities = [
@@ -33,8 +33,75 @@ export default function CareersContent({ data }: { data: Record<string, any> }) 
       number,
     }));
   const heroImage = data.hero?.slides?.[0]?.image;
+  const application = data.applicationSection || {};
+  const departments = Array.from(
+    new Map(
+      jobs.map((job: Record<string, any>) => [job.department?.slug, job.department]),
+    ).values(),
+  ).filter(Boolean) as Array<Record<string, string>>;
+  const clinics = Array.from(
+    new Map(
+      jobs
+        .flatMap((job: Record<string, any>) => job.clinics || [])
+        .map((clinic: Record<string, string>) => [clinic.slug, clinic]),
+    ).values(),
+  ) as Array<Record<string, string>>;
+  const [department, setDepartment] = useState("");
+  const [clinic, setClinic] = useState("");
+  const [selectedJob, setSelectedJob] = useState("");
   const [fileName, setFileName] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [feedback, setFeedback] = useState<{ type: "success" | "error"; message: string } | null>(
+    null,
+  );
   const fileRef = useRef<HTMLInputElement>(null);
+  const visibleJobs = useMemo(
+    () =>
+      jobs.filter(
+        (job: Record<string, any>) =>
+          (!department || job.department?.slug === department) &&
+          (!clinic || job.clinics?.some((item: Record<string, string>) => item.slug === clinic)),
+      ),
+    [clinic, department, jobs],
+  );
+  const positionOptions = application.positionOptions?.length
+    ? application.positionOptions
+    : jobs.map((job: Record<string, any>) => ({ label: job.title, value: job.slug }));
+
+  const submitApplication = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setSubmitting(true);
+    setFeedback(null);
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+    const job = jobs.find((item: Record<string, any>) => item.slug === formData.get("position"));
+    if (job) {
+      formData.set("jobId", job.id);
+      formData.set("jobSlug", job.slug);
+    }
+    formData.set("consent", "true");
+    try {
+      const response = await fetch("/api/careers/apply", { method: "POST", body: formData });
+      const payload = await response.json().catch(() => null);
+      if (!response.ok || payload?.success === false) {
+        throw new Error(payload?.message || "Application submit nahi ho saka. Please try again.");
+      }
+      setFeedback({
+        type: "success",
+        message: payload?.message || "Application submitted successfully.",
+      });
+      form.reset();
+      setFileName("");
+      setSelectedJob("");
+    } catch (error) {
+      setFeedback({
+        type: "error",
+        message: error instanceof Error ? error.message : "Application submit nahi ho saka.",
+      });
+    } finally {
+      setSubmitting(false);
+    }
+  };
   const fieldClass =
     "w-full rounded-xl border border-[#c9dfdc] bg-[#f8fbfb] px-4 py-3.5 text-sm text-[#254d50] outline-none transition placeholder:text-[#91a2a3] hover:border-[#9bcac5] focus:border-[#25bfae] focus:bg-white focus:ring-4 focus:ring-[#25bfae]/10";
 
@@ -87,8 +154,38 @@ export default function CareersContent({ data }: { data: Record<string, any> }) 
               {data.jobsSection?.title || "Find where you fit."}
             </h2>
           </div>
+          {(departments.length > 1 || clinics.length > 1) && (
+            <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+              <select
+                value={department}
+                onChange={(event) => setDepartment(event.target.value)}
+                className={fieldClass}
+                aria-label="Filter jobs by department"
+              >
+                <option value="">All departments</option>
+                {departments.map((item) => (
+                  <option key={item.slug} value={item.slug}>
+                    {item.name}
+                  </option>
+                ))}
+              </select>
+              <select
+                value={clinic}
+                onChange={(event) => setClinic(event.target.value)}
+                className={fieldClass}
+                aria-label="Filter jobs by clinic"
+              >
+                <option value="">All clinics</option>
+                {clinics.map((item) => (
+                  <option key={item.slug} value={item.slug}>
+                    {item.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
           <div className="mt-9 grid gap-5 md:grid-cols-3">
-            {jobs.map((job: Record<string, any>, index: number) => (
+            {visibleJobs.map((job: Record<string, any>, index: number) => (
               <article
                 key={job.id || job.title}
                 className="group flex min-h-[290px] flex-col rounded-[22px] border border-[#cfe2df] bg-white p-6 shadow-[0_14px_35px_rgba(19,78,82,.06)] transition duration-300 hover:-translate-y-1 hover:border-[#88c7c1] hover:shadow-[0_20px_45px_rgba(19,78,82,.12)] sm:p-7"
@@ -107,6 +204,7 @@ export default function CareersContent({ data }: { data: Record<string, any> }) 
                 <p className="mt-4 text-sm leading-7 text-[#667d7f]">{job.description}</p>
                 <a
                   href="#apply"
+                  onClick={() => setSelectedJob(job.slug)}
                   className="mt-auto flex items-center justify-between border-t border-[#dceae8] pt-5 text-sm font-bold text-[#168f85]"
                 >
                   Apply for this role
@@ -117,39 +215,48 @@ export default function CareersContent({ data }: { data: Record<string, any> }) 
               </article>
             ))}
           </div>
+          {visibleJobs.length === 0 && (
+            <p className="mt-9 rounded-xl bg-white p-6 text-center text-sm font-semibold text-[#607779]">
+              No open positions match these filters.
+            </p>
+          )}
         </div>
       </section>
 
       <section id="apply" className="scroll-mt-8 bg-white px-5 py-8 sm:px-8 sm:py-14 lg:px-12">
         <div className="mx-auto mb-10 max-w-3xl text-center">
           <p className="text-xs font-bold tracking-[.18em] text-[#1da99d] uppercase">
-            Join our team
+            {application.eyebrow || "Join our team"}
           </p>
           <h2 className="mt-3 text-3xl font-semibold tracking-[-.04em] text-[#174e53] sm:text-4xl">
-            Your next chapter could start here.
+            {application.title || "Your next chapter could start here."}
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-[#667d7f]">
-            Share a few details and your résumé. We will review your profile for current and
-            upcoming opportunities.
+            {application.description ||
+              "Share a few details and your résumé. We will review your profile for current and upcoming opportunities."}
           </p>
         </div>
         <div className="mx-auto grid max-w-6xl overflow-hidden rounded-[28px] border border-[#d4e6e3] bg-white shadow-[0_24px_65px_rgba(18,75,79,.11)] lg:grid-cols-[.78fr_1.22fr]">
           <div className="relative overflow-hidden bg-[linear-gradient(155deg,#174e53,#267176)] p-7 text-white sm:p-10 lg:p-12">
             <div className="pointer-events-none absolute -right-20 -bottom-24 h-64 w-64 rounded-full border-[44px] border-[#4dd8cb]/10" />
-            <p className="text-xs font-bold tracking-[.18em] text-[#58ddcf] uppercase">Apply now</p>
+            <p className="text-xs font-bold tracking-[.18em] text-[#58ddcf] uppercase">
+              {application.panelEyebrow || "Apply now"}
+            </p>
             <h2 className="mt-4 text-3xl font-semibold tracking-[-.04em] sm:text-4xl">
-              Tell us where you would like to grow.
+              {application.panelTitle || "Tell us where you would like to grow."}
             </h2>
             <p className="mt-5 text-sm leading-7 text-white/72">
-              Our hiring team reviews every profile carefully and connects when your experience
-              matches a suitable role.
+              {application.panelDescription ||
+                "Our hiring team reviews every profile carefully and connects when your experience matches a suitable role."}
             </p>
             <div className="relative mt-9 space-y-4 border-t border-white/15 pt-7 text-sm">
-              {[
-                "Profiles reviewed by our team",
-                "Open to clinical and support roles",
-                "PDF, DOC and DOCX accepted",
-              ].map((item) => (
+              {(
+                application.highlights || [
+                  "Profiles reviewed by our team",
+                  "Open to clinical and support roles",
+                  "PDF, DOC and DOCX accepted",
+                ]
+              ).map((item: string) => (
                 <p key={item} className="flex items-center gap-3 text-white/78">
                   <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-[#25bfae]/20 text-xs text-[#65e3d7]">
                     ✓
@@ -159,15 +266,15 @@ export default function CareersContent({ data }: { data: Record<string, any> }) 
               ))}
             </div>
             <a
-              href="mailto:info@elitedentalstudio.co.in"
+              href={`mailto:${application.email || "info@elitedentalstudio.co.in"}`}
               className="relative mt-9 block text-sm font-bold text-[#62dfd3]"
             >
-              info@elitedentalstudio.co.in
+              {application.email || "info@elitedentalstudio.co.in"}
             </a>
           </div>
           <form
             className="grid gap-x-5 gap-y-5 p-6 sm:grid-cols-2 sm:p-9 lg:p-11"
-            onSubmit={(event) => event.preventDefault()}
+            onSubmit={submitApplication}
           >
             <label>
               <span className="mb-2 block text-xs font-bold tracking-[.1em] text-[#526568] uppercase">
@@ -203,15 +310,21 @@ export default function CareersContent({ data }: { data: Record<string, any> }) 
               <span className="mb-2 block text-xs font-bold tracking-[.1em] text-[#526568] uppercase">
                 Position
               </span>
-              <select className={fieldClass} name="position" required defaultValue="">
+              <select
+                className={fieldClass}
+                name="position"
+                required
+                value={selectedJob}
+                onChange={(event) => setSelectedJob(event.target.value)}
+              >
                 <option value="" disabled>
                   Select role
                 </option>
-                <option>Dentist / Specialist</option>
-                <option>Dental Nurse / Assistant</option>
-                <option>Patient Coordinator</option>
-                <option>Front Office / Administration</option>
-                <option>Other</option>
+                {positionOptions.map((option: Record<string, string>) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
               </select>
             </label>
             <label className="sm:col-span-2">
@@ -221,7 +334,7 @@ export default function CareersContent({ data }: { data: Record<string, any> }) 
               <input
                 ref={fileRef}
                 className="sr-only"
-                name="cv"
+                name="resume"
                 type="file"
                 accept=".pdf,.doc,.docx"
                 required
@@ -238,10 +351,19 @@ export default function CareersContent({ data }: { data: Record<string, any> }) 
             </label>
             <button
               type="submit"
-              className="mt-1 w-full rounded-xl bg-[#25bfae] px-7 py-4 text-sm font-bold text-white shadow-[0_10px_24px_rgba(37,191,174,.2)] transition hover:bg-[#176b70] sm:col-span-2"
+              disabled={submitting}
+              className="mt-1 w-full rounded-xl bg-[#25bfae] px-7 py-4 text-sm font-bold text-white shadow-[0_10px_24px_rgba(37,191,174,.2)] transition hover:bg-[#176b70] disabled:cursor-not-allowed disabled:opacity-60 sm:col-span-2"
             >
-              Submit application
+              {submitting ? "Submitting…" : application.submitButtonLabel || "Submit application"}
             </button>
+            {feedback && (
+              <p
+                role="status"
+                className={`text-sm font-semibold sm:col-span-2 ${feedback.type === "success" ? "text-[#168f85]" : "text-red-600"}`}
+              >
+                {feedback.message}
+              </p>
+            )}
           </form>
         </div>
       </section>
