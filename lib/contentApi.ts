@@ -1,11 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-const API_BASE =
-  process.env.EDS_API_BASE_URL ?? "https://reinventmedia.in/elitedentalstudio/wp-json/eds/v1";
+import { getEdsApiBaseUrl } from "@/lib/apiConfig";
 
 type Envelope<T> = { success: boolean; message?: string; data: T };
 
 export async function getContent<T>(path: string): Promise<T> {
-  const response = await fetch(`${API_BASE}/${path.replace(/^\//, "")}`, {
+  const response = await fetch(`${getEdsApiBaseUrl()}/${path.replace(/^\//, "")}`, {
     headers: { Accept: "application/json" },
   });
   if (!response.ok) throw new Error(`Content API returned ${response.status}`);

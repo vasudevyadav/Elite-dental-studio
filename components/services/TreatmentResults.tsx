@@ -98,7 +98,7 @@ export default function TreatmentResults({
   data?: Record<string, unknown>;
 }) {
   return (
-    <section className="bg-[#f2f9f8] px-5 py-16 sm:px-8 sm:py-20 lg:px-12">
+    <section className="overflow-hidden bg-[#f2f9f8] px-5 py-16 sm:px-8 sm:py-20 lg:px-12">
       <div className="mx-auto max-w-7xl">
         <div className="grid gap-6 lg:grid-cols-[1fr_.75fr] lg:items-end">
           <div>

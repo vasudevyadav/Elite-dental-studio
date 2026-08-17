@@ -10,20 +10,8 @@ const companyLinks = [
   { label: "International Patients", href: "/international-patients" },
   { label: "Patient Safety", href: "/patient-safety" },
   { label: "Blog", href: "/blog" },
-  { label: "Careers", href: "https://elitedentalstudio.co.in/careers/" },
+  { label: "Careers", href: "/careers" },
   { label: "Contact Us", href: "/contact" },
-];
-
-const serviceLinks = [
-  "Laser Dentistry",
-  "Dental Fillings",
-  "Invisible Aligners",
-  "Braces & Aligners",
-  "Wisdom Teeth Removal",
-  "Dental Implants",
-  "Dental Crowns",
-  "Advanced Gum Treatments",
-  "Paediatric Dentistry",
 ];
 
 const serviceSlugs = [
@@ -37,6 +25,18 @@ const serviceSlugs = [
   "periodontics",
   "pediatric-dentistry",
 ];
+
+const fallbackServices = [
+  "Laser Dentistry",
+  "Dental Fillings",
+  "Invisible Aligners",
+  "Braces & Aligners",
+  "Wisdom Teeth Removal",
+  "Dental Implants",
+  "Dental Crowns",
+  "Advanced Gum Treatments",
+  "Paediatric Dentistry",
+].map((name, index) => ({ name, slug: serviceSlugs[index] }));
 
 const fallbackClinics = [
   { name: "Calicut", href: "https://share.google/Fwtkjjfxd6VB0I8Pg" },
@@ -83,6 +83,7 @@ function SocialIcon({ type }: { type: "facebook" | "tiktok" | "instagram" | "wha
 
 export default function Footer() {
   const [clinics, setClinics] = useState(fallbackClinics);
+  const [services, setServices] = useState(fallbackServices);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -91,13 +92,28 @@ export default function Footer() {
       .then((payload) => {
         const items = payload?.data?.items;
         if (!Array.isArray(items)) return;
-        const mapLinks: Record<string, string> = Object.fromEntries(
-          fallbackClinics.map((item) => [item.name.toLowerCase(), item.href]),
-        );
         setClinics(
           items.map((item: { name: string; slug: string }) => ({
             name: item.name,
-            href: mapLinks[item.slug] || `/locations/${item.slug}`,
+            href: `/locations/${item.slug}`,
+          })),
+        );
+      })
+      .catch(() => undefined);
+    return () => controller.abort();
+  }, []);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    fetch("/api/services", { signal: controller.signal })
+      .then((response) => (response.ok ? response.json() : null))
+      .then((payload) => {
+        const items = payload?.data?.items;
+        if (!Array.isArray(items)) return;
+        setServices(
+          items.map((item: { title: string; slug: string }) => ({
+            name: item.title,
+            slug: item.slug,
           })),
         );
       })
@@ -181,13 +197,13 @@ export default function Footer() {
               Services
             </h3>
             <ul className="mt-5 space-y-4 lg:space-y-5">
-              {serviceLinks.map((link, index) => (
-                <li key={link}>
+              {services.map((service) => (
+                <li key={service.slug}>
                   <Link
-                    href={`/services/${serviceSlugs[index]}`}
+                    href={`/services/${service.slug}`}
                     className="smooth-hover link-hover hover:text-dent-accent text-base font-medium text-white/92"
                   >
-                    {link}
+                    {service.name}
                   </Link>
                 </li>
               ))}

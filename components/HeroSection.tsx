@@ -88,9 +88,9 @@ export default function HeroSection({ slides = HOME_SLIDES, content }: HeroSecti
             alt={s.alt}
             fill
             quality={60}
+            loading={i === 0 ? "eager" : "lazy"}
             sizes="100vw"
             className="object-cover object-[-100px] lg:object-center"
-            priority={i === 0}
             fetchPriority={i === 0 ? "high" : "auto"}
           />
         </div>

@@ -27,6 +27,7 @@ export default function BlogDirectory({ posts }: { posts: BlogApiPost[] }) {
   );
   const pages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
   const visible = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
+  const pageNumbers = Array.from({ length: pages }, (_, index) => index + 1);
 
   const selectCategory = (value: string) => {
     setCategory(value);
@@ -36,7 +37,7 @@ export default function BlogDirectory({ posts }: { posts: BlogApiPost[] }) {
   return (
     <section className="mx-auto max-w-[1240px] px-4 py-8 text-[#333] sm:px-8 sm:py-10 lg:px-[34px] lg:pt-12 lg:pb-[72px]">
       <div className="grid min-w-0 items-start gap-9 lg:grid-cols-[minmax(0,820px)_270px] lg:gap-10 xl:gap-[70px]">
-        <main>
+        <main className="min-w-0">
           <h1 className="mb-5 text-xl font-medium text-[#282828]">Latest Posts</h1>
           <article className="rounded-xl bg-[#eff9f7] p-2.5 shadow-[0_0_26px_rgba(23,99,100,.13)] sm:rounded-[14px] sm:p-[18px]">
             <div className="relative h-[250px] overflow-hidden rounded-[10px] bg-white shadow-[0_3px_17px_rgba(0,0,0,.09)] after:absolute after:inset-0 after:z-[1] after:bg-[linear-gradient(90deg,#fff_0%,rgba(255,255,255,.9)_52%,transparent_100%)] sm:h-[320px] lg:h-[370px] lg:after:bg-[linear-gradient(90deg,#fff_0%,#fff_42%,rgba(255,255,255,.5)_55%,transparent_74%)]">
@@ -151,21 +152,15 @@ export default function BlogDirectory({ posts }: { posts: BlogApiPost[] }) {
             className="mt-[62px] flex items-center justify-center gap-[13px]"
             aria-label="Blog pagination"
           >
-            {[1, 2, 3, "…", pages].map((item, index) =>
-              typeof item === "number" ? (
-                <button
-                  key={`${item}-${index}`}
-                  className={`grid h-7 w-7 cursor-pointer place-items-center rounded-full border-0 text-[10px] font-bold text-white ${page === item ? "bg-[#21cdbd]" : "bg-[#2d7376]"}`}
-                  onClick={() => setPage(item)}
-                >
-                  {item}
-                </button>
-              ) : (
-                <span className="grid h-7 w-2.5 place-items-center text-[10px]" key={index}>
-                  {item}
-                </span>
-              ),
-            )}
+            {pageNumbers.map((item) => (
+              <button
+                key={item}
+                className={`grid h-7 w-7 cursor-pointer place-items-center rounded-full border-0 text-[10px] font-bold text-white ${page === item ? "bg-[#21cdbd]" : "bg-[#2d7376]"}`}
+                onClick={() => setPage(item)}
+              >
+                {item}
+              </button>
+            ))}
             <button
               className="grid h-7 w-7 cursor-pointer place-items-center rounded-full border-0 bg-[#21cdbd] text-[10px] font-bold text-white"
               onClick={() => setPage(Math.min(page + 1, pages))}

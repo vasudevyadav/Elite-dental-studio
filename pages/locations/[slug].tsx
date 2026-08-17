@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { GetServerSideProps } from "next";
 import Link from "next/link";
 import BookAppointmentSection from "@/components/BookAppointmentSection";
@@ -143,12 +142,6 @@ export const getServerSideProps: GetServerSideProps<{ data: LocationData }> = as
 }) => {
   try {
     const data = await getContent<LocationData>(`locations/${String(params?.slug || "")}`);
-    const suppliedMaps: Record<string, string> = {
-      calicut: "https://share.google/Fwtkjjfxd6VB0I8Pg",
-      kochi: "https://share.google/rBjee9uoOFuyUrBiN",
-      kannur: "https://share.google/hqWjVESaLgEvGCPDX",
-    };
-    data.contact.mapUrl = suppliedMaps[data.slug] || data.contact.mapUrl;
     res.setHeader("Cache-Control", "public, s-maxage=60, stale-while-revalidate=300");
     return { props: { data } };
   } catch {

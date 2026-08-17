@@ -50,8 +50,8 @@ export default function ServiceDetailPage({ service }: Props) {
 
       <Navbar />
 
-      <main>
-        <ServiceHero inner />
+      <main className="overflow-x-clip">
+        <ServiceHero inner image={service.hero?.image?.url} alt={service.hero?.image?.alt} />
         <ServiceOverview
           serviceTitle={service.title}
           treatmentName={treatmentName}

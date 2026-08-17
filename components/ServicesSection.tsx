@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import type { ServiceListItem } from "@/lib/servicesApi";
 import AnimatedArrowCta from "./AnimatedArrowCta";
 
 type Service = {
@@ -180,13 +181,33 @@ export default function ServicesSection({
   title = "11+ Specialities Under One Roof",
   description = "Each treatment at Elite Dental Studio is led by a specialist dentist, thoroughly checked by X-ray or examination before any work begins.",
   compact = false,
+  initialServices,
 }: {
   title?: string;
   description?: string;
   compact?: boolean;
+  initialServices?: ServiceListItem[];
 }) {
   const [activeService, setActiveService] = useState(0);
-  const [apiServices, setApiServices] = useState<Service[] | null>(null);
+  const toServices = (items: ApiService[]): Service[] =>
+    items.map((item) => ({
+      slug: item.slug,
+      title: item.title,
+      description: item.shortDescription,
+      image:
+        item.cardImage?.url ||
+        services.find((service) => service.slug === item.slug)?.image ||
+        "/service/services-1.png",
+      icon:
+        item.slug.includes("aligner") || item.slug === "orthodontics"
+          ? "aligner"
+          : item.slug.includes("laser") || item.slug === "periodontics"
+            ? "laser"
+            : "tooth",
+    }));
+  const [apiServices, setApiServices] = useState<Service[] | null>(() =>
+    initialServices?.length ? toServices(initialServices) : null,
+  );
   const activeServices = apiServices?.length ? apiServices : services;
 
   useEffect(() => {
@@ -196,23 +217,7 @@ export default function ServicesSection({
       .then((payload) => {
         const items = payload?.data?.items;
         if (!Array.isArray(items)) return;
-        setApiServices(
-          items.map((item: ApiService) => ({
-            slug: item.slug,
-            title: item.title,
-            description: item.shortDescription,
-            image:
-              item.cardImage?.url ||
-              services.find((service) => service.slug === item.slug)?.image ||
-              "/service/services-1.png",
-            icon:
-              item.slug.includes("aligner") || item.slug === "orthodontics"
-                ? "aligner"
-                : item.slug.includes("laser") || item.slug === "periodontics"
-                  ? "laser"
-                  : "tooth",
-          })),
-        );
+        setApiServices(toServices(items));
       })
       .catch(() => undefined);
     return () => controller.abort();

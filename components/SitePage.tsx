@@ -22,7 +22,7 @@ export default function SitePage({
         <title>{title}</title>
         <meta name="description" content={description} />
       </Head>
-      <div className="bg-white">
+      <div className="overflow-x-clip bg-white">
         <Navbar />
         <main className={mainClassName}>{children}</main>
         <Footer />
