@@ -64,6 +64,7 @@ export default function Home({ services, doctors, blogs, clinics }: HomeProps) {
 }
 
 export const getServerSideProps: GetServerSideProps<HomeProps> = async ({ res }) => {
+  const clinicSlugs = new Set(["calicut", "kochi", "kannur", "coimbatore"]);
   const [services, doctorsData, blogs, locationsData] = await Promise.all([
     getServicesStrict().catch(() => []),
     getContent<DoctorsData>("doctors").catch(() => null),
@@ -72,7 +73,7 @@ export const getServerSideProps: GetServerSideProps<HomeProps> = async ({ res })
   ]);
 
   const locationDetails = await Promise.all(
-    locationsData.items.map((location) =>
+    locationsData.items.filter((location) => clinicSlugs.has(location.slug)).map((location) =>
       getContent<LocationDetail>(`locations/${location.slug}`).catch(() => null),
     ),
   );
@@ -94,7 +95,12 @@ export const getServerSideProps: GetServerSideProps<HomeProps> = async ({ res })
             email: item.contact.email || fallback?.email || "",
             addressLines,
             mapQuery: addressLines.join(", ") || fallback?.mapQuery || item.name,
-            mapUrl: item.contact.mapUrl || fallback?.mapUrl,
+            mapUrl:
+              item.contact.mapUrl ||
+              fallback?.mapUrl ||
+              `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                addressLines.join(", ") || item.name,
+              )}`,
           },
         ];
       }),
