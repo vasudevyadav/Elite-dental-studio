@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Ignore cache recreated by a stale pre-restore dev process.
+    "frontend/**",
   ]),
 ]);
 
