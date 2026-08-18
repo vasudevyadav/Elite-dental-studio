@@ -142,7 +142,6 @@ const subNavItems = [
   { label: "Our Doctors", img: "/navbar/doctor.png", href: "/doctors" },
   { label: "About Us", img: "/navbar/icon02.png", href: "/about" },
   { label: "Our Dental Office", img: "/navbar/icon-3.png", href: "/our-dental-office" },
-  { label: "Technology", img: "/navbar/icon-4.png", href: "/services" },
   {
     label: "International Patients",
     img: "/navbar/icon-6.png",
@@ -232,11 +231,13 @@ export default function Navbar() {
         const items = payload?.data?.items;
         if (!Array.isArray(items)) return;
         setLocationItems(
-          items.map((item: { name: string; slug: string }) => ({
-            label: `${item.name} Clinic`,
-            description: `Visit Elite Dental Studio in ${item.name}`,
-            href: `/locations/${item.slug}`,
-          })),
+          items
+            .filter((item: { name: string; slug: string }) => item.slug === item.name.toLowerCase())
+            .map((item: { name: string; slug: string }) => ({
+              label: `${item.name} Clinic`,
+              description: `Visit Elite Dental Studio in ${item.name}`,
+              href: `/locations/${item.slug}`,
+            })),
         );
       })
       .catch(() => undefined);
@@ -336,7 +337,7 @@ export default function Navbar() {
                     <div className="text-dent-accent px-4 pt-3 pb-2 text-[11px] font-bold tracking-[0.16em] uppercase">
                       {menu.eyebrow}
                     </div>
-                    <div className="space-y-1">
+                    <div className="max-h-[455px] space-y-1 overflow-y-auto pr-1">
                       {menu.items.map((item) => (
                         <Link
                           key={item.label}
@@ -505,7 +506,7 @@ export default function Navbar() {
                       {isOpen && (
                         <div
                           id={`${name}-mobile-menu`}
-                          className="space-y-1 border-t border-[#d9eeee] bg-[#fbfefe] p-2"
+                          className="max-h-[440px] space-y-1 overflow-y-auto border-t border-[#d9eeee] bg-[#fbfefe] p-2"
                         >
                           {navigationDropdowns[name].items.map((item) => (
                             <Link
