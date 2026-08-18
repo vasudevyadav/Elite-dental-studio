@@ -3,19 +3,34 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import { localDoctorImage, type DoctorsData } from "@/lib/contentApi";
 
+const PAGE_SIZE = 9;
+
 export default function DoctorsDirectory({ data }: { data: DoctorsData }) {
   const doctors = data.items;
   const clinics = ["All Clinics", ...data.clinics.map((item) => item.name)];
   const [clinic, setClinic] = useState(data.clinics[0]?.name || "Calicut");
   const [activeClinic, setActiveClinic] = useState("All Clinics");
+  const [page, setPage] = useState(1);
 
-  const visibleDoctors = useMemo(
+  const filteredDoctors = useMemo(
     () =>
       activeClinic === "All Clinics"
         ? doctors
         : doctors.filter((doctor) => doctor.clinics.some((item) => item.name === activeClinic)),
     [activeClinic, doctors],
   );
+  const totalPages = Math.max(1, Math.ceil(filteredDoctors.length / PAGE_SIZE));
+  const currentPage = Math.min(page, totalPages);
+  const visibleDoctors = filteredDoctors.slice(
+    (currentPage - 1) * PAGE_SIZE,
+    currentPage * PAGE_SIZE,
+  );
+  const pageNumbers = Array.from({ length: totalPages }, (_, index) => index + 1);
+
+  const chooseClinic = (value: string) => {
+    setActiveClinic(value);
+    setPage(1);
+  };
 
   return (
     <section className="px-5 pt-10 pb-16 sm:px-8 lg:px-12 lg:pt-12 lg:pb-24">
@@ -41,7 +56,7 @@ export default function DoctorsDirectory({ data }: { data: DoctorsData }) {
           </select>
           <button
             type="button"
-            onClick={() => setActiveClinic(clinic)}
+            onClick={() => chooseClinic(clinic)}
             className="smooth-hover button-hover h-12 w-full rounded-full bg-[#296f73] px-6 text-sm font-extrabold text-white hover:bg-[#205e62] focus:ring-4 focus:ring-[#296f73]/20 focus:outline-none sm:w-auto sm:px-10"
           >
             Find Doctor
@@ -53,7 +68,7 @@ export default function DoctorsDirectory({ data }: { data: DoctorsData }) {
           <div className="mt-5 flex justify-center">
             <button
               type="button"
-              onClick={() => setActiveClinic("All Clinics")}
+              onClick={() => chooseClinic("All Clinics")}
               className="text-sm font-bold text-[#286f73] underline decoration-[#25bfae] decoration-2 underline-offset-4"
             >
               Showing {activeClinic} doctors · View all
@@ -120,6 +135,32 @@ export default function DoctorsDirectory({ data }: { data: DoctorsData }) {
           <p className="py-20 text-center text-lg font-semibold text-[#286f73]">
             No doctors found for this clinic.
           </p>
+        )}
+
+        {totalPages > 1 && (
+          <nav
+            className="mt-14 flex items-center justify-center gap-[13px]"
+            aria-label="Doctors pagination"
+          >
+            {pageNumbers.map((item) => (
+              <button
+                key={item}
+                type="button"
+                className={`grid h-7 w-7 cursor-pointer place-items-center rounded-full border-0 text-[10px] font-bold text-white ${currentPage === item ? "bg-[#21cdbd]" : "bg-[#2d7376]"}`}
+                onClick={() => setPage(item)}
+              >
+                {item}
+              </button>
+            ))}
+            <button
+              type="button"
+              className="grid h-7 w-7 cursor-pointer place-items-center rounded-full border-0 bg-[#21cdbd] text-[10px] font-bold text-white"
+              onClick={() => setPage(Math.min(currentPage + 1, totalPages))}
+              aria-label="Next page"
+            >
+              →
+            </button>
+          </nav>
         )}
       </div>
     </section>
