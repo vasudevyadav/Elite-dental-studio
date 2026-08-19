@@ -11,7 +11,7 @@ const guidance = [
 export default function AftercareSection({ data }: { data?: Record<string, unknown> }) {
   const items = (data?.items as string[] | undefined) || guidance;
   return (
-    <section className="mt-10 grid items-center gap-10 lg:mt-24 lg:grid-cols-2 lg:gap-20">
+    <section className="mt-10 grid items-center gap-10 lg:mt-16 lg:grid-cols-2 lg:gap-20">
       <div>
         <h2 className="text-2xl leading-tight font-bold text-[#2b7175] lg:text-[40px]">
           {(data?.title as string) || (

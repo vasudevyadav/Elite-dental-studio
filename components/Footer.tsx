@@ -93,10 +93,12 @@ export default function Footer() {
         const items = payload?.data?.items;
         if (!Array.isArray(items)) return;
         setClinics(
-          items.map((item: { name: string; slug: string }) => ({
-            name: item.name,
-            href: `/locations/${item.slug}`,
-          })),
+          items
+            .filter((item: { name: string; slug: string }) => item.slug === item.name?.toLowerCase())
+            .map((item: { name: string; slug: string }) => ({
+              name: item.name,
+              href: `/locations/${item.slug}`,
+            })),
         );
       })
       .catch(() => undefined);
@@ -177,8 +179,11 @@ export default function Footer() {
             </div>
           </div>
 
-          <div className="border-t border-white/15 pt-7 text-center sm:border-t-0 sm:pt-0 lg:pt-12 lg:text-left">
-            <ul className="mx-auto grid grid-cols-1 gap-x-5 gap-y-4 sm:block sm:space-y-5">
+          <div className="border-t border-white/15 pt-7 text-center sm:border-t-0 sm:pt-0 lg:pt-4 lg:text-left">
+            <h3 className="w-full border-white text-center text-2xl font-extrabold lg:w-fit lg:border-b lg:text-left">
+              Company
+            </h3>
+            <ul className="mx-auto mt-5 grid grid-cols-1 gap-x-5 gap-y-4 sm:block sm:space-y-5">
               {companyLinks.map((link) => (
                 <li key={link.label}>
                   <Link
@@ -196,7 +201,9 @@ export default function Footer() {
             <h3 className="w-full border-white text-center text-2xl font-extrabold lg:w-fit lg:border-b lg:text-left">
               Services
             </h3>
-            <ul className="mt-5 space-y-4 lg:space-y-5">
+            <ul
+              className={`mt-5 space-y-4 lg:space-y-5 ${services.length > 8 ? "max-h-72 overflow-y-auto pr-2 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-white/25 [&::-webkit-scrollbar-track]:bg-transparent" : ""}`}
+            >
               {services.map((service) => (
                 <li key={service.slug}>
                   <Link

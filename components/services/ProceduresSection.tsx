@@ -46,7 +46,7 @@ export default function ProceduresSection({ service, isLaser, data }: Props) {
   const mobileProcedures = activeProcedures.map(([name, copy]) => ({ name, copy }));
 
   return (
-    <section className="py-10 text-center lg:py-20">
+    <section className="py-10 text-center lg:py-16">
       <h2 className="text-xl leading-tight font-bold text-[#2b7175] lg:text-[40px]">
         {(data?.title as string) || (
           <>
