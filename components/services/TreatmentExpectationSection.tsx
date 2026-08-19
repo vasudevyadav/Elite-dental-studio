@@ -3,7 +3,7 @@ import Image from "next/image";
 export default function TreatmentExpectationSection({ data }: { data?: Record<string, unknown> }) {
   const paragraphs = data?.paragraphs as string[] | undefined;
   return (
-    <section className="mt-10 grid items-center gap-10 lg:mt-24 lg:grid-cols-2 lg:gap-20">
+    <section className="mt-10 grid items-center gap-10 lg:mt-16 lg:grid-cols-2 lg:gap-20">
       <div className="relative min-h-[300px] overflow-hidden rounded-2xl lg:min-h-[400px]">
         <Image
           src={

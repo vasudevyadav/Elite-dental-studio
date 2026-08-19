@@ -113,7 +113,7 @@ export default function ServicesPage({ data }: Props) {
             )}
           </div>
         </section>
-        <div className="mt-[130px] mb-[90px]">
+        <div>
           <FAQSection />
         </div>
         <BookAppointmentSection />

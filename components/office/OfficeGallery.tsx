@@ -16,7 +16,9 @@ export default function OfficeGallery({ data }: { data?: Record<string, any> }) 
     : officeImages;
   const locations: OfficeLocation[] = [
     "All",
-    ...(data?.locations?.map((item: Record<string, string>) => item.name) || [
+    ...(data?.locations
+      ?.filter((item: Record<string, string>) => item.slug === item.name?.toLowerCase())
+      .map((item: Record<string, string>) => item.name) || [
       "Calicut",
       "Kochi",
       "Kannur",
