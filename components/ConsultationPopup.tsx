@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { submitConsultation } from "@/lib/consultation";
+import { OPEN_CONSULTATION_POPUP_EVENT } from "@/lib/consultationPopup";
 
 const SESSION_KEY = "eds_consultation_popup_shown";
 const SCROLL_THRESHOLD = 0.4;
@@ -27,6 +28,15 @@ export default function ConsultationPopup() {
 
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    const onOpenRequest = () => {
+      setOpen(true);
+      sessionStorage.setItem(SESSION_KEY, "1");
+    };
+    window.addEventListener(OPEN_CONSULTATION_POPUP_EVENT, onOpenRequest);
+    return () => window.removeEventListener(OPEN_CONSULTATION_POPUP_EVENT, onOpenRequest);
   }, []);
 
   useEffect(() => {

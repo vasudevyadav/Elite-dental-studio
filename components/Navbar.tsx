@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { openConsultationPopup } from "@/lib/consultationPopup";
 
 type DropdownName = "treatments" | "clinic";
 
@@ -401,12 +402,13 @@ export default function Navbar() {
             </div>
 
             {/* CTA */}
-            <Link
-              href="/#appointment"
+            <button
+              type="button"
+              onClick={openConsultationPopup}
               className="smooth-hover button-hover hover-lift hover:bg-dent-text rounded-[4px] bg-[#29696d] px-6 py-3 text-xs font-bold tracking-wider whitespace-nowrap text-white focus:ring-4 focus:ring-[#29696d]/20 focus:outline-none"
             >
               BOOK FREE CONSULTATION
-            </Link>
+            </button>
           </div>
 
           {/* Mobile: phone + hamburger */}
@@ -576,13 +578,16 @@ export default function Navbar() {
             </div>
 
             <div className="border-t border-[#dceeed] bg-white p-4">
-              <Link
-                href="/#appointment"
-                onClick={closeMenus}
+              <button
+                type="button"
+                onClick={() => {
+                  closeMenus();
+                  openConsultationPopup();
+                }}
                 className="smooth-hover button-hover hover-lift bg-dent-dark hover:bg-dent-nav focus:ring-dent-nav/20 block w-full rounded-lg py-3.5 text-center text-sm font-bold tracking-wider text-white focus:ring-4 focus:outline-none"
               >
                 BOOK FREE CONSULTATION
-              </Link>
+              </button>
             </div>
           </nav>
         </div>
