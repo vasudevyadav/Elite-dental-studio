@@ -1,10 +1,36 @@
 import { useState } from "react";
+import { useRouter } from "next/router";
+import { submitConsultation } from "@/lib/consultation";
 
 export default function ContactFormSection() {
   const [form, setForm] = useState({ clinic: "", name: "", email: "", phone: "", message: "" });
+  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+  const [feedback, setFeedback] = useState("");
+  const router = useRouter();
   const update = (
     event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>,
   ) => setForm((current) => ({ ...current, [event.target.name]: event.target.value }));
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setStatus("submitting");
+    const result = await submitConsultation({
+      name: form.name,
+      phone: form.phone,
+      email: form.email,
+      clinicSlug: form.clinic.toLowerCase(),
+      message: form.message,
+      source: "contact-page",
+    });
+    setFeedback(result.message);
+    if (result.success) {
+      setStatus("success");
+      setForm({ clinic: "", name: "", email: "", phone: "", message: "" });
+      router.push("/thank-you");
+    } else {
+      setStatus("error");
+    }
+  };
   const fieldClass =
     "w-full rounded-xl border border-[#c7dfdc] bg-[#f7fbfa] px-4 py-3.5 text-sm text-[#324e51] outline-none transition placeholder:text-[#8a999a] hover:border-[#8fc7c1] focus:border-[#25bfae] focus:bg-white focus:ring-4 focus:ring-[#25bfae]/15";
 
@@ -60,10 +86,7 @@ export default function ContactFormSection() {
           <p className="mt-2 text-sm leading-6 text-[#6d7c7e]">
             We usually respond during clinic working hours.
           </p>
-          <form
-            className="mt-7 grid gap-4 sm:grid-cols-2 lg:gap-5"
-            onSubmit={(event) => event.preventDefault()}
-          >
+          <form className="mt-7 grid gap-4 sm:grid-cols-2 lg:gap-5" onSubmit={handleSubmit}>
             <label className="sm:col-span-2">
               <span className="mb-2 block text-xs font-bold tracking-[.1em] text-[#526568] uppercase">
                 Preferred clinic
@@ -138,10 +161,18 @@ export default function ContactFormSection() {
             </label>
             <button
               type="submit"
-              className="smooth-hover button-hover mt-2 w-full rounded-xl bg-[#25bfae] px-7 py-4 text-sm font-bold tracking-[.08em] text-white uppercase hover:bg-[#176b70] sm:col-span-2 sm:w-fit"
+              disabled={status === "submitting"}
+              className="smooth-hover button-hover mt-2 w-full rounded-xl bg-[#25bfae] px-7 py-4 text-sm font-bold tracking-[.08em] text-white uppercase hover:bg-[#176b70] disabled:opacity-60 sm:col-span-2 sm:w-fit"
             >
-              Submit enquiry →
+              {status === "submitting" ? "Submitting..." : "Submit enquiry →"}
             </button>
+            {feedback && (
+              <p
+                className={`text-sm font-semibold sm:col-span-2 ${status === "success" ? "text-emerald-600" : "text-red-600"}`}
+              >
+                {feedback}
+              </p>
+            )}
           </form>
         </div>
       </div>

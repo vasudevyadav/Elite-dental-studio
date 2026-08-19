@@ -1,5 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
+import { useRouter } from "next/router";
+import { submitConsultation } from "@/lib/consultation";
 
 const HOME_SLIDES = [{ img: "/home/slider-1.png", alt: "Dental Care 1" }];
 
@@ -31,6 +33,9 @@ export default function HeroSection({ slides = HOME_SLIDES, content }: HeroSecti
   const [slide, setSlide] = useState(0);
   const [modalOpen, setModalOpen] = useState(false);
   const [form, setForm] = useState({ name: "", phone: "", email: "", date: "", clinic: "" });
+  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+  const [feedback, setFeedback] = useState("");
+  const router = useRouter();
 
   const total = slides.length;
   const next = useCallback(() => setSlide((p) => (p + 1) % total), [total]);
@@ -69,7 +74,27 @@ export default function HeroSection({ slides = HOME_SLIDES, content }: HeroSecti
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
     setForm((p) => ({ ...p, [e.target.name]: e.target.value }));
 
-  const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => e.preventDefault();
+  const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setStatus("submitting");
+    const result = await submitConsultation({
+      name: form.name,
+      phone: form.phone,
+      email: form.email,
+      clinicSlug: form.clinic,
+      preferredDate: form.date,
+      source: "hero-section",
+    });
+    setFeedback(result.message);
+    if (result.success) {
+      setStatus("success");
+      setForm({ name: "", phone: "", email: "", date: "", clinic: "" });
+      setModalOpen(false);
+      router.push("/thank-you");
+    } else {
+      setStatus("error");
+    }
+  };
 
   const inputClass =
     "h-11 w-full rounded-[5px] border border-[#8bb5b6] bg-[#f5fbfa] px-4 text-sm text-gray-700 placeholder-gray-500 focus:border-dent-accent focus:outline-none focus:ring-1 focus:ring-dent-accent sm:h-12 sm:px-5";
@@ -210,10 +235,18 @@ export default function HeroSection({ slides = HOME_SLIDES, content }: HeroSecti
 
             <button
               type="submit"
-              className="smooth-hover button-hover hover-lift bg-dent-accent hover:bg-dent-nav mx-auto mt-2 w-full max-w-[245px] rounded-[5px] py-3 text-sm font-bold text-white"
+              disabled={status === "submitting"}
+              className="smooth-hover button-hover hover-lift bg-dent-accent hover:bg-dent-nav mx-auto mt-2 w-full max-w-[245px] rounded-[5px] py-3 text-sm font-bold text-white disabled:opacity-60"
             >
-              Book Now!
+              {status === "submitting" ? "Submitting..." : "Book Now!"}
             </button>
+            {feedback && (
+              <p
+                className={`text-center text-sm font-semibold ${status === "success" ? "text-emerald-600" : "text-red-600"}`}
+              >
+                {feedback}
+              </p>
+            )}
           </form>
         </div>
       </div>
@@ -324,10 +357,18 @@ export default function HeroSection({ slides = HOME_SLIDES, content }: HeroSecti
 
               <button
                 type="submit"
-                className="smooth-hover button-hover hover-lift bg-dent-accent hover:bg-dent-nav focus:ring-dent-accent/25 mx-auto mt-2 w-full max-w-[260px] rounded-[6px] py-3 text-sm font-bold text-white focus:ring-4 focus:outline-none"
+                disabled={status === "submitting"}
+                className="smooth-hover button-hover hover-lift bg-dent-accent hover:bg-dent-nav focus:ring-dent-accent/25 mx-auto mt-2 w-full max-w-[260px] rounded-[6px] py-3 text-sm font-bold text-white focus:ring-4 focus:outline-none disabled:opacity-60"
               >
-                Book Now!
+                {status === "submitting" ? "Submitting..." : "Book Now!"}
               </button>
+              {feedback && (
+                <p
+                  className={`text-center text-sm font-semibold ${status === "success" ? "text-emerald-600" : "text-red-600"}`}
+                >
+                  {feedback}
+                </p>
+              )}
             </form>
           </div>
         </div>
