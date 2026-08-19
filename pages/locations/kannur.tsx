@@ -51,6 +51,23 @@ const faqs = [
   ],
 ];
 
+function renderSectionIcon(icon: unknown) {
+  if (typeof icon === "string" && icon) return icon;
+  if (icon && typeof icon === "object" && "url" in icon && (icon as { url?: string }).url) {
+    const image = icon as { url: string; alt?: string };
+    return (
+      <Image
+        src={image.url}
+        alt={image.alt || ""}
+        width={32}
+        height={32}
+        className="mx-auto h-8 w-8 object-contain"
+      />
+    );
+  }
+  return "✦";
+}
+
 function AppointmentForm({ compact = false }: { compact?: boolean }) {
   const [form, setForm] = useState({ name: "", phone: "", email: "", date: "", clinic: "" });
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
@@ -292,14 +309,14 @@ export default function KannurLocationPage({ data }: { data: LocationData }) {
             {benefitSection.title || "Why Choose Us?"}
           </h2>
           <div className="mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {activeBenefits.map(({ icon, title, text }: Record<string, string>, index: number) => (
+            {activeBenefits.map((item: Record<string, unknown>, index: number) => (
               <article
-                key={title}
+                key={String(item.title)}
                 className={`rounded-xl border border-white/50 p-5 text-center sm:p-6 ${index % 2 ? "bg-[#276368] text-white" : "bg-white text-[#286f73]"}`}
               >
-                <div className="text-3xl">{icon}</div>
-                <h3 className="mt-3 font-bold">{title}</h3>
-                <p className="mt-1 text-xs opacity-75">{text}</p>
+                <div className="text-3xl">{renderSectionIcon(item.icon)}</div>
+                <h3 className="mt-3 font-bold">{String(item.title)}</h3>
+                <p className="mt-1 text-xs opacity-75">{String(item.text)}</p>
               </article>
             ))}
           </div>
@@ -396,17 +413,17 @@ export default function KannurLocationPage({ data }: { data: LocationData }) {
             {travelSection.description}
           </p>
           <div className="mt-8 grid gap-5 md:grid-cols-3">
-            {activeTravel.map(({ icon, title, text }: Record<string, string>) => (
+            {activeTravel.map((item: Record<string, unknown>) => (
               <article
-                key={title}
+                key={String(item.title)}
                 className="group rounded-xl border-2 border-white bg-white p-5 text-center text-[#286f73] shadow-sm transition duration-300 hover:-translate-y-1 hover:border-[#276368] hover:bg-[#276368] hover:text-white hover:shadow-xl sm:p-7"
               >
                 <div className="text-3xl transition-transform duration-300 group-hover:scale-110">
-                  {icon}
+                  {renderSectionIcon(item.icon)}
                 </div>
-                <h3 className="mt-3 font-bold">{title}</h3>
+                <h3 className="mt-3 font-bold">{String(item.title)}</h3>
                 <p className="mt-3 text-sm leading-6 text-[#526f71] transition-colors group-hover:text-white/85">
-                  {text}
+                  {String(item.text)}
                 </p>
               </article>
             ))}

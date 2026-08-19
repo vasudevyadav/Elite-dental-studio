@@ -11,11 +11,7 @@ const FALLBACK_IMAGES = [
   "/service/services-inner-6.png",
 ];
 
-export default function ServiceAccordionSection({
-  items,
-}: {
-  items?: ServiceAccordionItem[];
-}) {
+export default function ServiceAccordionSection({ items }: { items?: ServiceAccordionItem[] }) {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   if (!items?.length) return null;
@@ -43,9 +39,7 @@ export default function ServiceAccordionSection({
                 aria-expanded={open}
                 className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left sm:px-6 sm:py-5"
               >
-                <span className="text-base font-bold text-[#174e53] sm:text-lg">
-                  {item.title}
-                </span>
+                <span className="text-base font-bold text-[#174e53] sm:text-lg">{item.title}</span>
                 <span
                   aria-hidden="true"
                   className={`shrink-0 text-2xl leading-none text-[#25bfae] transition-transform ${open ? "rotate-45" : ""}`}
