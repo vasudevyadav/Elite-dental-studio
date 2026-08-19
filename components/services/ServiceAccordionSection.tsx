@@ -1,11 +1,15 @@
 import { useState } from "react";
 import Image from "next/image";
+import type { ServiceAccordionItem } from "@/lib/servicesApi";
 
-export type ServiceAccordionItem = {
-  title: string;
-  body: string;
-  image?: { url: string; alt: string };
-};
+const FALLBACK_IMAGES = [
+  "/service/services-inner-1.png",
+  "/service/services-inner-2.png",
+  "/service/services-inner-3.png",
+  "/service/services-inner-4.png",
+  "/service/services-inner-5.png",
+  "/service/services-inner-6.png",
+];
 
 export default function ServiceAccordionSection({
   items,
@@ -25,6 +29,9 @@ export default function ServiceAccordionSection({
       <div className="space-y-3">
         {items.map((item, index) => {
           const open = openIndex === index;
+          const image = item.image?.url
+            ? item.image
+            : { url: FALLBACK_IMAGES[index % FALLBACK_IMAGES.length], alt: item.title };
           return (
             <div
               key={item.title}
@@ -51,17 +58,15 @@ export default function ServiceAccordionSection({
                   <div className="space-y-3 text-sm leading-7 whitespace-pre-line text-gray-600 lg:text-base lg:leading-8">
                     {item.body}
                   </div>
-                  {item.image?.url && (
-                    <div className="relative hidden aspect-square overflow-hidden rounded-xl lg:block">
-                      <Image
-                        src={item.image.url}
-                        alt={item.image.alt}
-                        fill
-                        sizes="220px"
-                        className="object-cover"
-                      />
-                    </div>
-                  )}
+                  <div className="relative hidden aspect-square overflow-hidden rounded-xl lg:block">
+                    <Image
+                      src={image.url}
+                      alt={image.alt}
+                      fill
+                      sizes="220px"
+                      className="object-cover"
+                    />
+                  </div>
                 </div>
               )}
             </div>
