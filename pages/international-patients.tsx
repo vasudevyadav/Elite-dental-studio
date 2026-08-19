@@ -1,7 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/router";
 import SitePage from "@/components/SitePage";
+import { submitConsultationForm } from "@/lib/consultation";
 
 const MailIcon = () => (
   <svg
@@ -746,8 +748,44 @@ function BookingJourney() {
 }
 
 function InternationalEnquiryForm() {
+  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+  const [feedback, setFeedback] = useState("");
+  const router = useRouter();
   const fieldClass =
     "h-10 w-full rounded-[9px] border border-[#c9dfdc] bg-[#f8fcfb] px-3.5 text-[13px] text-[#304f52] outline-none transition placeholder:text-[#899798] focus:border-[#25bfae] focus:bg-white focus:ring-4 focus:ring-[#25bfae]/15";
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const raw = new FormData(form);
+
+    const country = String(raw.get("country") || "");
+    const message = String(raw.get("message") || "");
+    const clinic = String(raw.get("clinic") || "");
+
+    const payload = new FormData();
+    payload.set("name", String(raw.get("name") || ""));
+    payload.set("phone", String(raw.get("phone") || ""));
+    payload.set("email", String(raw.get("email") || ""));
+    payload.set("clinicSlug", clinic.toLowerCase());
+    payload.set("message", country ? `Country: ${country}\n\n${message}` : message);
+    payload.set("source", "international-patients");
+
+    const files = raw.getAll("records").filter((file): file is File => file instanceof File && file.size > 0);
+    if (files[0]) payload.set("records", files[0]);
+
+    setStatus("submitting");
+    const result = await submitConsultationForm(payload);
+    setFeedback(result.message);
+    if (result.success) {
+      setStatus("success");
+      form.reset();
+      router.push("/thank-you");
+    } else {
+      setStatus("error");
+    }
+  };
+
   return (
     <section id="international-enquiry" className="scroll-mt-8 bg-white px-5 py-8 sm:px-8 lg:py-14">
       <div className="mx-auto grid max-w-[1300px] items-center overflow-hidden rounded-[24px] bg-[#174e53] shadow-[0_20px_55px_rgba(18,75,79,.14)] lg:grid-cols-2">
@@ -801,10 +839,7 @@ function InternationalEnquiryForm() {
             Send your treatment enquiry
           </h3>
           <p className="mt-1 text-xs text-[#718184]">Fields marked * are required.</p>
-          <form
-            className="mt-4 grid gap-3 sm:grid-cols-2"
-            onSubmit={(event) => event.preventDefault()}
-          >
+          <form className="mt-4 grid gap-3 sm:grid-cols-2" onSubmit={handleSubmit}>
             <label>
               <span className="mb-1.5 block text-xs font-semibold text-[#526568]">Full name *</span>
               <input className={fieldClass} name="name" placeholder="Your full name" required />
@@ -894,10 +929,18 @@ function InternationalEnquiryForm() {
             </label>
             <button
               type="submit"
-              className="inline-flex w-full items-center justify-center gap-2 rounded-[10px] bg-[#25bfae] px-6 py-3.5 text-sm font-bold text-white transition hover:bg-[#176b70] sm:col-span-2 sm:w-fit"
+              disabled={status === "submitting"}
+              className="inline-flex w-full items-center justify-center gap-2 rounded-[10px] bg-[#25bfae] px-6 py-3.5 text-sm font-bold text-white transition hover:bg-[#176b70] disabled:opacity-60 sm:col-span-2 sm:w-fit"
             >
-              Submit treatment enquiry <ArrowIcon />
+              {status === "submitting" ? "Submitting..." : "Submit treatment enquiry"} <ArrowIcon />
             </button>
+            {feedback && (
+              <p
+                className={`text-sm font-semibold sm:col-span-2 ${status === "success" ? "text-emerald-600" : "text-red-600"}`}
+              >
+                {feedback}
+              </p>
+            )}
           </form>
         </div>
       </div>

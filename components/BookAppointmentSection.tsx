@@ -1,6 +1,9 @@
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { appointmentContent, type AppointmentSectionContent } from "@/content/siteSections";
+import { submitConsultation } from "@/lib/consultation";
+import { formatDateInput } from "@/lib/dateInput";
 
 export default function BookAppointmentSection({
   content = appointmentContent,
@@ -14,12 +17,37 @@ export default function BookAppointmentSection({
     date: "",
     clinic: "",
   });
+  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+  const [feedback, setFeedback] = useState("");
+  const router = useRouter();
 
   const updateForm = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = event.target;
     setForm((current) => ({
       ...current,
-      [event.target.name]: event.target.value,
+      [name]: name === "date" ? formatDateInput(value) : value,
     }));
+  };
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setStatus("submitting");
+    const result = await submitConsultation({
+      name: form.name,
+      phone: form.phone,
+      email: form.email,
+      clinicSlug: form.clinic,
+      preferredDate: form.date,
+      source: "book-appointment-section",
+    });
+    setFeedback(result.message);
+    if (result.success) {
+      setStatus("success");
+      setForm({ name: "", phone: "", email: "", date: "", clinic: "" });
+      router.push("/thank-you");
+    } else {
+      setStatus("error");
+    }
   };
 
   const fieldClass =
@@ -80,7 +108,7 @@ export default function BookAppointmentSection({
           <h3 className="text-center text-xl font-bold text-[#29666b] italic">
             {content.formTitle}
           </h3>
-          <form className="mt-6 space-y-7 lg:mt-10" onSubmit={(event) => event.preventDefault()}>
+          <form className="mt-6 space-y-7 lg:mt-10" onSubmit={handleSubmit}>
             <input
               name="name"
               value={form.name}
@@ -109,6 +137,8 @@ export default function BookAppointmentSection({
               value={form.date}
               onChange={updateForm}
               placeholder="DD/MM/YYYY"
+              inputMode="numeric"
+              maxLength={10}
               className={fieldClass}
             />
             <div className="relative">
@@ -135,10 +165,18 @@ export default function BookAppointmentSection({
             </div>
             <button
               type="submit"
-              className="smooth-hover button-hover hover-lift bg-dent-accent hover:bg-dent-nav focus:ring-dent-accent/25 mx-auto block w-full max-w-[245px] rounded-[5px] py-3 text-base font-extrabold text-white focus:ring-4 focus:outline-none"
+              disabled={status === "submitting"}
+              className="smooth-hover button-hover hover-lift bg-dent-accent hover:bg-dent-nav focus:ring-dent-accent/25 mx-auto block w-full max-w-[245px] rounded-[5px] py-3 text-base font-extrabold text-white focus:ring-4 focus:outline-none disabled:opacity-60"
             >
-              Book Now!
+              {status === "submitting" ? "Submitting..." : "Book Now!"}
             </button>
+            {feedback && (
+              <p
+                className={`text-center text-sm font-semibold ${status === "success" ? "text-emerald-600" : "text-red-600"}`}
+              >
+                {feedback}
+              </p>
+            )}
           </form>
         </div>
       </div>
