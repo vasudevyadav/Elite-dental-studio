@@ -17,6 +17,8 @@ import TreatmentExpectationSection from "@/components/services/TreatmentExpectat
 import AftercareSection from "@/components/services/AftercareSection";
 import BenefitsSection from "@/components/services/BenefitsSection";
 import TreatmentResults from "@/components/services/TreatmentResults";
+import ServiceAccordionSection from "@/components/services/ServiceAccordionSection";
+import { serviceAccordionData } from "@/content/serviceAccordionData";
 import {
   getService,
   toLegacyService,
@@ -75,6 +77,7 @@ export default function ServiceDetailPage({ service }: Props) {
           <TreatmentExpectationSection data={content("expectation")} />
           <AftercareSection data={content("aftercare")} />
           <BenefitsSection treatmentName={treatmentName} data={content("benefits")} />
+          <ServiceAccordionSection items={serviceAccordionData[service.slug]} />
         </div>
 
         <TreatmentResults serviceTitle={service.title} data={content("results")} />
