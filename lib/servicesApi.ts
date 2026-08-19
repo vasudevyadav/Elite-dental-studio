@@ -28,6 +28,12 @@ export type ServiceSection = {
   content: Record<string, unknown>;
 };
 
+export type ServiceAccordionItem = {
+  title: string;
+  body: string;
+  image?: Media | null;
+};
+
 export type ServiceDetail = ServiceListItem & {
   treatmentName: string;
   seo?: {
@@ -39,6 +45,7 @@ export type ServiceDetail = ServiceListItem & {
   };
   hero?: { image?: Media };
   sections: ServiceSection[];
+  accordionItems: ServiceAccordionItem[];
 };
 
 export type ServicesPageData = {
@@ -140,9 +147,13 @@ export async function getServices(): Promise<ServiceListItem[]> {
 export async function getService(slug: string): Promise<ServiceDetail | null> {
   try {
     const service = await request<
-      ServiceDetail & Record<ServiceSection["type"], Record<string, unknown>>
+      ServiceDetail &
+        Record<ServiceSection["type"], Record<string, unknown>> & { accordion?: unknown }
     >(`/services/${encodeURIComponent(slug)}`);
     const listItem = normalizeListItem(service, service.sortOrder ?? 0);
+    const accordionItems: ServiceAccordionItem[] = Array.isArray(service.accordion)
+      ? (service.accordion as ServiceAccordionItem[])
+      : [];
     const sectionTypes: ServiceSection["type"][] = [
       "overview",
       "introduction",
@@ -175,11 +186,14 @@ export async function getService(slug: string): Promise<ServiceDetail | null> {
       sections: sections
         .filter((section) => section.isEnabled !== false)
         .sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0)),
+      accordionItems,
     };
   } catch (error) {
     console.error(`Unable to load service ${slug}.`, error);
     const fallback = fallbackItems.find((item) => item.slug === slug);
-    return fallback ? { ...fallback, treatmentName: fallback.title, sections: [] } : null;
+    return fallback
+      ? { ...fallback, treatmentName: fallback.title, sections: [], accordionItems: [] }
+      : null;
   }
 }
 
