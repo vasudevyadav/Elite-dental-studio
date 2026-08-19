@@ -1,11 +1,30 @@
 import type { GetServerSideProps } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import BookAppointmentSection from "@/components/BookAppointmentSection";
 import DoctorsSection from "@/components/DoctorsSection";
+import FAQSection from "@/components/FAQSection";
 import HeroSection from "@/components/HeroSection";
 import ServicesSection from "@/components/ServicesSection";
 import SitePage from "@/components/SitePage";
 import { getContent, section, type DynamicSection } from "@/lib/contentApi";
+
+function renderSectionIcon(icon: unknown) {
+  if (typeof icon === "string" && icon) return icon;
+  if (icon && typeof icon === "object" && "url" in icon && (icon as { url?: string }).url) {
+    const image = icon as { url: string; alt?: string };
+    return (
+      <Image
+        src={image.url}
+        alt={image.alt || ""}
+        width={32}
+        height={32}
+        className="mx-auto h-8 w-8 object-contain"
+      />
+    );
+  }
+  return "✦";
+}
 
 type LocationData = {
   slug: string;
@@ -36,6 +55,8 @@ export default function LocationPage({ data }: { data: LocationData }) {
   const benefits = section(data.sections, "benefits") || {};
   const services = section(data.sections, "services") || {};
   const doctors = section(data.sections, "doctors") || {};
+  const travel = section(data.sections, "travel") || {};
+  const faq = section(data.sections, "faq") || {};
   const heroImage = hero.slides?.[0]?.image;
 
   return (
@@ -114,21 +135,88 @@ export default function LocationPage({ data }: { data: LocationData }) {
         <section className="mx-auto max-w-6xl px-5 py-12 sm:px-8">
           <h2 className="text-center text-3xl font-bold text-[#286f73]">{benefits.title}</h2>
           <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {benefits.items.map((item: Record<string, string>) => (
+            {benefits.items.map((item: Record<string, unknown>) => (
               <article
-                key={item.title}
+                key={String(item.title)}
                 className="rounded-2xl border border-[#b8dfdc] bg-[#effaf8] p-6 text-center"
               >
-                <h3 className="font-bold text-[#286f73]">{item.title}</h3>
-                <p className="mt-2 text-sm text-[#607779]">{item.text}</p>
+                <div className="text-3xl">{renderSectionIcon(item.icon)}</div>
+                <h3 className="mt-3 font-bold text-[#286f73]">{String(item.title)}</h3>
+                <p className="mt-2 text-sm text-[#607779]">{String(item.text)}</p>
               </article>
             ))}
           </div>
         </section>
       )}
 
-      <ServicesSection compact title={services.title} description={services.description} />
+      {services.items?.length > 0 ? (
+        <section className="mx-auto max-w-6xl px-5 py-12 sm:px-8">
+          <h2 className="text-center text-3xl font-bold text-[#174e53]">{services.heading}</h2>
+          {services.subHeading && (
+            <p className="mx-auto mt-3 max-w-2xl text-center text-sm text-[#607779] sm:text-base">
+              {services.subHeading}
+            </p>
+          )}
+          <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {services.items.map((item: Record<string, unknown>) => (
+              <article
+                key={String(item.title)}
+                className="rounded-2xl border border-[#dbe9e7] bg-white p-6 shadow-[0_10px_28px_rgba(23,78,83,.06)]"
+              >
+                <h3 className="font-bold text-[#174e53]">{String(item.title)}</h3>
+                <p className="mt-2 text-sm leading-6 text-[#607779]">{String(item.description)}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+      ) : (
+        <ServicesSection compact title={services.title} description={services.description} />
+      )}
+
       <DoctorsSection compact clinicSlug={doctors.clinicSlug || data.slug} />
+
+      {travel.items?.length > 0 && (
+        <section className="bg-[#f3faf9] px-5 py-12 sm:px-8">
+          <div className="mx-auto max-w-6xl">
+            <p className="text-xs font-bold tracking-[.16em] text-[#20a99d] uppercase sm:text-sm">
+              {travel.eyebrow}
+            </p>
+            <h2 className="mt-3 text-2xl font-bold text-[#174e53] sm:text-3xl">{travel.title}</h2>
+            {travel.description && (
+              <p className="mt-3 max-w-3xl text-sm leading-6 text-[#607779] sm:text-base">
+                {travel.description}
+              </p>
+            )}
+            <div className="mt-8 grid gap-5 md:grid-cols-3">
+              {travel.items.map((item: Record<string, unknown>) => (
+                <article
+                  key={String(item.title)}
+                  className="rounded-xl border-2 border-white bg-white p-5 text-center text-[#286f73] shadow-sm"
+                >
+                  <div className="text-3xl">{renderSectionIcon(item.icon)}</div>
+                  <h3 className="mt-3 font-bold">{String(item.title)}</h3>
+                  <p className="mt-3 text-sm leading-6 text-[#526f71]">{String(item.text)}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {faq.items?.length > 0 && (
+        <FAQSection
+          content={{
+            eyebrow: faq.eyebrow || "FAQs",
+            title: faq.title || "Frequently Asked Questions",
+            description: faq.description || "",
+            items: faq.items.map((item: Record<string, unknown>) => ({
+              question: String(item.question),
+              answer: String(item.answer),
+            })),
+          }}
+        />
+      )}
+
       <div id="appointment">
         <BookAppointmentSection />
       </div>
