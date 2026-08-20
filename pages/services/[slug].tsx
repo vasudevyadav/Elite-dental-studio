@@ -18,6 +18,8 @@ import AftercareSection from "@/components/services/AftercareSection";
 import BenefitsSection from "@/components/services/BenefitsSection";
 import TreatmentResults from "@/components/services/TreatmentResults";
 import ServiceAccordionSection from "@/components/services/ServiceAccordionSection";
+import ComparisonTableSection from "@/components/services/ComparisonTableSection";
+import EarlyTreatmentSection from "@/components/services/EarlyTreatmentSection";
 import {
   getService,
   toLegacyService,
@@ -35,6 +37,14 @@ export default function ServiceDetailPage({ service }: Props) {
   const treatmentName = service.treatmentName || service.title;
   const legacyService = toLegacyService(service);
   const content = (type: ServiceSection["type"]) => sectionContent(service.sections, type);
+  const serviceFaqContent = service.faqs?.items?.length
+    ? {
+        eyebrow: "FAQs",
+        title: service.faqs.title || `Frequently Asked Questions About ${treatmentName}`,
+        description: `Find clear answers to common questions about ${treatmentName} at Elite Dental Studio.`,
+        items: service.faqs.items,
+      }
+    : undefined;
 
   return (
     <>
@@ -81,11 +91,20 @@ export default function ServiceDetailPage({ service }: Props) {
 
         <TreatmentResults serviceTitle={service.title} data={content("results")} />
 
+        <div className="mx-auto max-w-screen-2xl px-5 sm:px-8 lg:px-28">
+          <ComparisonTableSection data={service.comparisonTable} />
+          <EarlyTreatmentSection data={service.earlyTreatment} />
+        </div>
+
         <NearestClinic serviceName={treatmentName} />
-        <DoctorsSection />
+        <DoctorsSection
+          initialDoctors={service.specialists?.doctors}
+          title={service.specialists?.title}
+          description={service.specialists?.description}
+        />
         <TestimonialsSection />
         <BlogSection />
-        <FAQSection />
+        <FAQSection content={serviceFaqContent} />
         <BookAppointmentSection />
       </main>
 

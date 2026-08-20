@@ -79,10 +79,14 @@ export default function DoctorsSection({
   compact = false,
   clinicSlug,
   initialDoctors,
+  title = "Our Doctors",
+  description,
 }: {
   compact?: boolean;
   clinicSlug?: string;
   initialDoctors?: DoctorListItem[];
+  title?: string;
+  description?: string;
 }) {
   const doctorsTrackRef = useRef<HTMLDivElement>(null);
   const [apiDoctors, setApiDoctors] = useState<DoctorListItem[] | null>(initialDoctors || null);
@@ -111,6 +115,8 @@ export default function DoctorsSection({
   const pageNumbers = Array.from({ length: totalPages }, (_, index) => index + 1);
 
   useEffect(() => {
+    if (initialDoctors?.length) return;
+
     const controller = new AbortController();
     fetch("/api/doctors", { signal: controller.signal })
       .then((response) => (response.ok ? response.json() : null))
@@ -119,7 +125,7 @@ export default function DoctorsSection({
       })
       .catch(() => undefined);
     return () => controller.abort();
-  }, []);
+  }, [initialDoctors]);
 
   const scrollDoctors = (direction: "left" | "right") => {
     const track = doctorsTrackRef.current;
@@ -144,15 +150,12 @@ export default function DoctorsSection({
     >
       <div className="mx-auto max-w-[1240px] text-center">
         <h2 className="text-2xl font-semibold tracking-[-0.035em] text-[#286f73] lg:text-4xl">
-          Our Doctors
+          {title}
         </h2>
 
         <p className="mx-auto mt-2 max-w-5xl text-sm leading-[1.65] text-[#555] lg:mt-5 lg:text-base">
-          Our MDS certified specialists across Calicut, Kochi, Kannur and Coimbatore cover every
-          specialty Elite Dental Studio offers, including implantology, orthodontics, pedodontics,
-          endodontics, periodontics, prosthodontics, Oral Medicine, Oral Pathology and oral surgery.
-          Book your appointment with experts trained specifically in the field treating you, not
-          general dentistry stretched across every problem.
+          {description ||
+            "Our MDS certified specialists across Calicut, Kochi, Kannur and Coimbatore cover every specialty Elite Dental Studio offers, including implantology, orthodontics, pedodontics, endodontics, periodontics, prosthodontics, Oral Medicine, Oral Pathology and oral surgery. Book your appointment with experts trained specifically in the field treating you, not general dentistry stretched across every problem."}
         </p>
       </div>
 

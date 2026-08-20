@@ -177,7 +177,7 @@ function LocationFaq({ data, phone }: { data: Record<string, any>; phone: string
   const [open, setOpen] = useState(0);
   return (
     <section className="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-10 lg:px-12 lg:py-12">
-      <div className="mx-auto grid max-w-6xl gap-8 rounded-[18px] bg-[#effaf8] p-5 sm:rounded-[22px] sm:p-7 lg:grid-cols-[.9fr_1.1fr] lg:gap-[50px] lg:p-[52px]">
+      <div className="mx-auto grid max-w-6xl items-center gap-8 rounded-[18px] bg-[#effaf8] p-5 sm:rounded-[22px] sm:p-7 lg:grid-cols-[.9fr_1.1fr] lg:gap-[50px] lg:p-[52px]">
         <div>
           <p className="text-xs font-bold tracking-[.16em] text-[#22bdae] uppercase">
             {data.eyebrow || "FAQs"}
