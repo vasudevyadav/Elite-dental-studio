@@ -1,5 +1,6 @@
 import { services as fallbackServices, type Service } from "@/components/services/serviceData";
 import { getEdsApiBaseUrl } from "@/lib/apiConfig";
+import type { DoctorListItem } from "@/lib/contentApi";
 
 export type Media = { url: string; alt: string; width?: number | null; height?: number | null };
 
@@ -34,6 +35,28 @@ export type ServiceAccordionItem = {
   image?: Media | null;
 };
 
+export type ServiceComparisonTable = {
+  title: string;
+  description: string;
+  rows: { situation: string; approach: string }[];
+};
+
+export type ServiceEarlyTreatment = {
+  title: string;
+  paragraphs: string[];
+};
+
+export type ServiceSpecialists = {
+  title: string;
+  description: string;
+  doctors: DoctorListItem[];
+};
+
+export type ServiceFaqs = {
+  title: string;
+  items: { question: string; answer: string }[];
+};
+
 export type ServiceDetail = ServiceListItem & {
   treatmentName: string;
   seo?: {
@@ -46,6 +69,10 @@ export type ServiceDetail = ServiceListItem & {
   hero?: { image?: Media };
   sections: ServiceSection[];
   accordionItems: ServiceAccordionItem[];
+  comparisonTable?: ServiceComparisonTable;
+  earlyTreatment?: ServiceEarlyTreatment;
+  specialists?: ServiceSpecialists;
+  faqs?: ServiceFaqs;
 };
 
 export type ServicesPageData = {
