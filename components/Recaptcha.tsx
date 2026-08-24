@@ -26,9 +26,17 @@ export function recaptchaEnabled() {
 export default function Recaptcha({ onTokenChange }: { onTokenChange: (token: string) => void }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const rendered = useRef(false);
+  const retryTimer = useRef<number | null>(null);
 
   const renderWidget = () => {
-    if (!siteKey || !window.grecaptcha || !containerRef.current || rendered.current) return;
+    if (
+      !siteKey ||
+      typeof window.grecaptcha?.render !== "function" ||
+      !containerRef.current ||
+      rendered.current
+    ) {
+      return false;
+    }
     window.grecaptcha.render(containerRef.current, {
       sitekey: siteKey,
       callback: onTokenChange,
@@ -36,10 +44,20 @@ export default function Recaptcha({ onTokenChange }: { onTokenChange: (token: st
       "error-callback": () => onTokenChange(""),
     });
     rendered.current = true;
+    return true;
   };
 
   useEffect(() => {
-    renderWidget();
+    if (renderWidget()) return;
+    retryTimer.current = window.setInterval(() => {
+      if (renderWidget() && retryTimer.current !== null) {
+        window.clearInterval(retryTimer.current);
+        retryTimer.current = null;
+      }
+    }, 100);
+    return () => {
+      if (retryTimer.current !== null) window.clearInterval(retryTimer.current);
+    };
   });
 
   if (!siteKey) return null;

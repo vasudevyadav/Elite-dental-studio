@@ -10,6 +10,7 @@ import ServicesSection from "@/components/ServicesSection";
 import SitePage from "@/components/SitePage";
 import { getContent, section, type DynamicSection } from "@/lib/contentApi";
 import { submitConsultation } from "@/lib/consultation";
+import Recaptcha, { recaptchaEnabled } from "@/components/Recaptcha";
 
 const benefitsFallback = [
   ["⌘", "Expert Multi-Speciality", "Dental Team"],
@@ -279,6 +280,7 @@ function AppointmentForm({ slug, compact = false }: { slug: string; compact?: bo
   const [form, setForm] = useState({ name: "", phone: "", email: "", date: "", clinic: "" });
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [feedback, setFeedback] = useState("");
+  const [captchaToken, setCaptchaToken] = useState("");
   const router = useRouter();
 
   const update = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
@@ -286,6 +288,11 @@ function AppointmentForm({ slug, compact = false }: { slug: string; compact?: bo
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (recaptchaEnabled() && !captchaToken) {
+      setStatus("error");
+      setFeedback("Please complete the CAPTCHA.");
+      return;
+    }
     setStatus("submitting");
     const result = await submitConsultation({
       name: form.name,
@@ -294,6 +301,7 @@ function AppointmentForm({ slug, compact = false }: { slug: string; compact?: bo
       clinicSlug: form.clinic.toLowerCase(),
       preferredDate: form.date,
       source: `location-${slug}`,
+      captchaToken,
     });
     setFeedback(result.message);
     if (result.success) {
@@ -363,6 +371,7 @@ function AppointmentForm({ slug, compact = false }: { slug: string; compact?: bo
           </option>
         ))}
       </select>
+      <Recaptcha onTokenChange={setCaptchaToken} />
       <button
         type="submit"
         disabled={status === "submitting"}

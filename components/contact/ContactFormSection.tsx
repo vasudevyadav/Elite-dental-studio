@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { submitConsultation } from "@/lib/consultation";
+import Recaptcha, { recaptchaEnabled } from "@/components/Recaptcha";
 
 export default function ContactFormSection() {
   const [form, setForm] = useState({ clinic: "", name: "", email: "", phone: "", message: "" });
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [feedback, setFeedback] = useState("");
+  const [captchaToken, setCaptchaToken] = useState("");
   const router = useRouter();
   const update = (
     event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>,
@@ -13,6 +15,11 @@ export default function ContactFormSection() {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (recaptchaEnabled() && !captchaToken) {
+      setStatus("error");
+      setFeedback("Please complete the CAPTCHA.");
+      return;
+    }
     setStatus("submitting");
     const result = await submitConsultation({
       name: form.name,
@@ -21,6 +28,7 @@ export default function ContactFormSection() {
       clinicSlug: form.clinic.toLowerCase(),
       message: form.message,
       source: "contact-page",
+      captchaToken,
     });
     setFeedback(result.message);
     if (result.success) {
@@ -167,6 +175,9 @@ export default function ContactFormSection() {
                 required
               />
             </label>
+            <div className="sm:col-span-2">
+              <Recaptcha onTokenChange={setCaptchaToken} />
+            </div>
             <button
               type="submit"
               disabled={status === "submitting"}

@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { FormEvent, useMemo, useRef, useState } from "react";
 import HeroSection from "@/components/HeroSection";
+import Recaptcha, { recaptchaEnabled } from "@/components/Recaptcha";
 
 const opportunities = [
   [
@@ -50,6 +51,7 @@ export default function CareersContent({ data }: { data: Record<string, any> }) 
   const [clinic, setClinic] = useState("");
   const [selectedJob, setSelectedJob] = useState("");
   const [fileName, setFileName] = useState("");
+  const [captchaToken, setCaptchaToken] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [feedback, setFeedback] = useState<{ type: "success" | "error"; message: string } | null>(
     null,
@@ -70,6 +72,10 @@ export default function CareersContent({ data }: { data: Record<string, any> }) 
 
   const submitApplication = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (recaptchaEnabled() && !captchaToken) {
+      setFeedback({ type: "error", message: "Please complete the CAPTCHA." });
+      return;
+    }
     setSubmitting(true);
     setFeedback(null);
     const form = event.currentTarget;
@@ -80,6 +86,7 @@ export default function CareersContent({ data }: { data: Record<string, any> }) 
       formData.set("jobSlug", job.slug);
     }
     formData.set("consent", "true");
+    formData.set("captchaToken", captchaToken);
     try {
       const response = await fetch("/api/careers/apply", { method: "POST", body: formData });
       const payload = await response.json().catch(() => null);
@@ -349,6 +356,9 @@ export default function CareersContent({ data }: { data: Record<string, any> }) 
                 <strong className="text-[#168f85]">Choose file</strong>
               </button>
             </label>
+            <div className="sm:col-span-2">
+              <Recaptcha onTokenChange={setCaptchaToken} />
+            </div>
             <button
               type="submit"
               disabled={submitting}

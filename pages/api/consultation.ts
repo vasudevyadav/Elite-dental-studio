@@ -1,23 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { getEdsApiBaseUrl } from "@/lib/apiConfig";
+import { readCaptchaToken, verifyRecaptcha } from "@/lib/recaptchaServer";
 
 const MAX_BODY_SIZE = 9 * 1024 * 1024;
-
-async function verifyRecaptcha(token: unknown, remoteIp?: string) {
-  const secret = process.env.RECAPTCHA_SECRET_KEY;
-  if (!secret) return true;
-  if (typeof token !== "string" || !token) return false;
-
-  const formData = new URLSearchParams({ secret, response: token });
-  if (remoteIp) formData.set("remoteip", remoteIp);
-  const response = await fetch("https://www.google.com/recaptcha/api/siteverify", {
-    method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body: formData,
-  });
-  const result = (await response.json()) as { success?: boolean };
-  return result.success === true;
-}
 
 export const config = {
   api: {
@@ -50,12 +35,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const body = await readBody(req);
     const contentType = req.headers["content-type"] || "application/json";
     let forwardedBody: BodyInit = new Uint8Array(body) as unknown as BodyInit;
+    const captchaToken = await readCaptchaToken(body, contentType);
+    const verified = await verifyRecaptcha(captchaToken, req.socket.remoteAddress);
+    if (!verified) {
+      return res.status(400).json({ success: false, message: "Please complete the CAPTCHA." });
+    }
     if (contentType.includes("application/json")) {
       const data = JSON.parse(body.toString()) as { captchaToken?: string };
-      const verified = await verifyRecaptcha(data.captchaToken, req.socket.remoteAddress);
-      if (!verified) {
-        return res.status(400).json({ success: false, message: "Please complete the CAPTCHA." });
-      }
       delete data.captchaToken;
       const consultation = data;
       forwardedBody = JSON.stringify(consultation);

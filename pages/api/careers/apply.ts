@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { getEdsApiBaseUrl } from "@/lib/apiConfig";
+import { readCaptchaToken, verifyRecaptcha } from "@/lib/recaptchaServer";
 
 const MAX_BODY_SIZE = 6 * 1024 * 1024;
 
@@ -32,10 +33,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   try {
     const body = await readBody(req);
+    const contentType = req.headers["content-type"] || "multipart/form-data";
+    const verified = await verifyRecaptcha(
+      await readCaptchaToken(body, contentType),
+      req.socket.remoteAddress,
+    );
+    if (!verified) {
+      return res.status(400).json({ success: false, message: "Please complete the CAPTCHA." });
+    }
     const response = await fetch(`${getEdsApiBaseUrl()}/careers/apply`, {
       method: "POST",
       headers: {
-        "Content-Type": req.headers["content-type"] || "multipart/form-data",
+        "Content-Type": contentType,
       },
       body: new Uint8Array(body),
     });
