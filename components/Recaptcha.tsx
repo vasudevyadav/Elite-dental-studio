@@ -3,45 +3,39 @@ import { useEffect, useRef } from "react";
 
 declare global {
   interface Window {
-    turnstile?: {
+    grecaptcha?: {
       render: (
         container: HTMLElement,
         options: {
           sitekey: string;
-          theme: "light" | "dark";
           callback: (token: string) => void;
           "expired-callback": () => void;
           "error-callback": () => void;
         },
-      ) => string;
-      reset: (widgetId: string) => void;
+      ) => number;
     };
   }
 }
 
-const siteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
+const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
 
-export function turnstileEnabled() {
+export function recaptchaEnabled() {
   return Boolean(siteKey);
 }
 
-export default function TurnstileCaptcha({
-  onTokenChange,
-}: {
-  onTokenChange: (token: string) => void;
-}) {
+export default function Recaptcha({ onTokenChange }: { onTokenChange: (token: string) => void }) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const widgetId = useRef<string | null>(null);
+  const rendered = useRef(false);
 
   const renderWidget = () => {
-    if (!siteKey || !window.turnstile || !containerRef.current || widgetId.current) return;
-    widgetId.current = window.turnstile.render(containerRef.current, {
+    if (!siteKey || !window.grecaptcha || !containerRef.current || rendered.current) return;
+    window.grecaptcha.render(containerRef.current, {
       sitekey: siteKey,
-      theme: "light",
       callback: onTokenChange,
       "expired-callback": () => onTokenChange(""),
       "error-callback": () => onTokenChange(""),
     });
+    rendered.current = true;
   };
 
   useEffect(() => {
@@ -53,7 +47,7 @@ export default function TurnstileCaptcha({
   return (
     <>
       <Script
-        src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"
+        src="https://www.google.com/recaptcha/api.js?render=explicit"
         strategy="afterInteractive"
         onLoad={renderWidget}
       />
