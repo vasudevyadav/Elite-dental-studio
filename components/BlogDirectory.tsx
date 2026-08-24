@@ -1,28 +1,53 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState } from "react";
+import { useRouter } from "next/router";
 import BlogSidebar from "@/components/BlogSidebar";
 import { formatBlogDate, type BlogApiPost } from "@/lib/blogsApi";
 
 const PAGE_SIZE = 8;
 
-export default function BlogDirectory({ posts }: { posts: BlogApiPost[] }) {
+export default function BlogDirectory({
+  posts,
+  initialCategory = "All",
+}: {
+  posts: BlogApiPost[];
+  initialCategory?: string;
+}) {
+  const router = useRouter();
   const [query, setQuery] = useState("");
-  const [category, setCategory] = useState("All");
   const [page, setPage] = useState(1);
   const featured = posts[0];
-  const categories = Array.from(
-    new Map(posts.flatMap((post) => post.categories).map((item) => [item.slug, item])).values(),
-  );
-  const filtered = useMemo(
+  const categories = useMemo(
     () =>
-      posts
-        .slice(1)
-        .filter(
-          (post) =>
-            (category === "All" || post.categories.some((item) => item.slug === category)) &&
-            post.title.toLowerCase().includes(query.toLowerCase()),
-        ),
+      Array.from(
+        new Map(posts.flatMap((post) => post.categories).map((item) => [item.slug, item])).values(),
+      ),
+    [posts],
+  );
+  const requestedCategory = router.isReady
+    ? typeof router.query.category === "string"
+      ? router.query.category
+      : "All"
+    : initialCategory;
+  const category = categories.some((item) => item.slug === requestedCategory)
+    ? requestedCategory
+    : "All";
+  const categoryName =
+    category === "All" ? "All" : categories.find((item) => item.slug === category)?.name || "All";
+  const filtered = useMemo(
+    () => {
+      const normalizedQuery = query.trim().toLowerCase();
+      const candidates = category === "All" && !normalizedQuery ? posts.slice(1) : posts;
+
+      return candidates.filter(
+        (post) =>
+          (category === "All" || post.categories.some((item) => item.slug === category)) &&
+          (!normalizedQuery ||
+            post.title.toLowerCase().includes(normalizedQuery) ||
+            post.excerpt.toLowerCase().includes(normalizedQuery)),
+      );
+    },
     [category, posts, query],
   );
   const pages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
@@ -30,8 +55,12 @@ export default function BlogDirectory({ posts }: { posts: BlogApiPost[] }) {
   const pageNumbers = Array.from({ length: pages }, (_, index) => index + 1);
 
   const selectCategory = (value: string) => {
-    setCategory(value);
     setPage(1);
+    void router.push(
+      { pathname: "/blog", query: value === "All" ? {} : { category: value } },
+      undefined,
+      { shallow: true, scroll: false },
+    );
   };
 
   return (
@@ -81,7 +110,7 @@ export default function BlogDirectory({ posts }: { posts: BlogApiPost[] }) {
 
           <div className="mx-2.5 mt-10 mb-6 flex flex-col items-stretch gap-3 text-base sm:mt-14 sm:flex-row sm:items-center sm:justify-between sm:text-lg lg:mt-[68px]">
             <p>
-              Filter: <b>{category}</b>
+              Filter: <b>{categoryName}</b>
             </p>
             <label className="relative w-full sm:w-[300px]">
               <span
@@ -171,6 +200,7 @@ export default function BlogDirectory({ posts }: { posts: BlogApiPost[] }) {
         </main>
         <BlogSidebar
           onCategory={selectCategory}
+          selectedCategory={category}
           categories={categories}
           recentPosts={posts.slice(0, 5)}
         />
