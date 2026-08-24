@@ -92,11 +92,13 @@ export default function DoctorsDirectory({ data }: { data: DoctorsData }) {
                     className="image-hover object-cover object-[center_22%]"
                   />
                 </div>
-                <div className="absolute top-2 right-9 z-10 grid h-14 w-14 place-items-center bg-[#24d1c0] text-center text-[11px] leading-tight font-black text-white [clip-path:polygon(0_0,100%_0,100%_100%,50%_82%,0_100%)]">
-                  {doctor.experienceLabel}
-                  <br />
-                  Exp
-                </div>
+                {(doctor.experienceYears > 0 || doctor.experienceLabel.trim()) && (
+                  <div className="absolute top-2 right-9 z-10 grid h-14 w-14 place-items-center bg-[#24d1c0] text-center text-[11px] leading-tight font-black text-white [clip-path:polygon(0_0,100%_0,100%_100%,50%_82%,0_100%)]">
+                    {doctor.experienceLabel || `${doctor.experienceYears}+`}
+                    <br />
+                    Exp
+                  </div>
+                )}
               </div>
 
               <div className="flex flex-1 flex-col px-7 pt-20 pb-6 text-center">

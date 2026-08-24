@@ -45,6 +45,13 @@ const fallbackClinics = [
   { name: "Coimbatore", href: "/#clinics" },
 ];
 
+const socialLinks = {
+  facebook: "https://www.facebook.com/elitedentalstudio1/",
+  instagram: "https://www.instagram.com/elitedental_studio/",
+  tiktok: "https://linktr.ee/Elitedentalclinic",
+  whatsapp: "https://wa.me/919048611911",
+};
+
 function SocialIcon({ type }: { type: "facebook" | "tiktok" | "instagram" | "whatsapp" }) {
   return (
     <span className="smooth-hover bg-dent-accent flex h-10 w-10 items-center justify-center rounded-[6px] text-[#064a50] sm:h-8 sm:w-8">
@@ -141,7 +148,7 @@ export default function Footer() {
             <div className="mx-auto mt-6 w-full max-w-[360px] border-t border-white/45 sm:mx-0" />
             <div className="mt-6 flex justify-around gap-3 sm:justify-start lg:justify-center">
               <a
-                href="https://linktr.ee/Elitedentalclinic"
+                href={socialLinks.facebook}
                 target="_blank"
                 rel="noreferrer"
                 aria-label="Elite Dental Studio on Facebook"
@@ -150,7 +157,7 @@ export default function Footer() {
                 <SocialIcon type="facebook" />
               </a>
               <a
-                href="https://linktr.ee/Elitedentalclinic"
+                href={socialLinks.tiktok}
                 target="_blank"
                 rel="noreferrer"
                 aria-label="Elite Dental Studio on TikTok"
@@ -159,7 +166,7 @@ export default function Footer() {
                 <SocialIcon type="tiktok" />
               </a>
               <a
-                href="https://linktr.ee/Elitedentalclinic"
+                href={socialLinks.instagram}
                 target="_blank"
                 rel="noreferrer"
                 aria-label="Elite Dental Studio on Instagram"
@@ -168,7 +175,7 @@ export default function Footer() {
                 <SocialIcon type="instagram" />
               </a>
               <a
-                href="https://wa.me/919048611911"
+                href={socialLinks.whatsapp}
                 target="_blank"
                 rel="noreferrer"
                 aria-label="Chat with Elite Dental Studio on WhatsApp"
