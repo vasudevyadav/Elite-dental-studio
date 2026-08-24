@@ -5,7 +5,12 @@ import { submitConsultation } from "@/lib/consultation";
 import { openConsultationPopup } from "@/lib/consultationPopup";
 import Recaptcha, { recaptchaEnabled } from "@/components/Recaptcha";
 
-const HOME_SLIDES = [{ img: "/home/slider-1.png", alt: "Dental Care 1" }];
+const HOME_SLIDES = [
+  {
+    img: "/home/home-page-banner-01.jpg",
+    alt: "Six years of specialist-led dental care at Elite Dental Studio",
+  },
+];
 
 type HeroSlide = { img: string; alt: string };
 
