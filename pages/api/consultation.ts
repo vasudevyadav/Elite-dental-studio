@@ -3,6 +3,22 @@ import { getEdsApiBaseUrl } from "@/lib/apiConfig";
 
 const MAX_BODY_SIZE = 9 * 1024 * 1024;
 
+async function verifyTurnstile(token: unknown, remoteIp?: string) {
+  const secret = process.env.TURNSTILE_SECRET_KEY;
+  if (!secret) return true;
+  if (typeof token !== "string" || !token) return false;
+
+  const formData = new URLSearchParams({ secret, response: token });
+  if (remoteIp) formData.set("remoteip", remoteIp);
+  const response = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: formData,
+  });
+  const result = (await response.json()) as { success?: boolean };
+  return result.success === true;
+}
+
 export const config = {
   api: {
     bodyParser: false,
@@ -32,12 +48,24 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   try {
     const body = await readBody(req);
+    const contentType = req.headers["content-type"] || "application/json";
+    let forwardedBody: BodyInit = new Uint8Array(body) as unknown as BodyInit;
+    if (contentType.includes("application/json")) {
+      const data = JSON.parse(body.toString()) as { captchaToken?: string };
+      const verified = await verifyTurnstile(data.captchaToken, req.socket.remoteAddress);
+      if (!verified) {
+        return res.status(400).json({ success: false, message: "Please complete the CAPTCHA." });
+      }
+      delete data.captchaToken;
+      const consultation = data;
+      forwardedBody = JSON.stringify(consultation);
+    }
     const response = await fetch(`${getEdsApiBaseUrl()}/consultation`, {
       method: "POST",
       headers: {
-        "Content-Type": req.headers["content-type"] || "application/json",
+        "Content-Type": contentType,
       },
-      body: new Uint8Array(body),
+      body: forwardedBody,
     });
     const payload = await response.text();
     res.status(response.status);

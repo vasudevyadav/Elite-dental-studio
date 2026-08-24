@@ -395,9 +395,13 @@ export default function Navbar() {
                 <div className="mb-1 text-sm leading-none font-medium text-gray-500">
                   Emergency Contact No.
                 </div>
-                <div className="text-dent-text text-base leading-none font-bold">
+                <a
+                  href="tel:+919048611911"
+                  className="text-dent-text smooth-hover link-hover block text-base leading-none font-bold hover:text-dent-accent"
+                  aria-label="Call Elite Dental Studio emergency line at +91 9048 611 911"
+                >
                   +91 9048 611 911
-                </div>
+                </a>
               </div>
             </div>
 

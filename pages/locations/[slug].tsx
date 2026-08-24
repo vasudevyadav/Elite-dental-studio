@@ -150,6 +150,36 @@ const clinicDirectory: Record<string, ClinicDirectoryEntry> = {
   },
 };
 
+function fallbackLocation(slug: string): LocationData | null {
+  const city = (["calicut", "kochi", "kannur", "coimbatore"] as const).find(
+    (item) => item === slug.toLowerCase(),
+  );
+  if (!city) return null;
+
+  const clinic = clinicDirectory[city.toUpperCase()];
+  return {
+    slug: city,
+    name: clinic.name,
+    seo: {
+      metaTitle: `Elite Dental Studio ${clinic.name}`,
+      metaDescription: `Specialist-led dental care at Elite Dental Studio ${clinic.name}.`,
+    },
+    contact: {
+      mobile: clinic.phone,
+      mobileHref: clinic.phoneHref,
+      email: "eliteinfo@gmail.com",
+      addressLines: clinic.address,
+      mapUrl: clinic.mapUrl,
+      mapEmbedUrl: clinic.mapEmbedUrl,
+    },
+    workingHours: [
+      { days: "Monday–Saturday", time: "9:30 AM–9:00 PM" },
+      { days: "Sunday", time: "10:00 AM–7:00 PM" },
+    ],
+    sections: [],
+  };
+}
+
 function NearestClinicPicker({ defaultClinic }: { defaultClinic: string }) {
   const [selected, setSelected] = useState(
     clinicDirectory[defaultClinic] ? defaultClinic : "KANNUR",
@@ -631,11 +661,17 @@ export const getServerSideProps: GetServerSideProps<{ data: LocationData }> = as
   params,
   res,
 }) => {
+  const slug = String(params?.slug || "");
   try {
-    const data = await getContent<LocationData>(`locations/${String(params?.slug || "")}`);
+    const data = await getContent<LocationData>(`locations/${slug}`);
     res.setHeader("Cache-Control", "public, s-maxage=60, stale-while-revalidate=300");
     return { props: { data } };
   } catch {
+    const data = fallbackLocation(slug);
+    if (data) {
+      res.setHeader("Cache-Control", "public, s-maxage=60, stale-while-revalidate=300");
+      return { props: { data } };
+    }
     return { notFound: true };
   }
 };

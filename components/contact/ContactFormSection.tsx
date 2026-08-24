@@ -52,8 +52,16 @@ export default function ContactFormSection() {
               <span className="block text-xs tracking-[.14em] text-[#51dfd1] uppercase">
                 Working hours
               </span>
-              <strong className="mt-3 block text-sm">Mon–Sat: 9:30 AM–9:00 PM</strong>
-              <strong className="mt-1 block text-sm">Sunday: 10:00 AM–7:00 PM</strong>
+              <div className="mt-3 space-y-1.5 text-sm font-bold">
+                <p className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-0.5">
+                  <span>Mon–Sat</span>
+                  <span className="whitespace-nowrap">9:30 AM–9:00 PM</span>
+                </p>
+                <p className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-0.5">
+                  <span>Sunday</span>
+                  <span className="whitespace-nowrap">10:00 AM–7:00 PM</span>
+                </p>
+              </div>
             </div>
             <div className="rounded-2xl border border-white/15 bg-white/10 p-5 backdrop-blur-sm">
               <span className="block text-xs tracking-[.14em] text-[#51dfd1] uppercase">

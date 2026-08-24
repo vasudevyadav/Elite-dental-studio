@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { submitConsultation } from "@/lib/consultation";
 import { OPEN_CONSULTATION_POPUP_EVENT } from "@/lib/consultationPopup";
+import TurnstileCaptcha, { turnstileEnabled } from "@/components/TurnstileCaptcha";
 
 const SESSION_KEY = "eds_consultation_popup_shown";
 const SCROLL_THRESHOLD = 0.4;
@@ -11,6 +12,7 @@ export default function ConsultationPopup() {
   const [form, setForm] = useState({ name: "", phone: "", email: "", clinic: "" });
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [feedback, setFeedback] = useState("");
+  const [captchaToken, setCaptchaToken] = useState("");
   const router = useRouter();
 
   useEffect(() => {
@@ -58,6 +60,11 @@ export default function ConsultationPopup() {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (turnstileEnabled() && !captchaToken) {
+      setStatus("error");
+      setFeedback("Please complete the CAPTCHA.");
+      return;
+    }
     setStatus("submitting");
     const result = await submitConsultation({
       name: form.name,
@@ -65,6 +72,7 @@ export default function ConsultationPopup() {
       email: form.email,
       clinicSlug: form.clinic,
       source: "scroll-popup",
+      captchaToken,
     });
     setFeedback(result.message);
     if (result.success) {
@@ -154,6 +162,7 @@ export default function ConsultationPopup() {
             <option value="kannur">Kannur</option>
             <option value="coimbatore">Coimbatore</option>
           </select>
+          <TurnstileCaptcha onTokenChange={setCaptchaToken} />
           <button
             type="submit"
             disabled={status === "submitting"}
