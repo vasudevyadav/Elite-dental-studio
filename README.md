@@ -40,13 +40,13 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
 # Elite Dental Studio
 
-## Cloudflare Turnstile CAPTCHA
+## Google reCAPTCHA
 
-The consultation popup supports Cloudflare Turnstile spam protection. Add these values to the deployment environment to activate it:
+The consultation popup supports Google reCAPTCHA spam protection. Add these values to the deployment environment to activate it:
 
 ```bash
-NEXT_PUBLIC_TURNSTILE_SITE_KEY=your_public_site_key
-TURNSTILE_SECRET_KEY=your_server_secret_key
+NEXT_PUBLIC_RECAPTCHA_SITE_KEY=your_public_site_key
+RECAPTCHA_SECRET_KEY=your_server_secret_key
 ```
 
 The public key renders the CAPTCHA in the popup; the secret key verifies its response on the server before an enquiry is sent to the consultation service.

@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { submitConsultation } from "@/lib/consultation";
+import Recaptcha, { recaptchaEnabled } from "@/components/Recaptcha";
 
 const HOME_SLIDES = [{ img: "/home/slider-1.png", alt: "Dental Care 1" }];
 
@@ -35,6 +36,7 @@ export default function HeroSection({ slides = HOME_SLIDES, content }: HeroSecti
   const [form, setForm] = useState({ name: "", phone: "", email: "", date: "", clinic: "" });
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [feedback, setFeedback] = useState("");
+  const [captchaToken, setCaptchaToken] = useState("");
   const router = useRouter();
 
   const total = slides.length;
@@ -76,6 +78,11 @@ export default function HeroSection({ slides = HOME_SLIDES, content }: HeroSecti
 
   const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (recaptchaEnabled() && !captchaToken) {
+      setStatus("error");
+      setFeedback("Please complete the CAPTCHA.");
+      return;
+    }
     setStatus("submitting");
     const result = await submitConsultation({
       name: form.name,
@@ -84,6 +91,7 @@ export default function HeroSection({ slides = HOME_SLIDES, content }: HeroSecti
       clinicSlug: form.clinic,
       preferredDate: form.date,
       source: "hero-section",
+      captchaToken,
     });
     setFeedback(result.message);
     if (result.success) {
@@ -232,6 +240,7 @@ export default function HeroSection({ slides = HOME_SLIDES, content }: HeroSecti
                 <ChevronDown />
               </div>
             </div>
+            <Recaptcha onTokenChange={setCaptchaToken} />
 
             <button
               type="submit"
@@ -335,7 +344,7 @@ export default function HeroSection({ slides = HOME_SLIDES, content }: HeroSecti
                 required
               />
 
-              <div className="relative">
+            <div className="relative">
                 <select
                   aria-label="Select clinic"
                   name="clinic"
@@ -352,7 +361,8 @@ export default function HeroSection({ slides = HOME_SLIDES, content }: HeroSecti
                 </select>
                 <div className="bg-dent-nav pointer-events-none absolute top-0 right-0 flex h-full w-11 items-center justify-center rounded-r-lg">
                   <ChevronDown />
-                </div>
+            </div>
+            <Recaptcha onTokenChange={setCaptchaToken} />
               </div>
 
               <button

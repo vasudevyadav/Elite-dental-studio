@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import SitePage from "@/components/SitePage";
 import { submitConsultationForm } from "@/lib/consultation";
+import Recaptcha, { recaptchaEnabled } from "@/components/Recaptcha";
 
 const MailIcon = () => (
   <svg
@@ -750,12 +751,18 @@ function BookingJourney() {
 function InternationalEnquiryForm() {
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [feedback, setFeedback] = useState("");
+  const [captchaToken, setCaptchaToken] = useState("");
   const router = useRouter();
   const fieldClass =
     "h-10 w-full rounded-[9px] border border-[#c9dfdc] bg-[#f8fcfb] px-3.5 text-[13px] text-[#304f52] outline-none transition placeholder:text-[#899798] focus:border-[#25bfae] focus:bg-white focus:ring-4 focus:ring-[#25bfae]/15";
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (recaptchaEnabled() && !captchaToken) {
+      setStatus("error");
+      setFeedback("Please complete the CAPTCHA.");
+      return;
+    }
     const form = event.currentTarget;
     const raw = new FormData(form);
 
@@ -770,6 +777,7 @@ function InternationalEnquiryForm() {
     payload.set("clinicSlug", clinic.toLowerCase());
     payload.set("message", country ? `Country: ${country}\n\n${message}` : message);
     payload.set("source", "international-patients");
+    payload.set("captchaToken", captchaToken);
 
     const files = raw.getAll("records").filter((file): file is File => file instanceof File && file.size > 0);
     if (files[0]) payload.set("records", files[0]);
@@ -927,6 +935,9 @@ function InternationalEnquiryForm() {
               <input type="checkbox" required className="mt-1 accent-[#25bfae]" />I agree to be
               contacted about my treatment enquiry and travel coordination.
             </label>
+            <div className="sm:col-span-2">
+              <Recaptcha onTokenChange={setCaptchaToken} />
+            </div>
             <button
               type="submit"
               disabled={status === "submitting"}

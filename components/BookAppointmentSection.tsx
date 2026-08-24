@@ -4,6 +4,7 @@ import { useState } from "react";
 import { appointmentContent, type AppointmentSectionContent } from "@/content/siteSections";
 import { submitConsultation } from "@/lib/consultation";
 import { formatDateInput } from "@/lib/dateInput";
+import Recaptcha, { recaptchaEnabled } from "@/components/Recaptcha";
 
 export default function BookAppointmentSection({
   content = appointmentContent,
@@ -19,6 +20,7 @@ export default function BookAppointmentSection({
   });
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [feedback, setFeedback] = useState("");
+  const [captchaToken, setCaptchaToken] = useState("");
   const router = useRouter();
 
   const updateForm = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -31,6 +33,11 @@ export default function BookAppointmentSection({
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (recaptchaEnabled() && !captchaToken) {
+      setStatus("error");
+      setFeedback("Please complete the CAPTCHA.");
+      return;
+    }
     setStatus("submitting");
     const result = await submitConsultation({
       name: form.name,
@@ -39,6 +46,7 @@ export default function BookAppointmentSection({
       clinicSlug: form.clinic,
       preferredDate: form.date,
       source: "book-appointment-section",
+      captchaToken,
     });
     setFeedback(result.message);
     if (result.success) {
@@ -163,6 +171,7 @@ export default function BookAppointmentSection({
                 <path d="m4 7 6 7 6-7H4Z" />
               </svg>
             </div>
+            <Recaptcha onTokenChange={setCaptchaToken} />
             <button
               type="submit"
               disabled={status === "submitting"}
