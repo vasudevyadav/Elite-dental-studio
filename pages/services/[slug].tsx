@@ -26,6 +26,7 @@ import {
   type ServiceDetail,
   type ServiceSection,
 } from "@/lib/servicesApi";
+import { absoluteUrl } from "@/lib/siteUrl";
 
 type Props = { service: ServiceDetail };
 
@@ -35,6 +36,7 @@ const sectionContent = (sections: ServiceSection[], type: ServiceSection["type"]
 export default function ServiceDetailPage({ service }: Props) {
   const isLaser = service.slug === "laser-dentistry";
   const treatmentName = service.treatmentName || service.title;
+  const canonicalUrl = service.seo?.canonicalUrl || absoluteUrl(`/services/${service.slug}`);
   const legacyService = toLegacyService(service);
   const content = (type: ServiceSection["type"]) => sectionContent(service.sections, type);
   const serviceFaqContent = service.faqs?.items?.length
@@ -57,6 +59,17 @@ export default function ServiceDetailPage({ service }: Props) {
             `${service.title} consultation and treatment at Elite Dental Studio.`
           }
         />
+        <link rel="canonical" href={canonicalUrl} />
+        {service.seo?.robots && <meta name="robots" content={service.seo.robots} />}
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="Elite Dental Studio" />
+        <meta property="og:title" content={service.seo?.metaTitle || `${service.title} | Elite Dental Studio`} />
+        <meta
+          property="og:description"
+          content={service.seo?.metaDescription || `${service.title} consultation and treatment at Elite Dental Studio.`}
+        />
+        <meta property="og:url" content={canonicalUrl} />
+        <meta property="og:image" content={service.seo?.ogImage || service.hero?.image?.url || absoluteUrl("/navbar/elite-logo.png")} />
       </Head>
 
       <Navbar />

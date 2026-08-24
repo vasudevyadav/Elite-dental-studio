@@ -6,6 +6,7 @@ export default function ThankYouPage() {
     <SitePage
       title="Thank You | Elite Dental Studio"
       description="Thank you for reaching out to Elite Dental Studio. Our team will contact you shortly."
+      noIndex
     >
       <section className="mx-auto flex max-w-2xl flex-col items-center gap-6 px-5 py-24 text-center sm:py-32">
         <span className="grid h-16 w-16 place-items-center rounded-full bg-[#e4f7f4] text-3xl text-[#188e84]">

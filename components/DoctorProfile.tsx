@@ -65,7 +65,19 @@ export default function DoctorProfile({ doctor }: { doctor: DoctorDetail }) {
                     className="flex items-center gap-3 rounded-md bg-[#25cebd] px-4 py-3 text-white"
                   >
                     <span className="text-3xl" aria-hidden="true">
-                      {stat.icon || "◇"}
+                      {typeof stat.icon === "string" ? (
+                        stat.icon || "◇"
+                      ) : stat.icon?.url ? (
+                        <Image
+                          src={stat.icon.url}
+                          alt=""
+                          width={36}
+                          height={36}
+                          className="h-9 w-9 object-contain"
+                        />
+                      ) : (
+                        "◇"
+                      )}
                     </span>
                     <span>
                       <strong className="block text-xl leading-none">{stat.value}</strong>

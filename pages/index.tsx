@@ -47,6 +47,9 @@ export default function Home({ services, doctors, blogs, clinics }: HomeProps) {
       title="Elite Dental Studio | Specialist Dental Care Across Calicut, Kochi, Kannur and Coimbatore"
       description="ISO 9001 certified specialist dental care across Calicut, Kochi, Kannur and Coimbatore, led by MDS qualified doctors since 2020."
     >
+      <h1 className="sr-only">
+        Elite Dental Studio: specialist dental care in Calicut, Kochi, Kannur and Coimbatore
+      </h1>
       <HeroSection />
       <StatsBar />
       <NearestClinic clinics={clinics} />

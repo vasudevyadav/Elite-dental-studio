@@ -11,6 +11,7 @@ import SitePage from "@/components/SitePage";
 import { getContent, section, type DynamicSection } from "@/lib/contentApi";
 import { submitConsultation } from "@/lib/consultation";
 import Recaptcha, { recaptchaEnabled } from "@/components/Recaptcha";
+import { absoluteUrl } from "@/lib/siteUrl";
 
 const benefitsFallback = [
   ["⌘", "Expert Multi-Speciality", "Dental Team"],
@@ -495,6 +496,21 @@ export default function LocationPage({ data }: { data: LocationData }) {
     <SitePage
       title={data.seo.metaTitle}
       description={data.seo.metaDescription}
+      structuredData={{
+        "@context": "https://schema.org",
+        "@type": "Dentist",
+        name: `Elite Dental Studio ${data.name}`,
+        url: absoluteUrl(`/locations/${data.slug}`),
+        telephone: data.contact.mobile,
+        email: data.contact.email,
+        hasMap: data.contact.mapUrl,
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: data.contact.addressLines.join(", "),
+          addressLocality: data.name,
+          addressCountry: "IN",
+        },
+      }}
       mainClassName="[&_.scroll-reveal]:!translate-y-0 [&_.scroll-reveal]:!opacity-100"
     >
       <div className="[&>section]:h-[380px] [&>section]:after:pointer-events-none [&>section]:after:absolute [&>section]:after:inset-0 [&>section]:after:z-20 [&>section]:after:bg-[linear-gradient(90deg,rgba(4,55,60,.08),rgba(4,55,60,.02)_55%,rgba(4,55,60,.35))] sm:[&>section]:h-[500px] lg:[&>section]:h-[clamp(560px,42.51vw,700px)]">

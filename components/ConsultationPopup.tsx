@@ -9,7 +9,7 @@ const SCROLL_THRESHOLD = 0.4;
 
 export default function ConsultationPopup() {
   const [open, setOpen] = useState(false);
-  const [form, setForm] = useState({ name: "", phone: "", email: "", clinic: "" });
+  const [form, setForm] = useState({ name: "", phone: "", email: "", date: "", clinic: "" });
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [feedback, setFeedback] = useState("");
   const [captchaToken, setCaptchaToken] = useState("");
@@ -42,6 +42,34 @@ export default function ConsultationPopup() {
   }, []);
 
   useEffect(() => {
+    const onAppointmentClick = (event: MouseEvent) => {
+      if (!(event.target instanceof Element)) return;
+
+      const trigger = event.target.closest<HTMLElement>('a, button, [role="button"]');
+      if (!trigger || trigger.closest('[role="dialog"]')) return;
+
+      const href = trigger.getAttribute("href")?.toLowerCase() || "";
+      const label = `${trigger.getAttribute("aria-label") || ""} ${trigger.textContent || ""}`
+        .replace(/\s+/g, " ")
+        .trim()
+        .toLowerCase();
+      const isAppointmentAnchor = href.endsWith("#appointment");
+      const isBookingAction =
+        label.includes("book") &&
+        (label.includes("appointment") || label.includes("consultation"));
+
+      if (!isAppointmentAnchor && !isBookingAction) return;
+
+      event.preventDefault();
+      setOpen(true);
+      sessionStorage.setItem(SESSION_KEY, "1");
+    };
+
+    document.addEventListener("click", onAppointmentClick, true);
+    return () => document.removeEventListener("click", onAppointmentClick, true);
+  }, []);
+
+  useEffect(() => {
     if (!open) return;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
@@ -71,7 +99,8 @@ export default function ConsultationPopup() {
       phone: form.phone,
       email: form.email,
       clinicSlug: form.clinic,
-      source: "scroll-popup",
+      preferredDate: form.date,
+      source: "appointment-popup",
       captchaToken,
     });
     setFeedback(result.message);
@@ -87,11 +116,11 @@ export default function ConsultationPopup() {
   if (!open) return null;
 
   const fieldClass =
-    "h-11 w-full rounded-[6px] border border-[#8bb5b6] bg-[#f5fbfa] px-4 text-sm text-gray-700 placeholder-gray-500 outline-none focus:border-dent-accent focus:ring-1 focus:ring-dent-accent";
+    "h-10 w-full rounded-[6px] border border-[#8bb5b6] bg-[#f5fbfa] px-3 text-[13px] text-gray-700 placeholder-gray-500 outline-none focus:border-dent-accent focus:ring-1 focus:ring-dent-accent sm:h-11 sm:px-4 sm:text-sm";
 
   return (
     <div
-      className="fixed inset-0 z-[200] flex items-center justify-center bg-[#123f43]/70 p-4 backdrop-blur-sm"
+      className="fixed inset-0 z-[200] flex items-center justify-center bg-[#123f43]/70 p-2 backdrop-blur-sm sm:p-4"
       role="presentation"
       onMouseDown={(event) => {
         if (event.target === event.currentTarget) setOpen(false);
@@ -101,26 +130,26 @@ export default function ConsultationPopup() {
         role="dialog"
         aria-modal="true"
         aria-labelledby="consultation-popup-title"
-        className="relative w-full max-w-[420px] rounded-[22px] bg-white p-6 shadow-[0_24px_70px_rgba(5,42,45,0.35)] sm:p-7"
+        className="relative max-h-[calc(100dvh-1rem)] w-full max-w-[420px] touch-pan-y overscroll-contain overflow-y-auto rounded-[18px] bg-white p-4 shadow-[0_24px_70px_rgba(5,42,45,0.35)] [-webkit-overflow-scrolling:touch] [scrollbar-color:#8bb5b6_transparent] [scrollbar-width:thin] sm:max-h-[92dvh] sm:rounded-[22px] sm:p-7"
       >
         <button
           type="button"
           onClick={() => setOpen(false)}
           aria-label="Close"
-          className="smooth-hover hover-lift text-dent-nav absolute top-4 right-4 flex h-9 w-9 items-center justify-center rounded-full bg-[#e8f8f6] text-xl font-bold hover:bg-[#d5f3ef]"
+          className="smooth-hover hover-lift text-dent-nav absolute top-3 right-3 flex h-8 w-8 items-center justify-center rounded-full bg-[#e8f8f6] text-lg font-bold hover:bg-[#d5f3ef] sm:top-4 sm:right-4 sm:h-9 sm:w-9 sm:text-xl"
         >
           ×
         </button>
         <h3
           id="consultation-popup-title"
-          className="text-dent-text mb-1 pr-10 text-lg font-bold italic"
+          className="text-dent-text mb-1 pr-9 text-base font-bold italic sm:pr-10 sm:text-lg"
         >
-          Book a Free Consultation
+          Book an Appointment
         </h3>
-        <p className="mb-5 text-sm text-[#6d7c7e]">
+        <p className="mb-3 pr-7 text-xs leading-5 text-[#6d7c7e] sm:mb-5 sm:pr-0 sm:text-sm">
           Share your details and our team will call you back shortly.
         </p>
-        <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-2.5 sm:gap-3">
           <input
             type="text"
             name="name"
@@ -148,6 +177,15 @@ export default function ConsultationPopup() {
             className={fieldClass}
             required
           />
+          <input
+            type="date"
+            name="date"
+            value={form.date}
+            onChange={update}
+            aria-label="Preferred appointment date"
+            className={fieldClass}
+            required
+          />
           <select
             aria-label="Select clinic"
             name="clinic"
@@ -162,11 +200,13 @@ export default function ConsultationPopup() {
             <option value="kannur">Kannur</option>
             <option value="coimbatore">Coimbatore</option>
           </select>
-          <Recaptcha onTokenChange={setCaptchaToken} />
+          <div className="max-w-full overflow-hidden max-[359px]:[&>div]:origin-left max-[359px]:[&>div]:scale-[0.84]">
+            <Recaptcha onTokenChange={setCaptchaToken} />
+          </div>
           <button
             type="submit"
             disabled={status === "submitting"}
-            className="smooth-hover button-hover hover-lift bg-dent-accent hover:bg-dent-nav mt-1 w-full rounded-[5px] py-3 text-sm font-bold text-white disabled:opacity-60"
+            className="smooth-hover button-hover hover-lift bg-dent-accent hover:bg-dent-nav mt-0.5 w-full rounded-[5px] py-2.5 text-sm font-bold text-white disabled:opacity-60 sm:mt-1 sm:py-3"
           >
             {status === "submitting" ? "Submitting..." : "Book Now!"}
           </button>

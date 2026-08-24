@@ -178,7 +178,7 @@ function ServiceIcon({ type }: { type: Service["icon"] }) {
 }
 
 export default function ServicesSection({
-  title = "11+ Specialities Under One Roof",
+  title = "Comprehensive Dental Specialities Under One Roof",
   description = "Each treatment at Elite Dental Studio is led by a specialist dentist, thoroughly checked by X-ray or examination before any work begins.",
   compact = false,
   initialServices,

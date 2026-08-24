@@ -39,7 +39,7 @@ export type DoctorDetail = DoctorListItem & {
   seo: { metaTitle: string; metaDescription: string };
   pageTitle: string;
   about: { title: string; paragraphs: string[] };
-  stats: { id: string; icon: string; value: string; label: string; sortOrder: number }[];
+  stats: { id: string; icon: string | Media; value: string; label: string; sortOrder: number }[];
   expertise: { id: string; title: string; sortOrder: number }[];
   availability: { type: string; icon: string; label: string; value: string; sortOrder: number }[];
   appointment?: { title: string; buttonLabel: string; buttonUrl: string };
