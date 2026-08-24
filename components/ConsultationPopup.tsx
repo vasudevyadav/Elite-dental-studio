@@ -9,7 +9,7 @@ const SCROLL_THRESHOLD = 0.4;
 
 export default function ConsultationPopup() {
   const [open, setOpen] = useState(false);
-  const [form, setForm] = useState({ name: "", phone: "", email: "", clinic: "" });
+  const [form, setForm] = useState({ name: "", phone: "", email: "", date: "", clinic: "" });
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [feedback, setFeedback] = useState("");
   const [captchaToken, setCaptchaToken] = useState("");
@@ -42,6 +42,34 @@ export default function ConsultationPopup() {
   }, []);
 
   useEffect(() => {
+    const onAppointmentClick = (event: MouseEvent) => {
+      if (!(event.target instanceof Element)) return;
+
+      const trigger = event.target.closest<HTMLElement>('a, button, [role="button"]');
+      if (!trigger || trigger.closest('[role="dialog"]')) return;
+
+      const href = trigger.getAttribute("href")?.toLowerCase() || "";
+      const label = `${trigger.getAttribute("aria-label") || ""} ${trigger.textContent || ""}`
+        .replace(/\s+/g, " ")
+        .trim()
+        .toLowerCase();
+      const isAppointmentAnchor = href.endsWith("#appointment");
+      const isBookingAction =
+        label.includes("book") &&
+        (label.includes("appointment") || label.includes("consultation"));
+
+      if (!isAppointmentAnchor && !isBookingAction) return;
+
+      event.preventDefault();
+      setOpen(true);
+      sessionStorage.setItem(SESSION_KEY, "1");
+    };
+
+    document.addEventListener("click", onAppointmentClick, true);
+    return () => document.removeEventListener("click", onAppointmentClick, true);
+  }, []);
+
+  useEffect(() => {
     if (!open) return;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
@@ -71,7 +99,8 @@ export default function ConsultationPopup() {
       phone: form.phone,
       email: form.email,
       clinicSlug: form.clinic,
-      source: "scroll-popup",
+      preferredDate: form.date,
+      source: "appointment-popup",
       captchaToken,
     });
     setFeedback(result.message);
@@ -101,7 +130,7 @@ export default function ConsultationPopup() {
         role="dialog"
         aria-modal="true"
         aria-labelledby="consultation-popup-title"
-        className="relative w-full max-w-[420px] rounded-[22px] bg-white p-6 shadow-[0_24px_70px_rgba(5,42,45,0.35)] sm:p-7"
+        className="relative max-h-[92dvh] w-full max-w-[420px] overflow-y-auto rounded-[22px] bg-white p-6 shadow-[0_24px_70px_rgba(5,42,45,0.35)] sm:p-7"
       >
         <button
           type="button"
@@ -115,7 +144,7 @@ export default function ConsultationPopup() {
           id="consultation-popup-title"
           className="text-dent-text mb-1 pr-10 text-lg font-bold italic"
         >
-          Book a Free Consultation
+          Book an Appointment
         </h3>
         <p className="mb-5 text-sm text-[#6d7c7e]">
           Share your details and our team will call you back shortly.
@@ -145,6 +174,15 @@ export default function ConsultationPopup() {
             value={form.email}
             onChange={update}
             placeholder="Enter Your Mail"
+            className={fieldClass}
+            required
+          />
+          <input
+            type="date"
+            name="date"
+            value={form.date}
+            onChange={update}
+            aria-label="Preferred appointment date"
             className={fieldClass}
             required
           />

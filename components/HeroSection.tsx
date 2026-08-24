@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { submitConsultation } from "@/lib/consultation";
+import { openConsultationPopup } from "@/lib/consultationPopup";
 import Recaptcha, { recaptchaEnabled } from "@/components/Recaptcha";
 
 const HOME_SLIDES = [{ img: "/home/slider-1.png", alt: "Dental Care 1" }];
@@ -32,7 +33,6 @@ const ChevronDown = () => (
 
 export default function HeroSection({ slides = HOME_SLIDES, content }: HeroSectionProps) {
   const [slide, setSlide] = useState(0);
-  const [modalOpen, setModalOpen] = useState(false);
   const [form, setForm] = useState({ name: "", phone: "", email: "", date: "", clinic: "" });
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [feedback, setFeedback] = useState("");
@@ -50,28 +50,6 @@ export default function HeroSection({ slides = HOME_SLIDES, content }: HeroSecti
     const id = setInterval(next, 4500);
     return () => clearInterval(id);
   }, [next, total]);
-
-  useEffect(() => {
-    if (!modalOpen) {
-      return;
-    }
-
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-
-    const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setModalOpen(false);
-      }
-    };
-
-    document.addEventListener("keydown", closeOnEscape);
-
-    return () => {
-      document.body.style.overflow = previousOverflow;
-      document.removeEventListener("keydown", closeOnEscape);
-    };
-  }, [modalOpen]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
     setForm((p) => ({ ...p, [e.target.name]: e.target.value }));
@@ -97,7 +75,6 @@ export default function HeroSection({ slides = HOME_SLIDES, content }: HeroSecti
     if (result.success) {
       setStatus("success");
       setForm({ name: "", phone: "", email: "", date: "", clinic: "" });
-      setModalOpen(false);
       router.push("/thank-you");
     } else {
       setStatus("error");
@@ -167,7 +144,7 @@ export default function HeroSection({ slides = HOME_SLIDES, content }: HeroSecti
       <div className="absolute inset-x-0 bottom-14 z-40 flex justify-center px-5 lg:hidden">
         <button
           type="button"
-          onClick={() => setModalOpen(true)}
+          onClick={openConsultationPopup}
           className="smooth-hover button-hover hover-lift bg-dent-accent inline-flex min-w-[220px] items-center justify-center rounded-lg px-7 py-3.5 text-sm font-extrabold tracking-wide text-white uppercase shadow-[0_12px_30px_rgba(7,86,90,0.28)] focus:ring-4 focus:ring-white/40 focus:outline-none active:scale-[0.98]"
         >
           Book an Appointment
@@ -270,119 +247,6 @@ export default function HeroSection({ slides = HOME_SLIDES, content }: HeroSecti
         />
       </div>
 
-      {/* Mobile appointment modal */}
-      {modalOpen && (
-        <div
-          className="fixed inset-0 z-[120] flex items-center justify-center bg-[#123f43]/70 p-4 backdrop-blur-sm lg:hidden"
-          role="presentation"
-          onMouseDown={(event) => {
-            if (event.target === event.currentTarget) {
-              setModalOpen(false);
-            }
-          }}
-        >
-          <div
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="mobile-appointment-title"
-            className="relative max-h-[92dvh] w-full max-w-[440px] overflow-y-auto rounded-[22px] bg-white p-5 shadow-[0_24px_70px_rgba(5,42,45,0.35)] sm:p-7"
-          >
-            <button
-              type="button"
-              onClick={() => setModalOpen(false)}
-              aria-label="Close appointment form"
-              className="smooth-hover hover-lift text-dent-nav focus:ring-dent-accent/20 absolute top-4 right-4 flex h-9 w-9 items-center justify-center rounded-full bg-[#e8f8f6] text-xl font-bold hover:bg-[#d5f3ef] focus:ring-4 focus:outline-none"
-            >
-              ×
-            </button>
-
-            <h3
-              id="mobile-appointment-title"
-              className="text-dent-text mb-5 pr-10 text-center text-lg font-bold italic"
-            >
-              Book an Appointment
-            </h3>
-
-            <form onSubmit={handleSubmit} className="flex flex-col gap-3.5">
-              <input
-                type="text"
-                name="name"
-                value={form.name}
-                onChange={handleChange}
-                placeholder="Enter Your Name"
-                className={inputClass}
-                required
-              />
-              <input
-                type="tel"
-                name="phone"
-                value={form.phone}
-                onChange={handleChange}
-                placeholder="Enter Your Mobile No."
-                className={inputClass}
-                required
-              />
-              <input
-                type="email"
-                name="email"
-                value={form.email}
-                onChange={handleChange}
-                placeholder="Enter Your Mail"
-                className={inputClass}
-              />
-              <input
-                type="text"
-                name="date"
-                value={form.date}
-                onChange={handleChange}
-                placeholder="DD/MM/YYYY"
-                className={inputClass}
-                onFocus={(event) => (event.target.type = "date")}
-                onBlur={(event) => {
-                  if (!event.target.value) event.target.type = "text";
-                }}
-                required
-              />
-
-            <div className="relative">
-                <select
-                  aria-label="Select clinic"
-                  name="clinic"
-                  value={form.clinic}
-                  onChange={handleChange}
-                  className="focus:border-dent-accent focus:ring-dent-accent h-11 w-full appearance-none rounded-[5px] border border-[#8bb5b6] bg-[#f5fbfa] px-4 pr-12 text-sm text-gray-500 focus:ring-1 focus:outline-none sm:h-12 sm:px-5"
-                  required
-                >
-                  <option value="">Select Clinic</option>
-                  <option value="calicut">Calicut</option>
-                  <option value="kochi">Kochi</option>
-                  <option value="kannur">Kannur</option>
-                  <option value="coimbatore">Coimbatore</option>
-                </select>
-                <div className="bg-dent-nav pointer-events-none absolute top-0 right-0 flex h-full w-11 items-center justify-center rounded-r-lg">
-                  <ChevronDown />
-            </div>
-            <Recaptcha onTokenChange={setCaptchaToken} />
-              </div>
-
-              <button
-                type="submit"
-                disabled={status === "submitting"}
-                className="smooth-hover button-hover hover-lift bg-dent-accent hover:bg-dent-nav focus:ring-dent-accent/25 mx-auto mt-2 w-full max-w-[260px] rounded-[6px] py-3 text-sm font-bold text-white focus:ring-4 focus:outline-none disabled:opacity-60"
-              >
-                {status === "submitting" ? "Submitting..." : "Book Now!"}
-              </button>
-              {feedback && (
-                <p
-                  className={`text-center text-sm font-semibold ${status === "success" ? "text-emerald-600" : "text-red-600"}`}
-                >
-                  {feedback}
-                </p>
-              )}
-            </form>
-          </div>
-        </div>
-      )}
     </section>
   );
 }
