@@ -112,7 +112,7 @@ export default function HeroSection({ slides = HOME_SLIDES, content }: HeroSecti
             src={s.img}
             alt={s.alt}
             fill
-            quality={60}
+            quality={85}
             loading={i === 0 ? "eager" : "lazy"}
             sizes="100vw"
             className="object-cover object-[-100px] lg:object-center"

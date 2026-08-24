@@ -8,7 +8,7 @@ const trustPoints = [
   },
   {
     icon: "/home/count-icon-2.png",
-    title: "4 Clinics. 11 Dental Treatments. One Standard",
+    title: "4 Clinics. Comprehensive Dental Care. One Standard",
     subtitle: "MDS Certified Doctors Treating Every Case Since 2020",
   },
   {

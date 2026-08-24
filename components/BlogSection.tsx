@@ -155,27 +155,18 @@ export default function BlogSection({ initialPosts }: { initialPosts?: BlogApiPo
                 index === 1 ? "hidden md:block" : ""
               }`}
             >
-              <div className="relative h-[200px] overflow-hidden bg-white lg:h-[285px]">
-                <div className="absolute top-0 left-0 z-10 flex h-full w-[52%] flex-col justify-center bg-white px-6 sm:px-8">
-                  <p className="text-sm leading-[1.3] font-medium text-[#292929] lg:text-xl">
-                    Latest Insights
-                    <br /> About
-                  </p>
-                  <p className="mt-2 line-clamp-2 text-[29px] leading-[1.05] font-black text-[#27cfc0] [text-shadow:1px_1px_0_#143f43] sm:text-[42px]">
-                    {post.category}
-                  </p>
-                </div>
-                <div className="absolute top-0 right-0 h-full w-[58%]">
-                  <span className="absolute inset-y-0 left-0 z-10 w-24 bg-linear-to-r from-white to-transparent" />
-                  <span className="bg-dent-accent absolute -right-14 bottom-0 z-0 h-52 w-52 rounded-full" />
-                  <Image
-                    src={post.image}
-                    alt=""
-                    fill
-                    sizes="(max-width: 767px) 55vw, 28vw"
-                    className="image-hover relative z-[1] object-cover object-center"
-                  />
-                </div>
+              <div className="relative h-[200px] overflow-hidden bg-[#dcefed] lg:h-[285px]">
+                <Image
+                  src={post.image}
+                  alt=""
+                  fill
+                  sizes="(max-width: 767px) 100vw, 48vw"
+                  className="image-hover object-cover object-center"
+                />
+                <div className="absolute inset-0 bg-linear-to-t from-[#073f48]/70 via-[#073f48]/10 to-transparent" />
+                <p className="absolute top-5 left-5 max-w-[78%] rounded-full bg-white/95 px-4 py-2 text-xs font-extrabold tracking-[.08em] text-[#17656a] uppercase shadow-sm sm:top-6 sm:left-6">
+                  {post.category}
+                </p>
               </div>
 
               <div

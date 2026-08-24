@@ -53,6 +53,37 @@ const insetImages: Record<string, [string, string]> = {
   ],
 };
 
+const introductionFallbacks: Record<string, { title: string; paragraphs: [string, string] }> = {
+  calicut: {
+    title: "Specialist dental care in Calicut",
+    paragraphs: [
+      "Elite Dental Studio Calicut brings specialist-led dental care, modern diagnostics and personalised treatment planning together in one convenient Eranhipalam location.",
+      "From routine check-ups to advanced restorative, cosmetic and orthodontic care, our team focuses on clear guidance, clinical precision and a comfortable experience for every patient.",
+    ],
+  },
+  kochi: {
+    title: "Specialist dental care in Kochi",
+    paragraphs: [
+      "At Elite Dental Studio Kochi, our specialist team combines modern diagnostics with thoughtful, personalised treatment planning for patients of every age.",
+      "Whether you need preventive care, restorative treatment, orthodontics or cosmetic dentistry, we make each visit clear, comfortable and centred on your long-term oral health.",
+    ],
+  },
+  kannur: {
+    title: "Specialist dental care in Kannur",
+    paragraphs: [
+      "Elite Dental Studio Kannur offers a calm, modern setting where patients can access specialist dental care and a treatment plan tailored to their needs.",
+      "Our team supports everything from routine family dentistry to advanced treatments, with careful diagnosis and patient comfort at every step.",
+    ],
+  },
+  coimbatore: {
+    title: "Specialist dental care in Coimbatore",
+    paragraphs: [
+      "Elite Dental Studio Coimbatore provides specialist-led dental care with modern technology, clear treatment planning and a patient-first approach.",
+      "From preventive visits to restorative, cosmetic and orthodontic treatment, our team is here to help you make confident decisions about your smile.",
+    ],
+  },
+};
+
 const clinicOptions = ["Kannur", "Calicut", "Kochi", "Coimbatore"];
 
 type ClinicDirectoryEntry = {
@@ -118,6 +149,36 @@ const clinicDirectory: Record<string, ClinicDirectoryEntry> = {
       "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4446.736033085853!2d76.9504735!3d11.009234599999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba8591567f75a1f%3A0xa040008e7ebcf16c!2sElite%20Dental%20Studio!5e1!3m2!1sen!2sin!4v1787210475188!5m2!1sen!2sin",
   },
 };
+
+function fallbackLocation(slug: string): LocationData | null {
+  const city = (["calicut", "kochi", "kannur", "coimbatore"] as const).find(
+    (item) => item === slug.toLowerCase(),
+  );
+  if (!city) return null;
+
+  const clinic = clinicDirectory[city.toUpperCase()];
+  return {
+    slug: city,
+    name: clinic.name,
+    seo: {
+      metaTitle: `Elite Dental Studio ${clinic.name}`,
+      metaDescription: `Specialist-led dental care at Elite Dental Studio ${clinic.name}.`,
+    },
+    contact: {
+      mobile: clinic.phone,
+      mobileHref: clinic.phoneHref,
+      email: "eliteinfo@gmail.com",
+      addressLines: clinic.address,
+      mapUrl: clinic.mapUrl,
+      mapEmbedUrl: clinic.mapEmbedUrl,
+    },
+    workingHours: [
+      { days: "Monday–Saturday", time: "9:30 AM–9:00 PM" },
+      { days: "Sunday", time: "10:00 AM–7:00 PM" },
+    ],
+    sections: [],
+  };
+}
 
 function NearestClinicPicker({ defaultClinic }: { defaultClinic: string }) {
   const [selected, setSelected] = useState(
@@ -416,6 +477,10 @@ export default function LocationPage({ data }: { data: LocationData }) {
     ) || "kannur";
   const heroImage = heroFallbacks[cityKey];
   const [inset1, inset2] = insetImages[cityKey];
+  const introduction = introductionFallbacks[cityKey];
+  const introParagraphs = intro.paragraphs?.filter(Boolean)?.length
+    ? intro.paragraphs
+    : introduction.paragraphs;
 
   return (
     <SitePage
@@ -438,10 +503,10 @@ export default function LocationPage({ data }: { data: LocationData }) {
         <div className="relative mx-auto max-w-6xl">
           <div className="rounded-[15px] bg-[#f5fbfa] p-5 shadow-[0_8px_24px_rgba(0,0,0,.15)] sm:p-8 lg:min-h-[322px] lg:p-12 lg:pr-[370px]">
             <h2 className="text-xl leading-[1.35] font-bold text-[#276368] sm:text-2xl">
-              {intro.title || `Trusted dental care in ${data.name}`}
+              {intro.title || introduction.title}
             </h2>
             <p className="mt-4 text-sm leading-6 text-[#677778] sm:mt-5 sm:leading-7">
-              {intro.paragraphs?.[0]}
+              {introParagraphs[0]}
             </p>
           </div>
           <div className="relative mx-3 -mt-2 h-[230px] overflow-hidden rounded-[14px] border-4 border-[#f2fbfa] shadow-xl sm:mx-8 sm:-mt-4 sm:h-[320px] sm:border-8 lg:absolute lg:top-[-50px] lg:right-[24px] lg:mx-0 lg:mt-0 lg:h-[334px] lg:w-[340px]">
@@ -465,7 +530,7 @@ export default function LocationPage({ data }: { data: LocationData }) {
             />
           </div>
           <div className="text-sm text-white/85 sm:text-base">
-            <p className="leading-6 sm:leading-7">{intro.paragraphs?.[1]}</p>
+            <p className="leading-6 sm:leading-7">{introParagraphs[1]}</p>
             <Link
               href="#appointment"
               className="mt-6 inline-flex rounded bg-[#24ccbd] px-6 py-3 text-sm font-bold text-white"
@@ -596,11 +661,17 @@ export const getServerSideProps: GetServerSideProps<{ data: LocationData }> = as
   params,
   res,
 }) => {
+  const slug = String(params?.slug || "");
   try {
-    const data = await getContent<LocationData>(`locations/${String(params?.slug || "")}`);
+    const data = await getContent<LocationData>(`locations/${slug}`);
     res.setHeader("Cache-Control", "public, s-maxage=60, stale-while-revalidate=300");
     return { props: { data } };
   } catch {
+    const data = fallbackLocation(slug);
+    if (data) {
+      res.setHeader("Cache-Control", "public, s-maxage=60, stale-while-revalidate=300");
+      return { props: { data } };
+    }
     return { notFound: true };
   }
 };

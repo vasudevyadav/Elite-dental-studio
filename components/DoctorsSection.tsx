@@ -102,7 +102,10 @@ export default function DoctorsSection({
       experienceYears: 0,
       experienceLabel: "",
       image: { url: doctor.image, alt: doctor.name },
-      clinics: [],
+      clinics: ["calicut", "kochi", "kannur", "coimbatore"].map((slug) => ({
+        name: slug[0].toUpperCase() + slug.slice(1),
+        slug,
+      })),
       profileUrl: "/doctors/dr-amal",
       sortOrder: index,
     }));

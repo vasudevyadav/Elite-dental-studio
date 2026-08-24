@@ -45,11 +45,16 @@ const fallbackClinics = [
   { name: "Coimbatore", href: "/#clinics" },
 ];
 
-function SocialIcon({ type }: { type: "facebook" | "tiktok" | "instagram" | "whatsapp" }) {
+const socialLinks = {
+  facebook: "https://www.facebook.com/elitedentalstudio1",
+  instagram: "https://www.instagram.com/elitedental_studio/",
+  youtube: "https://www.youtube.com/channel/UCOfybkaXV4UoBAE0bjGIkVQ",
+};
+
+function SocialIcon({ type }: { type: "facebook" | "instagram" | "youtube" }) {
   return (
     <span className="smooth-hover bg-dent-accent flex h-10 w-10 items-center justify-center rounded-[6px] text-[#064a50] sm:h-8 sm:w-8">
       {type === "facebook" && <strong className="text-xl leading-none">f</strong>}
-      {type === "tiktok" && <strong className="text-lg leading-none">♪</strong>}
       {type === "instagram" && (
         <svg
           aria-hidden="true"
@@ -64,7 +69,7 @@ function SocialIcon({ type }: { type: "facebook" | "tiktok" | "instagram" | "wha
           <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
         </svg>
       )}
-      {type === "whatsapp" && (
+      {type === "youtube" && (
         <svg
           aria-hidden="true"
           viewBox="0 0 24 24"
@@ -73,8 +78,8 @@ function SocialIcon({ type }: { type: "facebook" | "tiktok" | "instagram" | "wha
           stroke="currentColor"
           strokeWidth="2"
         >
-          <path d="M20 11.6a8 8 0 0 1-11.8 7L4 20l1.4-4A8 8 0 1 1 20 11.6Z" />
-          <path d="M9 8c.5 3 2 4.5 5 5l1-1.5 2 1c-.5 2-1.8 3-3.5 2.5-4-1-6.5-3.5-7.5-7.5C5.5 5.8 6.5 4.5 8.5 4l1 2L8 7l1 1Z" />
+          <path d="M21 12c0 2.2-.3 4.2-.5 5.2a3 3 0 0 1-2.3 2.3c-1 .2-3 .5-6.2.5s-5.2-.3-6.2-.5a3 3 0 0 1-2.3-2.3C3.3 16.2 3 14.2 3 12s.3-4.2.5-5.2a3 3 0 0 1 2.3-2.3C6.8 4.3 8.8 4 12 4s5.2.3 6.2.5a3 3 0 0 1 2.3 2.3c.2 1 .5 3 .5 5.2Z" />
+          <path d="m10 9 5 3-5 3V9Z" fill="currentColor" stroke="none" />
         </svg>
       )}
     </span>
@@ -141,7 +146,7 @@ export default function Footer() {
             <div className="mx-auto mt-6 w-full max-w-[360px] border-t border-white/45 sm:mx-0" />
             <div className="mt-6 flex justify-around gap-3 sm:justify-start lg:justify-center">
               <a
-                href="https://linktr.ee/Elitedentalclinic"
+                href={socialLinks.facebook}
                 target="_blank"
                 rel="noreferrer"
                 aria-label="Elite Dental Studio on Facebook"
@@ -150,16 +155,7 @@ export default function Footer() {
                 <SocialIcon type="facebook" />
               </a>
               <a
-                href="https://linktr.ee/Elitedentalclinic"
-                target="_blank"
-                rel="noreferrer"
-                aria-label="Elite Dental Studio on TikTok"
-                className="smooth-hover hover-lift"
-              >
-                <SocialIcon type="tiktok" />
-              </a>
-              <a
-                href="https://linktr.ee/Elitedentalclinic"
+                href={socialLinks.instagram}
                 target="_blank"
                 rel="noreferrer"
                 aria-label="Elite Dental Studio on Instagram"
@@ -168,13 +164,13 @@ export default function Footer() {
                 <SocialIcon type="instagram" />
               </a>
               <a
-                href="https://wa.me/919048611911"
+                href={socialLinks.youtube}
                 target="_blank"
                 rel="noreferrer"
-                aria-label="Chat with Elite Dental Studio on WhatsApp"
+                aria-label="Elite Dental Studio on YouTube"
                 className="smooth-hover hover-lift"
               >
-                <SocialIcon type="whatsapp" />
+                <SocialIcon type="youtube" />
               </a>
             </div>
           </div>

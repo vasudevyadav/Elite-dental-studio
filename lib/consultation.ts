@@ -5,6 +5,7 @@ export type ConsultationPayload = {
   clinicSlug?: string;
   preferredDate?: string;
   message?: string;
+  captchaToken?: string;
   source: string;
 };
 

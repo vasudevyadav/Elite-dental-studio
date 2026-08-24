@@ -10,7 +10,7 @@ export default function ServiceHero({
   alt?: string;
 }) {
   return (
-    <div className={inner ? "lg:[&>section]:h-[clamp(560px,42.51vw,874px)]" : undefined}>
+    <div className={inner ? "lg:[&>section]:h-[clamp(520px,38vw,700px)]" : undefined}>
       <HeroSection
         slides={[
           {
