@@ -6,7 +6,7 @@ import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import FAQSection from "@/components/FAQSection";
 import BookAppointmentSection from "@/components/BookAppointmentSection";
-import Footer from "@/components/Footer";
+import GlobalFooter from "@/components/GlobalFooter";
 import ServiceHero from "@/components/services/ServiceHero";
 import { getServicesPage, type ServicesPageData } from "@/lib/servicesApi";
 
@@ -118,7 +118,7 @@ export default function ServicesPage({ data }: Props) {
         </div>
         <BookAppointmentSection />
       </main>
-      <Footer />
+      <GlobalFooter />
     </>
   );
 }

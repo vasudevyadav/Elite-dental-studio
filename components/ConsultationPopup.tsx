@@ -9,7 +9,13 @@ const SCROLL_THRESHOLD = 0.4;
 
 export default function ConsultationPopup() {
   const [open, setOpen] = useState(false);
-  const [form, setForm] = useState({ name: "", phone: "", email: "", date: "", clinic: "" });
+  const [form, setForm] = useState({
+    name: "",
+    phone: "",
+    email: "",
+    date: "",
+    clinic: "",
+  });
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [feedback, setFeedback] = useState("");
   const [captchaToken, setCaptchaToken] = useState("");
@@ -55,8 +61,7 @@ export default function ConsultationPopup() {
         .toLowerCase();
       const isAppointmentAnchor = href.endsWith("#appointment");
       const isBookingAction =
-        label.includes("book") &&
-        (label.includes("appointment") || label.includes("consultation"));
+        label.includes("book") && (label.includes("appointment") || label.includes("consultation"));
 
       if (!isAppointmentAnchor && !isBookingAction) return;
 
@@ -130,7 +135,7 @@ export default function ConsultationPopup() {
         role="dialog"
         aria-modal="true"
         aria-labelledby="consultation-popup-title"
-        className="relative max-h-[calc(100dvh-1rem)] w-full max-w-[420px] touch-pan-y overscroll-contain overflow-y-auto rounded-[18px] bg-white p-4 shadow-[0_24px_70px_rgba(5,42,45,0.35)] [-webkit-overflow-scrolling:touch] [scrollbar-color:#8bb5b6_transparent] [scrollbar-width:thin] sm:max-h-[92dvh] sm:rounded-[22px] sm:p-7"
+        className="relative max-h-[calc(100dvh-1rem)] w-full max-w-[420px] touch-pan-y [scrollbar-width:thin] [scrollbar-color:#8bb5b6_transparent] overflow-y-auto overscroll-contain rounded-[18px] bg-white p-4 shadow-[0_24px_70px_rgba(5,42,45,0.35)] [-webkit-overflow-scrolling:touch] sm:max-h-[92dvh] sm:rounded-[22px] sm:p-7"
       >
         <button
           type="button"

@@ -1,7 +1,7 @@
 import Head from "next/head";
 import type { ReactNode } from "react";
 import { useRouter } from "next/router";
-import Footer from "@/components/Footer";
+import GlobalFooter from "@/components/GlobalFooter";
 import Navbar from "@/components/Navbar";
 import { absoluteUrl, getSiteUrl } from "@/lib/siteUrl";
 
@@ -12,6 +12,7 @@ type SitePageProps = {
   mainClassName?: string;
   canonicalUrl?: string;
   noIndex?: boolean;
+  showFooterLocations?: boolean;
   structuredData?: Record<string, unknown> | Record<string, unknown>[];
 };
 
@@ -22,6 +23,7 @@ export default function SitePage({
   mainClassName = "",
   canonicalUrl,
   noIndex = false,
+  showFooterLocations = true,
   structuredData,
 }: SitePageProps) {
   const router = useRouter();
@@ -69,7 +71,7 @@ export default function SitePage({
       <div className="overflow-x-clip bg-white">
         <Navbar />
         <main className={mainClassName}>{children}</main>
-        <Footer />
+        <GlobalFooter showLocations={showFooterLocations} />
       </div>
     </>
   );

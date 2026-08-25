@@ -3,6 +3,7 @@ import { getBlogs } from "@/lib/blogsApi";
 import { getContent, type ClinicRef, type DoctorsData } from "@/lib/contentApi";
 import { getServices } from "@/lib/servicesApi";
 import { absoluteUrl } from "@/lib/siteUrl";
+import { isMainClinic } from "@/lib/clinics";
 
 const staticPaths = [
   "/",
@@ -39,7 +40,9 @@ export const getServerSideProps: GetServerSideProps = async ({ res }) => {
     ...services.map((service) => `/services/${service.slug}`),
     ...blogs.map((post) => `/blog/${post.slug}`),
     ...(doctorsData?.items || []).map((doctor) => doctor.profileUrl || `/doctors/${doctor.slug}`),
-    ...locationsData.items.map((location) => `/locations/${location.slug}`),
+    ...locationsData.items
+      .filter((location) => isMainClinic(location.slug))
+      .map((location) => `/locations/${location.slug}`),
   ]);
   const lastModified = new Date().toISOString();
   const urls = Array.from(paths)
@@ -51,7 +54,9 @@ export const getServerSideProps: GetServerSideProps = async ({ res }) => {
 
   res.setHeader("Content-Type", "application/xml");
   res.setHeader("Cache-Control", "public, s-maxage=3600, stale-while-revalidate=86400");
-  res.write(`<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>`);
+  res.write(
+    `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>`,
+  );
   res.end();
   return { props: {} };
 };

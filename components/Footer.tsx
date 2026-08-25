@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { isMainClinic } from "@/lib/clinics";
 
 const companyLinks = [
   { label: "About Us", href: "/about" },
@@ -99,7 +100,7 @@ export default function Footer() {
         if (!Array.isArray(items)) return;
         setClinics(
           items
-            .filter((item: { name: string; slug: string }) => item.slug === item.name?.toLowerCase())
+            .filter((item: { slug: string }) => isMainClinic(item.slug))
             .map((item: { name: string; slug: string }) => ({
               name: item.name,
               href: `/locations/${item.slug}`,

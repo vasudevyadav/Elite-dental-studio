@@ -57,19 +57,19 @@ const faqs = [
   ],
   [
     "Do you follow the same safety protocol at every branch?",
-    "Yes. Our sterilisation equipment, imaging standards and clinical protocols are consistent across Calicut, Kochi, Kannur and Coimbatore.",
+    "Yes. Our sterilisation equipment, imaging standards, and clinical protocols are consistent across Calicut, Kochi, Kannur and Coimbatore.",
   ],
   [
     "Is sedation safe for dental procedures?",
-    "Conscious sedation is administered and monitored by a trained dental professional throughout your procedure. You remain conscious and responsive, with reduced awareness that makes treatment more comfortable.",
+    "Conscious sedation is administered and monitored by a trained dental professional throughout your procedure. You remain conscious and responsive, with a reduced level of awareness that makes treatment more comfortable.",
   ],
   [
     "How does digital imaging reduce my radiation exposure?",
-    "Digital RVG and OPG use sensors instead of film. They need a lower radiation dose to produce a clear image, meaning less exposure per scan than traditional dental X-rays.",
+    "Digital RVG and OPG use sensors instead of film, which need a lower radiation dose to produce a clear image, meaning less exposure per scan than traditional dental X-rays.",
   ],
   [
     "What protective measures are in place between patients?",
-    "Gloves and masks are changed for every patient, and each treatment surface is cleaned and disinfected before the next appointment begins.",
+    "Gloves and masks are changed for each patient, and every treatment surface is cleaned and disinfected before the next appointment begins.",
   ],
 ];
 
@@ -419,10 +419,10 @@ export default function PatientSafetyPage() {
         <div className="mx-auto max-w-6xl">
           <div className="text-center">
             <p className="text-xs font-bold tracking-[.2em] text-[#20aa9e] uppercase">
-              Frequently asked questions
+              Patient safety
             </p>
             <h2 className="mt-3 text-3xl font-semibold tracking-[-.04em] text-[#174e53] sm:text-5xl">
-              Your safety questions, answered
+              Frequently Asked Questions
             </h2>
           </div>
           <div className="mt-9 space-y-3">

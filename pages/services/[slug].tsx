@@ -1,7 +1,7 @@
 import type { GetServerSideProps } from "next";
 import Head from "next/head";
 import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import GlobalFooter from "@/components/GlobalFooter";
 import NearestClinic from "@/components/NearestClinic";
 import DoctorsSection from "@/components/DoctorsSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
@@ -121,7 +121,7 @@ export default function ServiceDetailPage({ service }: Props) {
         <BookAppointmentSection />
       </main>
 
-      <Footer />
+      <GlobalFooter />
     </>
   );
 }

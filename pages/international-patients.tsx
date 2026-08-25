@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import SitePage from "@/components/SitePage";
 import { submitConsultationForm } from "@/lib/consultation";
 import Recaptcha, { recaptchaEnabled } from "@/components/Recaptcha";
+import { aboutFaqContent } from "@/content/siteSections";
 
 const MailIcon = () => (
   <svg
@@ -182,24 +183,7 @@ const clinics = [
   },
 ];
 
-const faqs = [
-  [
-    "Can I pay by EMI or insurance?",
-    "Yes. No-cost EMI and GCC country insurance billing apply on eligible treatments. Confirm the applicable terms with your patient coordinator when you book dental tourism in Kerala.",
-  ],
-  [
-    "Do you help with travel and language support?",
-    "Our travel desk can help plan your visit once your treatment plan is confirmed and can arrange airport or hotel pickup on arrival. Our staff speak English, with translator support available for other languages.",
-  ],
-  [
-    "What should I bring or send before I travel?",
-    "Send your existing X-rays, dental records and previous dentist notes with your first email. Bring physical or digital copies with you as well.",
-  ],
-  [
-    "Can I get braces during a dental tourism visit?",
-    "Braces require adjustment visits every few weeks over several months, so one visit is not enough. Ask whether Invisalign, clear aligners or a phased plan across repeat visits is better for your schedule.",
-  ],
-];
+const faqs = aboutFaqContent.items.map(({ question, answer }) => [question, answer]);
 
 export default function InternationalPatientsPage() {
   return (
@@ -531,8 +515,11 @@ export default function InternationalPatientsPage() {
               Frequently asked questions
             </p>
             <h2 className="mt-3 text-3xl font-semibold tracking-[-.04em] text-[#174e53] sm:text-5xl">
-              Planning your treatment visit
+              {aboutFaqContent.title}
             </h2>
+            <p className="mx-auto mt-4 max-w-3xl text-sm leading-7 text-[#607275] sm:text-base">
+              {aboutFaqContent.description}
+            </p>
           </div>
           <div className="mt-10 space-y-3">
             {faqs.map(([question, answer], index) => (
@@ -752,6 +739,7 @@ function InternationalEnquiryForm() {
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [feedback, setFeedback] = useState("");
   const [captchaToken, setCaptchaToken] = useState("");
+  const [clinic, setClinic] = useState("");
   const router = useRouter();
   const fieldClass =
     "h-10 w-full rounded-[9px] border border-[#c9dfdc] bg-[#f8fcfb] px-3.5 text-[13px] text-[#304f52] outline-none transition placeholder:text-[#899798] focus:border-[#25bfae] focus:bg-white focus:ring-4 focus:ring-[#25bfae]/15";
@@ -768,18 +756,21 @@ function InternationalEnquiryForm() {
 
     const country = String(raw.get("country") || "");
     const message = String(raw.get("message") || "");
-    const clinic = String(raw.get("clinic") || "");
+    const selectedClinic = String(raw.get("clinic") || "");
 
     const payload = new FormData();
     payload.set("name", String(raw.get("name") || ""));
     payload.set("phone", String(raw.get("phone") || ""));
     payload.set("email", String(raw.get("email") || ""));
-    payload.set("clinicSlug", clinic.toLowerCase());
+    payload.set("clinicSlug", selectedClinic.toLowerCase());
+    payload.set("preferredDate", String(raw.get("date") || ""));
     payload.set("message", country ? `Country: ${country}\n\n${message}` : message);
     payload.set("source", "international-patients");
     payload.set("captchaToken", captchaToken);
 
-    const files = raw.getAll("records").filter((file): file is File => file instanceof File && file.size > 0);
+    const files = raw
+      .getAll("records")
+      .filter((file): file is File => file instanceof File && file.size > 0);
     if (files[0]) payload.set("records", files[0]);
 
     setStatus("submitting");
@@ -788,6 +779,7 @@ function InternationalEnquiryForm() {
     if (result.success) {
       setStatus("success");
       form.reset();
+      setClinic("");
       router.push("/thank-you");
     } else {
       setStatus("error");
@@ -893,7 +885,10 @@ function InternationalEnquiryForm() {
                 className={`${fieldClass} appearance-none`}
                 name="clinic"
                 required
-                defaultValue=""
+                value={clinic}
+                onChange={(event) => {
+                  setClinic(event.target.value);
+                }}
               >
                 <option value="" disabled>
                   Select clinic
@@ -902,8 +897,13 @@ function InternationalEnquiryForm() {
                 <option>Kochi</option>
                 <option>Kannur</option>
                 <option>Coimbatore</option>
-                <option>Help me choose</option>
               </select>
+            </label>
+            <label>
+              <span className="mb-1.5 block text-xs font-semibold text-[#526568]">
+                Preferred date *
+              </span>
+              <input className={fieldClass} name="date" type="date" required />
             </label>
             <label className="sm:col-span-2">
               <span className="mb-1 block text-[11px] font-semibold text-[#526568]">

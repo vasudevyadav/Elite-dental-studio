@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { appointmentContent, type AppointmentSectionContent } from "@/content/siteSections";
 import { submitConsultation } from "@/lib/consultation";
-import { formatDateInput } from "@/lib/dateInput";
 import Recaptcha, { recaptchaEnabled } from "@/components/Recaptcha";
 
 export default function BookAppointmentSection({
@@ -27,7 +26,7 @@ export default function BookAppointmentSection({
     const { name, value } = event.target;
     setForm((current) => ({
       ...current,
-      [name]: name === "date" ? formatDateInput(value) : value,
+      [name]: value,
     }));
   };
 
@@ -123,6 +122,7 @@ export default function BookAppointmentSection({
               onChange={updateForm}
               placeholder="Enter Your Name"
               className={fieldClass}
+              required
             />
             <input
               name="phone"
@@ -131,6 +131,7 @@ export default function BookAppointmentSection({
               placeholder="Enter Your Mobile No."
               type="tel"
               className={fieldClass}
+              required
             />
             <input
               name="email"
@@ -139,15 +140,16 @@ export default function BookAppointmentSection({
               placeholder="Enter Your Mail"
               type="email"
               className={fieldClass}
+              required
             />
             <input
               name="date"
+              type="date"
               value={form.date}
               onChange={updateForm}
-              placeholder="DD/MM/YYYY"
-              inputMode="numeric"
-              maxLength={10}
+              aria-label="Preferred appointment date"
               className={fieldClass}
+              required
             />
             <div className="relative">
               <select
@@ -156,6 +158,7 @@ export default function BookAppointmentSection({
                 value={form.clinic}
                 onChange={updateForm}
                 className={`${fieldClass} appearance-none pr-12`}
+                required
               >
                 <option value="">Select Clinic</option>
                 <option value="calicut">Calicut</option>

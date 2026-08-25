@@ -2,22 +2,25 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { officeImages, type OfficeImage, type OfficeLocation } from "./officeData";
+import { isMainClinic } from "@/lib/clinics";
 
 export default function OfficeGallery({ data }: { data?: Record<string, any> }) {
   const apiItems = data?.items as Array<Record<string, any>> | undefined;
   const galleryImages: OfficeImage[] = apiItems?.length
-    ? apiItems.map((item, index) => ({
-        src: item.image?.url || officeImages[index % officeImages.length].src,
-        label: item.label,
-        location: (data?.locations?.find(
-          (location: Record<string, string>) => location.slug === item.locationSlug,
-        )?.name || item.locationSlug) as OfficeImage["location"],
-      }))
+    ? apiItems
+        .filter((item) => isMainClinic(item.locationSlug))
+        .map((item, index) => ({
+          src: item.image?.url || officeImages[index % officeImages.length].src,
+          label: item.label,
+          location: (data?.locations?.find(
+            (location: Record<string, string>) => location.slug === item.locationSlug,
+          )?.name || item.locationSlug) as OfficeImage["location"],
+        }))
     : officeImages;
   const locations: OfficeLocation[] = [
     "All",
     ...(data?.locations
-      ?.filter((item: Record<string, string>) => item.slug === item.name?.toLowerCase())
+      ?.filter((item: Record<string, string>) => isMainClinic(item.slug))
       .map((item: Record<string, string>) => item.name) || [
       "Calicut",
       "Kochi",

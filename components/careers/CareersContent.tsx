@@ -2,6 +2,7 @@
 import { FormEvent, useMemo, useRef, useState } from "react";
 import HeroSection from "@/components/HeroSection";
 import Recaptcha, { recaptchaEnabled } from "@/components/Recaptcha";
+import { isMainClinic } from "@/lib/clinics";
 
 const opportunities = [
   [
@@ -40,13 +41,15 @@ export default function CareersContent({ data }: { data: Record<string, any> }) 
       jobs.map((job: Record<string, any>) => [job.department?.slug, job.department]),
     ).values(),
   ).filter(Boolean) as Array<Record<string, string>>;
-  const clinics = Array.from(
-    new Map(
-      jobs
-        .flatMap((job: Record<string, any>) => job.clinics || [])
-        .map((clinic: Record<string, string>) => [clinic.slug, clinic]),
-    ).values(),
-  ) as Array<Record<string, string>>;
+  const clinics = (
+    Array.from(
+      new Map(
+        jobs
+          .flatMap((job: Record<string, any>) => job.clinics || [])
+          .map((clinic: Record<string, string>) => [clinic.slug, clinic]),
+      ).values(),
+    ) as Array<Record<string, string>>
+  ).filter((clinic) => isMainClinic(clinic.slug));
   const [department, setDepartment] = useState("");
   const [clinic, setClinic] = useState("");
   const [selectedJob, setSelectedJob] = useState("");

@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import HeroSection from "@/components/HeroSection";
 import SitePage from "@/components/SitePage";
 import { getContent } from "@/lib/contentApi";
+import { isMainClinic } from "@/lib/clinics";
 
 const fallbackCases = Array.from({ length: 12 }, (_, index) => ({
   src: `/cases/case-${String(index + 1).padStart(2, "0")}.webp`,
@@ -126,19 +127,23 @@ function BeforeAfterSlider({
 
 export default function CasesPage({ data }: { data: Record<string, any> }) {
   const cases: GalleryCase[] = data.items?.length
-    ? data.items.map((item: Record<string, any>, index: number) => ({
-        src:
-          item.combinedImage?.url ||
-          item.beforeImage?.url ||
-          `/cases/case-${String(index + 1).padStart(2, "0")}.webp`,
-        title: item.title,
-        label: item.category?.name,
-        location: item.location?.name,
-        treatmentSlug: item.category?.slug,
-        locationSlug: item.location?.slug,
-      }))
+    ? data.items
+        .filter((item: Record<string, any>) => isMainClinic(item.location?.slug))
+        .map((item: Record<string, any>, index: number) => ({
+          src:
+            item.combinedImage?.url ||
+            item.beforeImage?.url ||
+            `/cases/case-${String(index + 1).padStart(2, "0")}.webp`,
+          title: item.title,
+          label: item.category?.name,
+          location: item.location?.name,
+          treatmentSlug: item.category?.slug,
+          locationSlug: item.location?.slug,
+        }))
     : fallbackCases;
-  const locations = data.filters?.locations || [];
+  const locations = (data.filters?.locations || []).filter((location: Record<string, string>) =>
+    isMainClinic(location.slug),
+  );
   const treatments = data.filters?.treatments || [];
   const [selected, setSelected] = useState<number | null>(null);
   const [activeLocation, setActiveLocation] = useState<string>("");

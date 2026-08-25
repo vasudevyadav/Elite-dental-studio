@@ -47,8 +47,10 @@ export default function ContactLocations() {
         </div>
 
         <div className="mt-10 grid gap-5 xl:grid-cols-2">
-          {contactClinics.map((clinic, index) => {
-            const mapSrc = `https://www.google.com/maps?q=${encodeURIComponent(clinic.mapQuery)}&output=embed`;
+          {contactClinics.map((clinic) => {
+            const mapSrc =
+              clinic.mapEmbedUrl ||
+              `https://www.google.com/maps?q=${encodeURIComponent(clinic.mapQuery)}&output=embed`;
             return (
               <article
                 key={clinic.shortName}
@@ -60,11 +62,9 @@ export default function ContactLocations() {
                     src={mapSrc}
                     className="h-full w-full border-0 grayscale-[15%] transition duration-500 group-hover:grayscale-0"
                     loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade"
+                    allowFullScreen
+                    referrerPolicy="strict-origin-when-cross-origin"
                   />
-                  <span className="absolute top-4 left-4 rounded-full bg-[#174e53] px-3 py-1.5 text-[10px] font-bold tracking-[.12em] text-white uppercase shadow-lg">
-                    Clinic {String(index + 1).padStart(2, "0")}
-                  </span>
                 </div>
 
                 <div className="p-5 sm:p-6 lg:p-7">

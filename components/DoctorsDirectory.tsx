@@ -2,21 +2,21 @@ import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { localDoctorImage, type DoctorsData } from "@/lib/contentApi";
+import { isMainClinic } from "@/lib/clinics";
 
 const PAGE_SIZE = 9;
 
 export default function DoctorsDirectory({ data }: { data: DoctorsData }) {
   const doctors = data.items;
-  const clinics = ["All Clinics", ...data.clinics.map((item) => item.name)];
-  const [clinic, setClinic] = useState(data.clinics[0]?.name || "Calicut");
-  const [activeClinic, setActiveClinic] = useState("All Clinics");
+  const mainClinics = data.clinics.filter((item) => isMainClinic(item.slug));
+  const clinics = mainClinics.map((item) => item.name);
+  const defaultClinic = mainClinics[0]?.name || "Calicut";
+  const [clinic, setClinic] = useState(defaultClinic);
+  const [activeClinic, setActiveClinic] = useState(defaultClinic);
   const [page, setPage] = useState(1);
 
   const filteredDoctors = useMemo(
-    () =>
-      activeClinic === "All Clinics"
-        ? doctors
-        : doctors.filter((doctor) => doctor.clinics.some((item) => item.name === activeClinic)),
+    () => doctors.filter((doctor) => doctor.clinics.some((item) => item.name === activeClinic)),
     [activeClinic, doctors],
   );
   const totalPages = Math.max(1, Math.ceil(filteredDoctors.length / PAGE_SIZE));
@@ -47,10 +47,13 @@ export default function DoctorsDirectory({ data }: { data: DoctorsData }) {
           <select
             id="doctor-clinic"
             value={clinic}
-            onChange={(event) => setClinic(event.target.value)}
+            onChange={(event) => {
+              setClinic(event.target.value);
+              chooseClinic(event.target.value);
+            }}
             className="h-12 w-full rounded-full border border-[#46aaa8] bg-[#22cdbd] px-6 text-sm font-semibold text-[#23666a] uppercase outline-none focus:ring-4 focus:ring-[#25bfae]/20"
           >
-            {clinics.slice(1).map((item) => (
+            {clinics.map((item) => (
               <option key={item}>{item}</option>
             ))}
           </select>
@@ -64,17 +67,9 @@ export default function DoctorsDirectory({ data }: { data: DoctorsData }) {
           <span className="hidden h-px bg-[#94babb] sm:block" />
         </div>
 
-        {activeClinic !== "All Clinics" && (
-          <div className="mt-5 flex justify-center">
-            <button
-              type="button"
-              onClick={() => chooseClinic("All Clinics")}
-              className="text-sm font-bold text-[#286f73] underline decoration-[#25bfae] decoration-2 underline-offset-4"
-            >
-              Showing {activeClinic} doctors · View all
-            </button>
-          </div>
-        )}
+        <p className="mt-5 text-center text-sm font-bold text-[#286f73]">
+          Showing {activeClinic} doctors
+        </p>
 
         <div className="mt-14 grid gap-9 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-16 lg:gap-y-16">
           {visibleDoctors.map((doctor, index) => (

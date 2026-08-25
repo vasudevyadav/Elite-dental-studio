@@ -1,6 +1,5 @@
 import BookAppointmentSection from "@/components/BookAppointmentSection";
 import DoctorsDirectory from "@/components/DoctorsDirectory";
-import FAQSection from "@/components/FAQSection";
 import SitePage from "@/components/SitePage";
 import { getContent, type DoctorsData } from "@/lib/contentApi";
 
@@ -8,7 +7,6 @@ export default function DoctorsPage({ data }: { data: DoctorsData }) {
   return (
     <SitePage title={data.pageSeo.metaTitle} description={data.pageSeo.metaDescription}>
       <DoctorsDirectory data={data} />
-      <FAQSection />
       <BookAppointmentSection />
     </SitePage>
   );
