@@ -7,7 +7,7 @@ export default function FAQSection({ content = homeFaqContent }: { content?: FAQ
 
   return (
     <section className="faq-section mx-auto max-w-7xl px-5 py-6 sm:px-8 lg:px-12 lg:py-10">
-      <div className="bg-dent-surface rounded-[30px] px-6 py-10 sm:px-10 lg:grid lg:grid-cols-[0.9fr_1.1fr] lg:gap-14 lg:px-14 lg:py-10">
+      <div className="bg-dent-surface items-center rounded-[30px] px-6 py-10 sm:px-10 lg:grid lg:grid-cols-[0.9fr_1.1fr] lg:gap-14 lg:px-14 lg:py-10">
         <div>
           <p className="text-dent-accent text-sm font-extrabold uppercase sm:text-base">
             {content.eyebrow}

@@ -1,14 +1,5 @@
 import Image from "next/image";
 
-const candidates = [
-  "Gum disease with deeper pockets needing precise cleaning.",
-  "Excess gum tissue covering teeth or affecting cleaning access.",
-  "Dark gum pigmentation you want addressed cosmetically.",
-  "A tight frenum causing tongue tie, lip tie or tooth gaps.",
-  "Mouth ulcers or soft tissue growths needing clinical care.",
-  "A gummy smile requiring gum line reshaping.",
-];
-
 export default function CandidateSection({
   treatmentName,
   data,
@@ -16,7 +7,8 @@ export default function CandidateSection({
   treatmentName: string;
   data?: Record<string, unknown>;
 }) {
-  const items = (data?.items as string[] | undefined) || candidates;
+  const items = (data?.items as string[] | undefined) || [];
+  if (!items.length) return null;
   return (
     <section className="grid items-center gap-6 rounded-[22px] bg-[#ecfaf7] p-6 lg:grid-cols-[minmax(0,1fr)_minmax(520px,600px)] lg:p-16">
       <div>

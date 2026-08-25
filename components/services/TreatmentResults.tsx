@@ -2,20 +2,23 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRef, useState } from "react";
 
-const results = [
-  { src: "/cases/case-01.webp", label: "Smile rehabilitation" },
-  { src: "/cases/case-09.webp", label: "Alignment correction" },
-  { src: "/cases/case-02.webp", label: "Aesthetic restoration" },
-] as const;
+type ResultItem = {
+  id?: string;
+  label: string;
+  beforeImage: { url: string; alt?: string };
+  afterImage: { url: string; alt?: string };
+};
 
 function ResultImage({
   src,
   label,
   side,
+  combined,
 }: {
   src: string;
   label: string;
   side: "before" | "after";
+  combined: boolean;
 }) {
   return (
     <Image
@@ -23,15 +26,20 @@ function ResultImage({
       alt={`${label} ${side}`}
       width={1440}
       height={1440}
-      className={`absolute left-0 h-[200%] w-full max-w-none object-cover ${side === "before" ? "top-0 object-top" : "bottom-0 object-bottom"}`}
+      className={
+        combined
+          ? `absolute left-0 h-[200%] w-full max-w-none object-cover ${side === "before" ? "top-0 object-top" : "bottom-0 object-bottom"}`
+          : "absolute inset-0 h-full w-full object-cover"
+      }
       sizes="(max-width: 768px) 88vw, 33vw"
     />
   );
 }
 
-function ComparisonCard({ src, label }: { src: string; label: string }) {
+function ComparisonCard({ item }: { item: ResultItem }) {
   const [position, setPosition] = useState(50);
   const frameRef = useRef<HTMLDivElement>(null);
+  const combined = item.beforeImage.url === item.afterImage.url;
   const updatePosition = (clientX: number) => {
     const bounds = frameRef.current?.getBoundingClientRect();
     if (!bounds) return;
@@ -41,12 +49,22 @@ function ComparisonCard({ src, label }: { src: string; label: string }) {
   return (
     <article className="overflow-hidden rounded-[22px] border border-[#c6dfdc] bg-white shadow-[0_16px_40px_rgba(18,75,79,.09)]">
       <div ref={frameRef} className="relative aspect-[1.32/1] overflow-hidden bg-[#174e53]">
-        <ResultImage src={src} label={label} side="after" />
+        <ResultImage
+          src={item.afterImage.url}
+          label={item.label}
+          side="after"
+          combined={combined}
+        />
         <div
           className="absolute inset-0 overflow-hidden"
           style={{ clipPath: `inset(0 ${100 - position}% 0 0)` }}
         >
-          <ResultImage src={src} label={label} side="before" />
+          <ResultImage
+            src={item.beforeImage.url}
+            label={item.label}
+            side="before"
+            combined={combined}
+          />
         </div>
         <span className="pointer-events-none absolute top-4 left-4 z-10 rounded-full bg-[#174e53]/85 px-3 py-1.5 text-[10px] font-bold tracking-[.12em] text-white uppercase backdrop-blur">
           Before
@@ -67,7 +85,7 @@ function ComparisonCard({ src, label }: { src: string; label: string }) {
         <div
           role="slider"
           tabIndex={0}
-          aria-label={`Compare before and after — ${label}`}
+          aria-label={`Compare before and after — ${item.label}`}
           aria-valuemin={0}
           aria-valuemax={100}
           aria-valuenow={Math.round(position)}
@@ -97,6 +115,13 @@ export default function TreatmentResults({
   serviceTitle: string;
   data?: Record<string, unknown>;
 }) {
+  const items = (data?.items as ResultItem[] | undefined)?.filter(
+    (item) => item.beforeImage?.url && item.afterImage?.url,
+  );
+  if (!items?.length) return null;
+
+  const viewAll = data?.viewAll as { label?: string; url?: string } | undefined;
+
   return (
     <section className="overflow-hidden bg-[#f2f9f8] px-5 py-16 sm:px-8 sm:py-20 lg:px-12">
       <div className="mx-auto max-w-7xl">
@@ -115,21 +140,21 @@ export default function TreatmentResults({
           </p>
         </div>
         <div className="-mx-5 mt-10 flex snap-x [scrollbar-width:none] gap-5 overflow-x-auto px-5 pb-5 sm:mx-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-3 [&::-webkit-scrollbar]:hidden">
-          {results.map((result) => (
+          {items.map((item) => (
             <div
-              key={result.src}
+              key={item.id || `${item.label}-${item.beforeImage.url}`}
               className="w-[86vw] max-w-[390px] shrink-0 snap-center sm:w-auto sm:max-w-none"
             >
-              <ComparisonCard {...result} />
+              <ComparisonCard item={item} />
             </div>
           ))}
         </div>
         <div className="mt-14 flex w-full justify-center text-center">
           <Link
-            href="/gallery/cases"
+            href={viewAll?.url || "/gallery/cases"}
             className="rounded-xl bg-[#168f85] px-10 py-2 text-lg font-semibold text-white"
           >
-            View all smile transformations →
+            {viewAll?.label || "View all smile transformations →"}
           </Link>
         </div>
       </div>
