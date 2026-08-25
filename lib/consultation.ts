@@ -19,12 +19,15 @@ async function parseConsultationResponse(response: Response): Promise<Consultati
   const data = await response.json();
   return {
     success: Boolean(data.success),
-    message: data.message || (data.success ? "Request submitted successfully" : "Something went wrong"),
+    message:
+      data.message || (data.success ? "Request submitted successfully" : "Something went wrong"),
     errors: data.errors,
   };
 }
 
-export async function submitConsultation(payload: ConsultationPayload): Promise<ConsultationResult> {
+export async function submitConsultation(
+  payload: ConsultationPayload,
+): Promise<ConsultationResult> {
   try {
     const response = await fetch("/api/consultation", {
       method: "POST",

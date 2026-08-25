@@ -7,6 +7,7 @@ export type ContactClinic = {
   email?: string;
   mapUrl: string;
   mapQuery: string;
+  mapEmbedUrl?: string;
 };
 
 export const contactClinics: ContactClinic[] = [
@@ -35,8 +36,10 @@ export const contactClinics: ContactClinic[] = [
     phone: "+91 9567 124 888",
     landline: "0484 4024 888",
     email: "elitedentalkochireception@gmail.com",
-    mapUrl: "https://share.google/rBjee9uoOFuyUrBiN",
+    mapUrl: "https://maps.app.goo.gl/cPfCY2QTRJQ2NNXbA",
     mapQuery: "Elite Dental Studio | Dental Clinic In Kochi",
+    mapEmbedUrl:
+      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d9137712.686598783!2d67.33039185000001!3d9.964243799999995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b0873e4be116aa5%3A0xcde9dcdaf26b0668!2sElite%20Dental%20Studio!5e1!3m2!1sen!2sus!4v1787642325827!5m2!1sen!2sus",
   },
   {
     name: "Kannur Clinic",
@@ -55,7 +58,9 @@ export const contactClinics: ContactClinic[] = [
       "R.S. Puram, Coimbatore, Tamil Nadu 641002",
     ],
     phone: "+91 9633 694999",
-    mapUrl: "https://maps.app.goo.gl/Wx3n9HuttpszrQpy5",
+    mapUrl: "https://maps.app.goo.gl/aLQEArD1RVjUyrEe6",
     mapQuery: "Alankar Building, Diwan Bahadur Road, R.S. Puram, Coimbatore, Tamil Nadu 641002",
+    mapEmbedUrl:
+      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4446.736033085853!2d76.9504735!3d11.009234599999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba8591567f75a1f%3A0xa040008e7ebcf16c!2sElite%20Dental%20Studio!5e1!3m2!1sen!2sin!4v1787642373702!5m2!1sen!2sin",
   },
 ];

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { openConsultationPopup } from "@/lib/consultationPopup";
+import { isMainClinic } from "@/lib/clinics";
 
 type DropdownName = "treatments" | "clinic";
 
@@ -233,7 +234,7 @@ export default function Navbar() {
         if (!Array.isArray(items)) return;
         setLocationItems(
           items
-            .filter((item: { name: string; slug: string }) => item.slug === item.name.toLowerCase())
+            .filter((item: { slug: string }) => isMainClinic(item.slug))
             .map((item: { name: string; slug: string }) => ({
               label: `${item.name} Clinic`,
               description: `Visit Elite Dental Studio in ${item.name}`,
@@ -397,7 +398,7 @@ export default function Navbar() {
                 </div>
                 <a
                   href="tel:+919048611911"
-                  className="text-dent-text smooth-hover link-hover block text-base leading-none font-bold hover:text-dent-accent"
+                  className="text-dent-text smooth-hover link-hover hover:text-dent-accent block text-base leading-none font-bold"
                   aria-label="Call Elite Dental Studio emergency line at +91 9048 611 911"
                 >
                   +91 9048 611 911

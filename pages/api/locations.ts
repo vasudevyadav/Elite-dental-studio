@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { getContent, type ClinicRef } from "@/lib/contentApi";
+import { isMainClinic } from "@/lib/clinics";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== "GET")
@@ -7,7 +8,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   try {
     const data = await getContent<{ items: ClinicRef[] }>("locations");
     res.setHeader("Cache-Control", "public, s-maxage=60, stale-while-revalidate=300");
-    return res.status(200).json({ success: true, data });
+    return res.status(200).json({
+      success: true,
+      data: { ...data, items: data.items.filter((clinic) => isMainClinic(clinic.slug)) },
+    });
   } catch {
     return res.status(502).json({ success: false, message: "Locations API unavailable" });
   }

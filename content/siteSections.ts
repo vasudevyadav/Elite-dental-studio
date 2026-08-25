@@ -72,7 +72,7 @@ export const aboutFaqContent: FAQSectionContent = {
     {
       question: "Can NRI or international patients get insurance bills at Elite Dental Studio?",
       answer:
-        "Yes, Elite Dental Studio issues bills for insurance claims for patients from GCC countries including the UAE, Kuwait, Qatar, Bahrain, Oman and Saudi Arabia. Elite Dental Studio is also recognised through the Famdent Excellence in Dentistry Award for clinical innovation and outstanding patient care.",
+        "Yes, Elite Dental Studio issues bills for insurance claims for patients from GCC countries including the UAE, Kuwait, Qatar, Bahrain, Oman and Saudi Arabia.",
     },
   ],
 };

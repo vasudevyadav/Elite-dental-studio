@@ -4,7 +4,14 @@ import { submitConsultation } from "@/lib/consultation";
 import Recaptcha, { recaptchaEnabled } from "@/components/Recaptcha";
 
 export default function ContactFormSection() {
-  const [form, setForm] = useState({ clinic: "", name: "", email: "", phone: "", message: "" });
+  const [form, setForm] = useState({
+    clinic: "",
+    date: "",
+    name: "",
+    email: "",
+    phone: "",
+    message: "",
+  });
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [feedback, setFeedback] = useState("");
   const [captchaToken, setCaptchaToken] = useState("");
@@ -26,6 +33,7 @@ export default function ContactFormSection() {
       phone: form.phone,
       email: form.email,
       clinicSlug: form.clinic.toLowerCase(),
+      preferredDate: form.date,
       message: form.message,
       source: "contact-page",
       captchaToken,
@@ -33,7 +41,14 @@ export default function ContactFormSection() {
     setFeedback(result.message);
     if (result.success) {
       setStatus("success");
-      setForm({ clinic: "", name: "", email: "", phone: "", message: "" });
+      setForm({
+        clinic: "",
+        date: "",
+        name: "",
+        email: "",
+        phone: "",
+        message: "",
+      });
       router.push("/thank-you");
     } else {
       setStatus("error");
@@ -123,6 +138,19 @@ export default function ContactFormSection() {
             </label>
             <label>
               <span className="mb-2 block text-xs font-bold tracking-[.1em] text-[#526568] uppercase">
+                Preferred date
+              </span>
+              <input
+                name="date"
+                type="date"
+                value={form.date}
+                onChange={update}
+                className={fieldClass}
+                required
+              />
+            </label>
+            <label>
+              <span className="mb-2 block text-xs font-bold tracking-[.1em] text-[#526568] uppercase">
                 Full name
               </span>
               <input
@@ -148,7 +176,7 @@ export default function ContactFormSection() {
                 required
               />
             </label>
-            <label className="sm:col-span-2">
+            <label className="sm:col-span-1">
               <span className="mb-2 block text-xs font-bold tracking-[.1em] text-[#526568] uppercase">
                 Email address
               </span>

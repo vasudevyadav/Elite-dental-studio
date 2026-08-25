@@ -38,7 +38,13 @@ const ChevronDown = () => (
 
 export default function HeroSection({ slides = HOME_SLIDES, content }: HeroSectionProps) {
   const [slide, setSlide] = useState(0);
-  const [form, setForm] = useState({ name: "", phone: "", email: "", date: "", clinic: "" });
+  const [form, setForm] = useState({
+    name: "",
+    phone: "",
+    email: "",
+    date: "",
+    clinic: "",
+  });
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [feedback, setFeedback] = useState("");
   const [captchaToken, setCaptchaToken] = useState("");
@@ -57,7 +63,7 @@ export default function HeroSection({ slides = HOME_SLIDES, content }: HeroSecti
   }, [next, total]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
-    setForm((p) => ({ ...p, [e.target.name]: e.target.value }));
+    setForm((current) => ({ ...current, [e.target.name]: e.target.value }));
 
   const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -163,7 +169,7 @@ export default function HeroSection({ slides = HOME_SLIDES, content }: HeroSecti
             Book an Appointment
           </h3>
 
-          <form onSubmit={handleSubmit} className="flex flex-col gap-3 sm:gap-5">
+          <form onSubmit={handleSubmit} className="flex flex-col gap-3">
             <input
               type="text"
               name="name"
@@ -171,6 +177,7 @@ export default function HeroSection({ slides = HOME_SLIDES, content }: HeroSecti
               onChange={handleChange}
               placeholder="Enter Your Name"
               className={inputClass}
+              required
             />
 
             <input
@@ -180,6 +187,7 @@ export default function HeroSection({ slides = HOME_SLIDES, content }: HeroSecti
               onChange={handleChange}
               placeholder="Enter Your Mobile No."
               className={inputClass}
+              required
             />
 
             <input
@@ -189,19 +197,17 @@ export default function HeroSection({ slides = HOME_SLIDES, content }: HeroSecti
               onChange={handleChange}
               placeholder="Enter Your Mail"
               className={inputClass}
+              required
             />
 
             <input
-              type="text"
+              type="date"
               name="date"
               value={form.date}
               onChange={handleChange}
-              placeholder="DD/MM/YYYY"
+              aria-label="Preferred appointment date"
               className={inputClass}
-              onFocus={(e) => (e.target.type = "date")}
-              onBlur={(e) => {
-                if (!e.target.value) e.target.type = "text";
-              }}
+              required
             />
 
             <div className="relative">
@@ -211,6 +217,7 @@ export default function HeroSection({ slides = HOME_SLIDES, content }: HeroSecti
                 value={form.clinic}
                 onChange={handleChange}
                 className="focus:border-dent-accent h-11 w-full appearance-none rounded-[5px] border border-[#8bb5b6] bg-[#f5fbfa] px-4 pr-12 text-sm text-gray-500 focus:outline-none sm:h-12 sm:px-5"
+                required
               >
                 <option value="">Select Clinic</option>
                 <option value="calicut">Calicut</option>
@@ -251,7 +258,6 @@ export default function HeroSection({ slides = HOME_SLIDES, content }: HeroSecti
           className="absolute bottom-0 left-0 z-30 h-auto w-full"
         />
       </div>
-
     </section>
   );
 }

@@ -41,11 +41,23 @@ type LocationDetail = {
   };
 };
 
+function isSpecificMapUrl(mapUrl?: string) {
+  if (!mapUrl) return false;
+
+  try {
+    const url = new URL(mapUrl);
+    return url.pathname !== "/" || Boolean(url.search);
+  } catch {
+    return false;
+  }
+}
+
 export default function Home({ services, doctors, blogs, clinics }: HomeProps) {
   return (
     <SitePage
       title="Elite Dental Studio | Specialist Dental Care Across Calicut, Kochi, Kannur and Coimbatore"
       description="ISO 9001 certified specialist dental care across Calicut, Kochi, Kannur and Coimbatore, led by MDS qualified doctors since 2020."
+      showFooterLocations={false}
     >
       <h1 className="sr-only">
         Elite Dental Studio: specialist dental care in Calicut, Kochi, Kannur and Coimbatore
@@ -76,9 +88,11 @@ export const getServerSideProps: GetServerSideProps<HomeProps> = async ({ res })
   ]);
 
   const locationDetails = await Promise.all(
-    locationsData.items.filter((location) => clinicSlugs.has(location.slug)).map((location) =>
-      getContent<LocationDetail>(`locations/${location.slug}`).catch(() => null),
-    ),
+    locationsData.items
+      .filter((location) => clinicSlugs.has(location.slug))
+      .map((location) =>
+        getContent<LocationDetail>(`locations/${location.slug}`).catch(() => null),
+      ),
   );
   const clinics = Object.fromEntries(
     locationDetails
@@ -97,9 +111,10 @@ export const getServerSideProps: GetServerSideProps<HomeProps> = async ({ res })
             landline: item.contact.telephone || fallback?.landline || item.contact.mobile || "",
             email: item.contact.email || fallback?.email || "",
             addressLines,
-            mapQuery: addressLines.join(", ") || fallback?.mapQuery || item.name,
+            mapQuery: fallback?.mapQuery || addressLines.join(", ") || item.name,
+            mapEmbedUrl: fallback?.mapEmbedUrl,
             mapUrl:
-              item.contact.mapUrl ||
+              (isSpecificMapUrl(item.contact.mapUrl) ? item.contact.mapUrl : undefined) ||
               fallback?.mapUrl ||
               `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
                 addressLines.join(", ") || item.name,

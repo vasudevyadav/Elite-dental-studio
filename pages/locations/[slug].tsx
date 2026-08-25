@@ -135,7 +135,7 @@ const clinicDirectory: Record<string, ClinicDirectoryEntry> = {
     ],
     mapUrl: "https://maps.app.goo.gl/cPfCY2QTRJQ2NNXbA",
     mapEmbedUrl:
-      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d8923.547545506624!2d76.2952356!3d9.9642438!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b0873e4be116aa5%3A0xcde9dcdaf26b0668!2sElite%20Dental%20Studio!5e1!3m2!1sen!2sin!4v1787210551121!5m2!1sen!2sin",
+      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d9137712.686598783!2d67.33039185000001!3d9.964243799999995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b0873e4be116aa5%3A0xcde9dcdaf26b0668!2sElite%20Dental%20Studio!5e1!3m2!1sen!2sus!4v1787642325827!5m2!1sen!2sus",
   },
   COIMBATORE: {
     name: "Coimbatore",
@@ -148,7 +148,7 @@ const clinicDirectory: Record<string, ClinicDirectoryEntry> = {
     ],
     mapUrl: "https://maps.app.goo.gl/aLQEArD1RVjUyrEe6",
     mapEmbedUrl:
-      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4446.736033085853!2d76.9504735!3d11.009234599999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba8591567f75a1f%3A0xa040008e7ebcf16c!2sElite%20Dental%20Studio!5e1!3m2!1sen!2sin!4v1787210475188!5m2!1sen!2sin",
+      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4446.736033085853!2d76.9504735!3d11.009234599999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba8591567f75a1f%3A0xa040008e7ebcf16c!2sElite%20Dental%20Studio!5e1!3m2!1sen!2sin!4v1787642373702!5m2!1sen!2sin",
   },
 };
 
@@ -252,7 +252,8 @@ function NearestClinicPicker({ defaultClinic }: { defaultClinic: string }) {
             src={clinic.mapEmbedUrl}
             className="min-h-[300px] w-full border-0 sm:min-h-[380px]"
             loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
+            allowFullScreen
+            referrerPolicy="strict-origin-when-cross-origin"
           />
         </div>
       </div>
@@ -278,7 +279,13 @@ function renderSectionIcon(icon: unknown) {
 }
 
 function AppointmentForm({ slug, compact = false }: { slug: string; compact?: boolean }) {
-  const [form, setForm] = useState({ name: "", phone: "", email: "", date: "", clinic: "" });
+  const [form, setForm] = useState({
+    name: "",
+    phone: "",
+    email: "",
+    date: "",
+    clinic: "",
+  });
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [feedback, setFeedback] = useState("");
   const [captchaToken, setCaptchaToken] = useState("");
@@ -347,15 +354,12 @@ function AppointmentForm({ slug, compact = false }: { slug: string; compact?: bo
       />
       <input
         name="date"
-        type="text"
+        type="date"
         value={form.date}
         onChange={update}
-        placeholder="DD/MM/YYYY"
+        aria-label="Preferred appointment date"
         className={inputClass}
-        onFocus={(event) => (event.target.type = "date")}
-        onBlur={(event) => {
-          if (!event.target.value) event.target.type = "text";
-        }}
+        required
       />
       <select
         aria-label="Select clinic"

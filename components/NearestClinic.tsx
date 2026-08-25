@@ -10,6 +10,7 @@ export type Clinic = {
   addressLines: string[];
   mapQuery: string;
   mapUrl?: string;
+  mapEmbedUrl?: string;
 };
 
 export const defaultClinics: Record<string, Clinic> = {
@@ -29,17 +30,18 @@ export const defaultClinics: Record<string, Clinic> = {
   },
   KOCHI: {
     name: "KOCHI",
-    phone: "+91 9745 072 444",
-    landline: "0484 3552 444",
-    email: "elitedentalstudiokochi@gmail.com",
+    phone: "+91 9567 124 888",
+    landline: "0484 4024 888",
+    email: "elitedentalkochireception@gmail.com",
     addressLines: [
-      "2nd Floor, Marine Drive Road",
-      "Near High Court Junction",
-      "Ernakulam",
-      "Kochi, Kerala 682031",
+      "5/981 A, Main Avenue Road",
+      "Near Manorama Junction, Panampilly Nagar",
+      "Kochi, Kerala 682036",
     ],
     mapQuery: "Elite Dental Studio | Dental Clinic In Kochi",
-    mapUrl: "https://share.google/rBjee9uoOFuyUrBiN",
+    mapUrl: "https://maps.app.goo.gl/cPfCY2QTRJQ2NNXbA",
+    mapEmbedUrl:
+      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d9137712.686598783!2d67.33039185000001!3d9.964243799999995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b0873e4be116aa5%3A0xcde9dcdaf26b0668!2sElite%20Dental%20Studio!5e1!3m2!1sen!2sus!4v1787642325827!5m2!1sen!2sus",
   },
   KANNUR: {
     name: "KANNUR",
@@ -52,7 +54,7 @@ export const defaultClinics: Record<string, Clinic> = {
   },
   COIMBATORE: {
     name: "COIMBATORE",
-    phone: "+91 9745 072 222",
+    phone: "+91 9633 694999",
     landline: "0422 3552 222",
     email: "elitedentalstudiocbe@gmail.com",
     addressLines: [
@@ -62,7 +64,9 @@ export const defaultClinics: Record<string, Clinic> = {
       "Coimbatore, Tamil Nadu 641002",
     ],
     mapQuery: "Alankar Building, Diwan Bahadur Road, R.S. Puram, Coimbatore, Tamil Nadu 641002",
-    mapUrl: "https://maps.app.goo.gl/Wx3n9HuttpszrQpy5",
+    mapUrl: "https://maps.app.goo.gl/aLQEArD1RVjUyrEe6",
+    mapEmbedUrl:
+      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4446.736033085853!2d76.9504735!3d11.009234599999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba8591567f75a1f%3A0xa040008e7ebcf16c!2sElite%20Dental%20Studio!5e1!3m2!1sen!2sin!4v1787642373702!5m2!1sen!2sin",
   },
 };
 
@@ -156,7 +160,8 @@ export default function NearestClinic({
   );
   const clinic = availableClinics[selectedClinic] || availableClinics[firstClinic];
   const encodedMapQuery = encodeURIComponent(clinic.mapQuery);
-  const mapEmbedUrl = `https://www.google.com/maps?q=${encodedMapQuery}&output=embed`;
+  const mapEmbedUrl =
+    clinic.mapEmbedUrl || `https://www.google.com/maps?q=${encodedMapQuery}&output=embed`;
   const mapPageUrl =
     clinic.mapUrl ?? `https://www.google.com/maps/search/?api=1&query=${encodedMapQuery}`;
 
@@ -179,8 +184,8 @@ export default function NearestClinic({
                 onChange={(event) => setSelectedClinic(event.target.value)}
                 className="focus:border-dent-accent focus:ring-dent-accent/20 w-full appearance-none rounded-full border border-[#d9d9d9] bg-white px-8 py-3 pr-14 text-lg font-medium text-[#666] shadow-[inset_0_2px_7px_rgba(0,0,0,0.13)] transition outline-none focus:ring-4"
               >
-                {Object.values(availableClinics).map(({ name }) => (
-                  <option key={name} value={name}>
+                {Object.entries(availableClinics).map(([key, { name }]) => (
+                  <option key={key} value={key}>
                     {name}
                   </option>
                 ))}
@@ -256,7 +261,8 @@ export default function NearestClinic({
                   src={mapEmbedUrl}
                   className="h-full min-h-[190px] w-full border-0"
                   loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
+                  allowFullScreen
+                  referrerPolicy="strict-origin-when-cross-origin"
                 />
               </div>
             </div>
