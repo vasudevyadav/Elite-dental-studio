@@ -1,17 +1,6 @@
 import Image from "next/image";
 import type { Service } from "./serviceData";
 
-const procedures = [
-  ["Laser-assisted gum treatment", "Supports gum pocket care with greater precision."],
-  ["Laser gingivectomy", "Removes or reshapes excess gum tissue where needed."],
-  ["Laser gum depigmentation", "Reduces dark gum pigmentation in suitable cosmetic cases."],
-  ["Laser frenectomy", "Releases a tight frenum for tongue tie or lip tie cases."],
-  [
-    "Laser-assisted soft tissue care",
-    "Used for selected ulcers or soft tissue growths after diagnosis.",
-  ],
-];
-
 type Props = { service: Service; isLaser: boolean; data?: Record<string, unknown> };
 
 function ProcedureItem({
@@ -42,7 +31,8 @@ function ProcedureItem({
 
 export default function ProceduresSection({ service, isLaser, data }: Props) {
   const apiItems = data?.items as { title: string; description: string }[] | undefined;
-  const activeProcedures = apiItems?.map((item) => [item.title, item.description]) || procedures;
+  const activeProcedures = apiItems?.map((item) => [item.title, item.description]) || [];
+  if (!activeProcedures.length) return null;
   const mobileProcedures = activeProcedures.map(([name, copy]) => ({ name, copy }));
 
   return (

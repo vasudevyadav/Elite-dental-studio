@@ -1,24 +1,15 @@
 import Image from "next/image";
 
-const guidance = [
-  "Eat soft foods for the first two to three days.",
-  "Rinse gently with the solution your dentist recommends.",
-  "Avoid smoking during the healing period.",
-  "Do not disturb the treated area with your tongue or fingers.",
-  "Attend your follow-up visit so your dentist can check healing progress.",
-];
-
 export default function AftercareSection({ data }: { data?: Record<string, unknown> }) {
-  const items = (data?.items as string[] | undefined) || guidance;
+  const items = (data?.items as string[] | undefined) || [];
+  if (!items.length) return null;
   return (
     <section className="mt-10 grid items-center gap-10 lg:mt-16 lg:grid-cols-2 lg:gap-20">
       <div>
         <h2 className="text-2xl leading-tight font-bold text-[#2b7175] lg:text-[40px]">
           {(data?.title as string) || (
             <>
-              <span>Aftercare Following Your</span>
-              <br />
-              <span>Laser Procedure</span>
+              <span>Aftercare Following Your Treatment</span>
             </>
           )}
         </h2>

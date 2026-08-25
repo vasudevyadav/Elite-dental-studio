@@ -17,7 +17,6 @@ import TreatmentExpectationSection from "@/components/services/TreatmentExpectat
 import AftercareSection from "@/components/services/AftercareSection";
 import BenefitsSection from "@/components/services/BenefitsSection";
 import TreatmentResults from "@/components/services/TreatmentResults";
-import ServiceAccordionSection from "@/components/services/ServiceAccordionSection";
 import ComparisonTableSection from "@/components/services/ComparisonTableSection";
 import EarlyTreatmentSection from "@/components/services/EarlyTreatmentSection";
 import {
@@ -30,8 +29,10 @@ import { absoluteUrl } from "@/lib/siteUrl";
 
 type Props = { service: ServiceDetail };
 
-const sectionContent = (sections: ServiceSection[], type: ServiceSection["type"]) =>
-  sections.find((section) => section.type === type)?.content;
+const sectionContent = (sections: ServiceSection[], type: ServiceSection["type"]) => {
+  const content = sections.find((section) => section.type === type)?.content;
+  return content && Object.keys(content).length ? content : undefined;
+};
 
 export default function ServiceDetailPage({ service }: Props) {
   const isLaser = service.slug === "laser-dentistry";
@@ -39,6 +40,17 @@ export default function ServiceDetailPage({ service }: Props) {
   const canonicalUrl = service.seo?.canonicalUrl || absoluteUrl(`/services/${service.slug}`);
   const legacyService = toLegacyService(service);
   const content = (type: ServiceSection["type"]) => sectionContent(service.sections, type);
+  const overview = content("overview");
+  const introduction = content("introduction");
+  const procedures = content("procedures");
+  const candidate = content("candidate");
+  const expectation = content("expectation");
+  const aftercare = content("aftercare");
+  const benefits = content("benefits");
+  const results = content("results");
+  const hasTreatmentDetails = Boolean(
+    introduction || procedures || candidate || expectation || aftercare || benefits,
+  );
   const serviceFaqContent = service.faqs?.items?.length
     ? {
         eyebrow: "FAQs",
@@ -63,46 +75,62 @@ export default function ServiceDetailPage({ service }: Props) {
         {service.seo?.robots && <meta name="robots" content={service.seo.robots} />}
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="Elite Dental Studio" />
-        <meta property="og:title" content={service.seo?.metaTitle || `${service.title} | Elite Dental Studio`} />
+        <meta
+          property="og:title"
+          content={service.seo?.metaTitle || `${service.title} | Elite Dental Studio`}
+        />
         <meta
           property="og:description"
-          content={service.seo?.metaDescription || `${service.title} consultation and treatment at Elite Dental Studio.`}
+          content={
+            service.seo?.metaDescription ||
+            `${service.title} consultation and treatment at Elite Dental Studio.`
+          }
         />
         <meta property="og:url" content={canonicalUrl} />
-        <meta property="og:image" content={service.seo?.ogImage || service.hero?.image?.url || absoluteUrl("/navbar/elite-logo.png")} />
+        <meta
+          property="og:image"
+          content={
+            service.seo?.ogImage ||
+            service.hero?.image?.url ||
+            absoluteUrl("/navbar/elite-logo.png")
+          }
+        />
       </Head>
 
       <Navbar />
 
       <main className="overflow-x-clip">
         <ServiceHero inner image={service.hero?.image?.url} alt={service.hero?.image?.alt} />
-        <ServiceOverview
-          serviceTitle={service.title}
-          treatmentName={treatmentName}
-          isLaser={isLaser}
-          data={content("overview")}
-        />
-
-        <div className="mx-auto max-w-screen-2xl px-5 py-2 text-gray-800 sm:px-8 lg:px-28 lg:py-20">
-          <ServiceIntroduction
-            isLaser={isLaser}
+        {overview && (
+          <ServiceOverview
             serviceTitle={service.title}
             treatmentName={treatmentName}
-            data={content("introduction")}
-          />
-          <ProceduresSection
-            service={legacyService}
             isLaser={isLaser}
-            data={content("procedures")}
+            data={overview}
           />
-          <CandidateSection treatmentName={treatmentName} data={content("candidate")} />
-          <TreatmentExpectationSection data={content("expectation")} />
-          <AftercareSection data={content("aftercare")} />
-          <BenefitsSection treatmentName={treatmentName} data={content("benefits")} />
-          <ServiceAccordionSection items={service.accordionItems} />
-        </div>
+        )}
 
-        <TreatmentResults serviceTitle={service.title} data={content("results")} />
+        {hasTreatmentDetails && (
+          <div className="mx-auto max-w-screen-2xl px-5 py-2 text-gray-800 sm:px-8 lg:px-28 lg:py-20">
+            {introduction && (
+              <ServiceIntroduction
+                isLaser={isLaser}
+                serviceTitle={service.title}
+                treatmentName={treatmentName}
+                data={introduction}
+              />
+            )}
+            {procedures && (
+              <ProceduresSection service={legacyService} isLaser={isLaser} data={procedures} />
+            )}
+            {candidate && <CandidateSection treatmentName={treatmentName} data={candidate} />}
+            {expectation && <TreatmentExpectationSection data={expectation} />}
+            {aftercare && <AftercareSection data={aftercare} />}
+            {benefits && <BenefitsSection treatmentName={treatmentName} data={benefits} />}
+          </div>
+        )}
+
+        {results && <TreatmentResults serviceTitle={service.title} data={results} />}
 
         <div className="mx-auto max-w-screen-2xl px-5 sm:px-8 lg:px-28">
           <ComparisonTableSection data={service.comparisonTable} />
@@ -110,14 +138,16 @@ export default function ServiceDetailPage({ service }: Props) {
         </div>
 
         <NearestClinic serviceName={treatmentName} />
-        <DoctorsSection
-          initialDoctors={service.specialists?.doctors}
-          title={service.specialists?.title}
-          description={service.specialists?.description}
-        />
+        {service.specialists?.doctors?.length ? (
+          <DoctorsSection
+            initialDoctors={service.specialists.doctors}
+            title={service.specialists.title}
+            description={service.specialists.description}
+          />
+        ) : null}
         <TestimonialsSection />
         <BlogSection />
-        <FAQSection content={serviceFaqContent} />
+        {serviceFaqContent && <FAQSection content={serviceFaqContent} />}
         <BookAppointmentSection />
       </main>
 

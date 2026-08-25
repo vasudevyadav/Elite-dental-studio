@@ -1,14 +1,5 @@
 import Image from "next/image";
 
-const benefits = [
-  "More precise soft tissue handling with less disruption to the area around it.",
-  "Often less bleeding during the procedure compared to conventional methods.",
-  "Reduced need for sutures in certain soft tissue procedures.",
-  "Faster soft tissue recovery in selected cases.",
-  "Better gum contour and appearance outcomes in cosmetic procedures.",
-  "Lower risk of post-procedure infection in suitable cases.",
-];
-
 const positions = [
   "left-[32%] top-[20%]",
   "left-[13.5%] top-[42%]",
@@ -25,7 +16,8 @@ export default function BenefitsSection({
   treatmentName: string;
   data?: Record<string, unknown>;
 }) {
-  const activeBenefits = (data?.items as string[] | undefined) || benefits;
+  const activeBenefits = (data?.items as string[] | undefined) || [];
+  if (!activeBenefits.length) return null;
   return (
     <section className="pt-10 pb-2 text-center lg:pt-20 lg:pb-12">
       <h2 className="text-2xl leading-tight font-bold text-[#2b7175] lg:text-[40px]">
