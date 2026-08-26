@@ -1,35 +1,21 @@
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import { submitConsultation } from "@/lib/consultation";
+import { useEffect, useRef, useState } from "react";
+import BiginAppointmentWidget from "@/components/BiginAppointmentWidget";
 import { OPEN_CONSULTATION_POPUP_EVENT } from "@/lib/consultationPopup";
-import Recaptcha, { recaptchaEnabled } from "@/components/Recaptcha";
 
-const SESSION_KEY = "eds_consultation_popup_shown";
 const SCROLL_THRESHOLD = 0.4;
 
 export default function ConsultationPopup() {
   const [open, setOpen] = useState(false);
-  const [form, setForm] = useState({
-    name: "",
-    phone: "",
-    email: "",
-    date: "",
-    clinic: "",
-  });
-  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
-  const [feedback, setFeedback] = useState("");
-  const [captchaToken, setCaptchaToken] = useState("");
-  const router = useRouter();
+  const hasShownRef = useRef(false);
 
   useEffect(() => {
-    if (sessionStorage.getItem(SESSION_KEY)) return;
-
     const onScroll = () => {
+      if (hasShownRef.current) return;
       const scrollable = document.documentElement.scrollHeight - window.innerHeight;
       const progress = scrollable > 0 ? window.scrollY / scrollable : 0;
       if (progress >= SCROLL_THRESHOLD) {
+        hasShownRef.current = true;
         setOpen(true);
-        sessionStorage.setItem(SESSION_KEY, "1");
         window.removeEventListener("scroll", onScroll);
       }
     };
@@ -40,8 +26,8 @@ export default function ConsultationPopup() {
 
   useEffect(() => {
     const onOpenRequest = () => {
+      hasShownRef.current = true;
       setOpen(true);
-      sessionStorage.setItem(SESSION_KEY, "1");
     };
     window.addEventListener(OPEN_CONSULTATION_POPUP_EVENT, onOpenRequest);
     return () => window.removeEventListener(OPEN_CONSULTATION_POPUP_EVENT, onOpenRequest);
@@ -66,8 +52,8 @@ export default function ConsultationPopup() {
       if (!isAppointmentAnchor && !isBookingAction) return;
 
       event.preventDefault();
+      hasShownRef.current = true;
       setOpen(true);
-      sessionStorage.setItem(SESSION_KEY, "1");
     };
 
     document.addEventListener("click", onAppointmentClick, true);
@@ -88,40 +74,7 @@ export default function ConsultationPopup() {
     };
   }, [open]);
 
-  const update = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
-    setForm((current) => ({ ...current, [event.target.name]: event.target.value }));
-
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (recaptchaEnabled() && !captchaToken) {
-      setStatus("error");
-      setFeedback("Please complete the CAPTCHA.");
-      return;
-    }
-    setStatus("submitting");
-    const result = await submitConsultation({
-      name: form.name,
-      phone: form.phone,
-      email: form.email,
-      clinicSlug: form.clinic,
-      preferredDate: form.date,
-      source: "appointment-popup",
-      captchaToken,
-    });
-    setFeedback(result.message);
-    if (result.success) {
-      setStatus("success");
-      setOpen(false);
-      router.push("/thank-you");
-    } else {
-      setStatus("error");
-    }
-  };
-
   if (!open) return null;
-
-  const fieldClass =
-    "h-10 w-full rounded-[6px] border border-[#8bb5b6] bg-[#f5fbfa] px-3 text-[13px] text-gray-700 placeholder-gray-500 outline-none focus:border-dent-accent focus:ring-1 focus:ring-dent-accent sm:h-11 sm:px-4 sm:text-sm";
 
   return (
     <div
@@ -154,71 +107,7 @@ export default function ConsultationPopup() {
         <p className="mb-3 pr-7 text-xs leading-5 text-[#6d7c7e] sm:mb-5 sm:pr-0 sm:text-sm">
           Share your details and our team will call you back shortly.
         </p>
-        <form onSubmit={handleSubmit} className="flex flex-col gap-2.5 sm:gap-3">
-          <input
-            type="text"
-            name="name"
-            value={form.name}
-            onChange={update}
-            placeholder="Enter Your Name"
-            className={fieldClass}
-            required
-          />
-          <input
-            type="tel"
-            name="phone"
-            value={form.phone}
-            onChange={update}
-            placeholder="Enter Your Mobile No."
-            className={fieldClass}
-            required
-          />
-          <input
-            type="email"
-            name="email"
-            value={form.email}
-            onChange={update}
-            placeholder="Enter Your Mail"
-            className={fieldClass}
-            required
-          />
-          <input
-            type="date"
-            name="date"
-            value={form.date}
-            onChange={update}
-            aria-label="Preferred appointment date"
-            className={fieldClass}
-            required
-          />
-          <select
-            aria-label="Select clinic"
-            name="clinic"
-            value={form.clinic}
-            onChange={update}
-            className={`${fieldClass} appearance-none`}
-            required
-          >
-            <option value="">Select Clinic</option>
-            <option value="calicut">Calicut</option>
-            <option value="kochi">Kochi</option>
-            <option value="kannur">Kannur</option>
-            <option value="coimbatore">Coimbatore</option>
-          </select>
-          <div className="max-w-full overflow-hidden max-[359px]:[&>div]:origin-left max-[359px]:[&>div]:scale-[0.84]">
-            <Recaptcha onTokenChange={setCaptchaToken} />
-          </div>
-          <button
-            type="submit"
-            disabled={status === "submitting"}
-            className="smooth-hover button-hover hover-lift bg-dent-accent hover:bg-dent-nav mt-0.5 w-full rounded-[5px] py-2.5 text-sm font-bold text-white disabled:opacity-60 sm:mt-1 sm:py-3"
-          >
-            {status === "submitting" ? "Submitting..." : "Book Now!"}
-          </button>
-          {feedback && status === "error" && (
-            <p className="text-center text-sm font-semibold text-red-600">{feedback}</p>
-          )}
-        </form>
+        <BiginAppointmentWidget variant="popup" />
       </div>
     </div>
   );

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { submitConsultation } from "@/lib/consultation";
+import { MAIN_CLINICS } from "@/lib/clinics";
 import Recaptcha, { recaptchaEnabled } from "@/components/Recaptcha";
 
 export default function ContactFormSection() {
@@ -32,7 +33,7 @@ export default function ContactFormSection() {
       name: form.name,
       phone: form.phone,
       email: form.email,
-      clinicSlug: form.clinic.toLowerCase(),
+      clinicSlug: form.clinic,
       preferredDate: form.date,
       message: form.message,
       source: "contact-page",
@@ -130,10 +131,11 @@ export default function ContactFormSection() {
                 required
               >
                 <option value="">Select a clinic</option>
-                <option>Calicut</option>
-                <option>Kochi</option>
-                <option>Kannur</option>
-                <option>Coimbatore</option>
+                {MAIN_CLINICS.map((clinic) => (
+                  <option key={clinic.slug} value={clinic.slug}>
+                    {clinic.name}
+                  </option>
+                ))}
               </select>
             </label>
             <label>

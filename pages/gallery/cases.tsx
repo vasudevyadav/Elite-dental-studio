@@ -20,19 +20,16 @@ type GalleryCase = {
   locationSlug: string;
 };
 
-const fallbackCases: GalleryCase[] = Array.from({ length: 12 }, (_, index) => ({
-  id: `fallback-case-${index + 1}`,
-  beforeSrc: `/cases/case-${String(index + 1).padStart(2, "0")}.webp`,
-  afterSrc: `/cases/case-${String(index + 1).padStart(2, "0")}.webp`,
-  usesCombinedImage: true,
-  title: `Smile transformation ${String(index + 1).padStart(2, "0")}`,
-  label:
-    index % 3 === 0 ? "Smile Design" : index % 3 === 1 ? "Restorative Care" : "Advanced Dentistry",
-  location: index < 4 ? "Calicut" : index < 8 ? "Kochi" : "Kannur",
-  treatmentSlug:
-    index % 3 === 0 ? "smile-design" : index % 3 === 1 ? "restorative-care" : "advanced-dentistry",
-  locationSlug: index < 4 ? "calicut" : index < 8 ? "kochi" : "kannur",
-}));
+const CASES_PER_PAGE = 6;
+
+function decodeText(value: string) {
+  return value
+    .replace(/&#038;|&amp;/g, "&")
+    .replace(/&quot;/g, '"')
+    .replace(/&#039;|&apos;/g, "'")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">");
+}
 
 const ArrowIcon = ({ reverse = false }: { reverse?: boolean }) => (
   <svg
@@ -66,12 +63,13 @@ function ResultHalf({
       width={1440}
       height={1440}
       priority={priority}
+      loading={priority ? "eager" : "lazy"}
       className={
         usesCombinedImage
           ? `absolute left-0 h-[200%] w-full max-w-none object-cover ${side === "before" ? "top-0 object-top" : "bottom-0 object-bottom"}`
           : "absolute inset-0 h-full w-full object-cover"
       }
-      sizes="(max-width:640px) 100vw,(max-width:1024px) 50vw,50vw"
+      sizes="(max-width: 639px) 100vw, (max-width: 1023px) 50vw, 40vw"
     />
   );
 }
@@ -162,41 +160,37 @@ function BeforeAfterSlider({
 
 export default function CasesPage({ data }: { data: Record<string, any> }) {
   const cases: GalleryCase[] = data.items?.length
-    ? data.items
-        .filter((item: Record<string, any>) => isMainClinic(item.location?.slug))
-        .flatMap((item: Record<string, any>) => {
-          const imageSets = item.images?.length ? item.images : [item];
+    ? data.items.flatMap((item: Record<string, any>) => {
+        const imageSets = item.images?.length ? item.images : [item];
 
-          return imageSets.flatMap((images: Record<string, any>, imageIndex: number) => {
-            const beforeSrc = images.beforeImage?.url;
-            const afterSrc = images.afterImage?.url;
-            const combinedSrc = images.combinedImage?.url;
-            const hasSeparateImages = beforeSrc && afterSrc && beforeSrc !== afterSrc;
-            const displayBefore = hasSeparateImages
-              ? beforeSrc
-              : combinedSrc || beforeSrc || afterSrc;
-            const displayAfter = hasSeparateImages
-              ? afterSrc
-              : combinedSrc || afterSrc || beforeSrc;
+        return imageSets.flatMap((images: Record<string, any>, imageIndex: number) => {
+          const beforeSrc = images.beforeImage?.url;
+          const afterSrc = images.afterImage?.url;
+          const combinedSrc = images.combinedImage?.url;
+          const hasSeparateImages = beforeSrc && afterSrc && beforeSrc !== afterSrc;
+          const displayBefore = hasSeparateImages
+            ? beforeSrc
+            : combinedSrc || beforeSrc || afterSrc;
+          const displayAfter = hasSeparateImages ? afterSrc : combinedSrc || afterSrc || beforeSrc;
 
-            if (!displayBefore || !displayAfter) return [];
+          if (!displayBefore || !displayAfter) return [];
 
-            return [
-              {
-                id: `${item.id || item.slug || "case"}-${imageIndex}`,
-                beforeSrc: displayBefore,
-                afterSrc: displayAfter,
-                usesCombinedImage: !hasSeparateImages,
-                title: item.title || "Smile transformation",
-                label: item.category?.name || "Dental treatment",
-                location: item.location?.name || "",
-                treatmentSlug: item.category?.slug || "",
-                locationSlug: item.location?.slug || "",
-              },
-            ];
-          });
-        })
-    : fallbackCases;
+          return [
+            {
+              id: `${item.id || item.slug || "case"}-${imageIndex}`,
+              beforeSrc: displayBefore,
+              afterSrc: displayAfter,
+              usesCombinedImage: !hasSeparateImages,
+              title: item.title || "Smile transformation",
+              label: item.category?.name || "Dental treatment",
+              location: item.location?.name || "",
+              treatmentSlug: item.category?.slug || "",
+              locationSlug: item.location?.slug || "",
+            },
+          ];
+        });
+      })
+    : [];
   const locations = (data.filters?.locations || []).filter((location: Record<string, string>) =>
     isMainClinic(location.slug),
   );
@@ -204,6 +198,30 @@ export default function CasesPage({ data }: { data: Record<string, any> }) {
   const [selected, setSelected] = useState<number | null>(null);
   const [activeLocation, setActiveLocation] = useState<string>("");
   const [activeTreatment, setActiveTreatment] = useState<string>("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const treatmentScrollRef = useRef<HTMLDivElement>(null);
+  const caseResultsRef = useRef<HTMLDivElement>(null);
+
+  const scrollTreatments = (direction: -1 | 1) => {
+    treatmentScrollRef.current?.scrollBy({
+      left: direction * Math.min(420, treatmentScrollRef.current.clientWidth * 0.75),
+      behavior: "smooth",
+    });
+  };
+
+  const centerTreatment = (button: HTMLButtonElement) => {
+    const container = treatmentScrollRef.current;
+    if (!container) return;
+    const left = button.offsetLeft - (container.clientWidth - button.offsetWidth) / 2;
+    container.scrollTo({ left: Math.max(0, left), behavior: "smooth" });
+  };
+
+  const selectCasePage = (page: number) => {
+    setCurrentPage(Math.max(1, Math.min(totalPages, page)));
+    requestAnimationFrame(() =>
+      caseResultsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }),
+    );
+  };
 
   useEffect(() => {
     if (selected === null) return;
@@ -235,7 +253,13 @@ export default function CasesPage({ data }: { data: Record<string, any> }) {
         (!activeLocation || item.locationSlug === activeLocation) &&
         (!activeTreatment || item.treatmentSlug === activeTreatment),
     );
-  const featuredCases = visibleCases.slice(0, 3);
+  const totalPages = Math.max(1, Math.ceil(visibleCases.length / CASES_PER_PAGE));
+  const activePage = Math.min(currentPage, totalPages);
+  const paginatedCases = visibleCases.slice(
+    (activePage - 1) * CASES_PER_PAGE,
+    activePage * CASES_PER_PAGE,
+  );
+  const featuredCases = paginatedCases.slice(0, 3);
   const hasFeaturedMosaic = featuredCases.length >= 3;
 
   const caseCard = (item: (typeof visibleCases)[number], className = "") => (
@@ -253,7 +277,7 @@ export default function CasesPage({ data }: { data: Record<string, any> }) {
       <span className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#031d20]/75 via-transparent to-transparent" />
       <span className="pointer-events-none absolute right-4 bottom-4 left-4 z-20">
         <span className="block text-[9px] font-bold tracking-[.14em] text-[#6ce1d6] uppercase">
-          {item.location} · {item.label}
+          {[item.location, decodeText(item.label)].filter(Boolean).join(" · ")}
         </span>
         <span className="mt-1 block text-xs font-bold text-white sm:text-sm">
           Case {String(item.originalIndex + 1).padStart(2, "0")}
@@ -305,7 +329,10 @@ export default function CasesPage({ data }: { data: Record<string, any> }) {
               <div className="grid grid-cols-2 gap-2 sm:flex">
                 <button
                   type="button"
-                  onClick={() => setActiveLocation("")}
+                  onClick={() => {
+                    setActiveLocation("");
+                    setCurrentPage(1);
+                  }}
                   aria-pressed={!activeLocation}
                   className={`rounded-xl px-7 py-3 text-sm font-bold transition ${!activeLocation ? "bg-[#25bfae] text-white shadow-[0_8px_20px_rgba(37,191,174,.22)]" : "bg-white/[.08] text-white/90 hover:bg-white/15 hover:text-white"}`}
                 >
@@ -315,7 +342,10 @@ export default function CasesPage({ data }: { data: Record<string, any> }) {
                   <button
                     key={location.slug}
                     type="button"
-                    onClick={() => setActiveLocation(location.slug)}
+                    onClick={() => {
+                      setActiveLocation(location.slug);
+                      setCurrentPage(1);
+                    }}
                     aria-pressed={activeLocation === location.slug}
                     className={`rounded-xl px-7 py-3 text-sm font-bold transition ${activeLocation === location.slug ? "bg-[#25bfae] text-white shadow-[0_8px_20px_rgba(37,191,174,.22)]" : "bg-white/[.08] text-white/90 hover:bg-white/15 hover:text-white"}`}
                   >
@@ -325,16 +355,43 @@ export default function CasesPage({ data }: { data: Record<string, any> }) {
               </div>
             </div>
             {treatments.length > 0 && (
-              <div className="mt-5 border-t border-white/10 pt-4">
-                <span className="mb-3 block px-2 text-xs font-bold tracking-[.18em] text-white/85 uppercase">
-                  Filter by treatment
-                </span>
-                <div className="grid grid-cols-2 gap-2 sm:flex">
+              <div className="mt-5 min-w-0 overflow-hidden border-t border-white/10 pt-4">
+                <div className="mb-3 flex items-center justify-between gap-4 px-2">
+                  <span className="text-xs font-bold tracking-[.18em] text-white/85 uppercase">
+                    Filter by treatment
+                  </span>
+                  <div className="flex shrink-0 gap-2" aria-label="Scroll treatment filters">
+                    <button
+                      type="button"
+                      onClick={() => scrollTreatments(-1)}
+                      aria-label="Scroll treatments left"
+                      className="grid h-9 w-9 place-items-center rounded-full border border-white/15 bg-white/[.08] text-white transition hover:bg-white/15"
+                    >
+                      <ArrowIcon reverse />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => scrollTreatments(1)}
+                      aria-label="Scroll treatments right"
+                      className="grid h-9 w-9 place-items-center rounded-full border border-white/15 bg-white/[.08] text-white transition hover:bg-white/15"
+                    >
+                      <ArrowIcon />
+                    </button>
+                  </div>
+                </div>
+                <div
+                  ref={treatmentScrollRef}
+                  className="flex snap-x snap-mandatory [scrollbar-width:thin] [scrollbar-color:rgba(94,221,209,.75)_rgba(255,255,255,.08)] gap-2 overflow-x-auto overscroll-x-contain scroll-smooth px-1 pb-3 [&::-webkit-scrollbar]:h-1.5 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-[#5eddd1]/75 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-track]:bg-white/[.08]"
+                >
                   <button
                     type="button"
-                    onClick={() => setActiveTreatment("")}
+                    onClick={(event) => {
+                      setActiveTreatment("");
+                      setCurrentPage(1);
+                      centerTreatment(event.currentTarget);
+                    }}
                     aria-pressed={!activeTreatment}
-                    className={`rounded-xl px-7 py-3 text-sm font-bold transition ${!activeTreatment ? "bg-[#25bfae] text-white" : "bg-white/[.08] text-white/90 hover:bg-white/15"}`}
+                    className={`min-h-16 min-w-24 flex-none snap-start rounded-xl px-7 py-3 text-sm font-bold transition ${!activeTreatment ? "bg-[#25bfae] text-white" : "bg-white/[.08] text-white/90 hover:bg-white/15"}`}
                   >
                     All
                   </button>
@@ -342,11 +399,15 @@ export default function CasesPage({ data }: { data: Record<string, any> }) {
                     <button
                       key={treatment.slug}
                       type="button"
-                      onClick={() => setActiveTreatment(treatment.slug)}
+                      onClick={(event) => {
+                        setActiveTreatment(treatment.slug);
+                        setCurrentPage(1);
+                        centerTreatment(event.currentTarget);
+                      }}
                       aria-pressed={activeTreatment === treatment.slug}
-                      className={`rounded-xl px-7 py-3 text-sm font-bold transition ${activeTreatment === treatment.slug ? "bg-[#25bfae] text-white" : "bg-white/[.08] text-white/90 hover:bg-white/15"}`}
+                      className={`min-h-16 w-40 flex-none snap-start rounded-xl px-5 py-3 text-sm leading-5 font-bold transition sm:w-44 ${activeTreatment === treatment.slug ? "bg-[#25bfae] text-white" : "bg-white/[.08] text-white/90 hover:bg-white/15"}`}
                     >
-                      {treatment.name}
+                      {decodeText(treatment.name)}
                     </button>
                   ))}
                 </div>
@@ -354,22 +415,60 @@ export default function CasesPage({ data }: { data: Record<string, any> }) {
             )}
           </div>
 
-          <div
-            className={`grid grid-cols-1 gap-3 ${featuredCases.length === 1 ? "sm:grid-cols-1" : "sm:grid-cols-2"} ${hasFeaturedMosaic ? "sm:auto-rows-[210px]" : "sm:auto-rows-[320px]"}`}
-          >
-            {featuredCases.map((item, index) =>
-              caseCard(
-                item,
-                hasFeaturedMosaic && index === 0
-                  ? "min-h-[432px] sm:row-span-2 sm:min-h-0"
-                  : "min-h-[280px] sm:min-h-0",
-              ),
+          <div ref={caseResultsRef} id="case-results" className="scroll-mt-24">
+            <div
+              className={`grid grid-cols-1 gap-3 ${featuredCases.length === 1 ? "sm:grid-cols-1" : "sm:grid-cols-2"} ${hasFeaturedMosaic ? "sm:auto-rows-[210px]" : "sm:auto-rows-[320px]"}`}
+            >
+              {featuredCases.map((item, index) =>
+                caseCard(
+                  item,
+                  hasFeaturedMosaic && index === 0
+                    ? "min-h-[432px] sm:row-span-2 sm:min-h-0"
+                    : "min-h-[280px] sm:min-h-0",
+                ),
+              )}
+            </div>
+            {paginatedCases.length > 3 && (
+              <div className="mt-3 grid auto-rows-[300px] grid-cols-1 gap-3 sm:grid-cols-2 lg:auto-rows-[320px] lg:grid-cols-3">
+                {paginatedCases.slice(3).map((item) => caseCard(item, "h-full min-h-0"))}
+              </div>
             )}
           </div>
-          {visibleCases.length > 3 && (
-            <div className="mt-3 grid auto-rows-[300px] grid-cols-1 gap-3 sm:grid-cols-2 lg:auto-rows-[320px] lg:grid-cols-3">
-              {visibleCases.slice(3).map((item) => caseCard(item, "h-full min-h-0"))}
-            </div>
+
+          {totalPages > 1 && (
+            <nav
+              className="mt-10 flex flex-wrap items-center justify-center gap-2"
+              aria-label="Treatment cases pagination"
+            >
+              <PaginationButton
+                label="Previous"
+                disabled={activePage === 1}
+                onClick={() => selectCasePage(activePage - 1)}
+              />
+              {paginationItems(activePage, totalPages).map((item) =>
+                typeof item === "number" ? (
+                  <button
+                    key={item}
+                    type="button"
+                    onClick={() => selectCasePage(item)}
+                    aria-label={`Go to page ${item}`}
+                    aria-current={activePage === item ? "page" : undefined}
+                    className={`h-11 min-w-11 rounded-xl px-3 text-sm font-bold transition ${activePage === item ? "bg-[#25bfae] text-white" : "bg-white/[.08] text-white/85 hover:bg-white/15"}`}
+                  >
+                    {item}
+                  </button>
+                ) : (
+                  <span key={item} className="px-1 text-white/55" aria-hidden="true">
+                    …
+                  </span>
+                ),
+              )}
+              <PaginationButton
+                label="Next"
+                disabled={activePage === totalPages}
+                onClick={() => selectCasePage(activePage + 1)}
+              />
+            </nav>
           )}
 
           <div className="mt-14 border-t border-white/15 pt-10 text-white lg:flex lg:items-center lg:justify-between">
@@ -391,6 +490,11 @@ export default function CasesPage({ data }: { data: Record<string, any> }) {
               {data.disclaimer.cta.label}
             </Link>
           </div>
+          {!visibleCases.length && (
+            <p className="rounded-2xl border border-white/15 bg-white/5 px-6 py-14 text-center text-base font-semibold text-white/80">
+              Treatment cases will appear here when added from the WordPress backend.
+            </p>
+          )}
         </div>
       </section>
 
@@ -459,10 +563,61 @@ export default function CasesPage({ data }: { data: Record<string, any> }) {
   );
 }
 
+function paginationItems(currentPage: number, totalPages: number): Array<number | string> {
+  if (totalPages <= 7) return Array.from({ length: totalPages }, (_, index) => index + 1);
+  const pages = Array.from(new Set([1, totalPages, currentPage - 1, currentPage, currentPage + 1]))
+    .filter((page) => page >= 1 && page <= totalPages)
+    .sort((first, second) => first - second);
+  const items: Array<number | string> = [];
+  pages.forEach((page, index) => {
+    const previous = pages[index - 1];
+    if (previous && page - previous > 1) items.push(`ellipsis-${previous}-${page}`);
+    items.push(page);
+  });
+  return items;
+}
+
+function PaginationButton({
+  label,
+  disabled,
+  onClick,
+}: {
+  label: string;
+  disabled: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      disabled={disabled}
+      onClick={onClick}
+      className="h-11 rounded-xl border border-white/15 px-4 text-sm font-bold text-white transition hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-35"
+    >
+      {label}
+    </button>
+  );
+}
+
 export const getServerSideProps: GetServerSideProps<{ data: Record<string, any> }> = async ({
   res,
 }) => {
   const data = await getContent<Record<string, any>>("gallery");
+  const treatmentSlugs = (data.filters?.treatments || [])
+    .map((treatment: Record<string, string>) => treatment.slug)
+    .filter(Boolean);
+  const filteredResponses = await Promise.all(
+    treatmentSlugs.map((slug: string) =>
+      getContent<Record<string, any>>(`gallery?treatment=${encodeURIComponent(slug)}`).catch(
+        () => null,
+      ),
+    ),
+  );
+  const allItems = [data, ...filteredResponses.filter(Boolean)].flatMap(
+    (response) => response?.items || [],
+  );
+  data.items = Array.from(
+    new Map(allItems.map((item: Record<string, any>) => [item.id, item])).values(),
+  );
   res.setHeader("Cache-Control", "public, s-maxage=60, stale-while-revalidate=300");
   return { props: { data } };
 };

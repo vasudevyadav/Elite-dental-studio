@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import type { OfficeImage, OfficeLocation } from "./officeData";
 import { isMainClinic } from "@/lib/clinics";
 
+const OFFICE_IMAGES_PER_PAGE = 9;
+
 export default function OfficeGallery({ data }: { data?: Record<string, any> }) {
   const galleryImages: OfficeImage[] = Array.isArray(data?.items)
     ? data.items
@@ -34,9 +36,29 @@ export default function OfficeGallery({ data }: { data?: Record<string, any> }) 
   ] as OfficeLocation[];
   const [filter, setFilter] = useState<OfficeLocation>("All");
   const [activeImage, setActiveImage] = useState<OfficeImage | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
   const mobileTrackRef = useRef<HTMLDivElement>(null);
   const visibleImages =
     filter === "All" ? galleryImages : galleryImages.filter((image) => image.location === filter);
+  const totalPages = Math.max(1, Math.ceil(visibleImages.length / OFFICE_IMAGES_PER_PAGE));
+  const activePage = Math.min(currentPage, totalPages);
+  const paginatedImages = visibleImages.slice(
+    (activePage - 1) * OFFICE_IMAGES_PER_PAGE,
+    activePage * OFFICE_IMAGES_PER_PAGE,
+  );
+
+  const selectPage = (page: number) => {
+    setCurrentPage(Math.max(1, Math.min(totalPages, page)));
+    requestAnimationFrame(() =>
+      mobileTrackRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }),
+    );
+  };
+
+  const selectFilter = (location: OfficeLocation) => {
+    setFilter(location);
+    setCurrentPage(1);
+    mobileTrackRef.current?.scrollTo({ left: 0, behavior: "smooth" });
+  };
 
   const moveMobileSlider = (direction: "previous" | "next") => {
     const track = mobileTrackRef.current;
@@ -48,10 +70,6 @@ export default function OfficeGallery({ data }: { data?: Record<string, any> }) 
       behavior: "smooth",
     });
   };
-
-  useEffect(() => {
-    mobileTrackRef.current?.scrollTo({ left: 0, behavior: "smooth" });
-  }, [filter]);
 
   useEffect(() => {
     if (!activeImage) return;
@@ -86,7 +104,7 @@ export default function OfficeGallery({ data }: { data?: Record<string, any> }) 
               <button
                 key={location}
                 type="button"
-                onClick={() => setFilter(location)}
+                onClick={() => selectFilter(location)}
                 aria-pressed={filter === location}
                 className={`smooth-hover shrink-0 rounded-full px-4 py-2 text-sm font-semibold sm:px-5 ${filter === location ? "bg-[#176b70] text-white" : "text-[#426164] hover:bg-[#e8f7f5]"}`}
               >
@@ -97,9 +115,10 @@ export default function OfficeGallery({ data }: { data?: Record<string, any> }) 
         </div>
         <div
           ref={mobileTrackRef}
+          id="office-gallery-results"
           className="-mx-5 mt-8 flex snap-x snap-mandatory [scrollbar-width:none] gap-4 overflow-x-auto px-5 pb-3 sm:mx-0 sm:mt-10 sm:grid sm:auto-rows-[260px] sm:grid-cols-2 sm:gap-6 sm:overflow-visible sm:px-0 sm:pb-0 lg:auto-rows-[280px] lg:grid-cols-3 lg:gap-8 [&::-webkit-scrollbar]:hidden"
         >
-          {visibleImages.map((image, index) => (
+          {paginatedImages.map((image, index) => (
             <button
               key={image.src}
               type="button"
@@ -110,7 +129,8 @@ export default function OfficeGallery({ data }: { data?: Record<string, any> }) 
                 src={image.src}
                 alt={image.label}
                 fill
-                sizes="(max-width: 768px) 100vw, 50vw"
+                loading="lazy"
+                sizes="(max-width: 639px) 84vw, (max-width: 1023px) 50vw, 33vw"
                 className="object-cover transition duration-700 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#063f45]/85 via-transparent to-transparent opacity-80" />
@@ -127,7 +147,7 @@ export default function OfficeGallery({ data }: { data?: Record<string, any> }) 
               </div>
             </button>
           ))}
-          {!visibleImages.length && (
+          {!paginatedImages.length && (
             <div className="flex min-h-[220px] items-center justify-center rounded-[22px] border border-[#d6e6e4] bg-white px-6 text-center text-base font-semibold text-[#426164] sm:col-span-2 lg:col-span-3">
               Clinic photos will appear here when added from the WordPress backend.
             </div>
@@ -156,9 +176,79 @@ export default function OfficeGallery({ data }: { data?: Record<string, any> }) 
             </button>
           </div>
         </div>
+        {totalPages > 1 && (
+          <nav
+            className="mt-8 flex flex-wrap items-center justify-center gap-2"
+            aria-label="Office gallery pagination"
+          >
+            <OfficePageButton
+              label="Previous"
+              disabled={activePage === 1}
+              onClick={() => selectPage(activePage - 1)}
+            />
+            {paginationItems(activePage, totalPages).map((item) =>
+              typeof item === "number" ? (
+                <button
+                  key={item}
+                  type="button"
+                  onClick={() => selectPage(item)}
+                  aria-label={`Go to gallery page ${item}`}
+                  aria-current={activePage === item ? "page" : undefined}
+                  className={`h-10 min-w-10 rounded-xl px-3 text-sm font-bold transition ${activePage === item ? "bg-[#176b70] text-white" : "border border-[#9ccbc7] bg-white text-[#176b70] hover:bg-[#e8f7f5]"}`}
+                >
+                  {item}
+                </button>
+              ) : (
+                <span key={item} className="px-1 text-[#6a8583]" aria-hidden="true">
+                  …
+                </span>
+              ),
+            )}
+            <OfficePageButton
+              label="Next"
+              disabled={activePage === totalPages}
+              onClick={() => selectPage(activePage + 1)}
+            />
+          </nav>
+        )}
       </div>
       {activeImage && <OfficeLightbox image={activeImage} onClose={() => setActiveImage(null)} />}
     </section>
+  );
+}
+
+function paginationItems(currentPage: number, totalPages: number): Array<number | string> {
+  if (totalPages <= 7) return Array.from({ length: totalPages }, (_, index) => index + 1);
+  const pages = Array.from(new Set([1, totalPages, currentPage - 1, currentPage, currentPage + 1]))
+    .filter((page) => page >= 1 && page <= totalPages)
+    .sort((first, second) => first - second);
+  const items: Array<number | string> = [];
+  pages.forEach((page, index) => {
+    const previous = pages[index - 1];
+    if (previous && page - previous > 1) items.push(`ellipsis-${previous}-${page}`);
+    items.push(page);
+  });
+  return items;
+}
+
+function OfficePageButton({
+  label,
+  disabled,
+  onClick,
+}: {
+  label: string;
+  disabled: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      disabled={disabled}
+      onClick={onClick}
+      className="h-10 rounded-xl border border-[#9ccbc7] bg-white px-4 text-sm font-bold text-[#176b70] transition hover:bg-[#e8f7f5] disabled:cursor-not-allowed disabled:opacity-35"
+    >
+      {label}
+    </button>
   );
 }
 

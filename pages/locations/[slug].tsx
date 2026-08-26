@@ -3,14 +3,12 @@ import Image from "next/image";
 import Link from "next/link";
 import type { GetServerSideProps } from "next";
 import { useState } from "react";
-import { useRouter } from "next/router";
+import BiginAppointmentWidget from "@/components/BiginAppointmentWidget";
 import DoctorsSection from "@/components/DoctorsSection";
 import HeroSection from "@/components/HeroSection";
 import ServicesSection from "@/components/ServicesSection";
 import SitePage from "@/components/SitePage";
 import { getContent, section, type DynamicSection } from "@/lib/contentApi";
-import { submitConsultation } from "@/lib/consultation";
-import Recaptcha, { recaptchaEnabled } from "@/components/Recaptcha";
 import { absoluteUrl } from "@/lib/siteUrl";
 
 const benefitsFallback = [
@@ -278,121 +276,8 @@ function renderSectionIcon(icon: unknown) {
   return "✦";
 }
 
-function AppointmentForm({ slug, compact = false }: { slug: string; compact?: boolean }) {
-  const [form, setForm] = useState({
-    name: "",
-    phone: "",
-    email: "",
-    date: "",
-    clinic: "",
-  });
-  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
-  const [feedback, setFeedback] = useState("");
-  const [captchaToken, setCaptchaToken] = useState("");
-  const router = useRouter();
-
-  const update = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
-    setForm((current) => ({ ...current, [event.target.name]: event.target.value }));
-
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (recaptchaEnabled() && !captchaToken) {
-      setStatus("error");
-      setFeedback("Please complete the CAPTCHA.");
-      return;
-    }
-    setStatus("submitting");
-    const result = await submitConsultation({
-      name: form.name,
-      phone: form.phone,
-      email: form.email,
-      clinicSlug: form.clinic.toLowerCase(),
-      preferredDate: form.date,
-      source: `location-${slug}`,
-      captchaToken,
-    });
-    setFeedback(result.message);
-    if (result.success) {
-      setStatus("success");
-      setForm({ name: "", phone: "", email: "", date: "", clinic: "" });
-      router.push("/thank-you");
-    } else {
-      setStatus("error");
-    }
-  };
-
-  const inputClass = `${compact ? "h-[30px] text-[10px]" : "h-11 text-sm"} w-full rounded border border-[#70aeb0] bg-[#f8fffe] px-4 outline-none focus:border-[#22cdbd]`;
-
-  return (
-    <form className="space-y-3" onSubmit={handleSubmit}>
-      <input
-        name="name"
-        type="text"
-        value={form.name}
-        onChange={update}
-        placeholder="Enter Your Name"
-        className={inputClass}
-        required
-      />
-      <input
-        name="phone"
-        type="tel"
-        value={form.phone}
-        onChange={update}
-        placeholder="Enter Your Mobile No."
-        className={inputClass}
-        required
-      />
-      <input
-        name="email"
-        type="email"
-        value={form.email}
-        onChange={update}
-        placeholder="Enter Your Mail"
-        className={inputClass}
-        required
-      />
-      <input
-        name="date"
-        type="date"
-        value={form.date}
-        onChange={update}
-        aria-label="Preferred appointment date"
-        className={inputClass}
-        required
-      />
-      <select
-        aria-label="Select clinic"
-        name="clinic"
-        value={form.clinic}
-        onChange={update}
-        className={`${compact ? "h-[30px] text-[10px]" : "h-11 text-sm"} w-full rounded border border-[#70aeb0] bg-[#f8fffe] px-4 text-[#667] outline-none`}
-        required
-      >
-        <option value="">Select Clinic</option>
-        {clinicOptions.map((clinic) => (
-          <option key={clinic} value={clinic.toLowerCase()}>
-            {clinic}
-          </option>
-        ))}
-      </select>
-      <Recaptcha onTokenChange={setCaptchaToken} />
-      <button
-        type="submit"
-        disabled={status === "submitting"}
-        className={`${compact ? "px-12 py-2 text-[11px]" : "px-10 py-3 text-sm"} mx-auto block rounded bg-[#22cdbd] font-bold text-white hover:bg-[#16b8aa] disabled:opacity-60`}
-      >
-        {status === "submitting" ? "Submitting..." : "Book Now!"}
-      </button>
-      {feedback && (
-        <p
-          className={`text-center text-xs font-semibold ${status === "success" ? "text-emerald-600" : "text-red-600"}`}
-        >
-          {feedback}
-        </p>
-      )}
-    </form>
-  );
+function AppointmentForm() {
+  return <BiginAppointmentWidget hideTitle />;
 }
 
 function LocationFaq({ data, phone }: { data: Record<string, any>; phone: string }) {
@@ -678,7 +563,7 @@ export default function LocationPage({ data }: { data: LocationData }) {
           </div>
           <div className="min-w-0 rounded-2xl bg-white p-5 text-[#286f73] sm:p-7">
             <h3 className="mb-6 text-center text-lg font-bold">Book an Appointment</h3>
-            <AppointmentForm slug={data.slug} />
+            <AppointmentForm />
           </div>
         </div>
       </section>

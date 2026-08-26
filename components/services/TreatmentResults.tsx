@@ -9,6 +9,8 @@ type ResultItem = {
   afterImage: { url: string; alt?: string };
 };
 
+const RESULTS_PER_PAGE = 6;
+
 function ResultImage({
   src,
   label,
@@ -118,6 +120,14 @@ export default function TreatmentResults({
   const items = (data?.items as ResultItem[] | undefined)?.filter(
     (item) => item.beforeImage?.url && item.afterImage?.url,
   );
+  const [currentPage, setCurrentPage] = useState(1);
+  const totalPages = Math.max(1, Math.ceil((items?.length || 0) / RESULTS_PER_PAGE));
+  const activePage = Math.min(currentPage, totalPages);
+  const visibleItems = items?.slice(
+    (activePage - 1) * RESULTS_PER_PAGE,
+    activePage * RESULTS_PER_PAGE,
+  );
+
   if (!items?.length) return null;
 
   const viewAll = data?.viewAll as { label?: string; url?: string } | undefined;
@@ -140,7 +150,7 @@ export default function TreatmentResults({
           </p>
         </div>
         <div className="-mx-5 mt-10 flex snap-x [scrollbar-width:none] gap-5 overflow-x-auto px-5 pb-5 sm:mx-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-3 [&::-webkit-scrollbar]:hidden">
-          {items.map((item) => (
+          {visibleItems?.map((item) => (
             <div
               key={item.id || `${item.label}-${item.beforeImage.url}`}
               className="w-[86vw] max-w-[390px] shrink-0 snap-center sm:w-auto sm:max-w-none"
@@ -149,6 +159,41 @@ export default function TreatmentResults({
             </div>
           ))}
         </div>
+        {totalPages > 1 && (
+          <nav
+            className="mt-8 flex flex-wrap items-center justify-center gap-2"
+            aria-label={`${serviceTitle} results pagination`}
+          >
+            <button
+              type="button"
+              disabled={activePage === 1}
+              onClick={() => setCurrentPage(Math.max(1, activePage - 1))}
+              className="rounded-xl border border-[#9ccbc7] px-4 py-2.5 text-sm font-bold text-[#176b70] disabled:cursor-not-allowed disabled:opacity-35"
+            >
+              Previous
+            </button>
+            {Array.from({ length: totalPages }, (_, index) => index + 1).map((page) => (
+              <button
+                key={page}
+                type="button"
+                onClick={() => setCurrentPage(page)}
+                aria-label={`Go to results page ${page}`}
+                aria-current={activePage === page ? "page" : undefined}
+                className={`h-10 min-w-10 rounded-xl px-3 text-sm font-bold ${activePage === page ? "bg-[#168f85] text-white" : "border border-[#9ccbc7] text-[#176b70]"}`}
+              >
+                {page}
+              </button>
+            ))}
+            <button
+              type="button"
+              disabled={activePage === totalPages}
+              onClick={() => setCurrentPage(Math.min(totalPages, activePage + 1))}
+              className="rounded-xl border border-[#9ccbc7] px-4 py-2.5 text-sm font-bold text-[#176b70] disabled:cursor-not-allowed disabled:opacity-35"
+            >
+              Next
+            </button>
+          </nav>
+        )}
         <div className="mt-14 flex w-full justify-center text-center">
           <Link
             href={viewAll?.url || "/gallery/cases"}

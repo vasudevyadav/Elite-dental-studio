@@ -1,6 +1,7 @@
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import { Poppins } from "next/font/google";
+import { useRouter } from "next/router";
 import { useEffect } from "react";
 import ConsultationPopup from "@/components/ConsultationPopup";
 
@@ -11,6 +12,9 @@ const poppins = Poppins({
 });
 
 export default function App({ Component, pageProps }: AppProps) {
+  const router = useRouter();
+  const popupPageKey = router.asPath.split("?")[0] || "/";
+
   useEffect(() => {
     const elements = Array.from(
       document.querySelectorAll<HTMLElement>("main > section, [data-reveal]"),
@@ -41,7 +45,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <div className={poppins.className}>
       <Component {...pageProps} />
-      <ConsultationPopup />
+      <ConsultationPopup key={popupPageKey} />
     </div>
   );
 }
