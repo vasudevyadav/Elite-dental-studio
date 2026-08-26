@@ -26,15 +26,16 @@ import {
   type ServiceSection,
 } from "@/lib/servicesApi";
 import { absoluteUrl } from "@/lib/siteUrl";
+import { getTestimonials, type TestimonialItem } from "@/lib/testimonialsApi";
 
-type Props = { service: ServiceDetail };
+type Props = { service: ServiceDetail; testimonials: TestimonialItem[] };
 
 const sectionContent = (sections: ServiceSection[], type: ServiceSection["type"]) => {
   const content = sections.find((section) => section.type === type)?.content;
   return content && Object.keys(content).length ? content : undefined;
 };
 
-export default function ServiceDetailPage({ service }: Props) {
+export default function ServiceDetailPage({ service, testimonials }: Props) {
   const isLaser = service.slug === "laser-dentistry";
   const treatmentName = service.treatmentName || service.title;
   const canonicalUrl = service.seo?.canonicalUrl || absoluteUrl(`/services/${service.slug}`);
@@ -145,7 +146,7 @@ export default function ServiceDetailPage({ service }: Props) {
             description={service.specialists.description}
           />
         ) : null}
-        <TestimonialsSection />
+        <TestimonialsSection initialTestimonials={testimonials} />
         <BlogSection />
         {serviceFaqContent && <FAQSection content={serviceFaqContent} />}
         <BookAppointmentSection />
@@ -159,6 +160,7 @@ export default function ServiceDetailPage({ service }: Props) {
 export const getServerSideProps: GetServerSideProps<Props> = async ({ params, res }) => {
   const service = await getService(String(params?.slug));
   if (!service) return { notFound: true };
+  const testimonials = await getTestimonials().catch(() => []);
   res.setHeader("Cache-Control", "public, s-maxage=60, stale-while-revalidate=300");
-  return { props: { service } };
+  return { props: { service, testimonials } };
 };
