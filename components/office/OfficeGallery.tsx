@@ -1,11 +1,26 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { officeImages, type OfficeImage, type OfficeLocation } from "./officeData";
+import type { OfficeImage, OfficeLocation } from "./officeData";
 import { isMainClinic } from "@/lib/clinics";
 
 export default function OfficeGallery({ data }: { data?: Record<string, any> }) {
-  const galleryImages: OfficeImage[] = officeImages;
+  const galleryImages: OfficeImage[] = Array.isArray(data?.items)
+    ? data.items
+        .filter(
+          (item: Record<string, any>) =>
+            isMainClinic(item.locationSlug) && typeof item.image?.url === "string",
+        )
+        .sort(
+          (first: Record<string, any>, second: Record<string, any>) =>
+            Number(first.sortOrder || 0) - Number(second.sortOrder || 0),
+        )
+        .map((item: Record<string, any>) => ({
+          src: item.image.url,
+          location: locationName(item.locationSlug),
+          label: item.label || item.image.alt || `${locationName(item.locationSlug)} clinic`,
+        }))
+    : [];
   const locations: OfficeLocation[] = [
     "All",
     ...(data?.locations
@@ -112,6 +127,11 @@ export default function OfficeGallery({ data }: { data?: Record<string, any> }) 
               </div>
             </button>
           ))}
+          {!visibleImages.length && (
+            <div className="flex min-h-[220px] items-center justify-center rounded-[22px] border border-[#d6e6e4] bg-white px-6 text-center text-base font-semibold text-[#426164] sm:col-span-2 lg:col-span-3">
+              Clinic photos will appear here when added from the WordPress backend.
+            </div>
+          )}
         </div>
         <div className="mt-4 flex items-center justify-between sm:hidden">
           <p className="text-xs font-semibold text-[#527174]">
@@ -140,6 +160,16 @@ export default function OfficeGallery({ data }: { data?: Record<string, any> }) 
       {activeImage && <OfficeLightbox image={activeImage} onClose={() => setActiveImage(null)} />}
     </section>
   );
+}
+
+function locationName(slug: string): Exclude<OfficeLocation, "All"> {
+  const names: Record<string, Exclude<OfficeLocation, "All">> = {
+    calicut: "Calicut",
+    kochi: "Kochi",
+    kannur: "Kannur",
+    coimbatore: "Coimbatore",
+  };
+  return names[slug] || "Calicut";
 }
 
 function OfficeLightbox({ image, onClose }: { image: OfficeImage; onClose: () => void }) {

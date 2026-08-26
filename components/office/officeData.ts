@@ -7,14 +7,17 @@ export type OfficeImage = {
 };
 
 export const officeImages: OfficeImage[] = [
+  { src: "/office/calicut-01.webp", location: "Calicut", label: "Welcoming clinic interior" },
   { src: "/office/calicut-04.webp", location: "Calicut", label: "Reception & welcome desk" },
   { src: "/office/calicut-02.webp", location: "Calicut", label: "Modern treatment suite" },
   { src: "/office/kochi-05.webp", location: "Kochi", label: "Kids-friendly dental zone" },
+  { src: "/office/calicut-05.webp", location: "Calicut", label: "Patient care area" },
   { src: "/office/calicut-06.webp", location: "Calicut", label: "Advanced consultation room" },
   { src: "/office/kochi-02.webp", location: "Kochi", label: "Comfortable patient lounge" },
   { src: "/office/calicut-07.webp", location: "Calicut", label: "Precision dentistry setup" },
   { src: "/office/kochi-03.webp", location: "Kochi", label: "Sterile clinical environment" },
   { src: "/office/calicut-08.webp", location: "Calicut", label: "Digital dental technology" },
+  { src: "/office/calicut-09.webp", location: "Calicut", label: "Comfort-focused clinical space" },
   { src: "/office/kochi-04.webp", location: "Kochi", label: "Private treatment room" },
   { src: "/office/calicut-10.webp", location: "Calicut", label: "Patient-first care space" },
   { src: "/office/kochi-01.webp", location: "Kochi", label: "Calm clinic interiors" },

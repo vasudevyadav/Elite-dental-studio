@@ -21,12 +21,14 @@ import {
   type DoctorsData,
 } from "@/lib/contentApi";
 import { getServicesStrict, type ServiceListItem } from "@/lib/servicesApi";
+import { getTestimonials, type TestimonialItem } from "@/lib/testimonialsApi";
 
 type HomeProps = {
   services: ServiceListItem[];
   doctors: DoctorListItem[];
   blogs: BlogApiPost[];
   clinics: Record<string, Clinic>;
+  testimonials: TestimonialItem[];
 };
 
 type LocationDetail = {
@@ -52,7 +54,7 @@ function isSpecificMapUrl(mapUrl?: string) {
   }
 }
 
-export default function Home({ services, doctors, blogs, clinics }: HomeProps) {
+export default function Home({ services, doctors, blogs, clinics, testimonials }: HomeProps) {
   return (
     <SitePage
       title="Elite Dental Studio | Specialist Dental Care Across Calicut, Kochi, Kannur and Coimbatore"
@@ -69,7 +71,7 @@ export default function Home({ services, doctors, blogs, clinics }: HomeProps) {
       <ServicesSection initialServices={services} />
       <DoctorsSection initialDoctors={doctors} />
       <AwardsSection />
-      <TestimonialsSection />
+      <TestimonialsSection initialTestimonials={testimonials} />
       <BlogSection initialPosts={blogs} />
       <FAQSection />
       <BookAppointmentSection />
@@ -80,11 +82,12 @@ export default function Home({ services, doctors, blogs, clinics }: HomeProps) {
 
 export const getServerSideProps: GetServerSideProps<HomeProps> = async ({ res }) => {
   const clinicSlugs = new Set(["calicut", "kochi", "kannur", "coimbatore"]);
-  const [services, doctorsData, blogs, locationsData] = await Promise.all([
+  const [services, doctorsData, blogs, locationsData, testimonials] = await Promise.all([
     getServicesStrict().catch(() => []),
     getContent<DoctorsData>("doctors").catch(() => null),
     getBlogs().catch(() => []),
     getContent<{ items: ClinicRef[] }>("locations").catch(() => ({ items: [] })),
+    getTestimonials().catch(() => []),
   ]);
 
   const locationDetails = await Promise.all(
@@ -112,7 +115,7 @@ export const getServerSideProps: GetServerSideProps<HomeProps> = async ({ res })
             email: item.contact.email || fallback?.email || "",
             addressLines,
             mapQuery: fallback?.mapQuery || addressLines.join(", ") || item.name,
-            mapEmbedUrl: fallback?.mapEmbedUrl,
+            ...(fallback?.mapEmbedUrl ? { mapEmbedUrl: fallback.mapEmbedUrl } : {}),
             mapUrl:
               (isSpecificMapUrl(item.contact.mapUrl) ? item.contact.mapUrl : undefined) ||
               fallback?.mapUrl ||
@@ -131,6 +134,7 @@ export const getServerSideProps: GetServerSideProps<HomeProps> = async ({ res })
       doctors: doctorsData?.items || [],
       blogs: blogs.slice(0, 10),
       clinics,
+      testimonials,
     },
   };
 };
