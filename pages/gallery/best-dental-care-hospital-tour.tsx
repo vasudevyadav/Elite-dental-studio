@@ -1,14 +1,12 @@
-import SitePage from "@/components/SitePage";
-import HospitalTourContent from "@/components/gallery/HospitalTourContent";
+import type { GetServerSideProps } from "next";
 
-export default function HospitalTourPage() {
-  return (
-    <SitePage
-      title="Hospital Tour | Elite Dental Studio"
-      description="Tour Elite Dental Studio's modern dental clinics in Calicut, Kochi, Kannur and Coimbatore."
-      mainClassName="bg-[#f7fbfa]"
-    >
-      <HospitalTourContent />
-    </SitePage>
-  );
+export default function HospitalTourRedirect() {
+  return null;
 }
+
+export const getServerSideProps: GetServerSideProps = async () => ({
+  redirect: {
+    destination: "/our-dental-office",
+    permanent: true,
+  },
+});

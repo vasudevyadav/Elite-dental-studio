@@ -5,18 +5,7 @@ import { officeImages, type OfficeImage, type OfficeLocation } from "./officeDat
 import { isMainClinic } from "@/lib/clinics";
 
 export default function OfficeGallery({ data }: { data?: Record<string, any> }) {
-  const apiItems = data?.items as Array<Record<string, any>> | undefined;
-  const galleryImages: OfficeImage[] = apiItems?.length
-    ? apiItems
-        .filter((item) => isMainClinic(item.locationSlug))
-        .map((item, index) => ({
-          src: item.image?.url || officeImages[index % officeImages.length].src,
-          label: item.label,
-          location: (data?.locations?.find(
-            (location: Record<string, string>) => location.slug === item.locationSlug,
-          )?.name || item.locationSlug) as OfficeImage["location"],
-        }))
-    : officeImages;
+  const galleryImages: OfficeImage[] = officeImages;
   const locations: OfficeLocation[] = [
     "All",
     ...(data?.locations
