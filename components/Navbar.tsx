@@ -157,7 +157,7 @@ const subNavItems: SubNavItem[] = [
     children: [
       {
         label: "Hospital Tour",
-        href: "/gallery/best-dental-care-hospital-tour",
+        href: "/our-dental-office",
       },
       { label: "Gallery Cases", href: "/gallery/cases" },
     ],

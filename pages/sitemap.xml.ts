@@ -18,7 +18,6 @@ const staticPaths = [
   "/blog",
   "/careers",
   "/gallery/cases",
-  "/gallery/best-dental-care-hospital-tour",
 ];
 
 const escapeXml = (value: string) =>
