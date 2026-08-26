@@ -140,10 +140,28 @@ const XIcon = () => (
   </svg>
 );
 
-const subNavItems = [
+type SubNavItem = {
+  label: string;
+  img: string;
+  href: string;
+  children?: { label: string; href: string }[];
+};
+
+const subNavItems: SubNavItem[] = [
   { label: "Our Doctors", img: "/navbar/doctor.png", href: "/doctors" },
   { label: "About Us", img: "/navbar/icon02.png", href: "/about" },
-  { label: "Our Dental Office", img: "/navbar/icon-3.png", href: "/our-dental-office" },
+  {
+    label: "Our Dental Office",
+    img: "/navbar/icon-3.png",
+    href: "/our-dental-office",
+    children: [
+      {
+        label: "Hospital Tour",
+        href: "/gallery/best-dental-care-hospital-tour",
+      },
+      { label: "Gallery Cases", href: "/gallery/cases" },
+    ],
+  },
   {
     label: "International Patients",
     img: "/navbar/icon-6.png",
@@ -155,6 +173,7 @@ const subNavItems = [
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [mobileOfficeOpen, setMobileOfficeOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<DropdownName | null>(null);
   const headerRef = useRef<HTMLElement>(null);
   const [treatmentItems, setTreatmentItems] = useState<DropdownItem[]>([]);
@@ -183,6 +202,7 @@ export default function Navbar() {
 
   const closeMenus = () => {
     setActiveDropdown(null);
+    setMobileOfficeOpen(false);
     setMobileOpen(false);
   };
 
@@ -427,6 +447,7 @@ export default function Navbar() {
               onClick={() => {
                 setMobileOpen((current) => !current);
                 setActiveDropdown(null);
+                setMobileOfficeOpen(false);
               }}
               className="smooth-hover hover-lift text-dent-nav hover:bg-dent-mint focus:ring-dent-accent/20 rounded-md p-2 focus:ring-4 focus:outline-none"
               aria-label={mobileOpen ? "Close navigation menu" : "Open navigation menu"}
@@ -539,23 +560,77 @@ export default function Navbar() {
                 Quick links
               </p>
               <div className="grid grid-cols-2 gap-2.5">
-                {subNavItems.map(({ label, img, href }) => (
-                  <Link
-                    key={label}
-                    href={href}
-                    onClick={closeMenus}
-                    className="smooth-hover hover-lift hover:border-dent-accent focus:ring-dent-accent flex items-center gap-3 rounded-xl border border-[#d5ecea] bg-[#f7fcfb] px-3 py-3 text-sm font-semibold text-[#285f64] hover:bg-[#eaf9f7] focus:ring-2 focus:outline-none"
-                  >
-                    <Image
-                      src={img}
-                      alt=""
-                      width={28}
-                      height={28}
-                      className="h-7 w-7 shrink-0 object-contain"
-                    />
-                    {label}
-                  </Link>
-                ))}
+                {subNavItems.map(({ label, img, href, children }) =>
+                  children ? (
+                    <div
+                      key={label}
+                      className="col-span-2 overflow-hidden rounded-xl border border-[#d5ecea] bg-[#f7fcfb]"
+                    >
+                      <div className="flex items-stretch">
+                        <Link
+                          href={href}
+                          onClick={closeMenus}
+                          className="focus:ring-dent-accent flex flex-1 items-center gap-3 px-3 py-3 text-sm font-semibold text-[#285f64] hover:bg-[#eaf9f7] focus:ring-2 focus:outline-none focus:ring-inset"
+                        >
+                          <Image
+                            src={img}
+                            alt=""
+                            width={28}
+                            height={28}
+                            className="h-7 w-7 shrink-0 object-contain"
+                          />
+                          {label}
+                        </Link>
+                        <button
+                          type="button"
+                          onClick={() => setMobileOfficeOpen((current) => !current)}
+                          aria-label={`${mobileOfficeOpen ? "Close" : "Open"} ${label} submenu`}
+                          aria-expanded={mobileOfficeOpen}
+                          aria-controls="mobile-office-submenu"
+                          className="focus:ring-dent-accent flex w-14 items-center justify-center border-l border-[#d5ecea] text-[#285f64] hover:bg-[#eaf9f7] focus:ring-2 focus:outline-none focus:ring-inset"
+                        >
+                          <ChevronDown open={mobileOfficeOpen} />
+                        </button>
+                      </div>
+                      {mobileOfficeOpen && (
+                        <div
+                          id="mobile-office-submenu"
+                          className="grid grid-cols-2 gap-2 border-t border-[#d5ecea] bg-white p-2"
+                        >
+                          {children.map((child) => (
+                            <Link
+                              key={child.href}
+                              href={child.href}
+                              onClick={closeMenus}
+                              className="focus:ring-dent-accent flex items-center justify-between rounded-lg bg-[#eaf9f7] px-3 py-3 text-xs font-bold text-[#285f64] hover:bg-[#d8f3ef] focus:ring-2 focus:outline-none"
+                            >
+                              {child.label}
+                              <span aria-hidden="true" className="text-dent-accent">
+                                →
+                              </span>
+                            </Link>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    <Link
+                      key={label}
+                      href={href}
+                      onClick={closeMenus}
+                      className="smooth-hover hover-lift hover:border-dent-accent focus:ring-dent-accent flex items-center gap-3 rounded-xl border border-[#d5ecea] bg-[#f7fcfb] px-3 py-3 text-sm font-semibold text-[#285f64] hover:bg-[#eaf9f7] focus:ring-2 focus:outline-none"
+                    >
+                      <Image
+                        src={img}
+                        alt=""
+                        width={28}
+                        height={28}
+                        className="h-7 w-7 shrink-0 object-contain"
+                      />
+                      {label}
+                    </Link>
+                  ),
+                )}
               </div>
 
               <div className="mt-6 rounded-xl bg-[#eef9f8] p-4">
@@ -602,26 +677,56 @@ export default function Navbar() {
       <div className="bg-dent-nav relative z-10 hidden lg:block">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-5 px-5 py-4 sm:px-8 lg:px-12 lg:py-5">
           {/* Icon links – scrollable on mobile */}
-          <nav className="scrollbar-hide flex items-center gap-5 overflow-x-auto pb-0.5 lg:gap-12">
-            {subNavItems.map(({ label, img, href }) => (
-              <Link
-                key={label}
-                href={href}
-                className="group smooth-hover hover-lift flex shrink-0 flex-col items-center gap-1.5 text-white hover:opacity-90"
-              >
-                <div className="flex items-center justify-center transition-colors group-hover:border-white">
-                  <Image
-                    src={img}
-                    alt={label}
-                    width={28}
-                    height={28}
-                    className="image-hover h-7 w-7 object-contain lg:h-12 lg:w-12"
-                  />
-                </div>
-                <span className="text-[10px] font-medium whitespace-nowrap lg:text-sm">
-                  {label}
-                </span>
-              </Link>
+          <nav className="scrollbar-hide flex items-center gap-5 overflow-x-auto pb-0.5 lg:gap-12 lg:overflow-visible">
+            {subNavItems.map(({ label, img, href, children }) => (
+              <div key={label} className="group/subnav relative shrink-0">
+                <Link
+                  href={href}
+                  aria-haspopup={children ? "menu" : undefined}
+                  className="smooth-hover hover-lift flex flex-col items-center gap-1.5 text-white hover:opacity-90"
+                >
+                  <div className="flex items-center justify-center transition-colors group-hover/subnav:border-white">
+                    <Image
+                      src={img}
+                      alt={label}
+                      width={28}
+                      height={28}
+                      className="image-hover h-7 w-7 object-contain lg:h-12 lg:w-12"
+                    />
+                  </div>
+                  <span className="flex items-center gap-1.5 text-[10px] font-medium whitespace-nowrap lg:text-sm">
+                    {label}
+                    {children && <ChevronDown />}
+                  </span>
+                </Link>
+
+                {children && (
+                  <div className="pointer-events-none invisible absolute top-full left-1/2 z-[70] w-60 -translate-x-1/2 translate-y-1 pt-3 opacity-0 transition-all duration-200 group-focus-within/subnav:pointer-events-auto group-focus-within/subnav:visible group-focus-within/subnav:translate-y-0 group-focus-within/subnav:opacity-100 group-hover/subnav:pointer-events-auto group-hover/subnav:visible group-hover/subnav:translate-y-0 group-hover/subnav:opacity-100">
+                    <div
+                      role="menu"
+                      aria-label={`${label} menu`}
+                      className="overflow-hidden rounded-xl border border-[#d9eeee] bg-white p-2 shadow-[0_18px_45px_rgba(10,50,54,0.24)]"
+                    >
+                      {children.map((child) => (
+                        <Link
+                          key={child.href}
+                          href={child.href}
+                          role="menuitem"
+                          className="group/item flex items-center justify-between rounded-lg px-4 py-3 text-sm font-semibold text-[#1b4c50] transition hover:bg-[#e9f9f7] focus:bg-[#e9f9f7] focus:outline-none"
+                        >
+                          {child.label}
+                          <span
+                            aria-hidden="true"
+                            className="text-dent-accent transition-transform group-hover/item:translate-x-0.5"
+                          >
+                            →
+                          </span>
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
             ))}
           </nav>
 
