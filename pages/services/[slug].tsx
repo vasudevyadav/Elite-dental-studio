@@ -27,15 +27,30 @@ import {
 } from "@/lib/servicesApi";
 import { absoluteUrl } from "@/lib/siteUrl";
 import { getTestimonials, type TestimonialItem } from "@/lib/testimonialsApi";
+import { getContent } from "@/lib/contentApi";
 
-type Props = { service: ServiceDetail; testimonials: TestimonialItem[] };
+type GalleryCaseItem = {
+  id?: string;
+  title?: string;
+  images?: Array<{
+    beforeImage?: { url?: string; alt?: string };
+    afterImage?: { url?: string; alt?: string };
+    combinedImage?: { url?: string; alt?: string };
+  }>;
+};
+
+type Props = {
+  service: ServiceDetail;
+  testimonials: TestimonialItem[];
+  galleryCases: GalleryCaseItem[];
+};
 
 const sectionContent = (sections: ServiceSection[], type: ServiceSection["type"]) => {
   const content = sections.find((section) => section.type === type)?.content;
   return content && Object.keys(content).length ? content : undefined;
 };
 
-export default function ServiceDetailPage({ service, testimonials }: Props) {
+export default function ServiceDetailPage({ service, testimonials, galleryCases }: Props) {
   const isLaser = service.slug === "laser-dentistry";
   const treatmentName = service.treatmentName || service.title;
   const canonicalUrl = service.seo?.canonicalUrl || absoluteUrl(`/services/${service.slug}`);
@@ -49,6 +64,37 @@ export default function ServiceDetailPage({ service, testimonials }: Props) {
   const aftercare = content("aftercare");
   const benefits = content("benefits");
   const results = content("results");
+  const galleryResultItems = galleryCases.flatMap((galleryCase) =>
+    (galleryCase.images || []).flatMap((images, imageIndex) => {
+      const beforeUrl = images.beforeImage?.url;
+      const afterUrl = images.afterImage?.url;
+      const combinedUrl = images.combinedImage?.url;
+      const resolvedBefore = beforeUrl || combinedUrl;
+      const resolvedAfter = afterUrl || combinedUrl;
+      if (!resolvedBefore || !resolvedAfter) return [];
+      return [
+        {
+          id: `${galleryCase.id || service.slug}-${imageIndex}`,
+          label: galleryCase.title || treatmentName,
+          beforeImage: {
+            url: resolvedBefore,
+            alt: images.beforeImage?.alt || `${treatmentName} before treatment`,
+          },
+          afterImage: {
+            url: resolvedAfter,
+            alt: images.afterImage?.alt || `${treatmentName} after treatment`,
+          },
+        },
+      ];
+    }),
+  );
+  const treatmentResults = galleryResultItems.length
+    ? {
+        ...(results || {}),
+        items: galleryResultItems,
+        viewAll: { label: "View all smile transformations →", url: "/gallery/cases" },
+      }
+    : results;
   const hasTreatmentDetails = Boolean(
     introduction || procedures || candidate || expectation || aftercare || benefits,
   );
@@ -131,7 +177,9 @@ export default function ServiceDetailPage({ service, testimonials }: Props) {
           </div>
         )}
 
-        {results && <TreatmentResults serviceTitle={service.title} data={results} />}
+        {treatmentResults && (
+          <TreatmentResults serviceTitle={service.title} data={treatmentResults} />
+        )}
 
         <div className="mx-auto max-w-screen-2xl px-5 sm:px-8 lg:px-28">
           <ComparisonTableSection data={service.comparisonTable} />
@@ -160,7 +208,12 @@ export default function ServiceDetailPage({ service, testimonials }: Props) {
 export const getServerSideProps: GetServerSideProps<Props> = async ({ params, res }) => {
   const service = await getService(String(params?.slug));
   if (!service) return { notFound: true };
-  const testimonials = await getTestimonials().catch(() => []);
+  const [testimonials, galleryData] = await Promise.all([
+    getTestimonials().catch(() => []),
+    getContent<{ items?: GalleryCaseItem[] }>(
+      `gallery?treatment=${encodeURIComponent(service.slug)}`,
+    ).catch(() => ({ items: [] })),
+  ]);
   res.setHeader("Cache-Control", "public, s-maxage=60, stale-while-revalidate=300");
-  return { props: { service, testimonials } };
+  return { props: { service, testimonials, galleryCases: galleryData.items || [] } };
 };

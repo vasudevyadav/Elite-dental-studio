@@ -1,9 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
-import { useRouter } from "next/router";
-import { submitConsultation } from "@/lib/consultation";
+import BiginAppointmentWidget from "@/components/BiginAppointmentWidget";
 import { openConsultationPopup } from "@/lib/consultationPopup";
-import Recaptcha, { recaptchaEnabled } from "@/components/Recaptcha";
 
 const HOME_SLIDES = [
   {
@@ -24,31 +22,8 @@ type HeroSectionProps = {
   };
 };
 
-const ChevronDown = () => (
-  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-    <path
-      d="M3 5l4 4 4-4"
-      stroke="white"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-);
-
 export default function HeroSection({ slides = HOME_SLIDES, content }: HeroSectionProps) {
   const [slide, setSlide] = useState(0);
-  const [form, setForm] = useState({
-    name: "",
-    phone: "",
-    email: "",
-    date: "",
-    clinic: "",
-  });
-  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
-  const [feedback, setFeedback] = useState("");
-  const [captchaToken, setCaptchaToken] = useState("");
-  const router = useRouter();
 
   const total = slides.length;
   const next = useCallback(() => setSlide((p) => (p + 1) % total), [total]);
@@ -61,39 +36,6 @@ export default function HeroSection({ slides = HOME_SLIDES, content }: HeroSecti
     const id = setInterval(next, 4500);
     return () => clearInterval(id);
   }, [next, total]);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
-    setForm((current) => ({ ...current, [e.target.name]: e.target.value }));
-
-  const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (recaptchaEnabled() && !captchaToken) {
-      setStatus("error");
-      setFeedback("Please complete the CAPTCHA.");
-      return;
-    }
-    setStatus("submitting");
-    const result = await submitConsultation({
-      name: form.name,
-      phone: form.phone,
-      email: form.email,
-      clinicSlug: form.clinic,
-      preferredDate: form.date,
-      source: "hero-section",
-      captchaToken,
-    });
-    setFeedback(result.message);
-    if (result.success) {
-      setStatus("success");
-      setForm({ name: "", phone: "", email: "", date: "", clinic: "" });
-      router.push("/thank-you");
-    } else {
-      setStatus("error");
-    }
-  };
-
-  const inputClass =
-    "h-11 w-full rounded-[5px] border border-[#8bb5b6] bg-[#f5fbfa] px-4 text-sm text-gray-700 placeholder-gray-500 focus:border-dent-accent focus:outline-none focus:ring-1 focus:ring-dent-accent sm:h-12 sm:px-5";
 
   return (
     <section className="relative h-[430px] overflow-hidden sm:h-[560px] lg:h-[clamp(560px,42.51vw,700px)]">
@@ -168,84 +110,7 @@ export default function HeroSection({ slides = HOME_SLIDES, content }: HeroSecti
           <h3 className="mb-4 text-center text-base font-bold text-[#039382] sm:mb-6 lg:text-xl">
             Book an Appointment
           </h3>
-
-          <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-            <input
-              type="text"
-              name="name"
-              value={form.name}
-              onChange={handleChange}
-              placeholder="Enter Your Name"
-              className={inputClass}
-              required
-            />
-
-            <input
-              type="tel"
-              name="phone"
-              value={form.phone}
-              onChange={handleChange}
-              placeholder="Enter Your Mobile No."
-              className={inputClass}
-              required
-            />
-
-            <input
-              type="email"
-              name="email"
-              value={form.email}
-              onChange={handleChange}
-              placeholder="Enter Your Mail"
-              className={inputClass}
-              required
-            />
-
-            <input
-              type="date"
-              name="date"
-              value={form.date}
-              onChange={handleChange}
-              aria-label="Preferred appointment date"
-              className={inputClass}
-              required
-            />
-
-            <div className="relative">
-              <select
-                aria-label="Select clinic"
-                name="clinic"
-                value={form.clinic}
-                onChange={handleChange}
-                className="focus:border-dent-accent h-11 w-full appearance-none rounded-[5px] border border-[#8bb5b6] bg-[#f5fbfa] px-4 pr-12 text-sm text-gray-500 focus:outline-none sm:h-12 sm:px-5"
-                required
-              >
-                <option value="">Select Clinic</option>
-                <option value="calicut">Calicut</option>
-                <option value="kochi">Kochi</option>
-                <option value="kannur">Kannur</option>
-                <option value="coimbatore">Coimbatore</option>
-              </select>
-              <div className="bg-dent-nav pointer-events-none absolute top-0 right-0 flex h-full w-11 items-center justify-center rounded-r-lg">
-                <ChevronDown />
-              </div>
-            </div>
-            <Recaptcha onTokenChange={setCaptchaToken} />
-
-            <button
-              type="submit"
-              disabled={status === "submitting"}
-              className="smooth-hover button-hover hover-lift bg-dent-accent hover:bg-dent-nav mx-auto mt-2 w-full max-w-[245px] rounded-[5px] py-3 text-sm font-bold text-white disabled:opacity-60"
-            >
-              {status === "submitting" ? "Submitting..." : "Book Now!"}
-            </button>
-            {feedback && (
-              <p
-                className={`text-center text-sm font-semibold ${status === "success" ? "text-emerald-600" : "text-red-600"}`}
-              >
-                {feedback}
-              </p>
-            )}
-          </form>
+          <BiginAppointmentWidget hideTitle />
         </div>
       </div>
       <div>
