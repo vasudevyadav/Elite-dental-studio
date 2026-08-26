@@ -20,7 +20,7 @@ type GalleryCase = {
   locationSlug: string;
 };
 
-const CASES_PER_PAGE = 12;
+const CASES_PER_PAGE = 6;
 
 function decodeText(value: string) {
   return value
@@ -63,12 +63,13 @@ function ResultHalf({
       width={1440}
       height={1440}
       priority={priority}
+      loading={priority ? "eager" : "lazy"}
       className={
         usesCombinedImage
           ? `absolute left-0 h-[200%] w-full max-w-none object-cover ${side === "before" ? "top-0 object-top" : "bottom-0 object-bottom"}`
           : "absolute inset-0 h-full w-full object-cover"
       }
-      sizes="(max-width:640px) 100vw,(max-width:1024px) 50vw,50vw"
+      sizes="(max-width: 639px) 100vw, (max-width: 1023px) 50vw, 40vw"
     />
   );
 }
@@ -199,6 +200,7 @@ export default function CasesPage({ data }: { data: Record<string, any> }) {
   const [activeTreatment, setActiveTreatment] = useState<string>("");
   const [currentPage, setCurrentPage] = useState(1);
   const treatmentScrollRef = useRef<HTMLDivElement>(null);
+  const caseResultsRef = useRef<HTMLDivElement>(null);
 
   const scrollTreatments = (direction: -1 | 1) => {
     treatmentScrollRef.current?.scrollBy({
@@ -212,6 +214,13 @@ export default function CasesPage({ data }: { data: Record<string, any> }) {
     if (!container) return;
     const left = button.offsetLeft - (container.clientWidth - button.offsetWidth) / 2;
     container.scrollTo({ left: Math.max(0, left), behavior: "smooth" });
+  };
+
+  const selectCasePage = (page: number) => {
+    setCurrentPage(Math.max(1, Math.min(totalPages, page)));
+    requestAnimationFrame(() =>
+      caseResultsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }),
+    );
   };
 
   useEffect(() => {
@@ -406,7 +415,7 @@ export default function CasesPage({ data }: { data: Record<string, any> }) {
             )}
           </div>
 
-          <div id="case-results" className="scroll-mt-24">
+          <div ref={caseResultsRef} id="case-results" className="scroll-mt-24">
             <div
               className={`grid grid-cols-1 gap-3 ${featuredCases.length === 1 ? "sm:grid-cols-1" : "sm:grid-cols-2"} ${hasFeaturedMosaic ? "sm:auto-rows-[210px]" : "sm:auto-rows-[320px]"}`}
             >
@@ -434,24 +443,30 @@ export default function CasesPage({ data }: { data: Record<string, any> }) {
               <PaginationButton
                 label="Previous"
                 disabled={activePage === 1}
-                onClick={() => setCurrentPage(Math.max(1, activePage - 1))}
+                onClick={() => selectCasePage(activePage - 1)}
               />
-              {Array.from({ length: totalPages }, (_, index) => index + 1).map((page) => (
-                <button
-                  key={page}
-                  type="button"
-                  onClick={() => setCurrentPage(page)}
-                  aria-label={`Go to page ${page}`}
-                  aria-current={activePage === page ? "page" : undefined}
-                  className={`h-11 min-w-11 rounded-xl px-3 text-sm font-bold transition ${activePage === page ? "bg-[#25bfae] text-white" : "bg-white/[.08] text-white/85 hover:bg-white/15"}`}
-                >
-                  {page}
-                </button>
-              ))}
+              {paginationItems(activePage, totalPages).map((item) =>
+                typeof item === "number" ? (
+                  <button
+                    key={item}
+                    type="button"
+                    onClick={() => selectCasePage(item)}
+                    aria-label={`Go to page ${item}`}
+                    aria-current={activePage === item ? "page" : undefined}
+                    className={`h-11 min-w-11 rounded-xl px-3 text-sm font-bold transition ${activePage === item ? "bg-[#25bfae] text-white" : "bg-white/[.08] text-white/85 hover:bg-white/15"}`}
+                  >
+                    {item}
+                  </button>
+                ) : (
+                  <span key={item} className="px-1 text-white/55" aria-hidden="true">
+                    …
+                  </span>
+                ),
+              )}
               <PaginationButton
                 label="Next"
                 disabled={activePage === totalPages}
-                onClick={() => setCurrentPage(Math.min(totalPages, activePage + 1))}
+                onClick={() => selectCasePage(activePage + 1)}
               />
             </nav>
           )}
@@ -546,6 +561,20 @@ export default function CasesPage({ data }: { data: Record<string, any> }) {
       )}
     </SitePage>
   );
+}
+
+function paginationItems(currentPage: number, totalPages: number): Array<number | string> {
+  if (totalPages <= 7) return Array.from({ length: totalPages }, (_, index) => index + 1);
+  const pages = Array.from(new Set([1, totalPages, currentPage - 1, currentPage, currentPage + 1]))
+    .filter((page) => page >= 1 && page <= totalPages)
+    .sort((first, second) => first - second);
+  const items: Array<number | string> = [];
+  pages.forEach((page, index) => {
+    const previous = pages[index - 1];
+    if (previous && page - previous > 1) items.push(`ellipsis-${previous}-${page}`);
+    items.push(page);
+  });
+  return items;
 }
 
 function PaginationButton({
