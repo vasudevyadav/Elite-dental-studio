@@ -8,8 +8,23 @@ import SitePage from "@/components/SitePage";
 import { getContent } from "@/lib/contentApi";
 import { isMainClinic } from "@/lib/clinics";
 
-const fallbackCases = Array.from({ length: 12 }, (_, index) => ({
-  src: `/cases/case-${String(index + 1).padStart(2, "0")}.webp`,
+type GalleryCase = {
+  id: string;
+  beforeSrc: string;
+  afterSrc: string;
+  usesCombinedImage: boolean;
+  title: string;
+  label: string;
+  location: string;
+  treatmentSlug: string;
+  locationSlug: string;
+};
+
+const fallbackCases: GalleryCase[] = Array.from({ length: 12 }, (_, index) => ({
+  id: `fallback-case-${index + 1}`,
+  beforeSrc: `/cases/case-${String(index + 1).padStart(2, "0")}.webp`,
+  afterSrc: `/cases/case-${String(index + 1).padStart(2, "0")}.webp`,
+  usesCombinedImage: true,
   title: `Smile transformation ${String(index + 1).padStart(2, "0")}`,
   label:
     index % 3 === 0 ? "Smile Design" : index % 3 === 1 ? "Restorative Care" : "Advanced Dentistry",
@@ -18,8 +33,6 @@ const fallbackCases = Array.from({ length: 12 }, (_, index) => ({
     index % 3 === 0 ? "smile-design" : index % 3 === 1 ? "restorative-care" : "advanced-dentistry",
   locationSlug: index < 4 ? "calicut" : index < 8 ? "kochi" : "kannur",
 }));
-
-type GalleryCase = (typeof fallbackCases)[number];
 
 const ArrowIcon = ({ reverse = false }: { reverse?: boolean }) => (
   <svg
@@ -37,11 +50,13 @@ function ResultHalf({
   src,
   alt,
   side,
+  usesCombinedImage,
   priority = false,
 }: {
   src: string;
   alt: string;
   side: "before" | "after";
+  usesCombinedImage: boolean;
   priority?: boolean;
 }) {
   return (
@@ -51,19 +66,27 @@ function ResultHalf({
       width={1440}
       height={1440}
       priority={priority}
-      className={`absolute left-0 h-[200%] w-full max-w-none object-cover ${side === "before" ? "top-0 object-top" : "bottom-0 object-bottom"}`}
+      className={
+        usesCombinedImage
+          ? `absolute left-0 h-[200%] w-full max-w-none object-cover ${side === "before" ? "top-0 object-top" : "bottom-0 object-bottom"}`
+          : "absolute inset-0 h-full w-full object-cover"
+      }
       sizes="(max-width:640px) 100vw,(max-width:1024px) 50vw,50vw"
     />
   );
 }
 
 function BeforeAfterSlider({
-  src,
+  beforeSrc,
+  afterSrc,
   alt,
+  usesCombinedImage,
   priority = false,
 }: {
-  src: string;
+  beforeSrc: string;
+  afterSrc: string;
   alt: string;
+  usesCombinedImage: boolean;
   priority?: boolean;
 }) {
   const [position, setPosition] = useState(50);
@@ -77,12 +100,24 @@ function BeforeAfterSlider({
 
   return (
     <div ref={sliderRef} className="absolute inset-0 overflow-hidden bg-[#17474a]">
-      <ResultHalf src={src} alt={alt} side="after" priority={priority} />
+      <ResultHalf
+        src={afterSrc}
+        alt={alt}
+        side="after"
+        usesCombinedImage={usesCombinedImage}
+        priority={priority}
+      />
       <div
         className="absolute inset-0 overflow-hidden"
         style={{ clipPath: `inset(0 ${100 - position}% 0 0)` }}
       >
-        <ResultHalf src={src} alt={alt} side="before" priority={priority} />
+        <ResultHalf
+          src={beforeSrc}
+          alt={alt}
+          side="before"
+          usesCombinedImage={usesCombinedImage}
+          priority={priority}
+        />
       </div>
       <span className="pointer-events-none absolute top-3 left-3 z-10 rounded-full bg-[#174e53]/80 px-3 py-1.5 text-[9px] font-bold tracking-[.14em] text-white uppercase backdrop-blur">
         Before
@@ -129,17 +164,38 @@ export default function CasesPage({ data }: { data: Record<string, any> }) {
   const cases: GalleryCase[] = data.items?.length
     ? data.items
         .filter((item: Record<string, any>) => isMainClinic(item.location?.slug))
-        .map((item: Record<string, any>, index: number) => ({
-          src:
-            item.combinedImage?.url ||
-            item.beforeImage?.url ||
-            `/cases/case-${String(index + 1).padStart(2, "0")}.webp`,
-          title: item.title,
-          label: item.category?.name,
-          location: item.location?.name,
-          treatmentSlug: item.category?.slug,
-          locationSlug: item.location?.slug,
-        }))
+        .flatMap((item: Record<string, any>) => {
+          const imageSets = item.images?.length ? item.images : [item];
+
+          return imageSets.flatMap((images: Record<string, any>, imageIndex: number) => {
+            const beforeSrc = images.beforeImage?.url;
+            const afterSrc = images.afterImage?.url;
+            const combinedSrc = images.combinedImage?.url;
+            const hasSeparateImages = beforeSrc && afterSrc && beforeSrc !== afterSrc;
+            const displayBefore = hasSeparateImages
+              ? beforeSrc
+              : combinedSrc || beforeSrc || afterSrc;
+            const displayAfter = hasSeparateImages
+              ? afterSrc
+              : combinedSrc || afterSrc || beforeSrc;
+
+            if (!displayBefore || !displayAfter) return [];
+
+            return [
+              {
+                id: `${item.id || item.slug || "case"}-${imageIndex}`,
+                beforeSrc: displayBefore,
+                afterSrc: displayAfter,
+                usesCombinedImage: !hasSeparateImages,
+                title: item.title || "Smile transformation",
+                label: item.category?.name || "Dental treatment",
+                location: item.location?.name || "",
+                treatmentSlug: item.category?.slug || "",
+                locationSlug: item.location?.slug || "",
+              },
+            ];
+          });
+        })
     : fallbackCases;
   const locations = (data.filters?.locations || []).filter((location: Record<string, string>) =>
     isMainClinic(location.slug),
@@ -179,14 +235,21 @@ export default function CasesPage({ data }: { data: Record<string, any> }) {
         (!activeLocation || item.locationSlug === activeLocation) &&
         (!activeTreatment || item.treatmentSlug === activeTreatment),
     );
+  const featuredCases = visibleCases.slice(0, 3);
+  const hasFeaturedMosaic = featuredCases.length >= 3;
 
   const caseCard = (item: (typeof visibleCases)[number], className = "") => (
     <article
-      key={item.src}
+      key={item.id}
       onClick={() => setSelected(item.originalIndex)}
       className={`group relative min-h-[210px] cursor-zoom-in overflow-hidden rounded-2xl bg-[#17474a] text-left transition duration-300 hover:-translate-y-1 ${className}`}
     >
-      <BeforeAfterSlider src={item.src} alt={item.title} />
+      <BeforeAfterSlider
+        beforeSrc={item.beforeSrc}
+        afterSrc={item.afterSrc}
+        alt={item.title}
+        usesCombinedImage={item.usesCombinedImage}
+      />
       <span className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#031d20]/75 via-transparent to-transparent" />
       <span className="pointer-events-none absolute right-4 bottom-4 left-4 z-20">
         <span className="block text-[9px] font-bold tracking-[.14em] text-[#6ce1d6] uppercase">
@@ -291,17 +354,17 @@ export default function CasesPage({ data }: { data: Record<string, any> }) {
             )}
           </div>
 
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:grid-rows-2">
-            {visibleCases
-              .slice(0, 3)
-              .map((item, index) =>
-                caseCard(
-                  item,
-                  index === 0
-                    ? "min-h-[432px] sm:row-span-2 sm:min-h-0"
-                    : "min-h-[210px] sm:min-h-0",
-                ),
-              )}
+          <div
+            className={`grid grid-cols-1 gap-3 ${featuredCases.length === 1 ? "sm:grid-cols-1" : "sm:grid-cols-2"} ${hasFeaturedMosaic ? "sm:auto-rows-[210px]" : "sm:auto-rows-[320px]"}`}
+          >
+            {featuredCases.map((item, index) =>
+              caseCard(
+                item,
+                hasFeaturedMosaic && index === 0
+                  ? "min-h-[432px] sm:row-span-2 sm:min-h-0"
+                  : "min-h-[280px] sm:min-h-0",
+              ),
+            )}
           </div>
           {visibleCases.length > 3 && (
             <div className="mt-3 grid auto-rows-[300px] grid-cols-1 gap-3 sm:grid-cols-2 lg:auto-rows-[320px] lg:grid-cols-3">
@@ -365,7 +428,13 @@ export default function CasesPage({ data }: { data: Record<string, any> }) {
             onClick={(event) => event.stopPropagation()}
             className="relative aspect-[16/9] w-full max-w-5xl overflow-hidden rounded-2xl"
           >
-            <BeforeAfterSlider src={cases[selected].src} alt={cases[selected].title} priority />
+            <BeforeAfterSlider
+              beforeSrc={cases[selected].beforeSrc}
+              afterSrc={cases[selected].afterSrc}
+              alt={cases[selected].title}
+              usesCombinedImage={cases[selected].usesCombinedImage}
+              priority
+            />
           </div>
           <button
             type="button"
