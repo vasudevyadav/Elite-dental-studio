@@ -5,7 +5,7 @@ import { openConsultationPopup } from "@/lib/consultationPopup";
 
 const HOME_SLIDES = [
   {
-    img: "/home/Home Page Banner 02.jpg",
+    img: "/home/Home-Page-Banner-1.jpg",
     alt: "Six years of specialist-led dental care at Elite Dental Studio",
   },
 ];
