@@ -38,7 +38,7 @@ export default function HeroSection({ slides = HOME_SLIDES, content }: HeroSecti
   }, [next, total]);
 
   return (
-    <section className="relative h-[430px] overflow-hidden bg-[#f2f9f7] sm:h-[560px] lg:h-[clamp(560px,42.51vw,700px)]">
+    <section className="relative h-[430px] overflow-hidden sm:h-[560px] lg:h-[clamp(560px,42.51vw,700px)] bg-[#f2f9f7">
       {/* Background image slider */}
       {slides.map((s, i) => (
         <div
