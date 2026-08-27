@@ -5,7 +5,7 @@ import { openConsultationPopup } from "@/lib/consultationPopup";
 
 const HOME_SLIDES = [
   {
-    img: "/home/home-page-banner-01.jpg",
+    img: "/home/Home Page Banner 02.jpg",
     alt: "Six years of specialist-led dental care at Elite Dental Studio",
   },
 ];
@@ -38,7 +38,7 @@ export default function HeroSection({ slides = HOME_SLIDES, content }: HeroSecti
   }, [next, total]);
 
   return (
-    <section className="relative h-[430px] overflow-hidden sm:h-[560px] lg:h-[clamp(560px,42.51vw,700px)]">
+    <section className="relative h-[430px] overflow-hidden bg-[#f2f9f7] sm:h-[560px] lg:h-[clamp(560px,42.51vw,700px)]">
       {/* Background image slider */}
       {slides.map((s, i) => (
         <div
@@ -53,7 +53,7 @@ export default function HeroSection({ slides = HOME_SLIDES, content }: HeroSecti
             quality={85}
             loading={i === 0 ? "eager" : "lazy"}
             sizes="100vw"
-            className="object-cover object-[-100px] lg:object-center"
+            className="object-contain object-[-100px] lg:object-center"
             fetchPriority={i === 0 ? "high" : "auto"}
           />
         </div>
