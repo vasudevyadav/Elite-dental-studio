@@ -18,7 +18,7 @@ export default function AboutUs() {
       <div className="grid items-center gap-6 lg:grid-cols-[0.92fr_1.08fr] lg:gap-14">
         <div className="mx-auto w-full max-w-[610px]">
           <Image
-            src="/home/about-us-img.png"
+            src="/home/elite-6-year.png"
             alt="Elite Dental Studio treatment room with over 20 years of medical service experience"
             width={799}
             height={885}
