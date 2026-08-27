@@ -53,7 +53,7 @@ export default function HeroSection({ slides = HOME_SLIDES, content }: HeroSecti
             quality={85}
             loading={i === 0 ? "eager" : "lazy"}
             sizes="100vw"
-            className="object-[-100px] lg:object-center"
+            className="object-cover object-[-100px] lg:object-center"
             fetchPriority={i === 0 ? "high" : "auto"}
           />
         </div>
