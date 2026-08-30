@@ -47,7 +47,17 @@ type Props = {
 
 const sectionContent = (sections: ServiceSection[], type: ServiceSection["type"]) => {
   const content = sections.find((section) => section.type === type)?.content;
-  return content && Object.keys(content).length ? content : undefined;
+  return content && hasMeaningfulContent(content) ? content : undefined;
+};
+
+const hasMeaningfulContent = (value: unknown): boolean => {
+  if (typeof value === "string") return value.trim().length > 0;
+  if (typeof value === "number" || typeof value === "boolean") return true;
+  if (Array.isArray(value)) return value.some(hasMeaningfulContent);
+  if (value && typeof value === "object") {
+    return Object.values(value as Record<string, unknown>).some(hasMeaningfulContent);
+  }
+  return false;
 };
 
 export default function ServiceDetailPage({ service, testimonials, galleryCases }: Props) {

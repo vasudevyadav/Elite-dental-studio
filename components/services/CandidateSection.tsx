@@ -8,6 +8,7 @@ export default function CandidateSection({
   data?: Record<string, unknown>;
 }) {
   const items = (data?.items as string[] | undefined) || [];
+  const note = typeof data?.note === "string" ? data.note.trim() : "";
   if (!items.length) return null;
   return (
     <section className="grid items-center gap-6 rounded-[22px] bg-[#ecfaf7] p-6 lg:grid-cols-[minmax(0,1fr)_minmax(520px,600px)] lg:p-16">
@@ -35,10 +36,9 @@ export default function CandidateSection({
             </li>
           ))}
         </ul>
-        <strong className="mt-7 block text-lg leading-[1.55] font-bold italic">
-          {(data?.note as string) ||
-            "Suitability is confirmed after a clinical examination and dental X-ray at our clinic."}
-        </strong>
+        {note && (
+          <strong className="mt-7 block text-lg leading-[1.55] font-bold italic">{note}</strong>
+        )}
       </div>
       <div className="relative min-h-[300px] lg:min-h-[550px]">
         <Image
