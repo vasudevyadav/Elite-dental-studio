@@ -34,6 +34,10 @@ export default function ProceduresSection({ service, isLaser, data }: Props) {
   const activeProcedures = apiItems?.map((item) => [item.title, item.description]) || [];
   if (!activeProcedures.length) return null;
   const mobileProcedures = activeProcedures.map(([name, copy]) => ({ name, copy }));
+  const desktopSplitIndex = Math.ceil(activeProcedures.length / 2);
+  const leftProcedures = activeProcedures.slice(0, desktopSplitIndex);
+  const rightProcedures = activeProcedures.slice(desktopSplitIndex);
+  const note = typeof data?.note === "string" ? data.note.trim() : "";
 
   return (
     <section className="py-10 text-center lg:py-16">
@@ -69,7 +73,7 @@ export default function ProceduresSection({ service, isLaser, data }: Props) {
 
       <div className="mt-12 hidden items-center gap-8 text-left lg:grid lg:grid-cols-3 lg:gap-0">
         <div className="order-2 grid gap-7 lg:order-1 lg:gap-28">
-          {activeProcedures.slice(0, 3).map(([name, copy]) => (
+          {leftProcedures.map(([name, copy]) => (
             <ProcedureItem key={name} name={name} copy={copy} service={service} isLaser={isLaser} />
           ))}
         </div>
@@ -88,13 +92,14 @@ export default function ProceduresSection({ service, isLaser, data }: Props) {
         </div>
 
         <div className="order-3 grid gap-8 lg:gap-14 lg:pl-12">
-          {activeProcedures.slice(3).map(([name, copy]) => (
+          {rightProcedures.map(([name, copy]) => (
             <ProcedureItem key={name} name={name} copy={copy} service={service} isLaser={isLaser} />
           ))}
-          <strong className="max-w-sm rounded-lg bg-[#25d0c0] px-6 py-3 text-lg leading-7 font-normal text-white">
-            {(data?.note as string) ||
-              "Each procedure is planned after your dentist confirms your condition and treatment goals."}
-          </strong>
+          {note && (
+            <strong className="max-w-sm rounded-lg bg-[#25d0c0] px-6 py-3 text-lg leading-7 font-normal text-white">
+              {note}
+            </strong>
+          )}
         </div>
       </div>
     </section>
