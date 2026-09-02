@@ -36,7 +36,7 @@ export default function BookAppointmentSection({
         </button>
 
         {open && (
-          <div className="px-6 pb-10 sm:px-10 lg:grid lg:grid-cols-[0.95fr_1.05fr] lg:gap-16 lg:px-16 lg:pb-16">
+          <div className="px-3 pb-10 sm:px-10 lg:grid lg:grid-cols-[0.95fr_1.05fr] lg:gap-16 lg:px-16 lg:pb-16">
             <div className="text-white">
               <p className="max-w-[530px] text-base leading-[1.55] text-white/95 sm:text-lg">
                 {content.description}
@@ -79,7 +79,7 @@ export default function BookAppointmentSection({
               </div>
             </div>
 
-            <div className="mt-8 rounded-[22px] bg-white p-3 sm:p-4 lg:mt-0">
+            <div className="mt-8 rounded-[22px] bg-white p-1 lg:mt-0 lg:p-4">
               <BiginAppointmentWidget />
             </div>
           </div>

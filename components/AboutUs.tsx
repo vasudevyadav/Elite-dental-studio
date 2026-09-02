@@ -55,7 +55,7 @@ export default function AboutUs() {
           </div>
 
           <div className="mt-10 border-y border-[#dfe8e8] py-7">
-            <div className="grid grid-cols-2 gap-6 lg:gap-4">
+            <div className="grid gap-6 lg:grid-cols-2 lg:gap-4">
               <div className="grid items-center gap-2 lg:flex">
                 <strong className="shrink-0 text-2xl leading-none font-black text-[#2bd0c0] lg:text-5xl">
                   <AnimatedCounter value={100} suffix="%" duration={1400} />
