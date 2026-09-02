@@ -87,18 +87,12 @@ export default function TestimonialsSection({
             </div>
 
             <div className="flex flex-wrap gap-3" role="group" aria-label="Choose review type">
-              <AnimatedArrowCta
-                label="TEXT REVIEW"
-                onAction={() => (reviewType === "text" ? move(1) : selectReviewType("text"))}
-                arrowClassName="text-[#28cabb]"
-                className="bg-dent-accent hover:bg-dent-nav inline-flex w-fit items-center gap-4 rounded-[8px] py-1.5 pr-3 pl-5 text-sm font-bold text-white uppercase transition hover:-translate-y-0.5 lg:py-3"
-              />
-              <AnimatedArrowCta
+              {/* <AnimatedArrowCta
                 label="VIDEO REVIEW"
                 onAction={() => (reviewType === "video" ? move(1) : selectReviewType("video"))}
                 arrowClassName="text-[#28cabb]"
                 className="hover:bg-dent-nav inline-flex w-fit items-center gap-4 rounded-[8px] border border-white/40 bg-transparent py-1.5 pr-3 pl-5 text-sm font-bold text-white uppercase transition hover:-translate-y-0.5 lg:py-3"
-              />
+              /> */}
             </div>
           </div>
         </div>
