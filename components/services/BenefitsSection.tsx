@@ -1,12 +1,12 @@
 import Image from "next/image";
 
 const positions = [
-  "left-[32%] top-[20%]",
-  "left-[13.5%] top-[42%]",
-  "left-[32.5%] top-[64%]",
-  "left-[68%] top-[20%]",
-  "left-[87%] top-[42%]",
-  "left-[68%] top-[64%]",
+  "left-[32%] top-[28%]",
+  "left-[13%] top-[51%]",
+  "left-[32.5%] top-[73%]",
+  "left-[68%] top-[29%]",
+  "left-[87%] top-[51%]",
+  "left-[68%] top-[72%]",
 ];
 
 export default function BenefitsSection({
@@ -22,7 +22,7 @@ export default function BenefitsSection({
   const useDiagramLayout = activeBenefits.length <= positions.length;
   if (!activeBenefits.length) return null;
   return (
-    <section className="pt-10 pb-2 text-center lg:pt-20 lg:pb-12">
+    <section className="pt-10 pb-2 text-center lg:pt-20 lg:pb-0">
       <h2 className="text-2xl leading-tight font-bold text-[#2b7175] lg:text-[40px]">
         {(data?.title as string) || (
           <>
@@ -33,9 +33,7 @@ export default function BenefitsSection({
         )}
       </h2>
       {description && (
-        <p className="mt-5 text-sm leading-7 font-medium lg:text-lg lg:leading-8">
-          {description}
-        </p>
+        <p className="mt-5 text-sm leading-7 font-medium lg:text-lg lg:leading-8">{description}</p>
       )}
 
       <div
@@ -61,10 +59,7 @@ export default function BenefitsSection({
       {useDiagramLayout ? (
         <div className="relative mx-auto mt-8 hidden aspect-[1605/865] w-full max-w-[1605px] lg:block">
           <Image
-            src={
-              (data?.image as { url?: string } | undefined)?.url ||
-              "/service/services-inner-6.png"
-            }
+            src={(data?.image as { url?: string } | undefined)?.url || "/service/services-bg.png"}
             alt={`Benefits of ${treatmentName}`}
             fill
             sizes="100vw"
@@ -72,7 +67,7 @@ export default function BenefitsSection({
           />
           {activeBenefits.map((benefit, index) => (
             <span
-              className={`absolute z-10 w-[12%] -translate-x-1/2 -translate-y-1/2 text-[clamp(9px,.78vw,13px)] leading-[1.35] text-[#454b4b] ${positions[index]}`}
+              className={`absolute z-10 w-[13%] -translate-x-1/2 -translate-y-1/2 text-sm leading-[1.35] text-[#454b4b] lg:text-[15px] ${positions[index]}`}
               key={benefit}
             >
               {benefit}
