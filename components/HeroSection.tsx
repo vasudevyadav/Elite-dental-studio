@@ -46,16 +46,31 @@ export default function HeroSection({ slides = HOME_SLIDES, content }: HeroSecti
           className="absolute inset-0 transition-opacity duration-1000 ease-in-out"
           style={{ opacity: i === slide ? 1 : 0 }}
         >
-          <Image
-            src={s.img}
-            alt={s.alt}
-            fill
-            quality={85}
-            loading={i === 0 ? "eager" : "lazy"}
-            sizes="100vw"
-            className="object-cover object-left lg:object-center"
-            fetchPriority={i === 0 ? "high" : "auto"}
-          />
+          <div className="hidden lg:block">
+            <Image
+              src={s.img}
+              alt={s.alt}
+              fill
+              quality={85}
+              loading={i === 0 ? "eager" : "lazy"}
+              sizes="100vw"
+              className="object-cover object-left lg:object-center"
+              fetchPriority={i === 0 ? "high" : "auto"}
+            />
+          </div>
+
+          <div className="block lg:hidden">
+            <Image
+              src="/home/Home-Page-Banner-mob.webp"
+              alt={s.alt}
+              fill
+              quality={85}
+              loading={i === 0 ? "eager" : "lazy"}
+              sizes="100vw"
+              className="block object-cover lg:hidden lg:object-center"
+              fetchPriority={i === 0 ? "high" : "auto"}
+            />
+          </div>
         </div>
       ))}
 
