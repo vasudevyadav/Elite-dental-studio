@@ -4,6 +4,7 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   compress: true,
   poweredByHeader: false,
+  serverExternalPackages: ["sanitize-html"],
   images: {
     qualities: [60, 75],
     remotePatterns: [
