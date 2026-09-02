@@ -118,7 +118,7 @@ export default function ConsultationPopup() {
       window.cancelAnimationFrame(focusFrame);
       document.body.style.overflow = previousOverflow;
       if (siteContent) {
-        if (previousAriaHidden === null) siteContent.removeAttribute("aria-hidden");
+        if (previousAriaHidden == null) siteContent.removeAttribute("aria-hidden");
         else siteContent.setAttribute("aria-hidden", previousAriaHidden);
         if (!wasInert) siteContent.removeAttribute("inert");
       }
