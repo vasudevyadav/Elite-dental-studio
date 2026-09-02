@@ -1,5 +1,6 @@
 import { services as fallbackServices, type Service } from "@/components/services/serviceData";
 import { getEdsApiBaseUrl } from "@/lib/apiConfig";
+import { isLocationSpecificServiceSlug } from "@/lib/clinics";
 import type { DoctorListItem } from "@/lib/contentApi";
 
 export type Media = { url: string; alt: string; width?: number | null; height?: number | null };
@@ -157,6 +158,7 @@ export async function getServicesPage(): Promise<ServicesPageData> {
     ...data,
     items: (data.items ?? [])
       .filter((item) => item?.slug && item?.title)
+      .filter((item) => !isLocationSpecificServiceSlug(item.slug))
       .map(normalizeListItem)
       .sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0)),
   };

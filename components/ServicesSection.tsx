@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { isLocationSpecificServiceSlug } from "@/lib/clinics";
 import type { ServiceListItem } from "@/lib/servicesApi";
 import AnimatedArrowCta from "./AnimatedArrowCta";
 
@@ -190,21 +191,23 @@ export default function ServicesSection({
 }) {
   const [activeService, setActiveService] = useState(0);
   const toServices = (items: ApiService[]): Service[] =>
-    items.map((item) => ({
-      slug: item.slug,
-      title: item.title,
-      description: item.shortDescription,
-      image:
-        item.cardImage?.url ||
-        services.find((service) => service.slug === item.slug)?.image ||
-        "/service/services-1.png",
-      icon:
-        item.slug.includes("aligner") || item.slug === "orthodontics"
-          ? "aligner"
-          : item.slug.includes("laser") || item.slug === "periodontics"
-            ? "laser"
-            : "tooth",
-    }));
+    items
+      .filter((item) => !isLocationSpecificServiceSlug(item.slug))
+      .map((item) => ({
+        slug: item.slug,
+        title: item.title,
+        description: item.shortDescription,
+        image:
+          item.cardImage?.url ||
+          services.find((service) => service.slug === item.slug)?.image ||
+          "/service/services-1.png",
+        icon:
+          item.slug.includes("aligner") || item.slug === "orthodontics"
+            ? "aligner"
+            : item.slug.includes("laser") || item.slug === "periodontics"
+              ? "laser"
+              : "tooth",
+      }));
   const [apiServices, setApiServices] = useState<Service[] | null>(() =>
     initialServices?.length ? toServices(initialServices) : null,
   );
