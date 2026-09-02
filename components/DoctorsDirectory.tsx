@@ -13,23 +13,18 @@ export default function DoctorsDirectory({ data }: { data: DoctorsData }) {
   const defaultClinic = mainClinics[0]?.name || "Calicut";
   const [clinic, setClinic] = useState(defaultClinic);
   const [activeClinic, setActiveClinic] = useState(defaultClinic);
-  const [page, setPage] = useState(1);
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
 
   const filteredDoctors = useMemo(
     () => doctors.filter((doctor) => doctor.clinics.some((item) => item.name === activeClinic)),
     [activeClinic, doctors],
   );
-  const totalPages = Math.max(1, Math.ceil(filteredDoctors.length / PAGE_SIZE));
-  const currentPage = Math.min(page, totalPages);
-  const visibleDoctors = filteredDoctors.slice(
-    (currentPage - 1) * PAGE_SIZE,
-    currentPage * PAGE_SIZE,
-  );
-  const pageNumbers = Array.from({ length: totalPages }, (_, index) => index + 1);
+  const visibleDoctors = filteredDoctors.slice(0, visibleCount);
+  const hasMoreDoctors = visibleCount < filteredDoctors.length;
 
   const chooseClinic = (value: string) => {
     setActiveClinic(value);
-    setPage(1);
+    setVisibleCount(PAGE_SIZE);
   };
 
   return (
@@ -134,30 +129,18 @@ export default function DoctorsDirectory({ data }: { data: DoctorsData }) {
           </p>
         )}
 
-        {totalPages > 1 && (
-          <nav
-            className="mt-14 flex items-center justify-center gap-[13px]"
-            aria-label="Doctors pagination"
-          >
-            {pageNumbers.map((item) => (
-              <button
-                key={item}
-                type="button"
-                className={`grid h-7 w-7 cursor-pointer place-items-center rounded-full border-0 text-[10px] font-bold text-white ${currentPage === item ? "bg-[#21cdbd]" : "bg-[#2d7376]"}`}
-                onClick={() => setPage(item)}
-              >
-                {item}
-              </button>
-            ))}
+        {hasMoreDoctors && (
+          <div className="mt-14 flex justify-center">
             <button
               type="button"
-              className="grid h-7 w-7 cursor-pointer place-items-center rounded-full border-0 bg-[#21cdbd] text-[10px] font-bold text-white"
-              onClick={() => setPage(Math.min(currentPage + 1, totalPages))}
-              aria-label="Next page"
+              onClick={() =>
+                setVisibleCount((count) => Math.min(filteredDoctors.length, count + PAGE_SIZE))
+              }
+              className="smooth-hover button-hover rounded-full bg-[#296f73] px-8 py-3 text-sm font-extrabold text-white hover:bg-[#205e62] focus:ring-4 focus:ring-[#296f73]/20 focus:outline-none"
             >
-              →
+              Load More Doctors
             </button>
-          </nav>
+          </div>
         )}
       </div>
     </section>

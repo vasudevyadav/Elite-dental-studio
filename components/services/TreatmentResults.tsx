@@ -120,13 +120,9 @@ export default function TreatmentResults({
   const items = (data?.items as ResultItem[] | undefined)?.filter(
     (item) => item.beforeImage?.url && item.afterImage?.url,
   );
-  const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = Math.max(1, Math.ceil((items?.length || 0) / RESULTS_PER_PAGE));
-  const activePage = Math.min(currentPage, totalPages);
-  const visibleItems = items?.slice(
-    (activePage - 1) * RESULTS_PER_PAGE,
-    activePage * RESULTS_PER_PAGE,
-  );
+  const [visibleCount, setVisibleCount] = useState(RESULTS_PER_PAGE);
+  const visibleItems = items?.slice(0, visibleCount);
+  const hasMoreResults = (items?.length || 0) > visibleCount;
 
   if (!items?.length) return null;
 
@@ -159,40 +155,18 @@ export default function TreatmentResults({
             </div>
           ))}
         </div>
-        {totalPages > 1 && (
-          <nav
-            className="mt-8 flex flex-wrap items-center justify-center gap-2"
-            aria-label={`${serviceTitle} results pagination`}
-          >
+        {hasMoreResults && (
+          <div className="mt-8 flex justify-center">
             <button
               type="button"
-              disabled={activePage === 1}
-              onClick={() => setCurrentPage(Math.max(1, activePage - 1))}
-              className="rounded-xl border border-[#9ccbc7] px-4 py-2.5 text-sm font-bold text-[#176b70] disabled:cursor-not-allowed disabled:opacity-35"
+              onClick={() =>
+                setVisibleCount((count) => Math.min(items?.length || 0, count + RESULTS_PER_PAGE))
+              }
+              className="rounded-xl bg-[#168f85] px-8 py-3 text-sm font-bold text-white hover:bg-[#12726a]"
             >
-              Previous
+              Load More Results
             </button>
-            {Array.from({ length: totalPages }, (_, index) => index + 1).map((page) => (
-              <button
-                key={page}
-                type="button"
-                onClick={() => setCurrentPage(page)}
-                aria-label={`Go to results page ${page}`}
-                aria-current={activePage === page ? "page" : undefined}
-                className={`h-10 min-w-10 rounded-xl px-3 text-sm font-bold ${activePage === page ? "bg-[#168f85] text-white" : "border border-[#9ccbc7] text-[#176b70]"}`}
-              >
-                {page}
-              </button>
-            ))}
-            <button
-              type="button"
-              disabled={activePage === totalPages}
-              onClick={() => setCurrentPage(Math.min(totalPages, activePage + 1))}
-              className="rounded-xl border border-[#9ccbc7] px-4 py-2.5 text-sm font-bold text-[#176b70] disabled:cursor-not-allowed disabled:opacity-35"
-            >
-              Next
-            </button>
-          </nav>
+          </div>
         )}
         <div className="mt-14 flex w-full justify-center text-center">
           <Link

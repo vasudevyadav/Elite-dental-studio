@@ -66,7 +66,7 @@ export default function AwardsSection() {
             Recognition &amp; Excellence
           </p>
 
-          <h2 className="mt-4 text-[40px] leading-none font-extrabold tracking-[-0.045em] text-[#286f73] sm:text-[58px] lg:text-[64px]">
+          <h2 className="mt-4 text-[25px] leading-none font-bold tracking-[-0.045em] text-[#286f73] sm:text-[58px] lg:text-[64px] lg:font-extrabold">
             Our Awards
           </h2>
 
@@ -113,7 +113,7 @@ export default function AwardsSection() {
           </div>
         </div>
 
-        <div className="relative mx-auto min-h-[500px] w-full max-w-[700px] sm:min-h-[650px] lg:min-h-[690px] xl:min-h-[740px]">
+        <div className="relative mx-auto min-h-[350px] w-full max-w-[700px] sm:min-h-[650px] lg:min-h-[690px] xl:min-h-[740px]">
           <div className="absolute top-[19%] right-[4%] h-[54%] w-[66%] overflow-hidden rounded-[42px]">
             <Image
               src="/home/award-bg.png"

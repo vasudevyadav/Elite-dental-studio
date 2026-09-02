@@ -198,7 +198,7 @@ export default function CasesPage({ data }: { data: Record<string, any> }) {
   const [selected, setSelected] = useState<number | null>(null);
   const [activeLocation, setActiveLocation] = useState<string>("");
   const [activeTreatment, setActiveTreatment] = useState<string>("");
-  const [currentPage, setCurrentPage] = useState(1);
+  const [visibleCount, setVisibleCount] = useState(CASES_PER_PAGE);
   const treatmentScrollRef = useRef<HTMLDivElement>(null);
   const caseResultsRef = useRef<HTMLDivElement>(null);
 
@@ -214,13 +214,6 @@ export default function CasesPage({ data }: { data: Record<string, any> }) {
     if (!container) return;
     const left = button.offsetLeft - (container.clientWidth - button.offsetWidth) / 2;
     container.scrollTo({ left: Math.max(0, left), behavior: "smooth" });
-  };
-
-  const selectCasePage = (page: number) => {
-    setCurrentPage(Math.max(1, Math.min(totalPages, page)));
-    requestAnimationFrame(() =>
-      caseResultsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }),
-    );
   };
 
   useEffect(() => {
@@ -253,14 +246,14 @@ export default function CasesPage({ data }: { data: Record<string, any> }) {
         (!activeLocation || item.locationSlug === activeLocation) &&
         (!activeTreatment || item.treatmentSlug === activeTreatment),
     );
-  const totalPages = Math.max(1, Math.ceil(visibleCases.length / CASES_PER_PAGE));
-  const activePage = Math.min(currentPage, totalPages);
-  const paginatedCases = visibleCases.slice(
-    (activePage - 1) * CASES_PER_PAGE,
-    activePage * CASES_PER_PAGE,
-  );
+  const paginatedCases = visibleCases.slice(0, visibleCount);
+  const hasMoreCases = visibleCount < visibleCases.length;
   const featuredCases = paginatedCases.slice(0, 3);
   const hasFeaturedMosaic = featuredCases.length >= 3;
+
+  const loadMoreCases = () => {
+    setVisibleCount((count) => Math.min(visibleCases.length, count + CASES_PER_PAGE));
+  };
 
   const caseCard = (item: (typeof visibleCases)[number], className = "") => (
     <article
@@ -331,7 +324,7 @@ export default function CasesPage({ data }: { data: Record<string, any> }) {
                   type="button"
                   onClick={() => {
                     setActiveLocation("");
-                    setCurrentPage(1);
+                    setVisibleCount(CASES_PER_PAGE);
                   }}
                   aria-pressed={!activeLocation}
                   className={`rounded-xl px-7 py-3 text-sm font-bold transition ${!activeLocation ? "bg-[#25bfae] text-white shadow-[0_8px_20px_rgba(37,191,174,.22)]" : "bg-white/[.08] text-white/90 hover:bg-white/15 hover:text-white"}`}
@@ -344,7 +337,7 @@ export default function CasesPage({ data }: { data: Record<string, any> }) {
                     type="button"
                     onClick={() => {
                       setActiveLocation(location.slug);
-                      setCurrentPage(1);
+                      setVisibleCount(CASES_PER_PAGE);
                     }}
                     aria-pressed={activeLocation === location.slug}
                     className={`rounded-xl px-7 py-3 text-sm font-bold transition ${activeLocation === location.slug ? "bg-[#25bfae] text-white shadow-[0_8px_20px_rgba(37,191,174,.22)]" : "bg-white/[.08] text-white/90 hover:bg-white/15 hover:text-white"}`}
@@ -387,7 +380,7 @@ export default function CasesPage({ data }: { data: Record<string, any> }) {
                     type="button"
                     onClick={(event) => {
                       setActiveTreatment("");
-                      setCurrentPage(1);
+                      setVisibleCount(CASES_PER_PAGE);
                       centerTreatment(event.currentTarget);
                     }}
                     aria-pressed={!activeTreatment}
@@ -401,7 +394,7 @@ export default function CasesPage({ data }: { data: Record<string, any> }) {
                       type="button"
                       onClick={(event) => {
                         setActiveTreatment(treatment.slug);
-                        setCurrentPage(1);
+                        setVisibleCount(CASES_PER_PAGE);
                         centerTreatment(event.currentTarget);
                       }}
                       aria-pressed={activeTreatment === treatment.slug}
@@ -435,40 +428,16 @@ export default function CasesPage({ data }: { data: Record<string, any> }) {
             )}
           </div>
 
-          {totalPages > 1 && (
-            <nav
-              className="mt-10 flex flex-wrap items-center justify-center gap-2"
-              aria-label="Treatment cases pagination"
-            >
-              <PaginationButton
-                label="Previous"
-                disabled={activePage === 1}
-                onClick={() => selectCasePage(activePage - 1)}
-              />
-              {paginationItems(activePage, totalPages).map((item) =>
-                typeof item === "number" ? (
-                  <button
-                    key={item}
-                    type="button"
-                    onClick={() => selectCasePage(item)}
-                    aria-label={`Go to page ${item}`}
-                    aria-current={activePage === item ? "page" : undefined}
-                    className={`h-11 min-w-11 rounded-xl px-3 text-sm font-bold transition ${activePage === item ? "bg-[#25bfae] text-white" : "bg-white/[.08] text-white/85 hover:bg-white/15"}`}
-                  >
-                    {item}
-                  </button>
-                ) : (
-                  <span key={item} className="px-1 text-white/55" aria-hidden="true">
-                    …
-                  </span>
-                ),
-              )}
-              <PaginationButton
-                label="Next"
-                disabled={activePage === totalPages}
-                onClick={() => selectCasePage(activePage + 1)}
-              />
-            </nav>
+          {hasMoreCases && (
+            <div className="mt-10 flex justify-center">
+              <button
+                type="button"
+                onClick={loadMoreCases}
+                className="rounded-xl bg-[#25bfae] px-8 py-3 text-sm font-bold text-white transition hover:bg-[#45d2c4]"
+              >
+                Load More Cases
+              </button>
+            </div>
           )}
 
           <div className="mt-14 border-t border-white/15 pt-10 text-white lg:flex lg:items-center lg:justify-between">
@@ -560,41 +529,6 @@ export default function CasesPage({ data }: { data: Record<string, any> }) {
         </div>
       )}
     </SitePage>
-  );
-}
-
-function paginationItems(currentPage: number, totalPages: number): Array<number | string> {
-  if (totalPages <= 7) return Array.from({ length: totalPages }, (_, index) => index + 1);
-  const pages = Array.from(new Set([1, totalPages, currentPage - 1, currentPage, currentPage + 1]))
-    .filter((page) => page >= 1 && page <= totalPages)
-    .sort((first, second) => first - second);
-  const items: Array<number | string> = [];
-  pages.forEach((page, index) => {
-    const previous = pages[index - 1];
-    if (previous && page - previous > 1) items.push(`ellipsis-${previous}-${page}`);
-    items.push(page);
-  });
-  return items;
-}
-
-function PaginationButton({
-  label,
-  disabled,
-  onClick,
-}: {
-  label: string;
-  disabled: boolean;
-  onClick: () => void;
-}) {
-  return (
-    <button
-      type="button"
-      disabled={disabled}
-      onClick={onClick}
-      className="h-11 rounded-xl border border-white/15 px-4 text-sm font-bold text-white transition hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-35"
-    >
-      {label}
-    </button>
   );
 }
 

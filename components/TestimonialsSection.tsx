@@ -80,7 +80,7 @@ export default function TestimonialsSection({
               <h2 className="mt-3 max-w-[690px] text-2xl leading-[1.15] font-semibold tracking-[-0.025em] text-white lg:text-[39px]">
                 Real Stories of Exceptional Care &amp; Better Smiles
               </h2>
-              <p className="mt-3 max-w-[790px] text-base leading-[1.55] text-white/95 sm:text-lg">
+              <p className="mt-3 mb-8 max-w-[790px] text-base leading-[1.55] text-white/95 sm:text-lg lg:mb-0">
                 Across dozens of Google reviews, one line repeats, the doctor explained what they
                 were doing before they did it.
               </p>
@@ -100,7 +100,7 @@ export default function TestimonialsSection({
         {testimonial && (
           <div className="relative z-20 mx-auto -mt-[135px] w-[94%] rounded-[22px] bg-[#f3fbfa] px-5 py-7 shadow-[0_18px_45px_rgba(36,91,94,0.12)] sm:w-[86%] sm:px-10 lg:w-[75%] lg:rounded-[26px] lg:px-14 lg:py-10">
             <div className="flex gap-3 sm:gap-5 lg:gap-8">
-              <span className="shrink-0 text-[46px] leading-[0.75] font-black text-[#29666b] sm:text-[72px]">
+              <span className="hidden shrink-0 text-[46px] leading-[0.75] font-black text-[#29666b] sm:text-[72px] lg:block">
                 “
               </span>
               <div className="min-w-0 flex-1">
