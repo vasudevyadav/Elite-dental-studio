@@ -201,7 +201,7 @@ export default function Footer() {
               Services
             </h3>
             <ul
-              className={`mt-5 space-y-4 lg:space-y-5 ${services.length > 8 ? "lg:max-h-72 lg:overflow-y-auto lg:pr-2 lg:[&::-webkit-scrollbar]:w-1.5 lg:[&::-webkit-scrollbar-thumb]:rounded-full lg:[&::-webkit-scrollbar-thumb]:bg-white/25 lg:[&::-webkit-scrollbar-track]:bg-transparent" : ""}`}
+              className={`mt-5 space-y-4 lg:space-y-5 ${services.length > 8 ? " lg:overflow-y-auto lg:pr-2 lg:[&::-webkit-scrollbar]:w-1.5 lg:[&::-webkit-scrollbar-thumb]:rounded-full lg:[&::-webkit-scrollbar-thumb]:bg-white/25 lg:[&::-webkit-scrollbar-track]:bg-transparent" : ""}`}
             >
               {services.map((service) => (
                 <li key={service.slug}>
