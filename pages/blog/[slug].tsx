@@ -10,17 +10,17 @@ import {
   getBlogs,
   sanitizeWordPressHtml,
   type BlogApiPost,
+  type BlogCategory,
 } from "@/lib/blogsApi";
 
-type Props = { post: BlogApiPost; relatedPosts: BlogApiPost[] };
+type Props = {
+  post: BlogApiPost;
+  relatedPosts: BlogApiPost[];
+  categories: BlogCategory[];
+  sanitizedContent: string;
+};
 
-export default function BlogPostPage({ post, relatedPosts }: Props) {
-  const categories = Array.from(
-    new Map(
-      relatedPosts.flatMap((item) => item.categories).map((item) => [item.slug, item]),
-    ).values(),
-  );
-
+export default function BlogPostPage({ post, relatedPosts, categories, sanitizedContent }: Props) {
   return (
     <SitePage title={`${post.title} | Elite Dental Studio`} description={post.excerpt}>
       <section className="mx-auto max-w-[1240px] px-4 pt-8 pb-[34px] text-[#333] sm:px-8 sm:pt-10 lg:px-[34px] lg:pt-12">
@@ -28,14 +28,14 @@ export default function BlogPostPage({ post, relatedPosts }: Props) {
           Latest Posts
         </p>
         <div className="grid min-w-0 items-start gap-9 lg:grid-cols-[minmax(0,820px)_270px] lg:gap-10 xl:gap-[70px]">
-          <main className="min-w-0">
+          <div className="min-w-0">
             <header className="relative mt-[50px] h-[250px] overflow-hidden rounded-[10px] bg-[#174e53] sm:h-[330px] lg:h-[390px]">
               <Image
                 className="object-cover"
                 src={post.image.url}
                 alt={post.image.alt}
                 fill
-                priority
+                preload
                 sizes="800px"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#073c41]/85 via-transparent to-transparent" />
@@ -52,10 +52,10 @@ export default function BlogPostPage({ post, relatedPosts }: Props) {
               <h1>{post.title}</h1>
               <div
                 className="wordpress-blog-content"
-                dangerouslySetInnerHTML={{ __html: sanitizeWordPressHtml(post.content || "") }}
+                dangerouslySetInnerHTML={{ __html: sanitizedContent }}
               />
             </article>
-          </main>
+          </div>
           <BlogSidebar categories={categories} recentPosts={relatedPosts.slice(0, 5)} />
         </div>
       </section>
@@ -71,6 +71,17 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({ params, re
   const slug = String(params?.slug || "");
   const [post, posts] = await Promise.all([getBlog(slug), getBlogs()]);
   if (!post) return { notFound: true };
+  const otherPosts = posts.filter((item) => item.slug !== slug);
+  const categories = Array.from(
+    new Map(otherPosts.flatMap((item) => item.categories).map((item) => [item.slug, item])).values(),
+  );
   res.setHeader("Cache-Control", "public, s-maxage=60, stale-while-revalidate=300");
-  return { props: { post, relatedPosts: posts.filter((item) => item.slug !== slug) } };
+  return {
+    props: {
+      post,
+      relatedPosts: otherPosts.slice(0, 5),
+      categories,
+      sanitizedContent: sanitizeWordPressHtml(post.content || ""),
+    },
+  };
 };

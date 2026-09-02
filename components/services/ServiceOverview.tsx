@@ -21,7 +21,7 @@ export default function ServiceOverview({
         <div className="max-w-3xl">
           <h1 className="text-3xl leading-tight font-bold lg:text-[45px]">
             {(data?.title as string) || treatmentName}
-            <br />
+            <br />{" "}
             <span className="font-semibold lg:text-[34px]">
               {(data?.locationLine as string) || "in Kochi, Calicut & Kannur"}{" "}
             </span>

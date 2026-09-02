@@ -34,21 +34,26 @@ export const getServerSideProps: GetServerSideProps = async ({ res }) => {
     getContent<DoctorsData>("doctors").catch(() => null),
     getContent<{ items: ClinicRef[] }>("locations").catch(() => ({ items: [] })),
   ]);
-  const paths = new Set([
-    ...staticPaths,
-    ...services.map((service) => `/services/${service.slug}`),
-    ...blogs.map((post) => `/blog/${post.slug}`),
-    ...(doctorsData?.items || []).map((doctor) => doctor.profileUrl || `/doctors/${doctor.slug}`),
-    ...locationsData.items
-      .filter((location) => isMainClinic(location.slug))
-      .map((location) => `/locations/${location.slug}`),
-  ]);
-  const lastModified = new Date().toISOString();
+  const paths = new Map<string, string | undefined>();
+  staticPaths.forEach((path) => paths.set(path, undefined));
+  services.forEach((service) => paths.set(`/services/${service.slug}`, undefined));
+  blogs.forEach((post) =>
+    paths.set(`/blog/${post.slug}`, post.updatedAt || post.publishedAt || undefined),
+  );
+  (doctorsData?.items || []).forEach((doctor) =>
+    paths.set(doctor.profileUrl || `/doctors/${doctor.slug}`, undefined),
+  );
+  locationsData.items
+    .filter((location) => isMainClinic(location.slug))
+    .forEach((location) => paths.set(`/locations/${location.slug}`, undefined));
+
   const urls = Array.from(paths)
-    .map(
-      (path) =>
-        `  <url><loc>${escapeXml(absoluteUrl(path))}</loc><lastmod>${lastModified}</lastmod></url>`,
-    )
+    .map(([path, lastModified]) => {
+      const lastmod = lastModified
+        ? `<lastmod>${escapeXml(new Date(lastModified).toISOString())}</lastmod>`
+        : "";
+      return `  <url><loc>${escapeXml(absoluteUrl(path))}</loc>${lastmod}</url>`;
+    })
     .join("\n");
 
   res.setHeader("Content-Type", "application/xml");

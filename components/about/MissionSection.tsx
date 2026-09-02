@@ -10,14 +10,25 @@ const stats = [
 export default function MissionSection() {
   return (
     <section className="relative overflow-hidden bg-[#f1faf7]">
-      <Image
-        src="/about/about-5.png"
-        alt="Modern dental technology"
-        fill
-        sizes="100vw"
-        className="object-cover object-center"
-      />
-      <div className="relative mx-auto grid min-h-[490px] max-w-7xl items-center gap-10 px-5 py-14 sm:px-8 lg:grid-cols-2 lg:px-0">
+      <div className="invisible absolute inset-0 lg:visible">
+        <Image
+          src="/about/about-5.png"
+          alt="Modern dental technology"
+          fill
+          sizes="100vw"
+          className="object-cover object-center"
+        />
+      </div>
+      <div className="relative h-56 overflow-hidden sm:h-72 lg:hidden">
+        <Image
+          src="/about/about-5.png"
+          alt="Modern dental technology"
+          fill
+          sizes="100vw"
+          className="origin-right scale-[1.65] object-cover object-right"
+        />
+      </div>
+      <div className="relative mx-auto grid min-h-[490px] max-w-7xl items-center gap-10 px-5 py-10 sm:px-8 sm:py-14 lg:grid-cols-2 lg:px-0">
         <div>
           <p className="text-dent-accent text-sm font-extrabold uppercase">
             How Do We Approach Every Case?

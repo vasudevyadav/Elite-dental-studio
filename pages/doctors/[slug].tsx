@@ -5,8 +5,13 @@ import SitePage from "@/components/SitePage";
 import { getContent, type DoctorDetail } from "@/lib/contentApi";
 
 export default function DoctorDetailsPage({ doctor }: { doctor: DoctorDetail }) {
+  const title = doctor.seo?.metaTitle?.trim() || `${doctor.name} | Elite Dental Studio`;
+  const description =
+    doctor.seo?.metaDescription?.trim() ||
+    `Meet ${doctor.name}, ${doctor.speciality} at Elite Dental Studio, and learn about their qualifications, expertise and availability.`;
+
   return (
-    <SitePage title={doctor.seo.metaTitle} description={doctor.seo.metaDescription}>
+    <SitePage title={title} description={description}>
       <DoctorProfile doctor={doctor} />
       <BookAppointmentSection content={drAmalAppointmentContent} />
     </SitePage>

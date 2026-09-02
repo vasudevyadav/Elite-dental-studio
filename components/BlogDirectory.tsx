@@ -66,7 +66,7 @@ export default function BlogDirectory({
   return (
     <section className="mx-auto max-w-[1240px] px-4 py-8 text-[#333] sm:px-8 sm:py-10 lg:px-[34px] lg:pt-12 lg:pb-[72px]">
       <div className="grid min-w-0 items-start gap-9 lg:grid-cols-[minmax(0,820px)_270px] lg:gap-10 xl:gap-[70px]">
-        <main className="min-w-0">
+        <div className="min-w-0">
           <h1 className="mb-5 text-xl font-medium text-[#282828]">Latest Posts</h1>
           <article className="rounded-xl bg-[#eff9f7] p-2.5 shadow-[0_0_26px_rgba(23,99,100,.13)] sm:rounded-[14px] sm:p-[18px]">
             <div className="relative h-[250px] overflow-hidden rounded-[10px] bg-white shadow-[0_3px_17px_rgba(0,0,0,.09)] after:absolute after:inset-0 after:z-[1] after:bg-[linear-gradient(90deg,#fff_0%,rgba(255,255,255,.9)_52%,transparent_100%)] sm:h-[320px] lg:h-[370px] lg:after:bg-[linear-gradient(90deg,#fff_0%,#fff_42%,rgba(255,255,255,.5)_55%,transparent_74%)]">
@@ -84,7 +84,7 @@ export default function BlogDirectory({
                   src={featured.image.url}
                   alt={featured.image.alt}
                   fill
-                  priority
+                  preload
                   sizes="760px"
                 />
               )}
@@ -197,7 +197,7 @@ export default function BlogDirectory({
               →
             </button>
           </nav>
-        </main>
+        </div>
         <BlogSidebar
           onCategory={selectCategory}
           selectedCategory={category}

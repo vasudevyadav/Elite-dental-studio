@@ -1,3 +1,6 @@
+import sanitizeHtml from "sanitize-html";
+import { getEdsApiBaseUrl } from "@/lib/apiConfig";
+
 export type BlogCategory = { name: string; slug: string };
 export type BlogApiPost = {
   id: string;
@@ -42,6 +45,22 @@ function normalizePost(post: BlogApiPost): BlogApiPost {
   };
 }
 
+function normalizeListPost(post: BlogApiPost): BlogApiPost {
+  const normalized = normalizePost(post);
+  return {
+    id: normalized.id,
+    slug: normalized.slug,
+    title: normalized.title,
+    excerpt: normalized.excerpt,
+    image: normalized.image,
+    categories: normalized.categories,
+    tags: [],
+    author: { name: normalized.author?.name || "Elite Dental Studio" },
+    publishedAt: normalized.publishedAt,
+    updatedAt: normalized.updatedAt,
+  };
+}
+
 async function request<T>(path: string): Promise<T> {
   const response = await fetch(`${getEdsApiBaseUrl()}${path}`, {
     headers: { Accept: "application/json" },
@@ -58,7 +77,7 @@ export async function getBlogs(): Promise<BlogApiPost[]> {
 
 export async function getBlogsData(): Promise<BlogListData> {
   const data = await request<BlogListData>("/blogs?page=1&perPage=200");
-  return { ...data, items: (data.items ?? []).map(normalizePost) };
+  return { ...data, items: (data.items ?? []).map(normalizeListPost) };
 }
 
 export async function getBlog(slug: string): Promise<BlogApiPost | null> {
@@ -80,12 +99,46 @@ export function formatBlogDate(value: string): string {
 }
 
 export function sanitizeWordPressHtml(html: string): string {
-  return html
-    .replace(/<script[\s\S]*?<\/script>/gi, "")
-    .replace(/<style[\s\S]*?<\/style>/gi, "")
-    .replace(/<iframe[\s\S]*?<\/iframe>/gi, "")
-    .replace(/\son\w+\s*=\s*("[^"]*"|'[^']*'|[^\s>]+)/gi, "")
-    .replace(/\sstyle\s*=\s*("[^"]*"|'[^']*')/gi, "")
-    .replace(/javascript:/gi, "");
+  const safeHtml = sanitizeHtml(html, {
+    allowedTags: [
+      ...sanitizeHtml.defaults.allowedTags,
+      "img",
+      "figure",
+      "figcaption",
+      "table",
+      "thead",
+      "tbody",
+      "tfoot",
+      "tr",
+      "th",
+      "td",
+    ],
+    allowedAttributes: {
+      a: ["href", "name", "target", "rel"],
+      img: ["src", "alt", "width", "height", "loading"],
+      th: ["colspan", "rowspan", "scope"],
+      td: ["colspan", "rowspan"],
+    },
+    allowedSchemes: ["http", "https", "mailto", "tel"],
+    transformTags: {
+      a: (_tagName, attribs) => ({
+        tagName: "a",
+        attribs: {
+          ...attribs,
+          ...(attribs.target === "_blank" ? { rel: "noopener noreferrer" } : {}),
+        },
+      }),
+      img: (_tagName, attribs) => ({
+        tagName: "img",
+        attribs: { ...attribs, loading: attribs.loading || "lazy" },
+      }),
+    },
+  });
+
+  return safeHtml
+    .replace(
+      /<table(\s[^>]*)?>/gi,
+      '<div class="blog-table-scroll" role="region" tabindex="0"><table$1>',
+    )
+    .replace(/<\/table>/gi, "</table></div>");
 }
-import { getEdsApiBaseUrl } from "@/lib/apiConfig";

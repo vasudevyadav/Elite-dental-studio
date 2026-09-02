@@ -48,14 +48,14 @@ export default function SitePage({
     <>
       <Head>
         <title>{title}</title>
-        <meta name="description" content={description} />
+        <meta name="description" content={description} key="description" />
         <link rel="canonical" href={canonical} />
         {noIndex && <meta name="robots" content="noindex, nofollow" />}
-        <meta property="og:type" content="website" />
-        <meta property="og:site_name" content="Elite Dental Studio" />
-        <meta property="og:title" content={title} />
-        <meta property="og:description" content={description} />
-        <meta property="og:url" content={canonical} />
+        <meta property="og:type" content="website" key="og-type" />
+        <meta property="og:site_name" content="Elite Dental Studio" key="og-site-name" />
+        <meta property="og:title" content={title} key="og-title" />
+        <meta property="og:description" content={description} key="og-description" />
+        <meta property="og:url" content={canonical} key="og-url" />
         <meta property="og:image" content={absoluteUrl("/navbar/elite-logo.png")} />
         <meta name="twitter:card" content="summary" />
         <meta name="twitter:title" content={title} />

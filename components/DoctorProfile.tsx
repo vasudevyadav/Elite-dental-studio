@@ -3,11 +3,15 @@ import { localDoctorImage, type DoctorDetail } from "@/lib/contentApi";
 
 export default function DoctorProfile({ doctor }: { doctor: DoctorDetail }) {
   const clinic = doctor.clinics[0];
+  const pageTitle =
+    doctor.pageTitle?.trim() && doctor.pageTitle.trim().toLowerCase() !== "about doctors"
+      ? doctor.pageTitle.trim()
+      : doctor.name;
   return (
     <section className="px-5 pt-10 pb-14 sm:px-8 lg:px-12 lg:pt-12 lg:pb-24">
       <div className="mx-auto max-w-[1240px]">
         <h1 className="text-center text-3xl font-bold tracking-[-0.03em] text-[#286f73] lg:text-4xl">
-          {doctor.pageTitle}
+          {pageTitle}
         </h1>
 
         <div className="mt-6 grid items-stretch gap-7 lg:mt-12 lg:grid-cols-[0.82fr_1.18fr]">
@@ -17,7 +21,7 @@ export default function DoctorProfile({ doctor }: { doctor: DoctorDetail }) {
                 src={doctor.image.url || localDoctorImage(doctor.slug)}
                 alt={doctor.image.alt || doctor.name}
                 fill
-                priority
+                preload
                 sizes="(max-width: 1023px) 90vw, 470px"
                 className="object-cover object-[center_22%]"
               />

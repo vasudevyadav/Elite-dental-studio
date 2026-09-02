@@ -1,12 +1,10 @@
-import Head from "next/head";
 import type { GetServerSideProps } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import Navbar from "@/components/Navbar";
 import FAQSection from "@/components/FAQSection";
 import BookAppointmentSection from "@/components/BookAppointmentSection";
-import GlobalFooter from "@/components/GlobalFooter";
+import SitePage from "@/components/SitePage";
 import ServiceHero from "@/components/services/ServiceHero";
 import { getServicesPage, type ServicesPageData } from "@/lib/servicesApi";
 
@@ -22,13 +20,13 @@ export default function ServicesPage({ data }: Props) {
   const visibleServices = services.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
   const pageNumbers = Array.from({ length: totalPages }, (_, index) => index + 1);
   return (
-    <>
-      <Head>
-        <title>{pageSeo.metaTitle}</title>
-        <meta name="description" content={pageSeo.metaDescription} />
-      </Head>
-      <Navbar />
-      <main>
+    <SitePage
+      title={pageSeo.metaTitle || "Dental Treatments | Elite Dental Studio"}
+      description={
+        pageSeo.metaDescription ||
+        "Explore specialist dental treatments available across Elite Dental Studio clinics."
+      }
+    >
         <ServiceHero image={hero?.image?.url} alt={hero?.image?.alt} />
         <section className="bg-[linear-gradient(#2a686d_0_390px,#fff_390px)] px-5 pt-14 pb-10 sm:px-8 lg:px-12">
           <div className="mx-auto max-w-[1320px]">
@@ -117,9 +115,7 @@ export default function ServicesPage({ data }: Props) {
           <FAQSection />
         </div>
         <BookAppointmentSection />
-      </main>
-      <GlobalFooter />
-    </>
+    </SitePage>
   );
 }
 
