@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { isMainClinic } from "@/lib/clinics";
+import { isLocationSpecificServiceSlug, isMainClinic } from "@/lib/clinics";
 
 const companyLinks = [
   { label: "About Us", href: "/about" },
@@ -119,10 +119,12 @@ export default function Footer() {
         const items = payload?.data?.items;
         if (!Array.isArray(items)) return;
         setServices(
-          items.map((item: { title: string; slug: string }) => ({
-            name: item.title,
-            slug: item.slug,
-          })),
+          items
+            .filter((item: { slug: string }) => !isLocationSpecificServiceSlug(item.slug))
+            .map((item: { title: string; slug: string }) => ({
+              name: item.title,
+              slug: item.slug,
+            })),
         );
       })
       .catch(() => undefined);

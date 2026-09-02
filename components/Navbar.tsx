@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { openConsultationPopup } from "@/lib/consultationPopup";
-import { isMainClinic } from "@/lib/clinics";
+import { isLocationSpecificServiceSlug, isMainClinic } from "@/lib/clinics";
 
 type DropdownName = "treatments" | "clinic";
 
@@ -176,7 +176,7 @@ export default function Navbar() {
   const [mobileOfficeOpen, setMobileOfficeOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<DropdownName | null>(null);
   const headerRef = useRef<HTMLElement>(null);
-  const [treatmentItems, setTreatmentItems] = useState<DropdownItem[]>([]);
+  const [treatmentItems, setTreatmentItems] = useState<DropdownItem[]>(dropdowns.treatments.items);
   const [locationItems, setLocationItems] = useState<DropdownItem[]>([]);
 
   const navigationDropdowns = {
@@ -227,6 +227,7 @@ export default function Navbar() {
         setTreatmentItems(
           services
             .filter((service) => service.slug && service.title)
+            .filter((service) => !isLocationSpecificServiceSlug(service.slug))
             .sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0))
             .map((service) => ({
               label: service.title,
