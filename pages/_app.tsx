@@ -44,7 +44,9 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <div className={poppins.className}>
-      <Component {...pageProps} />
+      <div id="site-content">
+        <Component {...pageProps} />
+      </div>
       <ConsultationPopup key={popupPageKey} />
     </div>
   );

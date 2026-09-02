@@ -1,7 +1,10 @@
-const defaultSiteUrl = "https://elite-dental-studio-umber.vercel.app";
+const defaultSiteUrl = "https://elite-dental-studio-nine.vercel.app";
 
 export function getSiteUrl() {
-  return (process.env.NEXT_PUBLIC_SITE_URL || defaultSiteUrl).replace(/\/$/, "");
+  const configuredUrl =
+    process.env.NEXT_PUBLIC_SITE_URL || process.env.VERCEL_PROJECT_PRODUCTION_URL || defaultSiteUrl;
+  const url = configuredUrl.startsWith("http") ? configuredUrl : `https://${configuredUrl}`;
+  return url.replace(/\/$/, "");
 }
 
 export function absoluteUrl(path = "/") {

@@ -3,18 +3,36 @@ import BiginAppointmentWidget from "@/components/BiginAppointmentWidget";
 import { OPEN_CONSULTATION_POPUP_EVENT } from "@/lib/consultationPopup";
 
 const SCROLL_THRESHOLD = 0.4;
+const AUTO_POPUP_SESSION_KEY = "elite-consultation-popup-shown";
 
 export default function ConsultationPopup() {
   const [open, setOpen] = useState(false);
   const hasShownRef = useRef(false);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const lastFocusedRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
+    try {
+      if (window.sessionStorage.getItem(AUTO_POPUP_SESSION_KEY)) {
+        hasShownRef.current = true;
+        return;
+      }
+    } catch {
+      // Continue without session persistence when storage is unavailable.
+    }
+
     const onScroll = () => {
       if (hasShownRef.current) return;
       const scrollable = document.documentElement.scrollHeight - window.innerHeight;
       const progress = scrollable > 0 ? window.scrollY / scrollable : 0;
       if (progress >= SCROLL_THRESHOLD) {
         hasShownRef.current = true;
+        try {
+          window.sessionStorage.setItem(AUTO_POPUP_SESSION_KEY, "true");
+        } catch {
+          // The popup can still open when storage is unavailable.
+        }
         setOpen(true);
         window.removeEventListener("scroll", onScroll);
       }
@@ -62,15 +80,50 @@ export default function ConsultationPopup() {
 
   useEffect(() => {
     if (!open) return;
+    lastFocusedRef.current =
+      document.activeElement instanceof HTMLElement ? document.activeElement : null;
     const previousOverflow = document.body.style.overflow;
+    const siteContent = document.getElementById("site-content");
+    const previousAriaHidden = siteContent?.getAttribute("aria-hidden");
+    const wasInert = siteContent?.hasAttribute("inert") ?? false;
     document.body.style.overflow = "hidden";
+    siteContent?.setAttribute("aria-hidden", "true");
+    siteContent?.setAttribute("inert", "");
+    const focusFrame = window.requestAnimationFrame(() => closeButtonRef.current?.focus());
     const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setOpen(false);
+      if (event.key === "Escape") {
+        setOpen(false);
+        return;
+      }
+      if (event.key !== "Tab") return;
+
+      const focusable = Array.from(
+        dialogRef.current?.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
+        ) || [],
+      ).filter((element) => !element.hasAttribute("hidden"));
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
     };
     document.addEventListener("keydown", closeOnEscape);
     return () => {
+      window.cancelAnimationFrame(focusFrame);
       document.body.style.overflow = previousOverflow;
+      if (siteContent) {
+        if (previousAriaHidden == null) siteContent.removeAttribute("aria-hidden");
+        else siteContent.setAttribute("aria-hidden", previousAriaHidden);
+        if (!wasInert) siteContent.removeAttribute("inert");
+      }
       document.removeEventListener("keydown", closeOnEscape);
+      lastFocusedRef.current?.focus();
     };
   }, [open]);
 
@@ -85,12 +138,15 @@ export default function ConsultationPopup() {
       }}
     >
       <div
+        ref={dialogRef}
         role="dialog"
         aria-modal="true"
         aria-labelledby="consultation-popup-title"
+        aria-describedby="consultation-popup-description"
         className="relative max-h-[calc(100dvh-1rem)] w-full max-w-[420px] touch-pan-y [scrollbar-width:thin] [scrollbar-color:#8bb5b6_transparent] overflow-y-auto overscroll-contain rounded-[18px] bg-white p-4 shadow-[0_24px_70px_rgba(5,42,45,0.35)] [-webkit-overflow-scrolling:touch] sm:max-h-[92dvh] sm:rounded-[22px] sm:p-7"
       >
         <button
+          ref={closeButtonRef}
           type="button"
           onClick={() => setOpen(false)}
           aria-label="Close"

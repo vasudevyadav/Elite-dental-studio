@@ -380,11 +380,16 @@ export default function LocationPage({ data }: { data: LocationData }) {
   const introParagraphs = intro.paragraphs?.filter(Boolean)?.length
     ? intro.paragraphs
     : introduction.paragraphs;
+  const pageTitle =
+    data.seo?.metaTitle?.trim() || `Dental Clinic in ${data.name} | Elite Dental Studio`;
+  const pageDescription =
+    data.seo?.metaDescription?.trim() ||
+    `Visit Elite Dental Studio ${data.name} for specialist-led dental care, modern diagnostics and personalised treatment planning.`;
 
   return (
     <SitePage
-      title={data.seo.metaTitle}
-      description={data.seo.metaDescription}
+      title={pageTitle}
+      description={pageDescription}
       structuredData={{
         "@context": "https://schema.org",
         "@type": "Dentist",
@@ -402,6 +407,7 @@ export default function LocationPage({ data }: { data: LocationData }) {
       }}
       mainClassName="[&_.scroll-reveal]:!translate-y-0 [&_.scroll-reveal]:!opacity-100"
     >
+      <h1 className="sr-only">Elite Dental Studio dental clinic in {data.name}</h1>
       <div className="[&>section]:h-[380px] [&>section]:after:pointer-events-none [&>section]:after:absolute [&>section]:after:inset-0 [&>section]:after:z-20 [&>section]:after:bg-[linear-gradient(90deg,rgba(4,55,60,.08),rgba(4,55,60,.02)_55%,rgba(4,55,60,.35))] sm:[&>section]:h-[500px] lg:[&>section]:h-[clamp(560px,42.51vw,700px)]">
         <HeroSection
           slides={[

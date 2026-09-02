@@ -6,10 +6,6 @@ export default function Document() {
       <Head>
         <meta charSet="utf-8" />
         <meta name="theme-color" content="#ffffff" />
-        <meta
-          name="description"
-          content="Elite Dental Studio — Advanced dental care with a gentle touch."
-        />
         <link rel="icon" href="/favicon.ico" sizes="any" />
       </Head>
       <body className="antialiased">
