@@ -36,27 +36,20 @@ export default function OfficeGallery({ data }: { data?: Record<string, any> }) 
   ] as OfficeLocation[];
   const [filter, setFilter] = useState<OfficeLocation>("All");
   const [activeImage, setActiveImage] = useState<OfficeImage | null>(null);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [visibleCount, setVisibleCount] = useState(OFFICE_IMAGES_PER_PAGE);
   const mobileTrackRef = useRef<HTMLDivElement>(null);
   const visibleImages =
     filter === "All" ? galleryImages : galleryImages.filter((image) => image.location === filter);
-  const totalPages = Math.max(1, Math.ceil(visibleImages.length / OFFICE_IMAGES_PER_PAGE));
-  const activePage = Math.min(currentPage, totalPages);
-  const paginatedImages = visibleImages.slice(
-    (activePage - 1) * OFFICE_IMAGES_PER_PAGE,
-    activePage * OFFICE_IMAGES_PER_PAGE,
-  );
+  const paginatedImages = visibleImages.slice(0, visibleCount);
+  const hasMoreImages = visibleCount < visibleImages.length;
 
-  const selectPage = (page: number) => {
-    setCurrentPage(Math.max(1, Math.min(totalPages, page)));
-    requestAnimationFrame(() =>
-      mobileTrackRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }),
-    );
+  const loadMoreImages = () => {
+    setVisibleCount((count) => Math.min(visibleImages.length, count + OFFICE_IMAGES_PER_PAGE));
   };
 
   const selectFilter = (location: OfficeLocation) => {
     setFilter(location);
-    setCurrentPage(1);
+    setVisibleCount(OFFICE_IMAGES_PER_PAGE);
     mobileTrackRef.current?.scrollTo({ left: 0, behavior: "smooth" });
   };
 
@@ -176,79 +169,20 @@ export default function OfficeGallery({ data }: { data?: Record<string, any> }) 
             </button>
           </div>
         </div>
-        {totalPages > 1 && (
-          <nav
-            className="mt-8 flex flex-wrap items-center justify-center gap-2"
-            aria-label="Office gallery pagination"
-          >
-            <OfficePageButton
-              label="Previous"
-              disabled={activePage === 1}
-              onClick={() => selectPage(activePage - 1)}
-            />
-            {paginationItems(activePage, totalPages).map((item) =>
-              typeof item === "number" ? (
-                <button
-                  key={item}
-                  type="button"
-                  onClick={() => selectPage(item)}
-                  aria-label={`Go to gallery page ${item}`}
-                  aria-current={activePage === item ? "page" : undefined}
-                  className={`h-10 min-w-10 rounded-xl px-3 text-sm font-bold transition ${activePage === item ? "bg-[#176b70] text-white" : "border border-[#9ccbc7] bg-white text-[#176b70] hover:bg-[#e8f7f5]"}`}
-                >
-                  {item}
-                </button>
-              ) : (
-                <span key={item} className="px-1 text-[#6a8583]" aria-hidden="true">
-                  …
-                </span>
-              ),
-            )}
-            <OfficePageButton
-              label="Next"
-              disabled={activePage === totalPages}
-              onClick={() => selectPage(activePage + 1)}
-            />
-          </nav>
+        {hasMoreImages && (
+          <div className="mt-8 flex justify-center">
+            <button
+              type="button"
+              onClick={loadMoreImages}
+              className="h-10 rounded-xl bg-[#176b70] px-6 text-sm font-bold text-white transition hover:bg-[#0f4f53]"
+            >
+              Load More Photos
+            </button>
+          </div>
         )}
       </div>
       {activeImage && <OfficeLightbox image={activeImage} onClose={() => setActiveImage(null)} />}
     </section>
-  );
-}
-
-function paginationItems(currentPage: number, totalPages: number): Array<number | string> {
-  if (totalPages <= 7) return Array.from({ length: totalPages }, (_, index) => index + 1);
-  const pages = Array.from(new Set([1, totalPages, currentPage - 1, currentPage, currentPage + 1]))
-    .filter((page) => page >= 1 && page <= totalPages)
-    .sort((first, second) => first - second);
-  const items: Array<number | string> = [];
-  pages.forEach((page, index) => {
-    const previous = pages[index - 1];
-    if (previous && page - previous > 1) items.push(`ellipsis-${previous}-${page}`);
-    items.push(page);
-  });
-  return items;
-}
-
-function OfficePageButton({
-  label,
-  disabled,
-  onClick,
-}: {
-  label: string;
-  disabled: boolean;
-  onClick: () => void;
-}) {
-  return (
-    <button
-      type="button"
-      disabled={disabled}
-      onClick={onClick}
-      className="h-10 rounded-xl border border-[#9ccbc7] bg-white px-4 text-sm font-bold text-[#176b70] transition hover:bg-[#e8f7f5] disabled:cursor-not-allowed disabled:opacity-35"
-    >
-      {label}
-    </button>
   );
 }
 

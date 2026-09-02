@@ -14,11 +14,9 @@ type Props = { data: ServicesPageData };
 
 export default function ServicesPage({ data }: Props) {
   const { items: services, pageSeo, section, hero } = data;
-  const [page, setPage] = useState(1);
-  const totalPages = Math.max(1, Math.ceil(services.length / PAGE_SIZE));
-  const currentPage = Math.min(page, totalPages);
-  const visibleServices = services.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
-  const pageNumbers = Array.from({ length: totalPages }, (_, index) => index + 1);
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+  const visibleServices = services.slice(0, visibleCount);
+  const hasMoreServices = visibleCount < services.length;
   return (
     <SitePage
       title={pageSeo.metaTitle || "Dental Treatments | Elite Dental Studio"}
@@ -84,30 +82,18 @@ export default function ServicesPage({ data }: Props) {
               ))}
             </div>
 
-            {totalPages > 1 && (
-              <nav
-                className="mt-14 flex items-center justify-center gap-[13px]"
-                aria-label="Services pagination"
-              >
-                {pageNumbers.map((item) => (
-                  <button
-                    key={item}
-                    type="button"
-                    className={`grid h-7 w-7 cursor-pointer place-items-center rounded-full border-0 text-[10px] font-bold text-white ${currentPage === item ? "bg-[#21cdbd]" : "bg-[#2d7376]"}`}
-                    onClick={() => setPage(item)}
-                  >
-                    {item}
-                  </button>
-                ))}
+            {hasMoreServices && (
+              <div className="mt-14 flex justify-center">
                 <button
                   type="button"
-                  className="grid h-7 w-7 cursor-pointer place-items-center rounded-full border-0 bg-[#21cdbd] text-[10px] font-bold text-white"
-                  onClick={() => setPage(Math.min(currentPage + 1, totalPages))}
-                  aria-label="Next page"
+                  onClick={() =>
+                    setVisibleCount((count) => Math.min(services.length, count + PAGE_SIZE))
+                  }
+                  className="rounded-full bg-[#21cdbd] px-8 py-3 text-sm font-bold text-white hover:bg-[#1cb8aa]"
                 >
-                  →
+                  Load More Services
                 </button>
-              </nav>
+              </div>
             )}
           </div>
         </section>

@@ -16,7 +16,7 @@ export default function BlogDirectory({
 }) {
   const router = useRouter();
   const [query, setQuery] = useState("");
-  const [page, setPage] = useState(1);
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
   const featured = posts[0];
   const categories = useMemo(
     () =>
@@ -50,12 +50,11 @@ export default function BlogDirectory({
     },
     [category, posts, query],
   );
-  const pages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
-  const visible = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
-  const pageNumbers = Array.from({ length: pages }, (_, index) => index + 1);
+  const visible = filtered.slice(0, visibleCount);
+  const hasMorePosts = visibleCount < filtered.length;
 
   const selectCategory = (value: string) => {
-    setPage(1);
+    setVisibleCount(PAGE_SIZE);
     void router.push(
       { pathname: "/blog", query: value === "All" ? {} : { category: value } },
       undefined,
@@ -124,7 +123,7 @@ export default function BlogDirectory({
                 value={query}
                 onChange={(e) => {
                   setQuery(e.target.value);
-                  setPage(1);
+                  setVisibleCount(PAGE_SIZE);
                 }}
                 placeholder="Search"
                 aria-label="Search posts"
@@ -177,26 +176,19 @@ export default function BlogDirectory({
           </div>
 
           {visible.length === 0 && <p className="py-[60px] text-center">No blog posts found.</p>}
-          <nav
-            className="mt-[62px] flex items-center justify-center gap-[13px]"
-            aria-label="Blog pagination"
-          >
-            {pageNumbers.map((item) => (
+          {hasMorePosts && (
+            <div className="mt-[62px] flex justify-center">
               <button
-                key={item}
-                className={`grid h-7 w-7 cursor-pointer place-items-center rounded-full border-0 text-[10px] font-bold text-white ${page === item ? "bg-[#21cdbd]" : "bg-[#2d7376]"}`}
-                onClick={() => setPage(item)}
+                type="button"
+                onClick={() =>
+                  setVisibleCount((count) => Math.min(filtered.length, count + PAGE_SIZE))
+                }
+                className="rounded-full bg-[#21cdbd] px-8 py-3 text-sm font-bold text-white hover:bg-[#1cb8aa]"
               >
-                {item}
+                Load More Posts
               </button>
-            ))}
-            <button
-              className="grid h-7 w-7 cursor-pointer place-items-center rounded-full border-0 bg-[#21cdbd] text-[10px] font-bold text-white"
-              onClick={() => setPage(Math.min(page + 1, pages))}
-            >
-              →
-            </button>
-          </nav>
+            </div>
+          )}
         </div>
         <BlogSidebar
           onCategory={selectCategory}
