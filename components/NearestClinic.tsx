@@ -203,7 +203,7 @@ export default function NearestClinic({
               href={mapPageUrl}
               target="_blank"
               rel="noreferrer"
-              className="smooth-hover button-hover hover-lift flex items-center justify-center rounded-full bg-[#2d7378] px-6 text-lg font-bold text-white hover:bg-[#164f57] focus:ring-4 focus:ring-[#2d7378]/25 focus:outline-none"
+              className="smooth-hover button-hover hover-lift lg: flex items-center justify-center rounded-full bg-[#2d7378] px-6 text-sm font-medium text-white hover:bg-[#164f57] focus:ring-4 focus:ring-[#2d7378]/25 focus:outline-none lg:text-lg lg:font-bold"
             >
               Find Clinic
             </a>

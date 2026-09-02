@@ -38,7 +38,7 @@ export default function HeroSection({ slides = HOME_SLIDES, content }: HeroSecti
   }, [next, total]);
 
   return (
-    <section className="relative h-[430px] overflow-hidden bg-[#f2f9f7] sm:h-[560px] lg:h-[clamp(560px,42.51vw,700px)]">
+    <section className="relative h-[300px] overflow-hidden bg-[#f2f9f7] lg:h-[560px] lg:h-[clamp(560px,42.51vw,700px)]">
       {/* Background image slider */}
       {slides.map((s, i) => (
         <div
@@ -53,7 +53,7 @@ export default function HeroSection({ slides = HOME_SLIDES, content }: HeroSecti
             quality={85}
             loading={i === 0 ? "eager" : "lazy"}
             sizes="100vw"
-            className="object-cover object-[-100px] lg:object-center"
+            className="object-cover object-left lg:object-center"
             fetchPriority={i === 0 ? "high" : "auto"}
           />
         </div>
@@ -94,11 +94,11 @@ export default function HeroSection({ slides = HOME_SLIDES, content }: HeroSecti
       )}
 
       {/* Mobile CTA – the full form lives in the appointment section below */}
-      <div className="absolute inset-x-0 bottom-14 z-40 flex justify-center px-5 lg:hidden">
+      <div className="absolute inset-x-0 bottom-4 z-40 flex justify-center px-5 lg:bottom-14 lg:hidden">
         <button
           type="button"
           onClick={openConsultationPopup}
-          className="smooth-hover button-hover hover-lift bg-dent-accent inline-flex min-w-[220px] items-center justify-center rounded-lg px-7 py-3.5 text-sm font-extrabold tracking-wide text-white uppercase shadow-[0_12px_30px_rgba(7,86,90,0.28)] focus:ring-4 focus:ring-white/40 focus:outline-none active:scale-[0.98]"
+          className="smooth-hover button-hover hover-lift bg-dent-accent inline-flex min-w-[220px] items-center justify-center rounded-lg px-4 py-2 text-xs font-bold tracking-wide text-white uppercase shadow-[0_12px_30px_rgba(7,86,90,0.28)] focus:ring-4 focus:ring-white/40 focus:outline-none active:scale-[0.98] lg:px-7 lg:py-3.5 lg:text-sm lg:font-extrabold"
         >
           Book an Appointment
         </button>

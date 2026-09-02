@@ -22,8 +22,8 @@ const clinicAreas = [
 export default function AffordableDentalTreatment() {
   return (
     <section className="mx-auto max-w-7xl px-5 py-8 sm:px-8 lg:px-12 lg:py-14">
-      <div className="rounded-[28px] bg-[#f0faf8] px-6 py-9 sm:px-10 lg:px-14 lg:py-12">
-        <h2 className="text-3xl leading-[1.2] font-semibold tracking-tight text-[#29666b] sm:text-[38px]">
+      <div className="rounded-[28px] bg-[#f0faf8] px-3 py-9 sm:px-10 lg:px-14 lg:py-12">
+        <h2 className="text-xl leading-[1.2] font-semibold tracking-tight text-[#29666b] lg:text-[38px]">
           Elite Dental Studio: Specialist Dental Care Across Calicut, Kochi, Kannur and Coimbatore
         </h2>
         <div className="mt-6 space-y-5 text-sm leading-[1.8] text-[#4a5555] lg:text-[17px]">

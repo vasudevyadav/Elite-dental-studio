@@ -251,7 +251,7 @@ export default function ServicesSection({
               </div>
 
               <h2
-                className={`max-w-[760px] leading-[1.12] font-extrabold tracking-[-0.035em] text-white ${compact ? "text-[24px]" : "text-[29px] sm:text-[36px] lg:text-[46px]"}`}
+                className={`max-w-[760px] leading-[1.12] font-extrabold tracking-[-0.035em] text-white ${compact ? "text-[24px]" : "text-2xl lg:text-[46px]"}`}
               >
                 {title}
               </h2>
@@ -303,7 +303,7 @@ export default function ServicesSection({
                 <div className="my-5 h-px bg-[#c8cccc]" />
 
                 <p
-                  className={`min-h-[58px] leading-[1.55] text-[#555] ${compact ? "text-xs" : "text-base lg:text-[17px]"}`}
+                  className={`line-clamp-3 min-h-[58px] leading-[1.55] text-[#555] ${compact ? "text-xs" : "text-base lg:text-[17px]"}`}
                 >
                   {service.description}
                 </p>
