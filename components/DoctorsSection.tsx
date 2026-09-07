@@ -5,6 +5,18 @@ import { localDoctorImage, type DoctorListItem } from "@/lib/contentApi";
 
 const PAGE_SIZE = 5;
 
+const CALICUT_PRIORITY_DOCTOR_SLUG = "dr-fathima-nifla-cp";
+
+function bringDoctorToFront<T extends { slug: string }>(doctorsList: T[], slug: string): T[] {
+  const index = doctorsList.findIndex((doctor) => doctor.slug === slug);
+  if (index <= 0) return doctorsList;
+
+  const reordered = [...doctorsList];
+  const [doctor] = reordered.splice(index, 1);
+  reordered.unshift(doctor);
+  return reordered;
+}
+
 const highlights = [
   {
     stat: "15+",
@@ -91,7 +103,7 @@ export default function DoctorsSection({
   const doctorsTrackRef = useRef<HTMLDivElement>(null);
   const [apiDoctors, setApiDoctors] = useState<DoctorListItem[] | null>(initialDoctors || null);
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
-  const filteredDoctors =
+  const baseFilteredDoctors =
     apiDoctors?.filter(
       (doctor) => !clinicSlug || doctor.clinics.some((clinic) => clinic.slug === clinicSlug),
     ) ||
@@ -109,6 +121,10 @@ export default function DoctorsSection({
       profileUrl: "/doctors/dr-amal",
       sortOrder: index,
     }));
+  const filteredDoctors =
+    clinicSlug === "calicut"
+      ? bringDoctorToFront(baseFilteredDoctors, CALICUT_PRIORITY_DOCTOR_SLUG)
+      : baseFilteredDoctors;
   const visibleDoctors = filteredDoctors.slice(0, visibleCount);
   const hasMoreDoctors = visibleCount < filteredDoctors.length;
 

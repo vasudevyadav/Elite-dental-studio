@@ -1,11 +1,34 @@
 import Image from "next/image";
+import Link from "next/link";
+
+type TeamMember = {
+  name: string;
+  role: string;
+  image: string;
+  profileUrl?: string;
+};
 
 const directors = [
   { name: "Jaseem Ammattikas", role: "Executive Director", image: "/about/jaseem.png" },
-  { name: "Dr. Jafar Hamza", role: "Managing Director", image: "/about/jafar.png" },
-  { name: "Dr. Amal Sidharth", role: "Managing Director", image: "/about/amal.png" },
-  { name: "Dr. Fathima Nifla", role: "Director", image: "/about/fathima.png" },
-];
+  {
+    name: "Dr. jafar vazhappully",
+    role: "Managing Director",
+    image: "/about/jafar.png",
+    profileUrl: "/doctors/dr-jafar-vazhappully",
+  },
+  {
+    name: "Dr. Amal Sidharth",
+    role: "Managing Director",
+    image: "/about/amal.png",
+    profileUrl: "/doctors/dr-amal",
+  },
+  {
+    name: "Dr. Fathima Nifla",
+    role: "Director",
+    image: "/about/fathima.png",
+    profileUrl: "/doctors/dr-fathima-nifla-cp",
+  },
+] satisfies TeamMember[];
 
 const management = [
   { name: "SHAFIN BIN HARIF", role: "Head of operations", image: "/about/shafin.png" },
@@ -14,17 +37,10 @@ const management = [
   { name: "Shafeeque K", role: "General Manager (Kannur)", image: "/about/shafeeque.png" },
 ];
 
-function TeamCard({
-  person,
-  widthClassName,
-}: {
-  person: { name: string; role: string; image: string };
-  widthClassName: string;
-}) {
-  return (
-    <article
-      className={`${widthClassName} rounded-[16px] bg-white p-2 text-center shadow-[0_10px_25px_rgba(8,55,58,.18)]`}
-    >
+function TeamCard({ person, widthClassName }: { person: TeamMember; widthClassName: string }) {
+  const className = `${widthClassName} rounded-[16px] bg-white p-2 text-center shadow-[0_10px_25px_rgba(8,55,58,.18)]`;
+  const content = (
+    <>
       <Image
         src={person.image}
         alt={person.name}
@@ -34,8 +50,22 @@ function TeamCard({
       />
       <h3 className="mt-3 text-sm font-semibold text-[#29666b] lg:text-lg">{person.name}</h3>
       <p className="mt-1 mb-2 text-[10px] text-[#617374] lg:text-sm">{person.role}</p>
-    </article>
+    </>
   );
+
+  if (person.profileUrl) {
+    return (
+      <Link
+        href={person.profileUrl}
+        aria-label={`View ${person.name}'s profile`}
+        className={`${className} smooth-hover card-hover focus-visible:ring-4 focus-visible:ring-[#29cfc0]/40 focus-visible:outline-none`}
+      >
+        {content}
+      </Link>
+    );
+  }
+
+  return <article className={className}>{content}</article>;
 }
 
 export default function TeamSection() {
