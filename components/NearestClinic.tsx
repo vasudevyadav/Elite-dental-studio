@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { useState } from "react";
-import AnimatedArrowCta from "./AnimatedArrowCta";
 
 export type Clinic = {
   name: string;
