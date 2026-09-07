@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type AnimatedArrowCtaProps = {
   label: string;
@@ -20,13 +20,28 @@ export default function AnimatedArrowCta({
 }: AnimatedArrowCtaProps) {
   const router = useRouter();
   const [isRunning, setIsRunning] = useState(false);
+  const isRunningRef = useRef(false);
+  const actionTimerRef = useRef<number | null>(null);
+
+  useEffect(
+    () => () => {
+      if (actionTimerRef.current !== null) window.clearTimeout(actionTimerRef.current);
+    },
+    [],
+  );
+
+  const resetAnimation = () => {
+    isRunningRef.current = false;
+    actionTimerRef.current = null;
+    setIsRunning(false);
+  };
 
   const runAction = () => {
+    // Remove the animation class after every completed run so the same CTA can
+    // animate and work again when it keeps the user on the current page.
+    resetAnimation();
     if (onAction) onAction();
-    if (!href) {
-      setIsRunning(false);
-      return;
-    }
+    if (!href) return;
     if (target === "_blank") {
       window.open(href, "_blank", "noopener,noreferrer");
     } else if (href.startsWith("/")) {
@@ -37,14 +52,15 @@ export default function AnimatedArrowCta({
   };
 
   const handleClick = () => {
-    if (isRunning) return;
+    if (isRunningRef.current) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       runAction();
       return;
     }
 
+    isRunningRef.current = true;
     setIsRunning(true);
-    window.setTimeout(runAction, 1830);
+    actionTimerRef.current = window.setTimeout(runAction, 1830);
   };
 
   return (
