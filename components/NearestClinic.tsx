@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { useState } from "react";
+import AnimatedArrowCta from "./AnimatedArrowCta";
 
 export type Clinic = {
   name: string;
@@ -238,6 +239,11 @@ export default function NearestClinic({
             <div className="grid gap-6 md:grid-cols-[minmax(0,1fr)_minmax(220px,0.95fr)]">
               <div className="flex items-start gap-5">
                 <LocationIcon />
+                <div className="text-sm leading-[1.75] font-semibold text-[#667172] lg:text-[13px]">
+                  {clinic.addressLines.map((line) => (
+                    <div key={line}>{line}</div>
+                  ))}
+                </div>
               </div>
 
               <div className="min-h-[190px] overflow-hidden rounded-2xl bg-white shadow-sm">
