@@ -6,6 +6,18 @@ import { isMainClinic } from "@/lib/clinics";
 
 const PAGE_SIZE = 9;
 
+const CALICUT_PRIORITY_DOCTOR_SLUG = "dr-fathima-nifla-cp";
+
+function bringDoctorToFront<T extends { slug: string }>(doctorsList: T[], slug: string): T[] {
+  const index = doctorsList.findIndex((doctor) => doctor.slug === slug);
+  if (index <= 0) return doctorsList;
+
+  const reordered = [...doctorsList];
+  const [doctor] = reordered.splice(index, 1);
+  reordered.unshift(doctor);
+  return reordered;
+}
+
 export default function DoctorsDirectory({ data }: { data: DoctorsData }) {
   const doctors = data.items;
   const mainClinics = data.clinics.filter((item) => isMainClinic(item.slug));
@@ -15,10 +27,14 @@ export default function DoctorsDirectory({ data }: { data: DoctorsData }) {
   const [activeClinic, setActiveClinic] = useState(defaultClinic);
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
 
-  const filteredDoctors = useMemo(
-    () => doctors.filter((doctor) => doctor.clinics.some((item) => item.name === activeClinic)),
-    [activeClinic, doctors],
-  );
+  const filteredDoctors = useMemo(() => {
+    const matches = doctors.filter((doctor) =>
+      doctor.clinics.some((item) => item.name === activeClinic),
+    );
+    return activeClinic === "Calicut"
+      ? bringDoctorToFront(matches, CALICUT_PRIORITY_DOCTOR_SLUG)
+      : matches;
+  }, [activeClinic, doctors]);
   const visibleDoctors = filteredDoctors.slice(0, visibleCount);
   const hasMoreDoctors = visibleCount < filteredDoctors.length;
 
