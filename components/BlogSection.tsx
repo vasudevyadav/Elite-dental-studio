@@ -164,7 +164,7 @@ export default function BlogSection({ initialPosts }: { initialPosts?: BlogApiPo
                   className="image-hover object-cover object-center"
                 />
                 <div className="absolute inset-0 bg-linear-to-t from-[#073f48]/70 via-[#073f48]/10 to-transparent" />
-                <p className="absolute top-5 left-5 max-w-[78%] rounded-full bg-white/95 px-4 py-2 text-xs font-extrabold tracking-[.08em] text-[#17656a] uppercase shadow-sm sm:top-6 sm:left-6">
+                <p className="smooth-hover absolute top-5 left-5 max-w-[78%] -translate-y-1 rounded-full bg-white/95 px-4 py-2 text-xs font-extrabold tracking-[.08em] text-[#17656a] uppercase opacity-0 shadow-sm group-hover:translate-y-0 group-hover:opacity-100 sm:top-6 sm:left-6">
                   {post.category}
                 </p>
               </div>
