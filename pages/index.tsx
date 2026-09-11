@@ -43,31 +43,6 @@ type LocationDetail = {
   };
 };
 
-const HOME_SECOND_DOCTOR_SLUG = "dr-fathima-nifla-cp";
-const HOME_THIRD_DOCTOR_SLUG = "dr-amal";
-const HOME_SIXTH_DOCTOR_SLUG = "dr-aswathi-m-2";
-
-function placeDoctorAtIndex(doctors: DoctorListItem[], slug: string, destinationIndex: number) {
-  const doctorIndex = doctors.findIndex((doctor) => doctor.slug === slug);
-
-  if (doctors.length <= destinationIndex || doctorIndex < 0 || doctorIndex === destinationIndex) {
-    return doctors;
-  }
-
-  const orderedDoctors = [...doctors];
-  [orderedDoctors[destinationIndex], orderedDoctors[doctorIndex]] = [
-    orderedDoctors[doctorIndex],
-    orderedDoctors[destinationIndex],
-  ];
-  return orderedDoctors;
-}
-
-function orderHomeDoctors(doctors: DoctorListItem[]) {
-  const withFathimaSecond = placeDoctorAtIndex(doctors, HOME_SECOND_DOCTOR_SLUG, 1);
-  const withAmalThird = placeDoctorAtIndex(withFathimaSecond, HOME_THIRD_DOCTOR_SLUG, 2);
-  return placeDoctorAtIndex(withAmalThird, HOME_SIXTH_DOCTOR_SLUG, 5);
-}
-
 function isSpecificMapUrl(mapUrl?: string) {
   if (!mapUrl) return false;
 
@@ -156,7 +131,7 @@ export const getServerSideProps: GetServerSideProps<HomeProps> = async ({ res })
   return {
     props: {
       services,
-      doctors: orderHomeDoctors(doctorsData?.items || []),
+      doctors: doctorsData?.items || [],
       blogs: blogs.slice(0, 10),
       clinics,
       testimonials,

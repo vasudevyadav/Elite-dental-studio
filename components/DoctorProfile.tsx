@@ -1,12 +1,16 @@
 import Image from "next/image";
 import { localDoctorImage, type DoctorDetail } from "@/lib/contentApi";
 
+import DoctorCredentials from "@/components/DoctorCredentials";
+import { getDoctorIdentity } from "@/lib/doctors";
+
 export default function DoctorProfile({ doctor }: { doctor: DoctorDetail }) {
+  const identity = getDoctorIdentity(doctor);
   const clinic = doctor.clinics[0];
   const pageTitle =
     doctor.pageTitle?.trim() && doctor.pageTitle.trim().toLowerCase() !== "about doctors"
       ? doctor.pageTitle.trim()
-      : doctor.name;
+      : identity.name;
   return (
     <section className="px-5 pt-10 pb-14 sm:px-8 lg:px-12 lg:pt-12 lg:pb-24">
       <div className="mx-auto max-w-[1240px]">
@@ -32,19 +36,8 @@ export default function DoctorProfile({ doctor }: { doctor: DoctorDetail }) {
               Exp
             </div>
             <div className="px-3 pt-7 pb-2">
-              <h2 className="text-4xl font-bold">{doctor.name}</h2>
-              <p className="mt-2 text-lg leading-snug font-medium">
-                {doctor.speciality}
-                {doctor.designation && (
-                  <>
-                    <br />
-                    &amp; {doctor.designation}
-                  </>
-                )}
-              </p>
-              <p className="mt-4 text-lg">
-                <strong>Qualification:</strong> {doctor.qualification}
-              </p>
+              <h2 className="text-4xl font-bold">{identity.name}</h2>
+              <DoctorCredentials identity={identity} className="text-lg" />
               <p className="mt-3 text-lg font-semibold">
                 <span aria-hidden="true">●</span>&nbsp; {clinic?.label || clinic?.name}
               </p>

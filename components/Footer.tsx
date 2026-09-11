@@ -136,7 +136,7 @@ export default function Footer() {
         <div className="grid gap-9 sm:grid-cols-2 lg:grid-cols-[1.45fr_0.75fr_1.15fr_0.65fr] lg:gap-16">
           <div className="sm:col-span-2 lg:col-span-1">
             <Image
-              src="/home/logo-white.png"
+              src="/home/elite-dental-logo-white.webp"
               alt="Elite Dental Studio – A Complete Dental Center"
               width={340}
               height={120}

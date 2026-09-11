@@ -149,7 +149,7 @@ export default function ServiceDetailPage({ service, testimonials, galleryCases 
           content={
             service.seo?.ogImage ||
             service.hero?.image?.url ||
-            absoluteUrl("/navbar/elite-logo.png")
+            absoluteUrl("/navbar/elite-dental-logo.webp")
           }
         />
       </Head>

@@ -2,20 +2,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { localDoctorImage, type DoctorListItem } from "@/lib/contentApi";
+import { getDoctorIdentity, orderDoctors } from "@/lib/doctors";
+import DoctorCredentials from "@/components/DoctorCredentials";
 
 const PAGE_SIZE = 5;
-
-const CALICUT_PRIORITY_DOCTOR_SLUG = "dr-fathima-nifla-cp";
-
-function bringDoctorToFront<T extends { slug: string }>(doctorsList: T[], slug: string): T[] {
-  const index = doctorsList.findIndex((doctor) => doctor.slug === slug);
-  if (index <= 0) return doctorsList;
-
-  const reordered = [...doctorsList];
-  const [doctor] = reordered.splice(index, 1);
-  reordered.unshift(doctor);
-  return reordered;
-}
 
 const highlights = [
   {
@@ -41,31 +31,36 @@ const highlights = [
 const doctors = [
   {
     name: "Dr. Amrita Sathianathan",
+    slug: "dr-amrita-sathianathan",
     qualification: "BDS, MDS",
     speciality:
       "(Prosthodontics & Implantology) Fellowship in Orofacial Pain & Dental Sleep Medicine",
     image: "/home/doctors/dr-amrita.jpg",
   },
   {
-    name: "Dr. Amal",
+    name: "Dr. Amal Sidharth",
+    slug: "dr-amal",
     qualification: "BDS, MDS",
     speciality: "(Pedodontics & Preventive Dentistry) & Managing Director",
     image: "/home/doctors/dr-amal.jpg",
   },
   {
     name: "Dr. Vidhu S",
+    slug: "dr-vidhu-s",
     qualification: "BDS, MDS",
     speciality: "(Orthodontics) Invisalign Certified Orthodontist",
     image: "/home/doctors/dr-vidhu.jpg",
   },
   {
     name: "Dr. Manu Mathew",
+    slug: "dr-manu-mathew",
     qualification: "BDS, MDS (Orthodontics)",
     speciality: "Aligner Specialist",
     image: "/home/doctors/dr-manu.jpg",
   },
   {
     name: "Dr. Megha Mohan",
+    slug: "dr-megha-mohan",
     qualification: "BDS, MDS",
     speciality: "(Pedodontics & Preventive Dentistry)",
     image: "/home/doctors/dr-megha.jpg",
@@ -110,7 +105,6 @@ export default function DoctorsSection({
     doctors.map((doctor, index) => ({
       ...doctor,
       id: String(index),
-      slug: "dr-amal",
       experienceYears: 0,
       experienceLabel: "",
       image: { url: doctor.image, alt: doctor.name },
@@ -118,13 +112,10 @@ export default function DoctorsSection({
         name: slug[0].toUpperCase() + slug.slice(1),
         slug,
       })),
-      profileUrl: "/doctors/dr-amal",
+      profileUrl: `/doctors/${doctor.slug}`,
       sortOrder: index,
     }));
-  const filteredDoctors =
-    clinicSlug === "calicut"
-      ? bringDoctorToFront(baseFilteredDoctors, CALICUT_PRIORITY_DOCTOR_SLUG)
-      : baseFilteredDoctors;
+  const filteredDoctors = orderDoctors(baseFilteredDoctors);
   const visibleDoctors = filteredDoctors.slice(0, visibleCount);
   const hasMoreDoctors = visibleCount < filteredDoctors.length;
 
@@ -220,34 +211,31 @@ export default function DoctorsSection({
         tabIndex={0}
         className={`mt-12 flex snap-x snap-mandatory [scrollbar-width:none] gap-5 overflow-x-auto scroll-smooth pb-5 outline-none focus-visible:ring-4 focus-visible:ring-[#29cfc0]/25 sm:grid sm:grid-cols-2 sm:overflow-visible sm:pb-0 lg:mt-20 [&::-webkit-scrollbar]:hidden ${compact ? "lg:grid-cols-5 lg:gap-4" : "lg:grid-cols-3 lg:gap-7 xl:grid-cols-5"}`}
       >
-        {visibleDoctors.map((doctor) => (
-          <Link
-            href={doctor.profileUrl || `/doctors/${doctor.slug}`}
-            key={doctor.name}
-            className="group smooth-hover card-hover flex w-[84%] max-w-[330px] shrink-0 snap-start flex-col overflow-hidden rounded-3xl bg-[#2b7477] p-2 pb-0 shadow-[0_14px_35px_rgba(25,87,90,0.12)] sm:mx-auto sm:w-full sm:max-w-none"
-          >
-            <div className="relative aspect-[1.03/1] overflow-hidden rounded-[20px] bg-[#edf2f5]">
-              <Image
-                src={doctor.image.url || localDoctorImage(doctor.slug)}
-                alt={doctor.name}
-                fill
-                className="image-hover object-cover object-[center_0%]"
-              />
-            </div>
+        {visibleDoctors.map((doctor) => {
+          const identity = getDoctorIdentity(doctor);
+          return (
+            <Link
+              href={doctor.profileUrl || `/doctors/${doctor.slug}`}
+              key={doctor.name}
+              className="group smooth-hover card-hover flex w-[84%] max-w-[330px] shrink-0 snap-start flex-col overflow-hidden rounded-3xl bg-[#2b7477] p-2 pb-0 shadow-[0_14px_35px_rgba(25,87,90,0.12)] sm:mx-auto sm:w-full sm:max-w-none"
+            >
+              <div className="relative aspect-[1.03/1] overflow-hidden rounded-[20px] bg-[#edf2f5]">
+                <Image
+                  src={doctor.image.url || localDoctorImage(doctor.slug)}
+                  alt={doctor.name}
+                  fill
+                  className="image-hover object-cover object-[center_0%]"
+                />
+              </div>
 
-            <div className="flex min-h-[142px] flex-1 flex-col items-center justify-start px-2 pt-4 pb-5 text-center text-white">
-              <h3 className="text-base leading-tight font-bold lg:text-lg">{doctor.name}</h3>
+              <div className="flex min-h-[142px] flex-1 flex-col items-center justify-start px-2 pt-4 pb-5 text-center text-white">
+                <h3 className="text-base leading-tight font-bold lg:text-lg">{identity.name}</h3>
 
-              <p className="mt-3 mb-2 text-xs leading-[1.25] font-medium text-white/95">
-                {doctor.qualification}
-              </p>
-
-              <p className="max-w-[235px] text-[11px] leading-[1.25] font-medium text-white/90 uppercase">
-                {doctor.speciality}
-              </p>
-            </div>
-          </Link>
-        ))}
+                <DoctorCredentials identity={identity} className="text-xs text-white/95" />
+              </div>
+            </Link>
+          );
+        })}
       </div>
 
       <div className="mt-2 flex items-center justify-center gap-3 sm:hidden">
