@@ -4,6 +4,8 @@ import Link from "next/link";
 type TeamMember = {
   name: string;
   role: string;
+  specialty?: string;
+  qualification?: string;
   image: string;
   profileUrl?: string;
 };
@@ -11,15 +13,19 @@ type TeamMember = {
 const directors = [
   { name: "Jaseem Ammattikas", role: "Executive Director", image: "/about/jaseem.png" },
   {
-    name: "Dr. jafar vazhappully",
+    name: "Dr. Jafar Vazhappully",
     role: "Managing Director",
     image: "/about/jafar.png",
+    specialty: "Endodontics",
+    qualification: "BDS, MDS",
     profileUrl: "/doctors/dr-jafar-vazhappully",
   },
   {
     name: "Dr. Amal Sidharth",
     role: "Managing Director",
     image: "/about/amal.png",
+    specialty: "Pedodontist",
+    qualification: "BDS, MDS",
     profileUrl: "/doctors/dr-amal",
   },
   {
@@ -49,7 +55,19 @@ function TeamCard({ person, widthClassName }: { person: TeamMember; widthClassNa
         className="aspect-[1.16] w-full rounded-[11px] object-cover"
       />
       <h3 className="mt-3 text-sm font-semibold text-[#29666b] lg:text-lg">{person.name}</h3>
-      <p className="mt-1 mb-2 text-[10px] text-[#617374] lg:text-sm">{person.role}</p>
+      <p className="mt-2 mb-2 text-[10px] font-semibold text-[#617374] uppercase lg:text-sm">
+        {person.role}
+      </p>
+      {person.specialty && (
+        <p className="mb-2 text-[10px] font-medium text-[#617374] uppercase lg:text-sm">
+          {person.specialty}
+        </p>
+      )}
+      {person.qualification && (
+        <p className="mb-2 text-[10px] leading-relaxed text-[#617374] lg:text-sm">
+          {person.qualification}
+        </p>
+      )}
     </>
   );
 
@@ -73,12 +91,12 @@ export default function TeamSection() {
     <section className="">
       <div className="bg-dent-panel mx-auto max-w-7xl rounded-[24px] px-5 py-8 sm:px-8 lg:px-10 lg:py-10">
         <h2 className="text-center text-2xl font-bold text-white lg:text-4xl">
-          Meet Our Medical Directors
+          Meet Our Directors
         </h2>
         <p className="mx-auto mt-3 max-w-2xl text-center text-xs leading-5 text-white/90 lg:text-base">
-          Elite Dental Studio&apos;s four clinics are each led by a Medical Director with a
-          postgraduate dental qualification, ensuring exceptional clinical expertise and patient
-          care across every location.
+          Meet the directors behind Elite Dental Studio. Our leadership team guides the
+          organisation, supports our clinical teams and shapes the patient experience across our
+          clinics.
         </p>
         <div className="mx-auto mt-9 flex max-w-5xl flex-wrap justify-center gap-4">
           {directors.map((person) => (

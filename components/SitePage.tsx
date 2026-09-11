@@ -34,7 +34,7 @@ export default function SitePage({
       "@type": "Organization",
       name: "Elite Dental Studio",
       url: getSiteUrl(),
-      logo: absoluteUrl("/navbar/elite-logo.png"),
+      logo: absoluteUrl("/navbar/elite-dental-logo.webp"),
       sameAs: [
         "https://www.facebook.com/elitedentalstudio1",
         "https://www.instagram.com/elitedental_studio/",
@@ -56,7 +56,7 @@ export default function SitePage({
         <meta property="og:title" content={title} key="og-title" />
         <meta property="og:description" content={description} key="og-description" />
         <meta property="og:url" content={canonical} key="og-url" />
-        <meta property="og:image" content={absoluteUrl("/navbar/elite-logo.png")} />
+        <meta property="og:image" content={absoluteUrl("/navbar/elite-dental-logo.webp")} />
         <meta name="twitter:card" content="summary" />
         <meta name="twitter:title" content={title} />
         <meta name="twitter:description" content={description} />

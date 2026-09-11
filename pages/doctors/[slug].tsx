@@ -1,6 +1,6 @@
 import BookAppointmentSection from "@/components/BookAppointmentSection";
 import DoctorProfile from "@/components/DoctorProfile";
-import { drAmalAppointmentContent } from "@/content/siteSections";
+import { appointmentContent } from "@/content/siteSections";
 import SitePage from "@/components/SitePage";
 import { getContent, type DoctorDetail } from "@/lib/contentApi";
 
@@ -13,7 +13,9 @@ export default function DoctorDetailsPage({ doctor }: { doctor: DoctorDetail }) 
   return (
     <SitePage title={title} description={description}>
       <DoctorProfile doctor={doctor} />
-      <BookAppointmentSection content={drAmalAppointmentContent} />
+      <BookAppointmentSection
+        content={{ ...appointmentContent, formTitle: `Book Appointment with ${doctor.name}` }}
+      />
     </SitePage>
   );
 }
