@@ -278,10 +278,10 @@ export default function NearestClinic({
                 Consultation Now
               </h3>
               <p className="mx-auto mt-6 text-base leading-9 text-white lg:text-xl">
-                Elite Dental Studio is a specialist laser dental clinic serving patients across
-                Kerala who are searching for a laser dental clinic near me in Calicut, Kochi or
-                Kannur. Our periodontics and laser specialist team is available for consultations at
-                all three branches.
+                Ready to take the next step for your healthier smile? Book online or call us to
+                schedule your dental appointment in Calicut, Kochi, Kannur or Coimbatore. Elite
+                Dental Studio opened in Calicut in 2020 with a 4.8 star Google rating earned across
+                6 years and four ISO 9001 certified clinics.
               </p>
             </div>
           ) : (
