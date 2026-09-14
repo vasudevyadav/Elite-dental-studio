@@ -14,10 +14,10 @@ export default function AftercareSection({ data }: { data?: Record<string, unkno
           )}
         </h2>
         <div className="my-5 h-px bg-gray-500" />
-        <p className="my-2 text-sm leading-7 font-semibold lg:text-lg lg:leading-8">
+        {/* <p className="my-2 text-sm leading-7 font-semibold lg:text-lg lg:leading-8">
           {(data?.description as string) ||
             "The aftercare period after this treatment is straightforward. Your dentist at Elite Dental Studio gives you specific instructions based on your procedure. General guidance includes:"}
-        </p>
+        </p> */}
         <ul className="my-5 grid gap-3 pl-[18px] text-gray-700">
           {items.map((item) => (
             <li className="mt-2 list-disc text-sm font-medium lg:text-base" key={item}>
@@ -25,10 +25,10 @@ export default function AftercareSection({ data }: { data?: Record<string, unkno
             </li>
           ))}
         </ul>
-        <strong className="mt-6 block text-base leading-[1.55] font-semibold">
+        {/* <strong className="mt-6 block text-base leading-[1.55] font-semibold">
           {(data?.note as string) ||
             "Most patients find the recovery period manageable with simple care at home."}
-        </strong>
+        </strong> */}
       </div>
       <div className="relative min-h-[360px] overflow-hidden rounded-2xl sm:min-h-[500px] lg:min-h-[650px]">
         <Image
