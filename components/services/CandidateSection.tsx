@@ -22,9 +22,11 @@ export default function CandidateSection({
             </>
           )}
         </h2>
-        <p className="mt-5 text-sm leading-7 font-medium lg:text-[23px] lg:leading-8">
-          {(data?.subtitle as string) || "Your dentist may recommend laser support if you have:"}
-        </p>
+        {(data?.subtitle as string) && (
+          <p className="mt-5 text-sm leading-7 font-medium lg:text-[23px] lg:leading-8">
+            {data?.subtitle as string}
+          </p>
+        )}
         <div className="my-5 h-px bg-gray-500" />
         <ul className="grid gap-[14px] pl-[18px] lg:gap-[10px]">
           {items.map((item) => (

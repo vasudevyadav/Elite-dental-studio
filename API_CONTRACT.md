@@ -698,7 +698,7 @@ Full response for the currently designed Laser Dentistry page:
     },
     "candidate": {
       "title": "Who Should Consider Dental Laser Treatment?",
-      "subtitle": "Your dentist may recommend laser support if you have:",
+      "subtitle": "",
       "items": [
         "Gum disease with deeper pockets needing precise cleaning.",
         "Excess gum tissue covering teeth or affecting cleaning access.",
@@ -851,13 +851,80 @@ Query parameters: `clinic` (clinic slug), `search`, `page`, `limit`. All doctors
       { "id": "clinic_004", "name": "Coimbatore", "slug": "coimbatore" }
     ],
     "items": [
-      { "id": "doctor_001", "slug": "dr-amal", "name": "Dr. Amal", "qualification": "BDS, MDS", "speciality": "Pedodontics & Preventive Dentistry · Managing Director", "experienceYears": 15, "experienceLabel": "15 Yrs", "image": { "url": "/home/doctors/dr-amal.jpg", "alt": "Dr. Amal" }, "clinics": [{ "id": "clinic_001", "name": "Calicut", "slug": "calicut" }], "profileUrl": "/doctors/dr-amal", "sortOrder": 1 },
-      { "id": "doctor_002", "slug": "dr-amrita-sathianathan", "name": "Dr. Amrita Sathianathan", "qualification": "BDS, MDS", "speciality": "Prosthodontics & Implantology", "experienceYears": 12, "experienceLabel": "12 Yrs", "image": { "url": "/home/doctors/dr-amrita.jpg", "alt": "Dr. Amrita Sathianathan" }, "clinics": [{ "id": "clinic_002", "name": "Kochi", "slug": "kochi" }], "profileUrl": "/doctors/dr-amrita-sathianathan", "sortOrder": 2 },
-      { "id": "doctor_003", "slug": "dr-vidhu-s", "name": "Dr. Vidhu S", "qualification": "BDS, MDS", "speciality": "Invisalign Certified Orthodontist", "experienceYears": 10, "experienceLabel": "10 Yrs", "image": { "url": "/home/doctors/dr-vidhu.jpg", "alt": "Dr. Vidhu S" }, "clinics": [{ "id": "clinic_001", "name": "Calicut", "slug": "calicut" }], "profileUrl": "/doctors/dr-vidhu-s", "sortOrder": 3 },
-      { "id": "doctor_004", "slug": "dr-manu-mathew", "name": "Dr. Manu Mathew", "qualification": "BDS, MDS (Orthodontics)", "speciality": "Orthodontics · Aligner Specialist", "experienceYears": 10, "experienceLabel": "10 Yrs", "image": { "url": "/home/doctors/dr-manu.jpg", "alt": "Dr. Manu Mathew" }, "clinics": [{ "id": "clinic_003", "name": "Kannur", "slug": "kannur" }], "profileUrl": "/doctors/dr-manu-mathew", "sortOrder": 4 },
-      { "id": "doctor_005", "slug": "dr-megha-mohan", "name": "Dr. Megha Mohan", "qualification": "BDS, MDS", "speciality": "Pedodontics & Preventive Dentistry", "experienceYears": 8, "experienceLabel": "8 Yrs", "image": { "url": "/home/doctors/dr-megha.jpg", "alt": "Dr. Megha Mohan" }, "clinics": [{ "id": "clinic_004", "name": "Coimbatore", "slug": "coimbatore" }], "profileUrl": "/doctors/dr-megha-mohan", "sortOrder": 5 }
+      {
+        "id": "doctor_001",
+        "slug": "dr-amal",
+        "name": "Dr. Amal",
+        "qualification": "BDS, MDS",
+        "speciality": "Pedodontics & Preventive Dentistry · Managing Director",
+        "experienceYears": 15,
+        "experienceLabel": "15 Yrs",
+        "image": { "url": "/home/doctors/dr-amal.jpg", "alt": "Dr. Amal" },
+        "clinics": [{ "id": "clinic_001", "name": "Calicut", "slug": "calicut" }],
+        "profileUrl": "/doctors/dr-amal",
+        "sortOrder": 1
+      },
+      {
+        "id": "doctor_002",
+        "slug": "dr-amrita-sathianathan",
+        "name": "Dr. Amrita Sathianathan",
+        "qualification": "BDS, MDS",
+        "speciality": "Prosthodontics & Implantology",
+        "experienceYears": 12,
+        "experienceLabel": "12 Yrs",
+        "image": { "url": "/home/doctors/dr-amrita.jpg", "alt": "Dr. Amrita Sathianathan" },
+        "clinics": [{ "id": "clinic_002", "name": "Kochi", "slug": "kochi" }],
+        "profileUrl": "/doctors/dr-amrita-sathianathan",
+        "sortOrder": 2
+      },
+      {
+        "id": "doctor_003",
+        "slug": "dr-vidhu-s",
+        "name": "Dr. Vidhu S",
+        "qualification": "BDS, MDS",
+        "speciality": "Invisalign Certified Orthodontist",
+        "experienceYears": 10,
+        "experienceLabel": "10 Yrs",
+        "image": { "url": "/home/doctors/dr-vidhu.jpg", "alt": "Dr. Vidhu S" },
+        "clinics": [{ "id": "clinic_001", "name": "Calicut", "slug": "calicut" }],
+        "profileUrl": "/doctors/dr-vidhu-s",
+        "sortOrder": 3
+      },
+      {
+        "id": "doctor_004",
+        "slug": "dr-manu-mathew",
+        "name": "Dr. Manu Mathew",
+        "qualification": "BDS, MDS (Orthodontics)",
+        "speciality": "Orthodontics · Aligner Specialist",
+        "experienceYears": 10,
+        "experienceLabel": "10 Yrs",
+        "image": { "url": "/home/doctors/dr-manu.jpg", "alt": "Dr. Manu Mathew" },
+        "clinics": [{ "id": "clinic_003", "name": "Kannur", "slug": "kannur" }],
+        "profileUrl": "/doctors/dr-manu-mathew",
+        "sortOrder": 4
+      },
+      {
+        "id": "doctor_005",
+        "slug": "dr-megha-mohan",
+        "name": "Dr. Megha Mohan",
+        "qualification": "BDS, MDS",
+        "speciality": "Pedodontics & Preventive Dentistry",
+        "experienceYears": 8,
+        "experienceLabel": "8 Yrs",
+        "image": { "url": "/home/doctors/dr-megha.jpg", "alt": "Dr. Megha Mohan" },
+        "clinics": [{ "id": "clinic_004", "name": "Coimbatore", "slug": "coimbatore" }],
+        "profileUrl": "/doctors/dr-megha-mohan",
+        "sortOrder": 5
+      }
     ],
-    "pagination": { "currentPage": 1, "perPage": 20, "totalItems": 5, "totalPages": 1, "hasNextPage": false, "hasPreviousPage": false }
+    "pagination": {
+      "currentPage": 1,
+      "perPage": 20,
+      "totalItems": 5,
+      "totalPages": 1,
+      "hasNextPage": false,
+      "hasPreviousPage": false
+    }
   }
 }
 ```
@@ -877,20 +944,58 @@ Query parameters: `clinic` (clinic slug), `search`, `page`, `limit`. All doctors
     "experienceYears": 15,
     "experienceLabel": "15 Yrs",
     "image": { "url": "/home/doctors/dr-amal.jpg", "alt": "Dr. Amal" },
-    "clinics": [{ "id": "clinic_001", "name": "Calicut", "slug": "calicut", "label": "Calicut Branch" }],
-    "seo": { "metaTitle": "Dr. Amal | Elite Dental Studio", "metaDescription": "Meet Dr. Amal, Pedodontics and Preventive Dentistry specialist at Elite Dental Studio.", "canonicalUrl": "/doctors/dr-amal", "robots": "index,follow", "ogImage": "/home/doctors/dr-amal.jpg" },
+    "clinics": [
+      { "id": "clinic_001", "name": "Calicut", "slug": "calicut", "label": "Calicut Branch" }
+    ],
+    "seo": {
+      "metaTitle": "Dr. Amal | Elite Dental Studio",
+      "metaDescription": "Meet Dr. Amal, Pedodontics and Preventive Dentistry specialist at Elite Dental Studio.",
+      "canonicalUrl": "/doctors/dr-amal",
+      "robots": "index,follow",
+      "ogImage": "/home/doctors/dr-amal.jpg"
+    },
     "pageTitle": "About Doctors",
-    "about": { "title": "About Dr. Amal", "paragraphs": ["Dr. Amal Sidharth is a distinguished dental professional with a wealth of knowledge and expertise in the field of pedodontics. He holds a Bachelor of Dental Surgery (BDS) degree, and furthered his education by obtaining a Master's degree in Dental Surgery (MDS) with a specialization in Pedodontics."] },
+    "about": {
+      "title": "About Dr. Amal",
+      "paragraphs": [
+        "Dr. Amal Sidharth is a distinguished dental professional with a wealth of knowledge and expertise in the field of pedodontics. He holds a Bachelor of Dental Surgery (BDS) degree, and furthered his education by obtaining a Master's degree in Dental Surgery (MDS) with a specialization in Pedodontics."
+      ]
+    },
     "stats": [
-      { "id": "stat_001", "icon": "implant", "value": "4500+", "label": "Dental Implant", "sortOrder": 1 },
-      { "id": "stat_002", "icon": "surgery", "value": "1500+", "label": "Dental Surgery", "sortOrder": 2 },
+      {
+        "id": "stat_001",
+        "icon": "implant",
+        "value": "4500+",
+        "label": "Dental Implant",
+        "sortOrder": 1
+      },
+      {
+        "id": "stat_002",
+        "icon": "surgery",
+        "value": "1500+",
+        "label": "Dental Surgery",
+        "sortOrder": 2
+      },
       { "id": "stat_003", "icon": "rct", "value": "500+", "label": "RCT", "sortOrder": 3 }
     ],
-    "expertise": ["Smile Design", "Full Mouth Rehabilitation", "Dental Fillings", "RCTs", "Crowns", "Scaling", "Consultation for Implants and Aligners"],
+    "expertise": [
+      "Smile Design",
+      "Full Mouth Rehabilitation",
+      "Dental Fillings",
+      "RCTs",
+      "Crowns",
+      "Scaling",
+      "Consultation for Implants and Aligners"
+    ],
     "availability": [
       { "type": "visitingTime", "label": "Visiting Time", "value": "11 AM–8 PM", "icon": "clock" },
       { "type": "visitingDays", "label": "Visiting Days", "value": "Everyday", "icon": "calendar" },
-      { "type": "languages", "label": "Languages Known", "value": "English, Telugu, Hindi", "icon": "language" }
+      {
+        "type": "languages",
+        "label": "Languages Known",
+        "value": "English, Telugu, Hindi",
+        "icon": "language"
+      }
     ],
     "appointmentSectionId": "appointment_dr_amal",
     "status": "published"
@@ -908,20 +1013,124 @@ Query parameters: `clinic` (clinic slug), `search`, `page`, `limit`. All doctors
   "message": "Dental office page fetched successfully",
   "data": {
     "slug": "our-dental-office",
-    "seo": { "metaTitle": "Our Dental Office | Elite Dental Studio", "metaDescription": "Take a virtual tour of Elite Dental Studio's modern dental offices in Calicut and Kochi.", "canonicalUrl": "/our-dental-office", "robots": "index,follow", "ogImage": "/office/calicut-04.webp" },
+    "seo": {
+      "metaTitle": "Our Dental Office | Elite Dental Studio",
+      "metaDescription": "Take a virtual tour of Elite Dental Studio's modern dental offices in Calicut and Kochi.",
+      "canonicalUrl": "/our-dental-office",
+      "robots": "index,follow",
+      "ogImage": "/office/calicut-04.webp"
+    },
     "sections": [
-      { "type": "hero", "sortOrder": 1, "isEnabled": true, "content": { "eyebrow": "A modern space for better smiles", "title": "Our Dental", "accent": "Office", "description": "Step inside a calm, technology-led environment designed around clinical precision, patient comfort and care for every age.", "slides": [{ "image": { "url": "/office/calicut-04.webp", "alt": "Elite Dental Studio reception" }, "sortOrder": 1 }] } },
-      { "type": "introduction", "sortOrder": 2, "isEnabled": true, "content": { "eyebrow": "Designed around you", "title": "Clinical excellence feels different here.", "description": "Our dental offices bring specialist care, advanced technology and thoughtful hospitality together under one roof. From the moment you arrive, every space is planned to feel clear, comfortable and reassuring.", "stats": [{ "value": "4", "label": "Clinic locations" }, { "value": "15+", "label": "Specialists" }, { "value": "100%", "label": "MDS doctors" }] } },
-      { "type": "gallery", "sortOrder": 3, "isEnabled": true, "content": { "eyebrow": "Virtual tour", "title": "A closer look inside", "locations": [{ "name": "Calicut", "slug": "calicut" }, { "name": "Kochi", "slug": "kochi" }, { "name": "Kannur", "slug": "kannur" }, { "name": "Coimbatore", "slug": "coimbatore" }], "items": [
-        { "id": "office_001", "locationSlug": "calicut", "label": "Reception & welcome desk", "image": { "url": "/office/calicut-04.webp", "alt": "Reception & welcome desk" }, "sortOrder": 1 },
-        { "id": "office_002", "locationSlug": "calicut", "label": "Modern treatment suite", "image": { "url": "/office/calicut-02.webp", "alt": "Modern treatment suite" }, "sortOrder": 2 },
-        { "id": "office_003", "locationSlug": "kochi", "label": "Kids-friendly dental zone", "image": { "url": "/office/kochi-05.webp", "alt": "Kids-friendly dental zone" }, "sortOrder": 3 },
-        { "id": "office_004", "locationSlug": "kannur", "label": "Modern treatment room", "image": { "url": "/office/5bbea59a-c621-473f-8a9d-c4ff63269196.webp", "alt": "Modern treatment room" }, "sortOrder": 4 },
-        { "id": "office_005", "locationSlug": "coimbatore", "label": "Contemporary patient lounge", "image": { "url": "/office/1f0186e7-99d0-44d4-a6dd-efb98b394a8e.webp", "alt": "Contemporary patient lounge" }, "sortOrder": 5 }
-      ] } },
-      { "type": "comfort", "sortOrder": 4, "isEnabled": true, "content": { "eyebrow": "For every generation", "title": "Dental visits made more comfortable.", "description": "Our welcoming spaces reduce anxiety, support privacy and help children feel at ease. Because the environment around your treatment matters just as much as the treatment itself.", "image": { "url": "/office/kochi-05.webp", "alt": "Child-friendly area at Elite Dental Studio" }, "cta": { "label": "Plan your visit", "url": "#appointment" } } }
+      {
+        "type": "hero",
+        "sortOrder": 1,
+        "isEnabled": true,
+        "content": {
+          "eyebrow": "A modern space for better smiles",
+          "title": "Our Dental",
+          "accent": "Office",
+          "description": "Step inside a calm, technology-led environment designed around clinical precision, patient comfort and care for every age.",
+          "slides": [
+            {
+              "image": { "url": "/office/calicut-04.webp", "alt": "Elite Dental Studio reception" },
+              "sortOrder": 1
+            }
+          ]
+        }
+      },
+      {
+        "type": "introduction",
+        "sortOrder": 2,
+        "isEnabled": true,
+        "content": {
+          "eyebrow": "Designed around you",
+          "title": "Clinical excellence feels different here.",
+          "description": "Our dental offices bring specialist care, advanced technology and thoughtful hospitality together under one roof. From the moment you arrive, every space is planned to feel clear, comfortable and reassuring.",
+          "stats": [
+            { "value": "4", "label": "Clinic locations" },
+            { "value": "15+", "label": "Specialists" },
+            { "value": "100%", "label": "MDS doctors" }
+          ]
+        }
+      },
+      {
+        "type": "gallery",
+        "sortOrder": 3,
+        "isEnabled": true,
+        "content": {
+          "eyebrow": "Virtual tour",
+          "title": "A closer look inside",
+          "locations": [
+            { "name": "Calicut", "slug": "calicut" },
+            { "name": "Kochi", "slug": "kochi" },
+            { "name": "Kannur", "slug": "kannur" },
+            { "name": "Coimbatore", "slug": "coimbatore" }
+          ],
+          "items": [
+            {
+              "id": "office_001",
+              "locationSlug": "calicut",
+              "label": "Reception & welcome desk",
+              "image": { "url": "/office/calicut-04.webp", "alt": "Reception & welcome desk" },
+              "sortOrder": 1
+            },
+            {
+              "id": "office_002",
+              "locationSlug": "calicut",
+              "label": "Modern treatment suite",
+              "image": { "url": "/office/calicut-02.webp", "alt": "Modern treatment suite" },
+              "sortOrder": 2
+            },
+            {
+              "id": "office_003",
+              "locationSlug": "kochi",
+              "label": "Kids-friendly dental zone",
+              "image": { "url": "/office/kochi-05.webp", "alt": "Kids-friendly dental zone" },
+              "sortOrder": 3
+            },
+            {
+              "id": "office_004",
+              "locationSlug": "kannur",
+              "label": "Modern treatment room",
+              "image": {
+                "url": "/office/5bbea59a-c621-473f-8a9d-c4ff63269196.webp",
+                "alt": "Modern treatment room"
+              },
+              "sortOrder": 4
+            },
+            {
+              "id": "office_005",
+              "locationSlug": "coimbatore",
+              "label": "Contemporary patient lounge",
+              "image": {
+                "url": "/office/1f0186e7-99d0-44d4-a6dd-efb98b394a8e.webp",
+                "alt": "Contemporary patient lounge"
+              },
+              "sortOrder": 5
+            }
+          ]
+        }
+      },
+      {
+        "type": "comfort",
+        "sortOrder": 4,
+        "isEnabled": true,
+        "content": {
+          "eyebrow": "For every generation",
+          "title": "Dental visits made more comfortable.",
+          "description": "Our welcoming spaces reduce anxiety, support privacy and help children feel at ease. Because the environment around your treatment matters just as much as the treatment itself.",
+          "image": {
+            "url": "/office/kochi-05.webp",
+            "alt": "Child-friendly area at Elite Dental Studio"
+          },
+          "cta": { "label": "Plan your visit", "url": "#appointment" }
+        }
+      }
     ],
-    "relatedSectionIds": { "nearestClinic": "nearest_clinic_default", "appointment": "appointment_default" },
+    "relatedSectionIds": {
+      "nearestClinic": "nearest_clinic_default",
+      "appointment": "appointment_default"
+    },
     "status": "published"
   }
 }
@@ -941,18 +1150,162 @@ Example: `/api/v1/locations/kannur`
     "id": "clinic_003",
     "slug": "kannur",
     "name": "Kannur",
-    "seo": { "metaTitle": "Dental Clinic in Kannur | Elite Dental Studio", "metaDescription": "Visit Elite Dental Studio in Talap, Kannur for specialist-led dental care, modern technology and comfortable treatment.", "canonicalUrl": "/locations/kannur", "robots": "index,follow", "ogImage": "/locations-kannur-hero.png" },
-    "contact": { "mobile": "+91 96458 74777", "mobileHref": "+919645874777", "telephone": null, "email": "elitedentalstudioreception@gmail.com", "addressLines": ["Nyma Tower, opposite Koyili Hospital", "Talap, Kannur, Kerala"], "mapUrl": "https://maps.google.com/", "mapEmbedUrl": "https://www.google.com/maps?q=Talap%20Kannur&output=embed" },
-    "workingHours": [{ "days": "Mon to Sat", "time": "09:30 am to 8:00 pm" }, { "days": "Sunday", "time": "09:00 am to 7:00 pm" }],
+    "seo": {
+      "metaTitle": "Dental Clinic in Kannur | Elite Dental Studio",
+      "metaDescription": "Visit Elite Dental Studio in Talap, Kannur for specialist-led dental care, modern technology and comfortable treatment.",
+      "canonicalUrl": "/locations/kannur",
+      "robots": "index,follow",
+      "ogImage": "/locations-kannur-hero.png"
+    },
+    "contact": {
+      "mobile": "+91 96458 74777",
+      "mobileHref": "+919645874777",
+      "telephone": null,
+      "email": "elitedentalstudioreception@gmail.com",
+      "addressLines": ["Nyma Tower, opposite Koyili Hospital", "Talap, Kannur, Kerala"],
+      "mapUrl": "https://maps.google.com/",
+      "mapEmbedUrl": "https://www.google.com/maps?q=Talap%20Kannur&output=embed"
+    },
+    "workingHours": [
+      { "days": "Mon to Sat", "time": "09:30 am to 8:00 pm" },
+      { "days": "Sunday", "time": "09:00 am to 7:00 pm" }
+    ],
     "sections": [
-      { "type": "hero", "sortOrder": 1, "isEnabled": true, "content": { "slides": [{ "image": { "url": "/locations-kannur-hero.png", "alt": "Elite Dental Studio Kannur treatment room" }, "sortOrder": 1 }] } },
-      { "type": "introduction", "sortOrder": 2, "isEnabled": true, "content": { "title": "Get the Trusted Dental Care in Kannur with Elite Dental Studio", "paragraphs": ["Elite Dental Studio at Talap, Kannur is a multi-speciality dental clinic opposite Koyili Hospital, Nyma Tower. We offer specialist-led dental care for Kannur patients, covering everything from root canal treatment and dental implants to Invisalign, clear aligners, pediatric dentistry and smile designing.", "Every treatment is planned after a proper check-up, clear diagnosis and an honest conversation about your options. We are the Famdent Clinic of the Year 2026, and we have treated over 1,00,000 patients across our clinics since 2020."], "images": [{ "url": "/office/calicut-04.webp", "alt": "Elite Dental Studio Kannur reception" }, { "url": "/office/calicut-05.webp", "alt": "Kannur dental clinic interior" }], "cta": { "label": "Book Your Appointment", "url": "#appointment" } } },
-      { "type": "benefits", "sortOrder": 3, "isEnabled": true, "content": { "title": "Why Choose Us?", "items": [{ "icon": "multi-speciality", "title": "Expert Multi-Speciality", "text": "Dental Team" }, { "icon": "services", "title": "10+ Dental Services", "text": "Under One Roof" }, { "icon": "technology", "title": "In-House Modern", "text": "Dental Technology" }, { "icon": "comfort", "title": "Comfort-Focused Care", "text": "for Every Age" }] } },
-      { "type": "services", "sortOrder": 4, "isEnabled": true, "content": { "title": "Comprehensive dental care tailored services for every smile", "description": "Elite Dental Studio offers a full spectrum of dental procedures to help you explore what's best for your smile.", "source": "servicesApi" } },
-      { "type": "doctors", "sortOrder": 5, "isEnabled": true, "content": { "title": "Our Doctors", "clinicSlug": "kannur", "source": "doctorsApi" } },
-      { "type": "travel", "sortOrder": 6, "isEnabled": true, "content": { "eyebrow": "How to reach", "title": "Elite Dental Studio in Kannur?", "description": "Located at Nyma Tower, opposite Koyili Hospital in Talap, Kannur. The clinic is accessible from Payyambalam, Pallikkunnu, South Bazar, Thana and surrounding neighbourhoods.", "items": [{ "icon": "auto", "title": "Nearest Auto Stand", "text": "Auto rickshaws and taxis are readily available near Koyili Hospital." }, { "icon": "bus", "title": "Nearest Bus Stop", "text": "Koyili Hospital bus stop is a short walk from the clinic." }, { "icon": "landmark", "title": "Nearest Landmark", "text": "Opposite Koyili Hospital, inside Nyma Tower at Talap, Kannur." }] } },
-      { "type": "faq", "sortOrder": 7, "isEnabled": true, "content": { "eyebrow": "FAQs", "title": "Everything you need to know about dental care", "description": "Find quick answers to common questions about our dental services, appointments and patient care in our Kannur clinic.", "items": [{ "id": "faq_kannur_001", "question": "What services do you offer?", "answer": "We offer specialist-led dentistry including implants, braces, aligners, root canal care, paediatric dentistry, laser dentistry and cosmetic treatments.", "sortOrder": 1 }, { "id": "faq_kannur_002", "question": "How often should I visit the dentist?", "answer": "Most patients benefit from a dental check-up every six months. Your dentist may recommend a different schedule based on your oral health.", "sortOrder": 2 }, { "id": "faq_kannur_003", "question": "Do you offer emergency dental care?", "answer": "Yes. Call our care team and we will guide you to the earliest suitable appointment.", "sortOrder": 3 }] } },
-      { "type": "appointment", "sortOrder": 8, "isEnabled": true, "content": { "eyebrow": "Book your appointment", "title": "Schedule Your Dental Visit Online at Elite Dental Studio", "description": "Ready to take the next step towards a healthier smile? Use our easy online booking system to schedule your Kannur appointment.", "formId": "appointment_kannur" } }
+      {
+        "type": "hero",
+        "sortOrder": 1,
+        "isEnabled": true,
+        "content": {
+          "slides": [
+            {
+              "image": {
+                "url": "/locations-kannur-hero.png",
+                "alt": "Elite Dental Studio Kannur treatment room"
+              },
+              "sortOrder": 1
+            }
+          ]
+        }
+      },
+      {
+        "type": "introduction",
+        "sortOrder": 2,
+        "isEnabled": true,
+        "content": {
+          "title": "Get the Trusted Dental Care in Kannur with Elite Dental Studio",
+          "paragraphs": [
+            "Elite Dental Studio at Talap, Kannur is a multi-speciality dental clinic opposite Koyili Hospital, Nyma Tower. We offer specialist-led dental care for Kannur patients, covering everything from root canal treatment and dental implants to Invisalign, clear aligners, pediatric dentistry and smile designing.",
+            "Every treatment is planned after a proper check-up, clear diagnosis and an honest conversation about your options. We are the Famdent Clinic of the Year 2026, and we have treated over 1,00,000 patients across our clinics since 2020."
+          ],
+          "images": [
+            { "url": "/office/calicut-04.webp", "alt": "Elite Dental Studio Kannur reception" },
+            { "url": "/office/calicut-05.webp", "alt": "Kannur dental clinic interior" }
+          ],
+          "cta": { "label": "Book Your Appointment", "url": "#appointment" }
+        }
+      },
+      {
+        "type": "benefits",
+        "sortOrder": 3,
+        "isEnabled": true,
+        "content": {
+          "title": "Why Choose Us?",
+          "items": [
+            {
+              "icon": "multi-speciality",
+              "title": "Expert Multi-Speciality",
+              "text": "Dental Team"
+            },
+            { "icon": "services", "title": "10+ Dental Services", "text": "Under One Roof" },
+            { "icon": "technology", "title": "In-House Modern", "text": "Dental Technology" },
+            { "icon": "comfort", "title": "Comfort-Focused Care", "text": "for Every Age" }
+          ]
+        }
+      },
+      {
+        "type": "services",
+        "sortOrder": 4,
+        "isEnabled": true,
+        "content": {
+          "title": "Comprehensive dental care tailored services for every smile",
+          "description": "Elite Dental Studio offers a full spectrum of dental procedures to help you explore what's best for your smile.",
+          "source": "servicesApi"
+        }
+      },
+      {
+        "type": "doctors",
+        "sortOrder": 5,
+        "isEnabled": true,
+        "content": { "title": "Our Doctors", "clinicSlug": "kannur", "source": "doctorsApi" }
+      },
+      {
+        "type": "travel",
+        "sortOrder": 6,
+        "isEnabled": true,
+        "content": {
+          "eyebrow": "How to reach",
+          "title": "Elite Dental Studio in Kannur?",
+          "description": "Located at Nyma Tower, opposite Koyili Hospital in Talap, Kannur. The clinic is accessible from Payyambalam, Pallikkunnu, South Bazar, Thana and surrounding neighbourhoods.",
+          "items": [
+            {
+              "icon": "auto",
+              "title": "Nearest Auto Stand",
+              "text": "Auto rickshaws and taxis are readily available near Koyili Hospital."
+            },
+            {
+              "icon": "bus",
+              "title": "Nearest Bus Stop",
+              "text": "Koyili Hospital bus stop is a short walk from the clinic."
+            },
+            {
+              "icon": "landmark",
+              "title": "Nearest Landmark",
+              "text": "Opposite Koyili Hospital, inside Nyma Tower at Talap, Kannur."
+            }
+          ]
+        }
+      },
+      {
+        "type": "faq",
+        "sortOrder": 7,
+        "isEnabled": true,
+        "content": {
+          "eyebrow": "FAQs",
+          "title": "Everything you need to know about dental care",
+          "description": "Find quick answers to common questions about our dental services, appointments and patient care in our Kannur clinic.",
+          "items": [
+            {
+              "id": "faq_kannur_001",
+              "question": "What services do you offer?",
+              "answer": "We offer specialist-led dentistry including implants, braces, aligners, root canal care, paediatric dentistry, laser dentistry and cosmetic treatments.",
+              "sortOrder": 1
+            },
+            {
+              "id": "faq_kannur_002",
+              "question": "How often should I visit the dentist?",
+              "answer": "Most patients benefit from a dental check-up every six months. Your dentist may recommend a different schedule based on your oral health.",
+              "sortOrder": 2
+            },
+            {
+              "id": "faq_kannur_003",
+              "question": "Do you offer emergency dental care?",
+              "answer": "Yes. Call our care team and we will guide you to the earliest suitable appointment.",
+              "sortOrder": 3
+            }
+          ]
+        }
+      },
+      {
+        "type": "appointment",
+        "sortOrder": 8,
+        "isEnabled": true,
+        "content": {
+          "eyebrow": "Book your appointment",
+          "title": "Schedule Your Dental Visit Online at Elite Dental Studio",
+          "description": "Ready to take the next step towards a healthier smile? Use our easy online booking system to schedule your Kannur appointment.",
+          "formId": "appointment_kannur"
+        }
+      }
     ],
     "status": "published"
   }
@@ -972,20 +1325,100 @@ Query parameters: `location` (location slug), `treatment` (category slug), `page
   "success": true,
   "message": "Smile gallery fetched successfully",
   "data": {
-    "seo": { "metaTitle": "Dental Cases & Smile Gallery | Elite Dental Studio", "metaDescription": "View a curated selection of dental treatment results from Elite Dental Studio.", "canonicalUrl": "/gallery/cases", "robots": "index,follow", "ogImage": "/about/about-hero.png" },
-    "hero": { "eyebrow": "Real care · Real results", "title": "Every smile", "accent": "has a story.", "description": "Explore real transformations shaped by precise planning, modern dentistry and care personal to every patient.", "slides": [{ "image": { "url": "/about/about-hero.png", "alt": "Elite Dental Studio smile gallery" }, "sortOrder": 1 }] },
-    "archive": { "eyebrow": "The case archive", "title": "Details worth seeing.", "description": "Open any frame for a distraction-free, full-screen look." },
+    "seo": {
+      "metaTitle": "Dental Cases & Smile Gallery | Elite Dental Studio",
+      "metaDescription": "View a curated selection of dental treatment results from Elite Dental Studio.",
+      "canonicalUrl": "/gallery/cases",
+      "robots": "index,follow",
+      "ogImage": "/about/about-hero.png"
+    },
+    "hero": {
+      "eyebrow": "Real care · Real results",
+      "title": "Every smile",
+      "accent": "has a story.",
+      "description": "Explore real transformations shaped by precise planning, modern dentistry and care personal to every patient.",
+      "slides": [
+        {
+          "image": { "url": "/about/about-hero.png", "alt": "Elite Dental Studio smile gallery" },
+          "sortOrder": 1
+        }
+      ]
+    },
+    "archive": {
+      "eyebrow": "The case archive",
+      "title": "Details worth seeing.",
+      "description": "Open any frame for a distraction-free, full-screen look."
+    },
     "filters": {
-      "locations": [{ "name": "Calicut", "slug": "calicut" }, { "name": "Kochi", "slug": "kochi" }, { "name": "Kannur", "slug": "kannur" }],
-      "treatments": [{ "name": "Smile Design", "slug": "smile-design" }, { "name": "Restorative Care", "slug": "restorative-care" }, { "name": "Advanced Dentistry", "slug": "advanced-dentistry" }]
+      "locations": [
+        { "name": "Calicut", "slug": "calicut" },
+        { "name": "Kochi", "slug": "kochi" },
+        { "name": "Kannur", "slug": "kannur" }
+      ],
+      "treatments": [
+        { "name": "Smile Design", "slug": "smile-design" },
+        { "name": "Restorative Care", "slug": "restorative-care" },
+        { "name": "Advanced Dentistry", "slug": "advanced-dentistry" }
+      ]
     },
     "items": [
-      { "id": "case_001", "slug": "smile-transformation-01", "title": "Smile transformation 01", "category": { "name": "Smile Design", "slug": "smile-design" }, "location": { "name": "Calicut", "slug": "calicut" }, "beforeImage": { "url": "/cases/case-01.webp", "alt": "Smile transformation 01 before" }, "afterImage": { "url": "/cases/case-01.webp", "alt": "Smile transformation 01 after" }, "combinedImage": { "url": "/cases/case-01.webp", "alt": "Smile transformation 01 before and after" }, "sortOrder": 1 },
-      { "id": "case_002", "slug": "smile-transformation-02", "title": "Smile transformation 02", "category": { "name": "Restorative Care", "slug": "restorative-care" }, "location": { "name": "Calicut", "slug": "calicut" }, "beforeImage": { "url": "/cases/case-02.webp", "alt": "Smile transformation 02 before" }, "afterImage": { "url": "/cases/case-02.webp", "alt": "Smile transformation 02 after" }, "combinedImage": { "url": "/cases/case-02.webp", "alt": "Smile transformation 02 before and after" }, "sortOrder": 2 },
-      { "id": "case_003", "slug": "smile-transformation-03", "title": "Smile transformation 03", "category": { "name": "Advanced Dentistry", "slug": "advanced-dentistry" }, "location": { "name": "Kochi", "slug": "kochi" }, "beforeImage": { "url": "/cases/case-03.webp", "alt": "Smile transformation 03 before" }, "afterImage": { "url": "/cases/case-03.webp", "alt": "Smile transformation 03 after" }, "combinedImage": { "url": "/cases/case-03.webp", "alt": "Smile transformation 03 before and after" }, "sortOrder": 3 }
+      {
+        "id": "case_001",
+        "slug": "smile-transformation-01",
+        "title": "Smile transformation 01",
+        "category": { "name": "Smile Design", "slug": "smile-design" },
+        "location": { "name": "Calicut", "slug": "calicut" },
+        "beforeImage": { "url": "/cases/case-01.webp", "alt": "Smile transformation 01 before" },
+        "afterImage": { "url": "/cases/case-01.webp", "alt": "Smile transformation 01 after" },
+        "combinedImage": {
+          "url": "/cases/case-01.webp",
+          "alt": "Smile transformation 01 before and after"
+        },
+        "sortOrder": 1
+      },
+      {
+        "id": "case_002",
+        "slug": "smile-transformation-02",
+        "title": "Smile transformation 02",
+        "category": { "name": "Restorative Care", "slug": "restorative-care" },
+        "location": { "name": "Calicut", "slug": "calicut" },
+        "beforeImage": { "url": "/cases/case-02.webp", "alt": "Smile transformation 02 before" },
+        "afterImage": { "url": "/cases/case-02.webp", "alt": "Smile transformation 02 after" },
+        "combinedImage": {
+          "url": "/cases/case-02.webp",
+          "alt": "Smile transformation 02 before and after"
+        },
+        "sortOrder": 2
+      },
+      {
+        "id": "case_003",
+        "slug": "smile-transformation-03",
+        "title": "Smile transformation 03",
+        "category": { "name": "Advanced Dentistry", "slug": "advanced-dentistry" },
+        "location": { "name": "Kochi", "slug": "kochi" },
+        "beforeImage": { "url": "/cases/case-03.webp", "alt": "Smile transformation 03 before" },
+        "afterImage": { "url": "/cases/case-03.webp", "alt": "Smile transformation 03 after" },
+        "combinedImage": {
+          "url": "/cases/case-03.webp",
+          "alt": "Smile transformation 03 before and after"
+        },
+        "sortOrder": 3
+      }
     ],
-    "disclaimer": { "eyebrow": "Your smile, thoughtfully planned", "title": "Ready to discuss what is possible for you?", "description": "Treatment results vary for every patient. Images are shown for educational reference; your dentist will recommend a personalised plan after clinical assessment.", "cta": { "label": "Book a consultation", "url": "/contact" } },
-    "pagination": { "currentPage": 1, "perPage": 12, "totalItems": 12, "totalPages": 1, "hasNextPage": false, "hasPreviousPage": false }
+    "disclaimer": {
+      "eyebrow": "Your smile, thoughtfully planned",
+      "title": "Ready to discuss what is possible for you?",
+      "description": "Treatment results vary for every patient. Images are shown for educational reference; your dentist will recommend a personalised plan after clinical assessment.",
+      "cta": { "label": "Book a consultation", "url": "/contact" }
+    },
+    "pagination": {
+      "currentPage": 1,
+      "perPage": 12,
+      "totalItems": 12,
+      "totalPages": 1,
+      "hasNextPage": false,
+      "hasPreviousPage": false
+    }
   }
 }
 ```
@@ -1209,18 +1642,18 @@ Content type must be `multipart/form-data` because the request contains a résum
 
 Request fields:
 
-| Field | Type | Required | Validation |
-|---|---|---:|---|
-| `name` | string | Yes | 2–100 characters |
-| `phone` | string | Yes | Valid phone, 7–20 characters |
-| `email` | string | Yes | Valid email, maximum 150 characters |
-| `jobId` | string | No | ID from Careers GET API |
-| `jobSlug` | string | No | Slug from Careers GET API |
-| `position` | string | Yes | One of the returned `positionOptions[].value` values |
-| `clinicSlug` | string | No | One of the returned clinic slugs |
-| `message` | string | No | Maximum 2000 characters |
-| `resume` | file | Yes | PDF, DOC or DOCX; maximum 5 MB |
-| `consent` | boolean | Yes | Must be `true` |
+| Field        | Type    | Required | Validation                                           |
+| ------------ | ------- | -------: | ---------------------------------------------------- |
+| `name`       | string  |      Yes | 2–100 characters                                     |
+| `phone`      | string  |      Yes | Valid phone, 7–20 characters                         |
+| `email`      | string  |      Yes | Valid email, maximum 150 characters                  |
+| `jobId`      | string  |       No | ID from Careers GET API                              |
+| `jobSlug`    | string  |       No | Slug from Careers GET API                            |
+| `position`   | string  |      Yes | One of the returned `positionOptions[].value` values |
+| `clinicSlug` | string  |       No | One of the returned clinic slugs                     |
+| `message`    | string  |       No | Maximum 2000 characters                              |
+| `resume`     | file    |      Yes | PDF, DOC or DOCX; maximum 5 MB                       |
+| `consent`    | boolean |      Yes | Must be `true`                                       |
 
 Example multipart request:
 
