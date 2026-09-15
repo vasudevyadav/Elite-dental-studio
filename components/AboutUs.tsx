@@ -18,7 +18,7 @@ export default function AboutUs() {
       <div className="grid items-center gap-6 lg:grid-cols-[0.92fr_1.08fr] lg:gap-14">
         <div className="mx-auto w-full max-w-[610px]">
           <Image
-            src="/home/elite-6-year.png"
+            src="/home/elite-6-year-1.png"
             alt="Elite Dental Studio treatment room with over 20 years of medical service experience"
             width={799}
             height={885}
@@ -58,10 +58,10 @@ export default function AboutUs() {
             <div className="grid gap-6 lg:grid-cols-2 lg:gap-4">
               <div className="grid items-center gap-2 lg:flex">
                 <strong className="shrink-0 text-2xl leading-none font-black text-[#2bd0c0] lg:text-5xl">
-                  <AnimatedCounter value={100} suffix="%" duration={1400} />
+                  <AnimatedCounter value={1000} suffix="+" duration={1000} />
                 </strong>
                 <span className="text-sm leading-relaxed font-semibold text-[#303436] sm:text-sm">
-                  Invisalign Treatment
+                  Invisalign cases
                   <br />
                   Completed
                 </span>
