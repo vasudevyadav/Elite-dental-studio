@@ -312,7 +312,7 @@ export default function Navbar() {
           {/* Logo */}
           <Link href="/" className="smooth-hover hover-lift shrink-0">
             <Image
-              src="/navbar/elite-dental-logo-2.webp"
+              src="/navbar/elite-dental-logo.webp"
               alt="Elite Dental Studio"
               width={200}
               height={56}
@@ -486,7 +486,7 @@ export default function Navbar() {
           >
             <div className="flex items-center justify-between border-b border-[#dceeed] px-5 py-4">
               <Image
-                src="/navbar/elite-dental-logo-2.webp"
+                src="/navbar/elite-dental-logo.webp"
                 alt="Elite Dental Studio"
                 width={160}
                 height={45}
