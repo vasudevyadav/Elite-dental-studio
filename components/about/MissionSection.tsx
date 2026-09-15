@@ -1,10 +1,10 @@
 import Image from "next/image";
 
 const stats = [
-  ["75+", "Insurance covered", "We have more than 75 Insurance coverage from all over India"],
-  ["2k", "Realized projects", "Our team makes Elite Dental care better every month"],
-  ["22k", "Happy customers", "Our team makes Elite Dental care better every month"],
-  ["20+", "Experience doctors", "Our team makes Elite Dental care better every month"],
+  ["75+", "Insurance Covered", "We have more than 75 Insurance coverage from all over India"],
+  ["10k + ", "Comprehensive Cases", "Our team makes Elite Dental care better every month"],
+  ["1Lakh +", "Happy Customers", "Our team makes Elite Dental care better every month"],
+  ["100+", "Experience Doctors", "Our team makes Elite Dental care better every month"],
 ];
 
 export default function MissionSection() {
