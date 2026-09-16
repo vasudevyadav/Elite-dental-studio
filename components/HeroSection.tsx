@@ -6,11 +6,12 @@ import { openConsultationPopup } from "@/lib/consultationPopup";
 const HOME_SLIDES = [
   {
     img: "/home/Home-page-banner.jpg",
+    mobileImg: "/home/elite mob-1-2.jpg",
     alt: "Six years of specialist-led dental care at Elite Dental Studio",
   },
 ];
 
-type HeroSlide = { img: string; alt: string };
+type HeroSlide = { img: string; mobileImg?: string; alt: string };
 
 type HeroSectionProps = {
   slides?: HeroSlide[];
@@ -61,7 +62,7 @@ export default function HeroSection({ slides = HOME_SLIDES, content }: HeroSecti
 
           <div className="block lg:hidden">
             <Image
-              src="/home/elite mob-1-2.jpg"
+              src={s.mobileImg || s.img}
               alt={s.alt}
               fill
               quality={85}
@@ -91,12 +92,12 @@ export default function HeroSection({ slides = HOME_SLIDES, content }: HeroSecti
       )}
 
       {content && (
-        <div className="pointer-events-none absolute inset-0 z-[35] mx-auto flex max-w-7xl items-center px-5 pb-24 sm:px-8 lg:px-12 lg:pb-0">
+        <div className="pointer-events-none absolute inset-0 z-[35] mx-auto flex max-w-7xl items-center px-5 pb-10 sm:px-8 lg:px-12 lg:pb-0">
           <div className="max-w-[610px] text-white [text-shadow:0_2px_20px_rgba(4,49,53,.35)] lg:max-w-[44%] xl:max-w-[610px]">
             <p className="text-xs font-bold tracking-[.18em] text-[#56e2d5] uppercase sm:text-sm">
               {content.eyebrow}
             </p>
-            <h1 className="leading-light mt-3 text-4xl font-semibold lg:text-[49px]">
+            <h1 className="leading-light mt-3 text-[25px] font-semibold lg:text-[49px]">
               {content.title}
               <br />
               <span className="text-[#45d8ca]">{content.accent}</span>
