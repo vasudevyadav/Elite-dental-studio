@@ -3,6 +3,14 @@ import { useEffect, useRef, useState } from "react";
 
 const facilities = [
   {
+    title: "CBCT (Cone Beam Computed Tomography)",
+    tag: "3D imaging",
+    image: "/facilities/opg-v2.png",
+    text: "CBCT is a 3D imaging system that captures detailed cross-sectional images of the teeth, jawbone, nerves and surrounding structures in a single scan.",
+    detail:
+      "This clear 3D view helps our clinicians plan dental implants, root canal treatment, wisdom tooth removal and complex surgical cases with greater accuracy, while keeping radiation exposure within safe, monitored limits.",
+  },
+  {
     title: "Dental Implant Motor",
     tag: "Implantology",
     image: "/facilities/implant-motor-v2.png",
@@ -162,7 +170,7 @@ function FacilityIcon({ index }: { index: number }) {
       strokeLinejoin="round"
       aria-hidden="true"
     >
-      {paths[index]}
+      {paths[index === 0 ? 8 : index - 1]}
     </svg>
   );
 }
@@ -291,7 +299,7 @@ export default function FacilitiesExperience() {
                   <div className="mb-5 flex items-center gap-3">
                     <span className="h-px w-9 bg-[#25bfae]" />
                     <span className="text-xs font-bold tracking-[.18em] text-[#20aa9e] uppercase">
-                      Elite facility {String(index + 1).padStart(2, "0")}
+                      Elite facility
                     </span>
                   </div>
                   <h3 className="text-2xl leading-tight font-semibold tracking-[-.04em] text-[#174e53] lg:text-4xl">
