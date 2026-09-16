@@ -61,13 +61,13 @@ export default function HeroSection({ slides = HOME_SLIDES, content }: HeroSecti
 
           <div className="block lg:hidden">
             <Image
-              src="/home/Home-Page-Banner-mob.webp"
+              src="/home/elite mob-1-2.jpg"
               alt={s.alt}
               fill
               quality={85}
               loading={i === 0 ? "eager" : "lazy"}
               sizes="100vw"
-              className="block object-cover lg:hidden lg:object-center"
+              className="mb-5 block object-cover lg:hidden lg:object-center"
               fetchPriority={i === 0 ? "high" : "auto"}
             />
           </div>
@@ -109,7 +109,7 @@ export default function HeroSection({ slides = HOME_SLIDES, content }: HeroSecti
       )}
 
       {/* Mobile CTA – the full form lives in the appointment section below */}
-      <div className="absolute inset-x-0 bottom-4 z-40 flex justify-center px-5 lg:bottom-14 lg:hidden">
+      <div className="absolute inset-x-0 bottom-2 z-40 flex justify-center px-5 lg:bottom-14 lg:hidden">
         <button
           type="button"
           onClick={openConsultationPopup}
