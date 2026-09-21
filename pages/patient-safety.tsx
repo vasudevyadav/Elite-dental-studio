@@ -1,3 +1,4 @@
+import TrustBadges from "@/components/TrustBadges";
 import Image from "next/image";
 import Link from "next/link";
 import SitePage from "@/components/SitePage";
@@ -117,6 +118,7 @@ export default function PatientSafetyPage() {
               From sealed instruments and Class B sterilisation to digital diagnosis and monitored
               sedation, every detail is prepared around your protection, comfort and confidence.
             </p>
+            <TrustBadges className="mt-6" />
             <div className="mt-6 flex flex-wrap gap-2.5">
               {["Class B sterilisation", "Digital imaging", "Consistent across 4 clinics"].map(
                 (item) => (

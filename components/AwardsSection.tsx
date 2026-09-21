@@ -1,3 +1,4 @@
+import TrustBadges from "@/components/TrustBadges";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -75,6 +76,7 @@ export default function AwardsSection() {
             patient care and innovation in modern dentistry.
           </p>
 
+          <TrustBadges className="mt-6" />
           <div className="mt-12">
             {awards.map((award, index) => {
               const isOpen = openIndex === index;

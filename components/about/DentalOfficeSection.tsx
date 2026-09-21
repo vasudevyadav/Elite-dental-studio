@@ -1,3 +1,4 @@
+import TrustBadges from "@/components/TrustBadges";
 import Image from "next/image";
 
 const promises = [
@@ -50,6 +51,7 @@ export default function DentalOfficeSection() {
             qualified dental specialists, the clinic continues to set new benchmarks in
             comprehensive, ethical, and specialised dental care in South India.
           </p>
+          <TrustBadges className="mt-6" />
           <Image
             src="/about/about-ab.png"
             alt="Elite Dental Studio interior"

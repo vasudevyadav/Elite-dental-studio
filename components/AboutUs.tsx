@@ -1,3 +1,4 @@
+import TrustBadges from "@/components/TrustBadges";
 import Image from "next/image";
 import AnimatedCounter from "./AnimatedCounter";
 import AnimatedArrowCta from "./AnimatedArrowCta";
@@ -5,7 +6,7 @@ import AnimatedArrowCta from "./AnimatedArrowCta";
 function ToothIcon() {
   return (
     <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#2bd0c0]">
-      <svg aria-hidden="true" viewBox="0 0 24 24" className="fill-white lg:h-[18px] lg:w-[18px]">
+      <svg aria-hidden="true" viewBox="0 0 24 24" className="h-[18px] w-[18px] fill-white">
         <path d="M12 2.5c-1.7 0-2.8-.9-4.4-.9C4.7 1.6 3 4 3 7c0 2.6 1.2 4.8 2 7 .9 2.5 1.3 6.5 3.4 6.5 1.8 0 1.8-4.3 3.6-4.3s1.8 4.3 3.6 4.3c2.1 0 2.5-4 3.4-6.5.8-2.2 2-4.4 2-7 0-3-1.7-5.4-4.6-5.4-1.6 0-2.7.9-4.4.9Z" />
       </svg>
     </span>
@@ -15,29 +16,29 @@ function ToothIcon() {
 export default function AboutUs() {
   return (
     <section id="about-us" className="mx-auto max-w-7xl px-5 py-8 sm:px-8 lg:px-12 lg:py-12">
-      <div className="grid items-center gap-6 lg:grid-cols-[0.92fr_1.08fr] lg:gap-14">
-        <div className="mx-auto w-full max-w-[610px]">
+      <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:gap-8 xl:items-center xl:gap-14">
+        <div className="mx-auto w-full max-w-[420px] sm:max-w-[480px] lg:sticky lg:top-8 lg:max-w-[610px] xl:static">
           <Image
             src="/home/elite-6-year-1.png"
             alt="Elite Dental Studio treatment room with over 20 years of medical service experience"
             width={799}
             height={885}
-            sizes="(max-width: 1024px) 90vw, 43vw"
+            sizes="(max-width: 639px) min(420px, 90vw), (max-width: 1023px) 480px, 43vw"
             className="h-auto w-full"
           />
         </div>
 
-        <div className="lg:py-4">
+        <div className="min-w-0 lg:py-4">
           <div className="mb-6 flex items-center gap-2.5">
             <ToothIcon />
             <span className="text-lg font-bold text-[#2bd0c0] lg:text-xl">About Us</span>
           </div>
 
-          <h2 className="mb-4 text-2xl leading-[1.3] font-bold tracking-[-0.025em] text-[#286d73] lg:text-4xl">
+          <h2 className="mb-4 text-2xl leading-[1.3] font-bold tracking-[-0.025em] text-[#286d73] sm:text-3xl xl:text-4xl">
             Best Dental Clinic in Calicut, Kochi, Kannur &amp; Coimbatore
           </h2>
 
-          <div className="space-y-4 text-sm leading-[1.6] text-[#303436] sm:text-lg lg:text-lg">
+          <div className="space-y-4 text-sm leading-[1.6] text-[#303436] lg:text-base">
             <p>
               Elite Dental Studio has been treating patients since 2020 as an ISO 9001 certified
               dental clinic in Calicut, Kochi, Kannur and Coimbatore. Every clinic runs on the same
@@ -54,10 +55,11 @@ export default function AboutUs() {
             </p>
           </div>
 
-          <div className="mt-10 border-y border-[#dfe8e8] py-7">
-            <div className="grid gap-6 lg:grid-cols-2 lg:gap-4">
-              <div className="grid items-center gap-2 lg:flex">
-                <strong className="shrink-0 text-2xl leading-none font-black text-[#2bd0c0] lg:text-5xl">
+          <TrustBadges className="mt-6" />
+          <div className="mt-6 border-y border-[#dfe8e8] py-5 sm:mt-8 sm:py-6">
+            <div className="grid grid-cols-2 gap-4 sm:gap-6">
+              <div className="flex min-w-0 flex-col items-start gap-2">
+                <strong className="shrink-0 text-3xl leading-none font-black text-[#2bd0c0] sm:text-4xl xl:text-5xl">
                   <AnimatedCounter value={1000} suffix="+" duration={1000} />
                 </strong>
                 <span className="text-sm leading-relaxed font-semibold text-[#303436] sm:text-sm">
@@ -67,8 +69,8 @@ export default function AboutUs() {
                 </span>
               </div>
 
-              <div className="grid items-center gap-3 lg:flex">
-                <strong className="shrink-0 text-2xl leading-none font-black text-[#2bd0c0] lg:text-5xl">
+              <div className="flex min-w-0 flex-col items-start gap-2">
+                <strong className="shrink-0 text-3xl leading-none font-black text-[#2bd0c0] sm:text-4xl xl:text-5xl">
                   <AnimatedCounter value={100} suffix="%" duration={1400} />
                 </strong>
                 <span className="text-sm leading-relaxed font-semibold text-[#303436] sm:text-sm">

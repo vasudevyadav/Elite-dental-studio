@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import TrustBadges from "@/components/TrustBadges";
 import Link from "next/link";
 import { openConsultationPopup } from "@/lib/consultationPopup";
 import { isLocationSpecificServiceSlug, isMainClinic } from "@/lib/clinics";
@@ -308,7 +309,7 @@ export default function Navbar() {
     <header ref={headerRef} className="relative z-50">
       {/* ── Top Bar ── */}
       <div className="relative z-20 bg-white shadow-sm">
-        <div className="mx-auto flex h-[70px] max-w-7xl items-center justify-between px-5 sm:px-8 lg:h-[92px] lg:h-[112px] lg:px-12">
+        <div className="mx-auto flex min-h-[72px] max-w-[1440px] items-center justify-between gap-2 px-3 py-3 sm:min-h-[92px] sm:px-8 xl:min-h-[112px] xl:gap-4 xl:px-10">
           {/* Logo */}
           <Link href="/" className="smooth-hover hover-lift shrink-0">
             <Image
@@ -316,13 +317,13 @@ export default function Navbar() {
               alt="Elite Dental Studio"
               width={200}
               height={56}
-              className="w-40 object-contain lg:w-[210px]"
+              className="h-auto w-28 object-contain min-[375px]:w-32 sm:w-40 xl:w-[180px] 2xl:w-[210px]"
               priority
             />
           </Link>
 
           {/* Center Nav – desktop */}
-          <nav aria-label="Primary navigation" className="hidden items-center gap-4 lg:flex">
+          <nav aria-label="Primary navigation" className="hidden items-center gap-3 xl:flex">
             {(
               [
                 ["treatments", "Our Treatments"],
@@ -339,7 +340,7 @@ export default function Navbar() {
                     onClick={() => toggleDropdown(name)}
                     aria-expanded={isOpen}
                     aria-controls={`${name}-desktop-menu`}
-                    className={`smooth-hover button-hover hover-lift focus:ring-dent-accent/25 flex items-center gap-2 rounded-md px-6 py-3 text-sm font-semibold whitespace-nowrap text-[#15494d] focus:ring-4 focus:outline-none ${
+                    className={`smooth-hover button-hover hover-lift focus:ring-dent-accent/25 flex items-center gap-2 rounded-md px-3 py-3 text-sm font-semibold whitespace-nowrap text-[#15494d] focus:ring-4 focus:outline-none 2xl:px-6 ${
                       isOpen
                         ? "bg-dent-accent shadow-[0_8px_20px_rgba(37,191,174,0.22)]"
                         : "bg-dent-accent hover:bg-[#1fae9f]"
@@ -393,56 +394,25 @@ export default function Navbar() {
             })}
           </nav>
 
-          {/* Right – desktop */}
-          <div className="hidden items-center gap-6 lg:flex">
-            {/* ISO Badge */}
-            <Image
-              src="/navbar/iso-icon.png"
-              alt="ISO 9001 Certified"
-              width={1000}
-              height={600}
-              className="w-28 object-contain"
-            />
+          {/* Awards stay visible at every screen size. */}
+          <TrustBadges variant="header" className="shrink-0 justify-center xl:hidden" />
 
-            {/* Emergency Contact */}
-            <div className="flex items-center gap-2.5">
-              <Image
-                src="/navbar/emergancy-icon.png"
-                alt="Emergency"
-                width={38}
-                height={38}
-                className="h-7 w-7 object-contain"
-              />
-              <div>
-                <div className="mb-1 text-sm leading-none font-medium text-gray-500">
-                  Emergency Contact No.
-                </div>
-                <a
-                  href="tel:+919048611911"
-                  className="text-dent-text smooth-hover link-hover hover:text-dent-accent block text-base leading-none font-bold"
-                  aria-label="Call Elite Dental Studio emergency line at +91 9048 611 911"
-                >
-                  +91 9048 611 911
-                </a>
-              </div>
-            </div>
+          {/* Right – desktop */}
+          <div className="hidden shrink-0 items-center gap-3 xl:flex 2xl:gap-5">
+            <TrustBadges variant="header" />
 
             {/* CTA */}
             <button
               type="button"
               onClick={openConsultationPopup}
-              className="smooth-hover button-hover hover-lift hover:bg-dent-text rounded-[4px] bg-[#29696d] px-6 py-3 text-xs font-bold tracking-wider whitespace-nowrap text-white focus:ring-4 focus:ring-[#29696d]/20 focus:outline-none"
+              className="smooth-hover button-hover hover-lift hover:bg-dent-text rounded-[4px] bg-[#29696d] px-3 py-3 text-xs font-bold tracking-wider whitespace-nowrap text-white focus:ring-4 focus:ring-[#29696d]/20 focus:outline-none 2xl:px-6"
             >
               BOOK FREE CONSULTATION
             </button>
           </div>
 
-          {/* Mobile: phone + hamburger */}
-          <div className="flex items-center gap-3 lg:hidden">
-            <a href="tel:+919048611911" className="hidden flex-col items-end leading-none sm:flex">
-              <span className="text-[9px] text-gray-500">Emergency</span>
-              <span className="text-dent-nav text-sm font-bold">+91 9048 611 911</span>
-            </a>
+          {/* Mobile and tablet navigation */}
+          <div className="flex shrink-0 items-center xl:hidden">
             <button
               type="button"
               onClick={() => {
@@ -462,8 +432,8 @@ export default function Navbar() {
 
         {/* Mobile Drawer */}
         <div
-          className={`fixed inset-0 z-[100] lg:hidden ${
-            mobileOpen ? "pointer-events-auto" : "pointer-events-none"
+          className={`fixed inset-0 z-[100] xl:hidden ${
+            mobileOpen ? "pointer-events-auto visible" : "pointer-events-none invisible"
           }`}
         >
           <button
@@ -675,10 +645,10 @@ export default function Navbar() {
       </div>
 
       {/* ── Sub Nav ── */}
-      <div className="bg-dent-nav relative z-10 hidden lg:block">
+      <div className="bg-dent-nav relative z-10 hidden xl:block">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-5 px-5 py-4 sm:px-8 lg:px-12 lg:py-5">
           {/* Icon links – scrollable on mobile */}
-          <nav className="scrollbar-hide flex items-center gap-5 overflow-x-auto pb-0.5 lg:gap-12 lg:overflow-visible">
+          <nav className="scrollbar-hide flex min-w-0 items-center gap-6 pb-0.5 2xl:gap-12">
             {subNavItems.map(({ label, img, href, children }) => (
               <div key={label} className="group/subnav relative shrink-0">
                 <Link
@@ -757,6 +727,33 @@ export default function Navbar() {
           </div>
         </div>
       </div>
+      <a
+        href="tel:+919048611911"
+        aria-label="Call Elite Dental Studio emergency line at +91 9048 611 911"
+        title="Emergency Contact No. +91 9048 611 911"
+        className={`fixed top-1/2 right-0 z-30 flex -translate-y-1/2 flex-col items-center gap-2 rounded-l-xl bg-[#29696d] px-1.5 py-3 text-white shadow-lg transition-colors hover:bg-[#1e5558] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#25cebd] sm:gap-3 sm:px-3 sm:py-4 ${mobileOpen ? "pointer-events-none invisible" : ""}`}
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth={2}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="h-6 w-6 shrink-0"
+          aria-hidden="true"
+        >
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.96.35 1.9.69 2.79a2 2 0 0 1-.45 2.11L8.09 9.89a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.89.34 1.83.57 2.79.69A2 2 0 0 1 22 16.92z" />
+        </svg>
+        <span className="whitespace-nowrap [writing-mode:vertical-rl]">
+          <span className="block text-[10px] font-medium sm:text-xs">
+            <span className="sm:hidden">Emergency Call</span>
+            <span className="hidden sm:inline">Emergency Contact No.</span>
+          </span>
+          <span className="mr-1 hidden text-sm font-bold sm:block">+91 9048 611 911</span>
+        </span>
+      </a>
     </header>
   );
 }
