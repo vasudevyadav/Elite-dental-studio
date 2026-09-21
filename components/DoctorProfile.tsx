@@ -27,7 +27,7 @@ export default function DoctorProfile({ doctor }: { doctor: DoctorDetail }) {
                 fill
                 preload
                 sizes="(max-width: 1023px) 90vw, 470px"
-                className="object-cover object-[center_22%]"
+                className="object-cover object-[center_8%]"
               />
             </div>
             <div className="absolute top-[322px] right-12 z-10 grid h-16 w-16 place-items-center bg-[#25d0bf] text-center text-xs leading-tight font-black [clip-path:polygon(0_0,100%_0,100%_100%,50%_84%,0_100%)] sm:top-[352px]">
