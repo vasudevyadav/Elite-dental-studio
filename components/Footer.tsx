@@ -1,3 +1,4 @@
+import TrustBadges from "@/components/TrustBadges";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -146,6 +147,7 @@ export default function Footer() {
               Elite Dental Studio dental clinic in Calicut, Kochi, Kannur and Coimbatore offers a
               comprehensive set of oral healthcare services
             </p>
+            <TrustBadges className="mt-6 justify-center sm:justify-start" />
             <div className="mx-auto mt-6 w-full max-w-[360px] border-t border-white/45 sm:mx-0" />
             <div className="mt-6 flex justify-around gap-3 sm:justify-start lg:justify-center">
               <a
