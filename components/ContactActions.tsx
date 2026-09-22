@@ -59,7 +59,7 @@ export default function ContactActions({ hidden = false }: { hidden?: boolean })
               <rect x="3" y="5" width="18" height="16" rx="2" />
               <path d="M16 3v4M8 3v4M3 11h18m-9 4v4m-2-2h4" />
             </svg>
-            Book Appointment
+            Book an Appointment
           </button>
         </div>
       </nav>
