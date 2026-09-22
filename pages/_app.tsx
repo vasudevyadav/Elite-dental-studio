@@ -44,7 +44,7 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <div className={poppins.className}>
-      <div id="site-content">
+      <div id="site-content" className="pb-[calc(72px+env(safe-area-inset-bottom))] md:pb-0">
         <Component {...pageProps} />
       </div>
       <ConsultationPopup key={popupPageKey} />

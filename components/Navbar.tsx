@@ -1,3 +1,4 @@
+import ContactActions from "@/components/ContactActions";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import TrustBadges from "@/components/TrustBadges";
@@ -727,33 +728,7 @@ export default function Navbar() {
           </div>
         </div>
       </div>
-      <a
-        href="tel:+919048611911"
-        aria-label="Call Elite Dental Studio emergency line at +91 9048 611 911"
-        title="Emergency Contact No. +91 9048 611 911"
-        className={`fixed top-1/2 right-0 z-30 flex -translate-y-1/2 flex-col items-center gap-2 rounded-l-xl bg-[#29696d] px-1.5 py-3 text-white shadow-lg transition-colors hover:bg-[#1e5558] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#25cebd] sm:gap-3 sm:px-3 sm:py-4 ${mobileOpen ? "pointer-events-none invisible" : ""}`}
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth={2}
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="h-6 w-6 shrink-0"
-          aria-hidden="true"
-        >
-          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.96.35 1.9.69 2.79a2 2 0 0 1-.45 2.11L8.09 9.89a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.89.34 1.83.57 2.79.69A2 2 0 0 1 22 16.92z" />
-        </svg>
-        <span className="whitespace-nowrap [writing-mode:vertical-rl]">
-          <span className="block text-[10px] font-medium sm:text-xs">
-            <span className="sm:hidden">Emergency Call</span>
-            <span className="hidden sm:inline">Emergency Contact No.</span>
-          </span>
-          <span className="mr-1 hidden text-sm font-bold sm:block">+91 9048 611 911</span>
-        </span>
-      </a>
+      <ContactActions hidden={mobileOpen} />
     </header>
   );
 }
