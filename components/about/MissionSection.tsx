@@ -1,10 +1,26 @@
 import Image from "next/image";
 
 const stats = [
-  ["75+", "Insurance Covered", "We have more than 75 Insurance coverage from all over India"],
-  ["10k + ", "Comprehensive Cases", "Our team makes Elite Dental care better every month"],
-  ["1Lakh +", "Happy Customers", "Our team makes Elite Dental care better every month"],
-  ["100+", "Experience Doctors", "Our team makes Elite Dental care better every month"],
+  [
+    "30+",
+    "Insurance Plans Supported",
+    "We provide assistance with documentation and reimbursement of your eligible dental insurance policy.",
+  ],
+  [
+    "10k+",
+    "Comprehensive Cases",
+    "Personalised treatment planning and comprehensive dental care at Elite Dental Studio.",
+  ],
+  [
+    "1 Lakh+",
+    "Happy Patients",
+    "Patients trust Elite Dental Studio for thoughtful care and healthier smiles.",
+  ],
+  [
+    "100+",
+    "Experienced Doctors",
+    "The team at Elite Dental Studio brings experience across dental specialities.",
+  ],
 ];
 
 export default function MissionSection() {
