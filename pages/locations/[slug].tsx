@@ -174,7 +174,10 @@ function fallbackLocation(slug: string): LocationData | null {
     },
     workingHours: [
       { days: "Monday–Saturday", time: "9:30 AM–9:00 PM" },
-      { days: "Sunday", time: city === "kannur" ? "9:30 AM–6:00 PM" : "10:00 AM–7:00 PM" },
+      {
+        days: "Sunday",
+        time: city === "kannur" || city === "calicut" ? "9:30 AM–6:00 PM" : "10:00 AM–7:00 PM",
+      },
     ],
     sections: [],
   };
@@ -555,8 +558,8 @@ export default function LocationPage({ data }: { data: LocationData }) {
                   <p key={row.days} className="mt-2 text-sm">
                     {row.days} &nbsp;{" "}
                     {/^sun(day)?$/i.test(row.days.trim()) &&
-                    (cityKey === "kannur" || cityKey === "kochi")
-                      ? cityKey === "kannur"
+                    (cityKey === "kannur" || cityKey === "calicut" || cityKey === "kochi")
+                      ? cityKey === "kannur" || cityKey === "calicut"
                         ? "9:30 AM–6:00 PM"
                         : "10:00 AM–7:00 PM"
                       : row.time}

@@ -42,21 +42,21 @@ export default function BookAppointmentSection({
                 {content.description}
               </p>
 
-              <div className="mt-6 max-w-[390px] rounded-[20px] bg-linear-to-br from-[#19d6c7] to-[#29cdbf] px-5 py-3 lg:mt-10 lg:px-8 lg:py-6">
-                <h3 className="text-lg font-semibold lg:text-xl">Working Hours</h3>
-                <div className="my-2 border-t border-white/70 lg:my-4" />
-                <div className="space-y-4 text-base font-bold">
-                  <div className="flex flex-col gap-1 font-medium sm:flex-row sm:justify-between sm:gap-5">
+              <div className="mt-6 w-full max-w-[390px] rounded-[20px] bg-[#59cec3] px-4 py-5 min-[380px]:px-7 lg:mt-10">
+                <h3 className="text-xl font-semibold">Working Hours</h3>
+                <div className="my-4 border-t border-white/70" />
+                <div className="space-y-5 text-xs leading-[1.6] font-medium min-[380px]:text-sm">
+                  <div className="flex items-center justify-between gap-2 whitespace-nowrap">
                     <span>Mon to Sat</span>
-                    <span>09:30 AM to 9:00 PM</span>
+                    <span className="shrink-0">09:30 AM to 9:00 PM</span>
                   </div>
-                  <div className="flex flex-col gap-1 font-medium sm:flex-row sm:justify-between sm:gap-5">
-                    <span>Sunday (except Kannur)</span>
-                    <span>10:00 AM to 7:00 PM</span>
+                  <div className="flex items-center justify-between gap-2 whitespace-nowrap">
+                    <span>Sunday</span>
+                    <span className="shrink-0">10:00 AM to 7:00 PM</span>
                   </div>
-                  <div className="flex flex-col gap-1 font-medium sm:flex-row sm:justify-between sm:gap-5">
-                    <span>Sunday (Kannur)</span>
-                    <span>9:30 AM to 6:00 PM</span>
+                  <div className="flex items-center justify-between gap-2 whitespace-nowrap">
+                    <span>Sunday (Kannur & Calicut)</span>
+                    <span className="shrink-0">9:30 AM to 6:00 PM</span>
                   </div>
                 </div>
               </div>
