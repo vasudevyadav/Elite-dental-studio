@@ -724,7 +724,9 @@ export default function Navbar() {
               <div className="text-base leading-none font-bold text-[#2e6c72]">
                 10:00 AM – 7:00 PM
               </div>
-              <div className="mt-2 text-xs text-[#2e6c72]">Kannur: 9:30 AM – 6:00 PM</div>
+              <div className="mt-2 text-xs text-[#2e6c72]">
+                Kannur &amp; Calicut: 9:30 AM – 6:00 PM
+              </div>
             </div>
           </div>
         </div>

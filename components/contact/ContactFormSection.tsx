@@ -81,14 +81,19 @@ export default function ContactFormSection() {
                   <span>Mon–Sat</span>
                   <span className="whitespace-nowrap">9:30 AM–9:00 PM</span>
                 </p>
-                <p className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-0.5">
-                  <span>Sunday (except Kannur)</span>
-                  <span className="whitespace-nowrap">10:00 AM–7:00 PM</span>
-                </p>
-                <p className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-0.5">
-                  <span>Sunday (Kannur)</span>
-                  <span className="whitespace-nowrap">9:30 AM–6:00 PM</span>
-                </p>
+                <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
+                  <span>Sunday</span>
+                  <div className="space-y-2">
+                    <div>
+                      <span className="block text-xs font-normal">Kochi & Coimbatore</span>
+                      <span className="whitespace-nowrap">10:00 AM–7:00 PM</span>
+                    </div>
+                    <div>
+                      <span className="block text-xs font-normal">Kannur & Calicut</span>
+                      <span className="whitespace-nowrap">9:30 AM–6:00 PM</span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
             <div className="rounded-2xl border border-white/15 bg-white/10 p-5 backdrop-blur-sm">
