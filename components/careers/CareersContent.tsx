@@ -276,10 +276,10 @@ export default function CareersContent({ data }: { data: Record<string, any> }) 
               ))}
             </div>
             <a
-              href={`mailto:${application.email || "info@elitedentalstudio.co.in"}`}
+              href="mailto:hr@elitedentalstudio.co.in"
               className="relative mt-9 block text-sm font-bold text-[#62dfd3]"
             >
-              {application.email || "info@elitedentalstudio.co.in"}
+              hr@elitedentalstudio.co.in
             </a>
           </div>
           <form

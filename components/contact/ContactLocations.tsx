@@ -124,7 +124,8 @@ export default function ContactLocations() {
                             <b>Mon–Sat:</b> 09:30 AM–09:00 PM
                           </span>
                           <span>
-                            <b>Sunday:</b> 10:00 AM–07:00 PM
+                            <b>Sunday:</b>{" "}
+                            {clinic.shortName === "Kannur" ? "9:30 AM–6:00 PM" : "10:00 AM–7:00 PM"}
                           </span>
                         </div>
                       </Detail>

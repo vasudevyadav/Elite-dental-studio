@@ -51,8 +51,12 @@ export default function BookAppointmentSection({
                     <span>09:30 AM to 9:00 PM</span>
                   </div>
                   <div className="flex flex-col gap-1 font-medium sm:flex-row sm:justify-between sm:gap-5">
-                    <span>Sunday</span>
+                    <span>Sunday (except Kannur)</span>
                     <span>10:00 AM to 7:00 PM</span>
+                  </div>
+                  <div className="flex flex-col gap-1 font-medium sm:flex-row sm:justify-between sm:gap-5">
+                    <span>Sunday (Kannur)</span>
+                    <span>9:30 AM to 6:00 PM</span>
                   </div>
                 </div>
               </div>

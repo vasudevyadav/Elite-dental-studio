@@ -82,8 +82,12 @@ export default function ContactFormSection() {
                   <span className="whitespace-nowrap">9:30 AM–9:00 PM</span>
                 </p>
                 <p className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-0.5">
-                  <span>Sunday</span>
+                  <span>Sunday (except Kannur)</span>
                   <span className="whitespace-nowrap">10:00 AM–7:00 PM</span>
+                </p>
+                <p className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-0.5">
+                  <span>Sunday (Kannur)</span>
+                  <span className="whitespace-nowrap">9:30 AM–6:00 PM</span>
                 </p>
               </div>
             </div>
