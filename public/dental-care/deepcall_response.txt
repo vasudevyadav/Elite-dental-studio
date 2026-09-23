@@ -1,0 +1,164 @@
+API URL: https://v4-api.deepcall.com/api/v3/clickToCall/para?user_id=68932213&token=Ehy8xQKD2B9FDG7JWFjr&callFirst=Customer&customer=8955286866&agentType=Employee&callFlow=4339
+Response: {"status":"error","message":"agent_number/agent_id/group_id any one required","code":1504}
+-------------------------
+API URL: https://v4-api.deepcall.com/api/v3/clickToCall/para?user_id=68932213&token=Ehy8xQKD2B9FDG7JWFjr&callFirst=Customer&customer=8955286866&agentType=Employee&callFlow=4339
+Response: {"status":"error","message":"agent_number/agent_id/group_id any one required","code":1504}
+-------------------------
+API URL: https://v4-api.deepcall.com/api/v3/clickToCall/para?user_id=68932213&token=Ehy8xQKD2B9FDG7JWFjr&callFirst=customer&customer=8955286866&agentType=agent_number&agent_number=918714608881
+Response: {"callId":"k10g9u71cncnjmj6idc474fv4","status":"success","code":"200"}
+-------------------------
+API URL: https://v4-api.deepcall.com/api/v3/clickToCall/para?user_id=68932213&token=Ehy8xQKD2B9FDG7JWFjr&callFirst=customer&customer=8955286866&agentType=agent_number&agent_number=918714608881
+Response: {"callId":"k10h1k01cncnl9xt7swrdn9gt","status":"success","code":"200"}
+-------------------------
+API URL: https://v4-api.deepcall.com/api/v3/clickToCall/para?user_id=68932213&token=Ehy8xQKD2B9FDG7JWFjr&callFirst=customer&customer=9649099356&agentType=agent_number&agent_number=918714608881
+Response: {"callId":"k10hylv1cncnn8s3q80zmdf5g","status":"success","code":"200"}
+-------------------------
+API URL: https://v4-api.deepcall.com/api/v3/clickToCall/para?user_id=68932213&token=Ehy8xQKD2B9FDG7JWFjr&callFirst=customer&customer=8955286866&agentType=agent_number&agent_number=918714608881
+Response: {"callId":"k10r9yu1cnco77knji8d41r4t","status":"success","code":"200"}
+-------------------------
+API URL: https://v4-api.deepcall.com/api/v3/clickToCall/para?user_id=68932213&token=Ehy8xQKD2B9FDG7JWFjr&callFirst=customer&customer=8239706134&agentType=agent_number&agent_number=918714608881
+Response: {"status":"error","message":"channel not available","code":1045}
+-------------------------
+API URL: https://v4-api.deepcall.com/api/v3/clickToCall/para?user_id=68932213&token=Ehy8xQKD2B9FDG7JWFjr&callFirst=customer&customer=8955286866&agentType=agent_number&agent_number=918714608881
+Response: {"callId":"k10thbx1cncobxock4gboxhnl","status":"success","code":"200"}
+-------------------------
+Customer: 9649099356
+Agent: 918714608881
+Response: {"callId":"k10x16r1cncojjpunb4vjjc5a","status":"success","code":"200"}
+-------------------------
+Customer: 8955286866
+Agent: 918714608881
+Response: {"callId":"k110gfy1cncoqvwa3pc5883co","status":"success","code":"200"}
+-------------------------
+Date: 2026-05-13 17:25:03
+Phone Variable: 9649099356
+Customer Sent: 9649099356
+API URL: https://v4-api.deepcall.com/api/v3/clickToCall/para?&user_id=68932213&token=Ehy8xQKD2B9FDG7JWFjr&callFirst=customer&customer=9649099356&agentType=agent_number&agent_number=918714608881
+DeepCall Response: {"callId":"k11by7b1cncpfiq7z6oy0kw7p","status":"success","code":"200"}
+--------------------------------------
+Date: 2026-05-13 17:25:59
+Phone Variable: 8955286866
+Customer Sent: 8955286866
+API URL: https://v4-api.deepcall.com/api/v3/clickToCall/para?&user_id=68932213&token=Ehy8xQKD2B9FDG7JWFjr&callFirst=customer&customer=8955286866&agentType=agent_number&agent_number=918714608881
+DeepCall Response: {"callId":"k11d5tv1cncpi48gwtceypufa","status":"success","code":"200"}
+--------------------------------------
+Customer: 8955286866
+Agent: 918714608881
+Response: {"callId":"k11g3581cncpodyoqg0myojrk","status":"success","code":"200"}
+-------------------------
+Date: 2026-05-13 17:34:24
+Submitted Customer: 9784332654
+Agent Number: 918714608881
+API URL: https://v4-api.deepcall.com/api/v3/clickToCall/para?&user_id=68932213&token=Ehy8xQKD2B9FDG7JWFjr&callFirst=customer&customer=9784332654&agentType=agent_number&agent_number=918714608881
+Response: {"callId":"k11nz0n1cncq5aefme8kjpr7c","status":"success","code":"200"}
+----------------------------------------
+Date: 2026-05-13 17:41:39
+Customer: 9197843326
+Agent: 918714608881
+CLI Sent: 07557188666
+API URL: https://v4-api.deepcall.com/api/v3/clickToCall/para?&user_id=68932213&token=Ehy8xQKD2B9FDG7JWFjr&callFirst=customer&customer=9197843326&agentType=agent_number&agent_number=918714608881&fromCLI=07557188666
+Response: {"callId":"k11xaw61cncqpaar41sw9x067","status":"success","code":"200"}
+----------------------------------------
+Date: 2026-05-13 17:42:31
+Customer: 9197843326
+Agent: 918714608881
+CLI Sent: 07557188666
+API URL: https://v4-api.deepcall.com/api/v3/clickToCall/para?&user_id=68932213&token=Ehy8xQKD2B9FDG7JWFjr&callFirst=customer&customer=9197843326&agentType=agent_number&agent_number=918714608881&fromCLI=07557188666
+Response: {"callId":"k11yekg1cncqrnc2f40wx888r","status":"success","code":"200"}
+----------------------------------------
+Date: 2026-05-13 18:04:49
+Customer: 8955286866
+Agent: 918714608881
+fromCLI: 07557188666
+Response: {"callId":"k12r36l1cncsh4l482ocg5tgx","status":"success","code":"200"}
+----------------------------------------
+Date: 2026-05-13 21:16:23
+Customer: 9605434199
+Agent: 918714608881
+fromCLI: 07557188666
+Response: {"callId":"k19lg9u1cnd7564iulc1irg99","status":"success","code":"200"}
+----------------------------------------
+Date: 2026-05-14 00:36:54
+Customer: 9539187791
+Agent: 918714608881
+fromCLI: 07557188666
+Response: {"callId":"k1bgp21cndmhv0ablsmq9uqxl","status":"success","code":"200"}
+----------------------------------------
+Date: 2026-05-14 07:54:06
+Customer: 9895669300
+Agent: 918714608881
+fromCLI: 07557188666
+Response: {"callId":"kgxoxo1cnejywv4n9c6leq6en","status":"success","code":"200"}
+----------------------------------------
+Date: 2026-05-14 10:25:08
+Customer: 9544312597
+Agent: 918714608881
+fromCLI: 07557188666
+Response: {"callId":"kmbxsj1cnevj8zhmf4tkd4uri","status":"success","code":"200"}
+----------------------------------------
+Date: 2026-05-14 11:21:56
+Customer: 8075368062
+Agent: 918714608881
+fromCLI: 07557188666
+Response: {"callId":"koczmu1cnezvtnd2aoqpnb329","status":"success","code":"200"}
+----------------------------------------
+Date: 2026-05-14 12:00:50
+Customer: 9744321658
+Agent: 918714608881
+fromCLI: 07557188666
+Response: {"callId":"kpr09p1cnf2v119qm8e0ec36k","status":"success","code":"200"}
+----------------------------------------
+Date: 2026-05-14 14:02:30
+Customer: 6238362013
+Agent: 918714608881
+fromCLI: 07557188666
+Response: {"callId":"ku3h551cnfc6e8j4zkelt4sh4","status":"success","code":"200"}
+----------------------------------------
+Date: 2026-05-14 20:40:30
+Customer: 9400405255
+Agent: 918714608881
+fromCLI: 07557188666
+Response: {"callId":"k18baq11cng6nenev5sel4v5p","status":"success","code":"200"}
+----------------------------------------
+Date: 2026-05-15 09:39:20
+Customer: 9539192218
+Agent: 918714608881
+fromCLI: 07557188666
+Response: {"callId":"kkp1k11cnhua6dwqyo6ukzdo7","status":"success","code":"200"}
+----------------------------------------
+Date: 2026-05-15 09:45:30
+Customer: 9747202249
+Agent: 918714608881
+fromCLI: 07557188666
+Response: {"callId":"kkwyn31cnhur5f708wjpljhr9","status":"success","code":"200"}
+----------------------------------------
+Date: 2026-05-15 09:45:47
+Customer: 8129939006
+Agent: 918714608881
+fromCLI: 07557188666
+Response: {"callId":"kkxbzr1cnhury1fly8o2bak56","status":"success","code":"200"}
+----------------------------------------
+Date: 2026-05-15 12:27:19
+Customer: 9061870595
+Agent: 918714608881
+fromCLI: 07557188666
+Response: {"callId":"kqp2jy1cni7576xl4wtyz7zl8","status":"success","code":"200"}
+----------------------------------------
+Date: 2026-05-15 13:41:13
+Customer: 7892239360
+Agent: 918714608881
+fromCLI: 07557188666
+Response: {"callId":"ktc3hk1cnicsvftzwg3cpbm4s","status":"success","code":"200"}
+----------------------------------------
+Date: 2026-05-15 15:03:58
+Customer: 6235688760
+Agent: 918714608881
+fromCLI: 07557188666
+Response: {"callId":"kwaixg1cnij4zjpt5swhobmuo","status":"success","code":"200"}
+----------------------------------------
+Date: 2026-05-15 15:06:09
+Customer: 9567533335
+Agent: 918714608881
+fromCLI: 07557188666
+Response: {"callId":"kwdbqa1cnijazlkxxcld9vhwj","status":"success","code":"200"}
+----------------------------------------

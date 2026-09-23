@@ -6,6 +6,16 @@ const nextConfig: NextConfig = {
   compress: true,
   poweredByHeader: false,
   serverExternalPackages: ["sanitize-html"],
+  async rewrites() {
+    return [
+      { source: "/aligner", destination: "/aligner/index.html" },
+      { source: "/implant", destination: "/implant/index.html" },
+      { source: "/dental-care", destination: "/dental-care/index.html" },
+      { source: "/coimbatore-aligner", destination: "/coimbatore-aligner/index.html" },
+      { source: "/coimbatore-implant", destination: "/coimbatore-implant/index.html" },
+      { source: "/coimbatore-generic", destination: "/coimbatore-generic/index.html" },
+    ];
+  },
   images: {
     qualities: [60, 75],
     remotePatterns: [
