@@ -169,25 +169,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       };
     }
 
-    if (
-      response.statusCode >= 300 &&
-      response.statusCode < 400 &&
-      response.location
-    ) {
-      const legacyUrl = new URL(response.location, `${LEGACY_ORIGIN}${pagePath}`);
-      const destination = `${legacyUrl.pathname}${legacyUrl.search}${legacyUrl.hash}`;
-
-      if (response.setCookie?.length) {
-        context.res.setHeader("Set-Cookie", response.setCookie);
-      }
-
-      return {
-        redirect: {
-          destination,
-          permanent: response.statusCode === 301 || response.statusCode === 308,
-        },
-      };
-    }
 
     const html = rewriteLegacyAssets(response.html, pagePath);
 
