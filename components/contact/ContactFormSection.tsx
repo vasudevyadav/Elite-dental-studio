@@ -85,11 +85,11 @@ export default function ContactFormSection() {
                   <span>Sunday</span>
                   <div className="space-y-2">
                     <div>
-                      <span className="block text-xs font-normal">Kochi & Coimbatore</span>
+                      <span className="block text-xs font-normal">Kochi</span>
                       <span className="whitespace-nowrap">10:00 AM–7:00 PM</span>
                     </div>
                     <div>
-                      <span className="block text-xs font-normal">Kannur & Calicut</span>
+                      <span className="block text-xs font-normal">Kannur, Calicut & Coimbatore</span>
                       <span className="whitespace-nowrap">9:30 AM–6:00 PM</span>
                     </div>
                   </div>
