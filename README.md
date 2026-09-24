@@ -2,6 +2,16 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
+Configure the WordPress backend in `.env.local` and in the deployment environment:
+
+```bash
+EDS_API_BASE_URL=https://cms.elitedentalstudio.co.in/wp-json/v1
+```
+
+The existing server-side API helper uses this shared base for all WordPress requests.
+Keep `/v1` in the base so existing endpoint paths remain unchanged. Rebuild and
+restart the deployment after updating its environment variable.
+
 First, run the development server:
 
 ```bash

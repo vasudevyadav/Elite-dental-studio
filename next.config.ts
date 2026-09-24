@@ -17,6 +17,16 @@ const nextConfig: NextConfig = {
         hostname: "reinventmedia.in",
         pathname: "/elitedentalstudio/**",
       },
+      {
+        protocol: "https",
+        hostname: "cms.elitedentalstudio.co.in",
+        pathname: "/wp-content/uploads/**",
+      },
+      {
+        protocol: "https",
+        hostname: "cms.elitedentalstudio.co.in",
+        pathname: "/**",
+      },
     ],
     formats: ["image/avif", "image/webp"],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920],
