@@ -67,6 +67,22 @@ const nextConfig: NextConfig = {
         source: "/leads/:path*",
         destination: "/legacy/leads/:path*",
       },
+      {
+        source: "/captcha",
+        destination: "/legacy/captcha",
+      },
+      {
+        source: "/captcha/:path*",
+        destination: "/legacy/captcha/:path*",
+      },
+      {
+        source: "/captcha",
+        destination: "/legacy/captcha",
+      },
+      {
+        source: "/captcha/:path*",
+        destination: "/legacy/captcha/:path*",
+      },
     ];
   },
   images: {
