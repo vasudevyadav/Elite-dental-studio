@@ -42,7 +42,7 @@ export default function BookAppointmentSection({
                 {content.description}
               </p>
 
-              <div className="mt-6 w-full max-w-[390px] rounded-[20px] bg-[#59cec3] px-4 py-5 min-[380px]:px-7 lg:mt-10">
+              <div className="mt-6 w-full max-w-[500px] rounded-[20px] bg-[#59cec3] px-4 py-5 min-[380px]:px-7 lg:mt-10">
                 <h3 className="text-xl font-semibold">Working Hours</h3>
                 <div className="my-4 border-t border-white/70" />
                 <div className="space-y-5 text-xs leading-[1.6] font-medium min-[380px]:text-sm">
@@ -51,11 +51,15 @@ export default function BookAppointmentSection({
                     <span className="shrink-0">09:30 AM to 9:00 PM</span>
                   </div>
                   <div className="flex items-center justify-between gap-2 whitespace-nowrap">
-                    <span>Sunday</span>
+                    <span>Sunday (Kochi)</span>
                     <span className="shrink-0">10:00 AM to 7:00 PM</span>
                   </div>
-                  <div className="flex items-center justify-between gap-2 whitespace-nowrap">
-                    <span>Sunday (Kannur & Calicut)</span>
+                  <div className="items-center justify-between gap-2 lg:flex lg:whitespace-nowrap">
+                    <span>Sunday (Kannur, Calicut & Coimbatore)</span>
+                    <span className="hidden shrink-0 sm:block">9:30 AM to 6:00 PM</span>
+                  </div>
+
+                  <div className="-mt-4 block items-center justify-between gap-2 sm:hidden">
                     <span className="shrink-0">9:30 AM to 6:00 PM</span>
                   </div>
                 </div>

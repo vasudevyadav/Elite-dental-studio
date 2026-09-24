@@ -712,7 +712,7 @@ export default function Navbar() {
               <div className="mb-2 text-xs font-normal tracking-wider text-[#2e6c72] uppercase">
                 MON TO SAT
               </div>
-              <div className="text-base leading-none font-bold text-[#2e6c72]">
+              <div className="text-sm leading-none font-bold text-[#2e6c72]">
                 09:30 AM – 9:00 PM
               </div>
             </div>
@@ -721,11 +721,11 @@ export default function Navbar() {
               <div className="mb-2 text-xs font-normal tracking-wider text-[#2e6c72] uppercase">
                 SUNDAY
               </div>
-              <div className="text-base leading-none font-bold text-[#2e6c72]">
-                10:00 AM – 7:00 PM
+              <div className="text-sm leading-none font-bold whitespace-nowrap text-[#2e6c72]">
+                10:00 AM – 7:00 PM (Kochi)
               </div>
-              <div className="mt-2 text-xs text-[#2e6c72]">
-                Kannur &amp; Calicut: 9:30 AM – 6:00 PM
+              <div className="mt-2 text-[10px] font-bold text-[#2e6c72]">
+                Kannur, Calicut &amp; Coimbatore: 9:30 AM – 6:00 PM
               </div>
             </div>
           </div>
