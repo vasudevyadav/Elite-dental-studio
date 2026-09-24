@@ -10,7 +10,7 @@ export type ServiceListItem = {
   slug: string;
   title: string;
   shortDescription: string;
-  cardImage: Media;
+  cardImage?: { url?: string; alt?: string };
   icon: Media;
   sortOrder: number;
 };
@@ -123,7 +123,7 @@ function normalizeListItem(item: ServiceListItem, index: number): ServiceListIte
     shortDescription: item.shortDescription || fallback?.shortDescription || "",
     cardImage: {
       ...item.cardImage,
-      url: item.cardImage?.url || fallback?.cardImage.url || "/service/services-1.png",
+      url: item.cardImage?.url?.trim() || fallback?.cardImage?.url || "/service/services-1.png",
       alt: decodeText(item.cardImage?.alt || title),
     },
     icon: {
@@ -230,7 +230,7 @@ export function toLegacyService(service: ServiceListItem): Service {
   return {
     slug: service.slug,
     title: service.title,
-    image: service.cardImage.url,
+    image: service.cardImage?.url?.trim() || "/service/services-1.png",
     icon: service.icon.url,
   };
 }

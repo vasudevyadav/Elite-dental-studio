@@ -71,8 +71,8 @@ export default function ServicesPage({ data }: Props) {
                   </p>
                   <div className="relative aspect-2/1 w-full overflow-hidden rounded-[18px] bg-[#eee]">
                     <Image
-                      src={service.cardImage.url}
-                      alt={service.title}
+                      src={service.cardImage?.url?.trim() || "/service/services-1.png"}
+                      alt={service.cardImage?.alt || service.title}
                       fill
                       sizes="(max-width: 700px) 90vw, 30vw"
                       className="object-cover transition duration-500 group-hover:scale-[1.03]"

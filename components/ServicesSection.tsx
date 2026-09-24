@@ -10,6 +10,7 @@ type Service = {
   title: string;
   description: string;
   image: string;
+  cardImage?: { url?: string; alt?: string };
   icon: "laser" | "tooth" | "aligner";
 };
 
@@ -17,7 +18,7 @@ type ApiService = {
   slug: string;
   title: string;
   shortDescription: string;
-  cardImage?: { url?: string };
+  cardImage?: { url?: string; alt?: string };
 };
 
 const services: Service[] = [
@@ -198,9 +199,10 @@ export default function ServicesSection({
         title: item.title,
         description: item.shortDescription,
         image:
-          item.cardImage?.url ||
+          item.cardImage?.url?.trim() ||
           services.find((service) => service.slug === item.slug)?.image ||
           "/service/services-1.png",
+        cardImage: item.cardImage,
         icon:
           item.slug.includes("aligner") || item.slug === "orthodontics"
             ? "aligner"
@@ -312,8 +314,8 @@ export default function ServicesSection({
                   className={`relative mt-5 overflow-hidden bg-[#edf6f5] ${compact ? "h-[112px] rounded-[14px]" : "h-[185px] rounded-[24px] lg:h-[205px]"}`}
                 >
                   <Image
-                    src={service.image}
-                    alt={`${service.title} treatment demonstration`}
+                    src={service.cardImage?.url?.trim() || service.image}
+                    alt={service.cardImage?.alt || service.title}
                     fill
                     sizes="(max-width: 767px) 90vw, (max-width: 1279px) 30vw, 390px"
                     className="image-hover object-cover"
