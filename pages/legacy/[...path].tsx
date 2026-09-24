@@ -20,45 +20,39 @@ function rewriteLegacyAssets(html: string, pagePath: string) {
   );
 
   // Root-relative src/href
-  html = html.replace(
-    /(src|href)=["'](\/(?!\/)[^"']*)["']/gi,
-    (_match, attr, value) => {
-      return `${attr}="${LEGACY_ORIGIN}${value}"`;
-    },
-  );
+  html = html.replace(/(src|href)=["'](\/(?!\/)[^"']*)["']/gi, (_match, attr, value) => {
+    return `${attr}="${LEGACY_ORIGIN}${value}"`;
+  });
 
   // srcset
-  html = html.replace(
-    /(\bsrcset)=["']([^"']+)["']/gi,
-    (_match, attr, value) => {
-      const rewritten = value
-        .split(",")
-        .map((item: string) => {
-          const parts = item.trim().split(/\s+/);
-          const src = parts[0];
+  html = html.replace(/(\bsrcset)=["']([^"']+)["']/gi, (_match, attr, value) => {
+    const rewritten = value
+      .split(",")
+      .map((item: string) => {
+        const parts = item.trim().split(/\s+/);
+        const src = parts[0];
 
-          if (
-            src.startsWith("http://") ||
-            src.startsWith("https://") ||
-            src.startsWith("//") ||
-            src.startsWith("data:")
-          ) {
-            return item.trim();
-          }
+        if (
+          src.startsWith("http://") ||
+          src.startsWith("https://") ||
+          src.startsWith("//") ||
+          src.startsWith("data:")
+        ) {
+          return item.trim();
+        }
 
-          if (src.startsWith("/")) {
-            parts[0] = `${LEGACY_ORIGIN}${src}`;
-          } else {
-            parts[0] = `${absoluteBase}${src.replace(/^\.\//, "")}`;
-          }
+        if (src.startsWith("/")) {
+          parts[0] = `${LEGACY_ORIGIN}${src}`;
+        } else {
+          parts[0] = `${absoluteBase}${src.replace(/^\.\//, "")}`;
+        }
 
-          return parts.join(" ");
-        })
-        .join(", ");
+        return parts.join(" ");
+      })
+      .join(", ");
 
-      return `${attr}="${rewritten}"`;
-    },
-  );
+    return `${attr}="${rewritten}"`;
+  });
 
   // CSS url(...)
   html = html.replace(
@@ -97,18 +91,20 @@ function fetchLegacy(
         // Keep legacy hostname for TLS/SNI, but bypass DNS and connect
         // directly to the Hostinger server IP.
         servername: LEGACY_HOST,
-        lookup: (_hostname, _options, callback) => {
+        lookup: (_hostname, options, callback) => {
+          if (typeof options === "object" && options?.all) {
+            callback(null, [{ address: LEGACY_IP, family: 4 }]);
+            return;
+          }
+
           callback(null, LEGACY_IP, 4);
         },
 
         headers: {
           Host: LEGACY_HOST,
           Accept: requestHeaders.accept || "text/html,*/*",
-          "User-Agent":
-            requestHeaders["user-agent"] || "Elite-Dental-Next-Proxy",
-          ...(requestHeaders.cookie
-            ? { Cookie: requestHeaders.cookie }
-            : {}),
+          "User-Agent": requestHeaders["user-agent"] || "Elite-Dental-Next-Proxy",
+          ...(requestHeaders.cookie ? { Cookie: requestHeaders.cookie } : {}),
         },
       },
       (response) => {
@@ -123,9 +119,7 @@ function fetchLegacy(
 
           resolve({
             statusCode: response.statusCode || 200,
-            contentType:
-              response.headers["content-type"] ||
-              "text/html; charset=UTF-8",
+            contentType: response.headers["content-type"] || "text/html; charset=UTF-8",
             html: Buffer.concat(chunks).toString("utf8"),
             setCookie,
           });
@@ -156,10 +150,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
     context.res.statusCode = response.statusCode;
     context.res.setHeader("Content-Type", response.contentType);
-    context.res.setHeader(
-      "Cache-Control",
-      "no-store, no-cache, must-revalidate",
-    );
+    context.res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
 
     if (response.setCookie?.length) {
       context.res.setHeader("Set-Cookie", response.setCookie);
