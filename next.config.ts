@@ -10,7 +10,12 @@ const nextConfig: NextConfig = {
   serverExternalPackages: ["sanitize-html"],
 
   async rewrites() {
-    return [];
+    return [
+      {
+        source: "/implant/:path*",
+        destination: "/api/legacy/implant/:path*",
+      },
+    ];
   },
 
   images: {
