@@ -10,68 +10,7 @@ const nextConfig: NextConfig = {
   serverExternalPackages: ["sanitize-html"],
 
   async rewrites() {
-    return [
-      // =========================
-      // Legacy PHP Landing Pages
-      // =========================
-
-      {
-        source: "/implant/:path*",
-        destination: "https://legacy.elitedentalstudio.co.in/implant/:path*",
-      },
-
-      {
-        source: "/aligner/:path*",
-        destination: "https://legacy.elitedentalstudio.co.in/aligner/:path*",
-      },
-
-      {
-        source: "/dental-care/:path*",
-        destination: "https://legacy.elitedentalstudio.co.in/dental-care/:path*",
-      },
-
-      {
-        source: "/coimbatore-aligner/:path*",
-        destination: "https://legacy.elitedentalstudio.co.in/coimbatore-aligner/:path*",
-      },
-
-      {
-        source: "/coimbatore-generic/:path*",
-        destination: "https://legacy.elitedentalstudio.co.in/coimbatore-generic/:path*",
-      },
-
-      {
-        source: "/coimbatore-implant/:path*",
-        destination: "https://legacy.elitedentalstudio.co.in/coimbatore-implant/:path*",
-      },
-
-      // =========================
-      // Legacy Leads Panel
-      // =========================
-
-      {
-        source: "/leads/:path*",
-        destination: "https://legacy.elitedentalstudio.co.in/leads/:path*",
-      },
-
-      // =========================
-      // Legacy Captcha
-      // =========================
-
-      {
-        source: "/captcha/:path*",
-        destination: "https://legacy.elitedentalstudio.co.in/captcha/:path*",
-      },
-
-      // =========================
-      // Legacy Bigin Integration
-      // =========================
-
-      {
-        source: "/bigin/:path*",
-        destination: "https://legacy.elitedentalstudio.co.in/bigin/:path*",
-      },
-    ];
+    return [];
   },
 
   images: {
