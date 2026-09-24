@@ -12,12 +12,63 @@ const nextConfig: NextConfig = {
   async rewrites() {
     return [
       {
+        source: "/implant",
+        destination: "/legacy/implant",
+      },
+      {
         source: "/implant/:path*",
-        destination: "/api/legacy/implant/:path*",
+        destination: "/legacy/implant/:path*",
+      },
+      {
+        source: "/aligner",
+        destination: "/legacy/aligner",
+      },
+      {
+        source: "/aligner/:path*",
+        destination: "/legacy/aligner/:path*",
+      },
+      {
+        source: "/dental-care",
+        destination: "/legacy/dental-care",
+      },
+      {
+        source: "/dental-care/:path*",
+        destination: "/legacy/dental-care/:path*",
+      },
+      {
+        source: "/coimbatore-aligner",
+        destination: "/legacy/coimbatore-aligner",
+      },
+      {
+        source: "/coimbatore-aligner/:path*",
+        destination: "/legacy/coimbatore-aligner/:path*",
+      },
+      {
+        source: "/coimbatore-generic",
+        destination: "/legacy/coimbatore-generic",
+      },
+      {
+        source: "/coimbatore-generic/:path*",
+        destination: "/legacy/coimbatore-generic/:path*",
+      },
+      {
+        source: "/coimbatore-implant",
+        destination: "/legacy/coimbatore-implant",
+      },
+      {
+        source: "/coimbatore-implant/:path*",
+        destination: "/legacy/coimbatore-implant/:path*",
+      },
+      {
+        source: "/leads",
+        destination: "/legacy/leads",
+      },
+      {
+        source: "/leads/:path*",
+        destination: "/legacy/leads/:path*",
       },
     ];
   },
-
   images: {
     qualities: [60, 75],
 
