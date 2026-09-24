@@ -11,6 +11,13 @@ const nextConfig: NextConfig = {
 
   async rewrites() {
     return [
+      // Legacy landing-page AJAX form submissions.
+      // These must hit the raw API proxy so POST/multipart bodies are preserved.
+      {
+        source: "/:landing(aligner|implant|dental-care|coimbatore-aligner|coimbatore-generic|coimbatore-implant)/:submit(submit|submit4).php",
+        destination: "/api/legacy-submit/:landing/:submit.php",
+      },
+
       {
         source: "/implant",
         destination: "/legacy/implant",
@@ -66,14 +73,6 @@ const nextConfig: NextConfig = {
       {
         source: "/leads/:path*",
         destination: "/legacy/leads/:path*",
-      },
-      {
-        source: "/captcha",
-        destination: "/legacy/captcha",
-      },
-      {
-        source: "/captcha/:path*",
-        destination: "/legacy/captcha/:path*",
       },
       {
         source: "/captcha",
