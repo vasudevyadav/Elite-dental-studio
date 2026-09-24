@@ -79,6 +79,7 @@ function fetchLegacy(
   contentType: string;
   html: string;
   setCookie?: string[];
+  location?: string;
 }> {
   return new Promise((resolve, reject) => {
     const request = https.request(
@@ -116,12 +117,14 @@ function fetchLegacy(
 
         response.on("end", () => {
           const setCookie = response.headers["set-cookie"];
+          const location = response.headers.location;
 
           resolve({
             statusCode: response.statusCode || 200,
             contentType: response.headers["content-type"] || "text/html; charset=UTF-8",
             html: Buffer.concat(chunks).toString("utf8"),
             setCookie,
+            location,
           });
         });
       },
@@ -145,6 +148,46 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   try {
     const response = await fetchLegacy(pagePath, context.req.headers);
+
+    if (
+      response.statusCode >= 300 &&
+      response.statusCode < 400 &&
+      response.location
+    ) {
+      const legacyUrl = new URL(response.location, `${LEGACY_ORIGIN}${pagePath}`);
+      const destination = `${legacyUrl.pathname}${legacyUrl.search}${legacyUrl.hash}`;
+
+      if (response.setCookie?.length) {
+        context.res.setHeader("Set-Cookie", response.setCookie);
+      }
+
+      return {
+        redirect: {
+          destination,
+          permanent: response.statusCode === 301 || response.statusCode === 308,
+        },
+      };
+    }
+
+    if (
+      response.statusCode >= 300 &&
+      response.statusCode < 400 &&
+      response.location
+    ) {
+      const legacyUrl = new URL(response.location, `${LEGACY_ORIGIN}${pagePath}`);
+      const destination = `${legacyUrl.pathname}${legacyUrl.search}${legacyUrl.hash}`;
+
+      if (response.setCookie?.length) {
+        context.res.setHeader("Set-Cookie", response.setCookie);
+      }
+
+      return {
+        redirect: {
+          destination,
+          permanent: response.statusCode === 301 || response.statusCode === 308,
+        },
+      };
+    }
 
     const html = rewriteLegacyAssets(response.html, pagePath);
 
