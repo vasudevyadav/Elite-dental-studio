@@ -17,7 +17,11 @@ declare global {
   }
 }
 
-const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+const siteKey =
+  process.env.NODE_ENV === "development" &&
+  process.env.NEXT_PUBLIC_DISABLE_RECAPTCHA === "true"
+    ? undefined
+    : process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
 
 export function recaptchaEnabled() {
   return Boolean(siteKey);

@@ -1,4 +1,8 @@
 export async function verifyRecaptcha(token: unknown, remoteIp?: string) {
+  if (
+    process.env.NODE_ENV === "development" &&
+    process.env.NEXT_PUBLIC_DISABLE_RECAPTCHA === "true"
+  ) return true;
   const secret = process.env.RECAPTCHA_SECRET_KEY;
   if (!secret) return true;
   if (typeof token !== "string" || !token) return false;

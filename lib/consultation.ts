@@ -1,3 +1,5 @@
+const CONSULTATION_API_URL = "https://cms.elitedentalstudio.co.in/wp-json/v1/consultation";
+
 export type ConsultationPayload = {
   name: string;
   phone: string;
@@ -29,7 +31,7 @@ export async function submitConsultation(
   payload: ConsultationPayload,
 ): Promise<ConsultationResult> {
   try {
-    const response = await fetch("/api/consultation", {
+    const response = await fetch(CONSULTATION_API_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
@@ -47,7 +49,7 @@ export async function submitConsultation(
  */
 export async function submitConsultationForm(formData: FormData): Promise<ConsultationResult> {
   try {
-    const response = await fetch("/api/consultation", {
+    const response = await fetch(CONSULTATION_API_URL, {
       method: "POST",
       body: formData,
     });
