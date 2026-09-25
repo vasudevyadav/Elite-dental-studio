@@ -1,4 +1,4 @@
-import { getContent } from "@/lib/contentApi";
+import { staticTestimonials } from "@/content/testimonials";
 
 export type TestimonialItem = {
   id: string;
@@ -14,8 +14,5 @@ export type TestimonialItem = {
 };
 
 export async function getTestimonials(): Promise<TestimonialItem[]> {
-  const data = await getContent<{ items: TestimonialItem[] }>("testimonials");
-  return (data.items || [])
-    .filter((item) => item?.id && (item.type === "text" || item.type === "video"))
-    .sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
+  return [...staticTestimonials].sort((a, b) => a.sortOrder - b.sortOrder);
 }

@@ -1,5 +1,6 @@
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { staticTestimonials } from "@/content/testimonials";
 import AnimatedArrowCta from "./AnimatedArrowCta";
 import type { TestimonialItem } from "@/lib/testimonialsApi";
 
@@ -25,30 +26,13 @@ type TestimonialsSectionProps = {
 export default function TestimonialsSection({
   initialTestimonials = [],
 }: TestimonialsSectionProps) {
-  const [wordpressTestimonials, setWordpressTestimonials] =
-    useState<TestimonialItem[]>(initialTestimonials);
-  const [isLoading, setIsLoading] = useState(initialTestimonials.length === 0);
+  const wordpressTestimonials = initialTestimonials.length ? initialTestimonials : staticTestimonials;
+  const isLoading = false;
   const [reviewType, setReviewType] = useState<"text" | "video">("text");
   const [index, setIndex] = useState(0);
   const testimonials = wordpressTestimonials.filter((item) => item.type === reviewType);
   const testimonial = testimonials[index] || testimonials[0];
 
-  useEffect(() => {
-    const controller = new AbortController();
-    fetch("/api/testimonials", { signal: controller.signal })
-      .then((response) => (response.ok ? response.json() : null))
-      .then((payload) => {
-        const items = payload?.data?.items;
-        if (Array.isArray(items)) setWordpressTestimonials(items);
-      })
-      .catch((error) => {
-        if ((error as Error).name !== "AbortError") {
-          console.error("Unable to load testimonials.", error);
-        }
-      })
-      .finally(() => setIsLoading(false));
-    return () => controller.abort();
-  }, []);
 
   const move = (step: number) =>
     testimonials.length &&

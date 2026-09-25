@@ -16,6 +16,7 @@ export default function ContactFormSection() {
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [feedback, setFeedback] = useState("");
   const [captchaToken, setCaptchaToken] = useState("");
+  const [captchaAttempt, setCaptchaAttempt] = useState(0);
   const router = useRouter();
   const update = (
     event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>,
@@ -53,6 +54,9 @@ export default function ContactFormSection() {
       router.push("/thank-you");
     } else {
       setStatus("error");
+      // Verification tokens are single-use, even when the downstream request fails.
+      setCaptchaToken("");
+      setCaptchaAttempt((attempt) => attempt + 1);
     }
   };
   const fieldClass =
@@ -215,7 +219,7 @@ export default function ContactFormSection() {
               />
             </label>
             <div className="sm:col-span-2">
-              <Recaptcha onTokenChange={setCaptchaToken} />
+              <Recaptcha key={captchaAttempt} onTokenChange={setCaptchaToken} />
             </div>
             <button
               type="submit"
