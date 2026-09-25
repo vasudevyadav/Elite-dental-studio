@@ -1,6 +1,5 @@
 import type { NextConfig } from "next";
 import { siteRedirects } from "./lib/siteRedirects";
-import { MAIN_CLINICS } from "./lib/clinics";
 
 const nextConfig: NextConfig = {
   devIndicators: false,
@@ -11,18 +10,26 @@ const nextConfig: NextConfig = {
   // Landing pages need "/aligner/" with a trailing slash; proxy.ts handles slash redirects.
   skipTrailingSlashRedirect: true,
   async rewrites() {
-    return [
-      ...MAIN_CLINICS.map(({ slug }) => ({
-        source: `/${slug}`,
-        destination: `/locations/${slug}`,
-      })),
-    ];
+    return {
+      // `fallback` only applies once no static/dynamic page matched, so this can't
+      // shadow /about, /service/:slug, etc. Whatever slug the locations API returns
+      // (kochi, dental-hospital-in-kochi, ...) is served at the root, never under /locations/.
+      fallback: [
+        {
+          source: "/:slug",
+          destination: "/locations/:slug",
+        },
+      ],
+    };
   },
   async redirects() {
     return [
       // Service detail pages moved from /services/:slug (plural) to /service/:slug (singular).
       { source: "/services/:slug", destination: "/service/:slug", permanent: true },
       { source: "/services/:slug/", destination: "/service/:slug", permanent: true },
+      // Location pages moved from /locations/:slug to /:slug (root), for any slug the API returns.
+      { source: "/locations/:slug", destination: "/:slug", permanent: true },
+      { source: "/locations/:slug/", destination: "/:slug", permanent: true },
       ...siteRedirects.flatMap(({ source, destination }) => [
         { source, destination, permanent: true },
         { source: `${source}/`, destination, permanent: true },

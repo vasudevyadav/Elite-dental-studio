@@ -1,22 +1,7 @@
 // Complete old/new URL pairs from the site's Redirection sheet.
 // Rows without a destination intentionally remain unmapped.
 export const siteRedirects = [
-  {
-    source: "/locations/kochi",
-    destination: "/kochi",
-  },
-  {
-    source: "/locations/coimbatore",
-    destination: "/coimbatore",
-  },
-  {
-    source: "/locations/calicut",
-    destination: "/calicut",
-  },
-  {
-    source: "/locations/kannur",
-    destination: "/kannur",
-  },
+  // /locations/:slug -> /:slug is handled generically in next.config.ts (any slug the API returns).
   {
     source: "/service/clear-aligners-treatment",
     destination: "/service/clear-aligners",
