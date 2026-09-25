@@ -10,8 +10,19 @@ export async function verifyRecaptcha(token: unknown, remoteIp?: string) {
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
     body: formData,
   });
-  const result = (await response.json()) as { success?: boolean };
-  return result.success === true;
+  const result = (await response.json()) as {
+    success?: boolean;
+    "error-codes"?: string[];
+  };
+  if (!response.ok || result.success !== true) {
+    // Log verification diagnostics only, never tokens, secrets, or form data.
+    console.warn("reCAPTCHA verification failed.", {
+      status: response.status,
+      codes: result["error-codes"] ?? [],
+    });
+    return false;
+  }
+  return true;
 }
 
 export async function readCaptchaToken(body: Buffer, contentType: string) {
