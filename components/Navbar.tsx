@@ -28,22 +28,22 @@ const dropdowns: Record<DropdownName, { eyebrow: string; items: DropdownItem[] }
       {
         label: "Dental Implants",
         description: "Long-lasting, natural-looking tooth replacement",
-        href: "/services/dental-implant",
+        href: "/service/dental-implant",
       },
       {
         label: "Invisible Aligners",
         description: "A discreet and comfortable smile transformation",
-        href: "/services/invisible-aligners",
+        href: "/service/invisible-aligners",
       },
       {
         label: "Root Canal Treatment",
         description: "Gentle care focused on saving your natural tooth",
-        href: "/services/endodontics",
+        href: "/service/endodontics",
       },
       {
         label: "Laser Dentistry",
         description: "Precise treatment with greater comfort",
-        href: "/services/laser-dentistry",
+        href: "/service/laser-dentistry",
       },
     ],
   },
@@ -63,7 +63,7 @@ const dropdowns: Record<DropdownName, { eyebrow: string; items: DropdownItem[] }
       {
         label: "Clinic Locations",
         description: "Find the Elite Dental Studio nearest to you",
-        href: "/locations/kannur",
+        href: "/kannur",
       },
       {
         label: "Our Dental Office",
@@ -196,7 +196,7 @@ export default function Navbar() {
             {
               label: "Clinic Locations",
               description: "Find the Elite Dental Studio nearest to you",
-              href: "/locations/kannur",
+              href: "/kannur",
             },
           ],
     },
@@ -234,7 +234,7 @@ export default function Navbar() {
             .map((service) => ({
               label: service.title,
               description: service.shortDescription || "Explore this dental treatment",
-              href: `/services/${service.slug}`,
+              href: `/service/${service.slug}`,
             })),
         );
       } catch (error) {
@@ -264,7 +264,7 @@ export default function Navbar() {
             .map((item: { name: string; slug: string }) => ({
               label: `${item.name} Clinic`,
               description: `Visit Elite Dental Studio in ${item.name}`,
-              href: `/locations/${item.slug}`,
+              href: `/${item.slug}`,
             })),
         );
       })

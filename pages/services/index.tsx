@@ -47,7 +47,7 @@ export default function ServicesPage({ data }: Props) {
             <div className="mt-[72px] grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-x-[46px] lg:gap-y-[42px]">
               {visibleServices.map((service) => (
                 <Link
-                  href={`/services/${service.slug}`}
+                  href={`/service/${service.slug}`}
                   className="group min-w-0 rounded-[20px] border-[1.5px] border-[#5d989b] bg-white p-4 text-[#454545] no-underline shadow-[0_12px_26px_rgba(30,93,96,.06)] transition duration-300 hover:-translate-y-1.5 hover:shadow-[0_20px_34px_rgba(30,93,96,.13)] sm:p-5"
                   key={service.slug}
                 >

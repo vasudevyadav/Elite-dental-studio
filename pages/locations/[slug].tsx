@@ -400,7 +400,7 @@ export default function LocationPage({ data }: { data: LocationData }) {
         "@context": "https://schema.org",
         "@type": "Dentist",
         name: `Elite Dental Studio ${data.name}`,
-        url: absoluteUrl(`/locations/${data.slug}`),
+        url: absoluteUrl(`/${data.slug}`),
         telephone: data.contact.mobile,
         email: data.contact.email,
         hasMap: data.contact.mapUrl,

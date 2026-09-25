@@ -2,68 +2,32 @@
 // Rows without a destination intentionally remain unmapped.
 export const siteRedirects = [
   {
-    source: "/kochi",
-    destination: "/locations/kochi",
+    source: "/locations/kochi",
+    destination: "/kochi",
   },
   {
-    source: "/coimbatore",
-    destination: "/locations/coimbatore",
+    source: "/locations/coimbatore",
+    destination: "/coimbatore",
   },
   {
-    source: "/calicut",
-    destination: "/locations/calicut",
+    source: "/locations/calicut",
+    destination: "/calicut",
   },
   {
-    source: "/kannur",
-    destination: "/locations/kannur",
-  },
-  {
-    source: "/service/laser-dentistry",
-    destination: "/services/laser-dentistry",
+    source: "/locations/kannur",
+    destination: "/kannur",
   },
   {
     source: "/service/clear-aligners-treatment",
-    destination: "/services/clear-aligners",
-  },
-  {
-    source: "/service/maxillofacial-orthognathic-surgery",
-    destination: "/services/maxillofacial-orthognathic-surgery",
+    destination: "/service/clear-aligners",
   },
   {
     source: "/service/invisalign-treatment",
-    destination: "/services/invisible-aligners",
-  },
-  {
-    source: "/service/pediatric-dentistry",
-    destination: "/services/pediatric-dentistry",
+    destination: "/service/invisible-aligners",
   },
   {
     source: "/service/oral-medicine-and-radiology",
-    destination: "/services/oral-medicine-radiology",
-  },
-  {
-    source: "/service/prosthodontics",
-    destination: "/services/prosthodontics",
-  },
-  {
-    source: "/service/restorative-dentistry",
-    destination: "/services/restorative-dentistry",
-  },
-  {
-    source: "/service/endodontics",
-    destination: "/services/endodontics",
-  },
-  {
-    source: "/service/orthodontics",
-    destination: "/services/orthodontics",
-  },
-  {
-    source: "/service/cosmetic-treatments",
-    destination: "/services/cosmetic-treatments",
-  },
-  {
-    source: "/service/dental-implant",
-    destination: "/services/dental-implant",
+    destination: "/service/oral-medicine-radiology",
   },
   {
     source: "/directors/dr-fathima-nifla",

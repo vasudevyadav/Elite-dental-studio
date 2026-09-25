@@ -63,7 +63,7 @@ const hasMeaningfulContent = (value: unknown): boolean => {
 export default function ServiceDetailPage({ service, testimonials, galleryCases }: Props) {
   const isLaser = service.slug === "laser-dentistry";
   const treatmentName = service.treatmentName || service.title;
-  const canonicalUrl = service.seo?.canonicalUrl || absoluteUrl(`/services/${service.slug}`);
+  const canonicalUrl = absoluteUrl(`/service/${service.slug}`);
   const legacyService = toLegacyService(service);
   const content = (type: ServiceSection["type"]) => sectionContent(service.sections, type);
   const overview = content("overview");

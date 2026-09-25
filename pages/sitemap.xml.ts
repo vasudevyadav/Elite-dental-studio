@@ -36,7 +36,7 @@ export const getServerSideProps: GetServerSideProps = async ({ res }) => {
   ]);
   const paths = new Map<string, string | undefined>();
   staticPaths.forEach((path) => paths.set(path, undefined));
-  services.forEach((service) => paths.set(`/services/${service.slug}`, undefined));
+  services.forEach((service) => paths.set(`/service/${service.slug}`, undefined));
   blogs.forEach((post) =>
     paths.set(`/blog/${post.slug}`, post.updatedAt || post.publishedAt || undefined),
   );
@@ -45,7 +45,7 @@ export const getServerSideProps: GetServerSideProps = async ({ res }) => {
   );
   locationsData.items
     .filter((location) => isMainClinic(location.slug))
-    .forEach((location) => paths.set(`/locations/${location.slug}`, undefined));
+    .forEach((location) => paths.set(`/${location.slug}`, undefined));
 
   const urls = Array.from(paths)
     .map(([path, lastModified]) => {

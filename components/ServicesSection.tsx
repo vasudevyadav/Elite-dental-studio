@@ -281,7 +281,7 @@ export default function ServicesSection({
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8" aria-live="polite">
             {visibleServices.map(({ service, offset }) => (
               <Link
-                href={`/services/${service.slug}`}
+                href={`/service/${service.slug}`}
                 key={service.title}
                 className={`group smooth-hover card-hover block overflow-hidden border bg-white no-underline shadow-[0_18px_45px_rgba(21,74,78,0.09)] ${compact ? "rounded-[18px] p-4" : "rounded-[28px] p-5 sm:p-6"} ${offset !== 0 ? "hidden sm:block" : ""} ${
                   offset === 0 ? "border-[#2b7f82] md:-translate-y-2" : "border-[#8cb8ba]"

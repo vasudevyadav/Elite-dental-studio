@@ -1,5 +1,6 @@
 import type { NextConfig } from "next";
 import { siteRedirects } from "./lib/siteRedirects";
+import { MAIN_CLINICS } from "./lib/clinics";
 
 const nextConfig: NextConfig = {
   devIndicators: false,
@@ -9,8 +10,19 @@ const nextConfig: NextConfig = {
   serverExternalPackages: ["sanitize-html"],
   // Landing pages need "/aligner/" with a trailing slash; proxy.ts handles slash redirects.
   skipTrailingSlashRedirect: true,
+  async rewrites() {
+    return [
+      ...MAIN_CLINICS.map(({ slug }) => ({
+        source: `/${slug}`,
+        destination: `/locations/${slug}`,
+      })),
+    ];
+  },
   async redirects() {
     return [
+      // Service detail pages moved from /services/:slug (plural) to /service/:slug (singular).
+      { source: "/services/:slug", destination: "/service/:slug", permanent: true },
+      { source: "/services/:slug/", destination: "/service/:slug", permanent: true },
       ...siteRedirects.flatMap(({ source, destination }) => [
         { source, destination, permanent: true },
         { source: `${source}/`, destination, permanent: true },

@@ -1,5 +1,6 @@
 # Redirect verification
 
+Update: Location URL direction was subsequently reversed at the user’s request: `/locations/{city}` now redirects to `/{city}` for Kochi, Coimbatore, Calicut and Kannur. Earlier tables below record the previous test. New local checks passed for all 16 location variants, with query strings preserved and no loops. Navigation links, sitemap and location structured data now use short paths.
 Source: https://docs.google.com/spreadsheets/d/18JbNPvGSGPnRwGaqjuQTw8lAvUZJpdMThIm3hjgZ0tw/edit?gid=2027428421#gid=2027428421
 
 Only complete pairs were implemented. Source sheet was not modified. Live status was checked before editing. Redirects are permanent (308); path mappings preserve query parameters and match both trailing-slash variants. The homepage host rule applies only to elitedentalstudio.co.in, not localhost, staging, or www.
