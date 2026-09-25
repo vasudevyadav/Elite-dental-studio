@@ -15,6 +15,10 @@ export const siteRedirects = [
     destination: "/service/oral-medicine-radiology",
   },
   {
+    source: "/service/periodontics",
+    destination: "/service/gum-treatement",
+  },
+  {
     source: "/directors/dr-fathima-nifla",
     destination: "/doctors/dr-fathima-nifla-cp",
   },
