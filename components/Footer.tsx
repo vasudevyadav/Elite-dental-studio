@@ -6,7 +6,7 @@ import { isLocationSpecificServiceSlug, isMainClinic } from "@/lib/clinics";
 
 const companyLinks = [
   { label: "About Us", href: "/about" },
-  { label: "Services", href: "/services" },
+  { label: "Services", href: "/service" },
   { label: "Doctors", href: "/doctors" },
   { label: "Our Dental Office", href: "/our-dental-office" },
   { label: "International Patients", href: "/international-patients" },
@@ -104,7 +104,7 @@ export default function Footer() {
             .filter((item: { slug: string }) => isMainClinic(item.slug))
             .map((item: { name: string; slug: string }) => ({
               name: item.name,
-              href: `/locations/${item.slug}`,
+              href: `/${item.slug}`,
             })),
         );
       })
@@ -208,7 +208,7 @@ export default function Footer() {
               {services.map((service) => (
                 <li key={service.slug}>
                   <Link
-                    href={`/services/${service.slug}`}
+                    href={`/service/${service.slug}`}
                     className="smooth-hover link-hover hover:text-dent-accent text-base font-medium text-white/92"
                   >
                     {service.name}
