@@ -238,8 +238,11 @@ export default function Navbar() {
             })),
         );
       } catch (error) {
-        if ((error as Error).name !== "AbortError") {
-          console.error("Unable to load services navigation.", error);
+        if (!controller.signal.aborted) {
+          console.warn(
+            "Unable to load services navigation; keeping the fallback menu.",
+            error instanceof Error ? error.message : "Request failed",
+          );
         }
       }
     };
