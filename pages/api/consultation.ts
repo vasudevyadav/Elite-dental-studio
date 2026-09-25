@@ -72,7 +72,7 @@ async function triggerClickToCall(phone: unknown) {
   });
 }
 
-async function forwardLeadToGoogleSheets(consultation: Consultation) {
+async function forwardLeadToGoogleSheets(consultation: Consultation): Promise<boolean> {
   const webhook = process.env.GOOGLE_SHEETS_WEBHOOK_URL || legacyGoogleSheetsWebhook;
   const lead = new URLSearchParams({
     datetime: new Intl.DateTimeFormat("en-IN", {
@@ -93,11 +93,12 @@ async function forwardLeadToGoogleSheets(consultation: Consultation) {
     gclid: String(consultation.gclid || ""),
     message: String(consultation.message || ""),
   });
-  await fetch(webhook, {
+  const response = await fetch(webhook, {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
     body: lead,
   });
+  return response.ok;
 }
 
 function escapeHtml(value: unknown) {
@@ -113,11 +114,11 @@ function escapeHtml(value: unknown) {
   });
 }
 
-async function sendLeadNotification(consultation: Consultation) {
+async function sendLeadNotification(consultation: Consultation): Promise<boolean> {
   const apiKey = process.env.RESEND_API_KEY;
   const from = process.env.LEAD_EMAIL_FROM;
   const recipients = process.env.LEAD_NOTIFICATION_EMAILS?.split(",").map((email) => email.trim());
-  if (!apiKey || !from || !recipients?.length) return;
+  if (!apiKey || !from || !recipients?.length) return false;
 
   const fields = [
     ["Name", consultation.name],
@@ -130,7 +131,7 @@ async function sendLeadNotification(consultation: Consultation) {
   const html = `<h2>New appointment request</h2><table>${fields
     .map(([label, value]) => `<tr><td><strong>${label}</strong></td><td>${escapeHtml(value)}</td></tr>`)
     .join("")}</table>`;
-  await fetch("https://api.resend.com/emails", {
+  const response = await fetch("https://api.resend.com/emails", {
     method: "POST",
     headers: {
       Authorization: `Bearer ${apiKey}`,
@@ -144,6 +145,22 @@ async function sendLeadNotification(consultation: Consultation) {
       html,
     }),
   });
+  return response.ok;
+}
+
+async function parseMultipartConsultation(body: Buffer, contentType: string): Promise<Consultation> {
+  const request = new Request("http://localhost", {
+    method: "POST",
+    headers: { "Content-Type": contentType },
+    body: new Uint8Array(body) as unknown as BodyInit,
+  });
+  const formData = await request.formData();
+  const consultation: Consultation = {};
+  for (const [key, value] of formData.entries()) {
+    if (key === "captchaToken" || typeof value !== "string") continue;
+    consultation[key] = value;
+  }
+  return consultation;
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -167,27 +184,45 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       delete data.captchaToken;
       consultation = data;
       forwardedBody = JSON.stringify(consultation);
+    } else if (contentType.includes("multipart/form-data")) {
+      consultation = await parseMultipartConsultation(body, contentType);
     }
-    const response = await fetch(`${getEdsApiBaseUrl()}/consultation`, {
-      method: "POST",
-      headers: {
-        "Content-Type": contentType,
-      },
-      body: forwardedBody,
-    });
-    const payload = await response.text();
-    if (response.ok && consultation) {
-      const notifications = [forwardLeadToGoogleSheets(consultation)];
-      if (consultation.phone) notifications.push(triggerClickToCall(consultation.phone));
-      notifications.push(sendLeadNotification(consultation));
-      const results = await Promise.allSettled(notifications);
-      results.forEach((result) => {
+
+    let cmsOk = false;
+    try {
+      const response = await fetch(`${getEdsApiBaseUrl()}/consultation`, {
+        method: "POST",
+        headers: {
+          "Content-Type": contentType,
+        },
+        body: forwardedBody,
+      });
+      cmsOk = response.ok;
+    } catch (error) {
+      console.error("Unable to forward consultation to CMS.", error);
+    }
+
+    let sheetsOk = false;
+    let emailOk = false;
+    if (consultation) {
+      const notifications = await Promise.allSettled([
+        forwardLeadToGoogleSheets(consultation),
+        consultation.phone ? triggerClickToCall(consultation.phone) : Promise.resolve(),
+        sendLeadNotification(consultation),
+      ]);
+      const [sheetsResult, , emailResult] = notifications;
+      sheetsOk = sheetsResult.status === "fulfilled" && sheetsResult.value === true;
+      emailOk = emailResult.status === "fulfilled" && emailResult.value === true;
+      notifications.forEach((result) => {
         if (result.status === "rejected") console.error("Unable to deliver lead notification.", result.reason);
       });
     }
-    res.status(response.status);
-    res.setHeader("Content-Type", response.headers.get("content-type") || "application/json");
-    return res.send(payload);
+
+    if (cmsOk || sheetsOk || emailOk) {
+      return res.status(200).json({ success: true, message: "Request submitted successfully" });
+    }
+
+    return res.status(502).json({ success: false, message: "Consultation service is unavailable." });
   } catch (error) {
     if (error instanceof Error && error.message === "PAYLOAD_TOO_LARGE") {
       return res

@@ -1,4 +1,4 @@
-const CONSULTATION_API_URL = "https://cms.elitedentalstudio.co.in/wp-json/v1/consultation";
+const CONSULTATION_API_URL = "/api/consultation";
 
 export type ConsultationPayload = {
   name: string;

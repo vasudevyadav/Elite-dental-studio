@@ -28,12 +28,55 @@ export type DoctorListItem = {
   profileUrl: string;
   sortOrder: number;
 };
+export type Pagination = {
+  currentPage: number;
+  perPage: number;
+  totalItems: number;
+  totalPages: number;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+};
 export type DoctorsData = {
   pageSeo: { metaTitle: string; metaDescription: string };
   pageHeader: { title: string };
   clinics: ClinicRef[];
   items: DoctorListItem[];
+  pagination?: Pagination;
 };
+
+/**
+ * The doctors CMS endpoint pagination is unreliable (may ignore page/limit
+ * or under-report hasNextPage/totalPages). Fetch pages until the API stops
+ * returning new items so the directory always shows every doctor.
+ */
+export async function getAllDoctors(params: { clinic?: string; search?: string } = {}): Promise<DoctorsData> {
+  const MAX_PAGES = 20;
+  let page = 1;
+  let first: DoctorsData | null = null;
+  let items: DoctorListItem[] = [];
+  const seen = new Set<string>();
+
+  while (page <= MAX_PAGES) {
+    const query = new URLSearchParams();
+    if (params.clinic) query.set("clinic", params.clinic);
+    if (params.search) query.set("search", params.search);
+    query.set("page", String(page));
+
+    const data = await getContent<DoctorsData>(`doctors?${query.toString()}`);
+    if (!first) first = data;
+
+    const newItems = data.items.filter((doctor) => !seen.has(`${doctor.id}-${doctor.slug}`));
+    newItems.forEach((doctor) => seen.add(`${doctor.id}-${doctor.slug}`));
+    items = items.concat(newItems);
+
+    const pagination = data.pagination;
+    if (!pagination || !pagination.hasNextPage || newItems.length === 0) break;
+    if (page >= pagination.totalPages) break;
+    page += 1;
+  }
+
+  return { ...(first as DoctorsData), items };
+}
 export type DoctorDetail = DoctorListItem & {
   designation?: string;
   seo: { metaTitle: string; metaDescription: string };
