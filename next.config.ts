@@ -6,9 +6,8 @@ const nextConfig: NextConfig = {
   compress: true,
   poweredByHeader: false,
   serverExternalPackages: ["sanitize-html"],
-  async rewrites() {
-    return [{ source: "/implant", destination: "/implant/index.html" }];
-  },
+  // Landing pages need "/aligner/" with a trailing slash; proxy.ts handles slash redirects.
+  skipTrailingSlashRedirect: true,
   images: {
     qualities: [60, 75],
     remotePatterns: [
