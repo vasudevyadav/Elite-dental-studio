@@ -11,7 +11,9 @@ const nextConfig: NextConfig = {
   skipTrailingSlashRedirect: true,
   async redirects() {
     return [
-      // Service detail pages moved from /services/:slug (plural) to /service/:slug (singular).
+      // Services section moved from /services (plural) to /service (singular).
+      { source: "/services", destination: "/service", permanent: true },
+      { source: "/services/", destination: "/service", permanent: true },
       { source: "/services/:slug", destination: "/service/:slug", permanent: true },
       { source: "/services/:slug/", destination: "/service/:slug", permanent: true },
       ...siteRedirects.flatMap(({ source, destination }) => [

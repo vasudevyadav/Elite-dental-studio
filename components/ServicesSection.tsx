@@ -267,7 +267,7 @@ export default function ServicesSection({
 
             <AnimatedArrowCta
               label="ALL SERVICES"
-              href="/services"
+              href="/service"
               arrowClassName="text-[#27bdb3]"
               className="smooth-hover button-hover hover-lift bg-dent-accent hover:bg-dent-nav inline-flex w-fit items-center gap-4 rounded-[9px] py-3 pr-3 pl-5 text-sm font-extrabold text-white uppercase shadow-sm focus:ring-4 focus:ring-white/30 focus:outline-none sm:text-base"
             />

@@ -6,7 +6,7 @@ import { isLocationSpecificServiceSlug, isMainClinic } from "@/lib/clinics";
 
 const companyLinks = [
   { label: "About Us", href: "/about" },
-  { label: "Services", href: "/services" },
+  { label: "Services", href: "/service" },
   { label: "Doctors", href: "/doctors" },
   { label: "Our Dental Office", href: "/our-dental-office" },
   { label: "International Patients", href: "/international-patients" },

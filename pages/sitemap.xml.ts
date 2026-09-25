@@ -8,7 +8,7 @@ import { isMainClinic } from "@/lib/clinics";
 const staticPaths = [
   "/",
   "/about",
-  "/services",
+  "/service",
   "/doctors",
   "/our-dental-office",
   "/facilities",
