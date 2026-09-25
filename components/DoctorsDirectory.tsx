@@ -1,35 +1,52 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import { localDoctorImage, type DoctorsData } from "@/lib/contentApi";
+import { localDoctorImage, type DoctorListItem, type DoctorsData } from "@/lib/contentApi";
 import DoctorCredentials from "@/components/DoctorCredentials";
 import { getDoctorIdentity, orderDoctors } from "@/lib/doctors";
 import { isMainClinic } from "@/lib/clinics";
 
-const PAGE_SIZE = 10;
-
 export default function DoctorsDirectory({ data }: { data: DoctorsData }) {
-  const doctors = data.items;
+  const [items, setItems] = useState<DoctorListItem[]>(data.items);
+  const [pagination, setPagination] = useState(data.pagination);
+  const [loadingMore, setLoadingMore] = useState(false);
   const mainClinics = data.clinics.filter((item) => isMainClinic(item.slug));
   const clinics = mainClinics.map((item) => item.name);
   const defaultClinic = "All clinics";
   const [clinic, setClinic] = useState(defaultClinic);
   const [activeClinic, setActiveClinic] = useState(defaultClinic);
-  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
 
   const filteredDoctors = useMemo(() => {
-    const matches = doctors.filter(
+    const matches = items.filter(
       (doctor) =>
         activeClinic === "All clinics" || doctor.clinics.some((item) => item.name === activeClinic),
     );
     return orderDoctors(matches);
-  }, [activeClinic, doctors]);
-  const visibleDoctors = filteredDoctors.slice(0, visibleCount);
-  const hasMoreDoctors = visibleCount < filteredDoctors.length;
+  }, [activeClinic, items]);
 
   const chooseClinic = (value: string) => {
     setActiveClinic(value);
-    setVisibleCount(PAGE_SIZE);
+  };
+
+  const loadMore = async () => {
+    if (!pagination?.hasNextPage || loadingMore) return;
+    setLoadingMore(true);
+    try {
+      const nextPage = pagination.currentPage + 1;
+      const response = await fetch(`/api/doctors?page=${nextPage}&limit=${pagination.perPage}`);
+      if (!response.ok) return;
+      const payload = await response.json();
+      if (!payload?.success || !payload.data) return;
+      const newItems = payload.data.items as DoctorListItem[];
+      setItems((current) => {
+        const seen = new Set(current.map((doctor) => `${doctor.id}-${doctor.slug}`));
+        const additions = newItems.filter((doctor) => !seen.has(`${doctor.id}-${doctor.slug}`));
+        return current.concat(additions);
+      });
+      setPagination(payload.data.pagination);
+    } finally {
+      setLoadingMore(false);
+    }
   };
 
   return (
@@ -75,7 +92,7 @@ export default function DoctorsDirectory({ data }: { data: DoctorsData }) {
         </p>
 
         <div className="mt-14 grid gap-9 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-16 lg:gap-y-16">
-          {visibleDoctors.map((doctor, index) => {
+          {filteredDoctors.map((doctor, index) => {
             const identity = getDoctorIdentity(doctor);
             return (
               <article
@@ -126,22 +143,21 @@ export default function DoctorsDirectory({ data }: { data: DoctorsData }) {
           })}
         </div>
 
-        {visibleDoctors.length === 0 && (
+        {filteredDoctors.length === 0 && (
           <p className="py-20 text-center text-lg font-semibold text-[#286f73]">
             No doctors found for this clinic.
           </p>
         )}
 
-        {hasMoreDoctors && (
+        {pagination?.hasNextPage && (
           <div className="mt-14 flex justify-center">
             <button
               type="button"
-              onClick={() =>
-                setVisibleCount((count) => Math.min(filteredDoctors.length, count + PAGE_SIZE))
-              }
-              className="smooth-hover button-hover rounded-full bg-[#296f73] px-8 py-3 text-sm font-extrabold text-white hover:bg-[#205e62] focus:ring-4 focus:ring-[#296f73]/20 focus:outline-none"
+              onClick={loadMore}
+              disabled={loadingMore}
+              className="smooth-hover button-hover rounded-full bg-[#296f73] px-8 py-3 text-sm font-extrabold text-white hover:bg-[#205e62] focus:ring-4 focus:ring-[#296f73]/20 focus:outline-none disabled:opacity-60"
             >
-              Load More Doctors
+              {loadingMore ? "Loading..." : "Load More Doctors"}
             </button>
           </div>
         )}

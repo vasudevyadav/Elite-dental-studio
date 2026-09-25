@@ -28,12 +28,91 @@ export type DoctorListItem = {
   profileUrl: string;
   sortOrder: number;
 };
+export type Pagination = {
+  currentPage: number;
+  perPage: number;
+  totalItems: number;
+  totalPages: number;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+};
 export type DoctorsData = {
   pageSeo: { metaTitle: string; metaDescription: string };
   pageHeader: { title: string };
   clinics: ClinicRef[];
   items: DoctorListItem[];
+  pagination?: Pagination;
 };
+
+export const DOCTORS_PAGE_SIZE = 9;
+
+/**
+ * The doctors CMS endpoint ignores page/limit and always returns the same
+ * fixed batch. Pull whatever it's willing to give across a few requests and
+ * dedupe, so we're not artificially capped if/when the CMS starts paginating
+ * for real.
+ */
+async function collectDoctors(params: { clinic?: string; search?: string } = {}): Promise<DoctorsData> {
+  const MAX_PAGES = 20;
+  let page = 1;
+  let first: DoctorsData | null = null;
+  let items: DoctorListItem[] = [];
+  const seen = new Set<string>();
+
+  while (page <= MAX_PAGES) {
+    const query = new URLSearchParams();
+    if (params.clinic) query.set("clinic", params.clinic);
+    if (params.search) query.set("search", params.search);
+    query.set("page", String(page));
+
+    const data = await getContent<DoctorsData>(`doctors?${query.toString()}`);
+    if (!first) first = data;
+
+    const newItems = data.items.filter((doctor) => !seen.has(`${doctor.id}-${doctor.slug}`));
+    newItems.forEach((doctor) => seen.add(`${doctor.id}-${doctor.slug}`));
+    items = items.concat(newItems);
+
+    const pagination = data.pagination;
+    if (!pagination || !pagination.hasNextPage || newItems.length === 0) break;
+    if (page >= pagination.totalPages) break;
+    page += 1;
+  }
+
+  return { ...(first as DoctorsData), items };
+}
+
+/**
+ * Real, request-driven pagination for the doctors directory: fetches
+ * whatever the CMS can currently provide via collectDoctors(), then serves
+ * back exactly one `limit`-sized slice with accurate pagination metadata.
+ * Today that pool caps out wherever the CMS bug caps it (e.g. 20 of 59);
+ * once the CMS honours page/limit for real, this starts returning further
+ * pages with no frontend change needed.
+ */
+export async function getDoctorsPage(
+  params: { page?: number; limit?: number; clinic?: string; search?: string } = {},
+): Promise<DoctorsData> {
+  const page = Math.max(1, Math.floor(params.page || 1));
+  const limit = Math.max(1, Math.floor(params.limit || DOCTORS_PAGE_SIZE));
+  const all = await collectDoctors({ clinic: params.clinic, search: params.search });
+  const start = (page - 1) * limit;
+  const items = all.items.slice(start, start + limit);
+  const totalItems = all.items.length;
+  const totalPages = Math.max(1, Math.ceil(totalItems / limit));
+
+  return {
+    ...all,
+    items,
+    pagination: {
+      currentPage: page,
+      perPage: limit,
+      totalItems,
+      totalPages,
+      hasNextPage: page < totalPages,
+      hasPreviousPage: page > 1,
+    },
+  };
+}
 export type DoctorDetail = DoctorListItem & {
   designation?: string;
   seo: { metaTitle: string; metaDescription: string };

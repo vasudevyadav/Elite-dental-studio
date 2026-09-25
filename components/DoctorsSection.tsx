@@ -123,7 +123,7 @@ export default function DoctorsSection({
     if (initialDoctors?.length) return;
 
     const controller = new AbortController();
-    fetch("/api/doctors", { signal: controller.signal })
+    fetch("/api/doctors?limit=50", { signal: controller.signal })
       .then((response) => (response.ok ? response.json() : null))
       .then((payload) => {
         if (Array.isArray(payload?.data?.items)) setApiDoctors(payload.data.items);

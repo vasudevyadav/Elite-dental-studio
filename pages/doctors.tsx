@@ -1,7 +1,7 @@
 import BookAppointmentSection from "@/components/BookAppointmentSection";
 import DoctorsDirectory from "@/components/DoctorsDirectory";
 import SitePage from "@/components/SitePage";
-import { getContent, type DoctorsData } from "@/lib/contentApi";
+import { DOCTORS_PAGE_SIZE, getDoctorsPage, type DoctorsData } from "@/lib/contentApi";
 
 export default function DoctorsPage({ data }: { data: DoctorsData }) {
   return (
@@ -13,7 +13,7 @@ export default function DoctorsPage({ data }: { data: DoctorsData }) {
 }
 
 export const getServerSideProps: GetServerSideProps<{ data: DoctorsData }> = async ({ res }) => {
-  const data = await getContent<DoctorsData>("doctors");
+  const data = await getDoctorsPage({ page: 1, limit: DOCTORS_PAGE_SIZE });
   res.setHeader("Cache-Control", "public, s-maxage=60, stale-while-revalidate=300");
   return { props: { data } };
 };
