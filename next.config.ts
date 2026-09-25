@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import { siteRedirects } from "./lib/siteRedirects";
 
 const nextConfig: NextConfig = {
   devIndicators: false,
@@ -8,6 +9,20 @@ const nextConfig: NextConfig = {
   serverExternalPackages: ["sanitize-html"],
   // Landing pages need "/aligner/" with a trailing slash; proxy.ts handles slash redirects.
   skipTrailingSlashRedirect: true,
+  async redirects() {
+    return [
+      ...siteRedirects.flatMap(({ source, destination }) => [
+        { source, destination, permanent: true },
+        { source: `${source}/`, destination, permanent: true },
+      ]),
+      {
+        source: "/",
+        has: [{ type: "host" as const, value: "elitedentalstudio.co.in" }],
+        destination: "https://www.elitedentalstudio.co.in/",
+        permanent: true,
+      },
+    ];
+  },
   images: {
     qualities: [60, 75],
     remotePatterns: [
