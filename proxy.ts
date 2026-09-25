@@ -12,10 +12,22 @@ const CAMPAIGN_ORIGIN =
 // Ad landing folders on the campaign site. (/leads/ = internal admin, intentionally excluded.)
 const LANDING_DIR = /^\/(aligner|implant|dental-care|coimbatore-[a-z0-9-]+)(\/.*)?$/i;
 
+const CANONICAL_HOST = "elitedentalstudio.co.in";
+
 export function proxy(request: NextRequest) {
   // Plain URL (not request.nextUrl): NextURL re-normalizes trailing slashes.
   const { pathname, search } = new URL(request.url);
   const match = pathname.match(LANDING_DIR);
+
+  // www.elitedentalstudio.co.in/... -> elitedentalstudio.co.in/... (single permanent hop,
+  // path and query kept, trailing slash fixed in the same hop).
+  const host = (request.headers.get("host") || "").toLowerCase();
+  if (host.startsWith("www.")) {
+    let target = pathname;
+    if (match && !match[2]) target = `${pathname}/`;
+    else if (!match && target.length > 1 && target.endsWith("/")) target = target.replace(/\/+$/, "");
+    return NextResponse.redirect(`https://${CANONICAL_HOST}${target}${search}`, 308);
+  }
 
   if (!match) {
     // skipTrailingSlashRedirect is on, so keep "/about/" -> "/about" for the rest of the site.

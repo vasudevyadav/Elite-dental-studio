@@ -20,12 +20,7 @@ const nextConfig: NextConfig = {
         { source, destination, permanent: true },
         { source: `${source}/`, destination, permanent: true },
       ]),
-      {
-        source: "/",
-        has: [{ type: "host" as const, value: "elitedentalstudio.co.in" }],
-        destination: "https://www.elitedentalstudio.co.in/",
-        permanent: true,
-      },
+      // www -> non-www is handled in proxy.ts (canonical host is elitedentalstudio.co.in).
     ];
   },
   images: {
