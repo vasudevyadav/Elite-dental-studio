@@ -44,7 +44,14 @@ export default function BiginAppointmentWidget({
     <style>${formOverrides}</style>
     <script>
       (function () {
+        function updateNavigation() {
+          var navigation = document.querySelector('input[name="CONTACTCF2"]');
+          if (navigation) {
+            navigation.value = window.parent.location.href;
+          }
+        }
         function prepareForm() {
+          updateNavigation();
           var placeholders = {
             "First Name": "First Name",
             "Last Name": "Last Name",
@@ -71,6 +78,8 @@ export default function BiginAppointmentWidget({
           }
         }
         prepareForm();
+        // Refresh before Zoho's submit handler, including after client-side navigation.
+        document.addEventListener("submit", updateNavigation, true);
         var observer = new MutationObserver(prepareForm);
         observer.observe(document.body, { childList: true, subtree: true });
         window.setTimeout(function () { observer.disconnect(); prepareForm(); }, 5000);
