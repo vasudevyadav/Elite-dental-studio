@@ -9,8 +9,10 @@ import { NextResponse, type NextRequest } from "next/server";
 const CAMPAIGN_ORIGIN =
   process.env.CAMPAIGN_ORIGIN || "https://campaign.elitedentalstudio.co.in";
 
-// Ad landing folders on the campaign site. (/leads/ = internal admin, intentionally excluded.)
-const LANDING_DIR = /^\/(aligner|implant|dental-care|coimbatore-[a-z0-9-]+)(\/.*)?$/i;
+// Folders served from the campaign site: ad landing pages, the /leads/ admin panel,
+// and /includes/ (shared CSS/assets the leads panel loads from the site root).
+const LANDING_DIR =
+  /^\/(aligner|implant|dental-care|leads|includes|coimbatore-[a-z0-9-]+)(\/.*)?$/i;
 
 const CANONICAL_HOST = "elitedentalstudio.co.in";
 
