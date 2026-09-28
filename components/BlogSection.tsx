@@ -182,7 +182,7 @@ export default function BlogSection({ initialPosts }: { initialPosts?: BlogApiPo
                     <span className="mx-2 inline-block w-12 border-t border-white/70 align-middle" />{" "}
                     <strong>{post.date}</strong>
                   </span>
-                  <Link href={`/blog/${post.slug}`} className="link-hover shrink-0 font-semibold">
+                  <Link href={`/${post.slug}`} className="link-hover shrink-0 font-semibold">
                     Read More →
                   </Link>
                 </div>

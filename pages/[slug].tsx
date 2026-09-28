@@ -4,12 +4,14 @@ import Link from "next/link";
 import type { GetServerSideProps } from "next";
 import { useState } from "react";
 import BiginAppointmentWidget from "@/components/BiginAppointmentWidget";
+import BlogPostView from "@/components/BlogPostView";
 import DoctorsSection from "@/components/DoctorsSection";
 import HeroSection from "@/components/HeroSection";
 import ServicesSection from "@/components/ServicesSection";
 import SitePage from "@/components/SitePage";
 import { getContent, section, type DynamicSection } from "@/lib/contentApi";
 import { absoluteUrl } from "@/lib/siteUrl";
+import { getBlog, getBlogs, sanitizeWordPressHtml, type BlogApiPost } from "@/lib/blogsApi";
 
 const benefitsFallback = [
   ["⌘", "Expert Multi-Speciality", "Dental Team"],
@@ -363,7 +365,7 @@ type LocationData = {
   sections: DynamicSection[];
 };
 
-export default function LocationPage({ data }: { data: LocationData }) {
+function LocationPageView({ data }: { data: LocationData }) {
   const intro = section(data.sections, "introduction") || {};
   const benefitSection = section(data.sections, "benefits") || {};
   const serviceSection = section(data.sections, "services") || {};
@@ -592,21 +594,68 @@ export default function LocationPage({ data }: { data: LocationData }) {
   );
 }
 
-export const getServerSideProps: GetServerSideProps<{ data: LocationData }> = async ({
-  params,
-  res,
-}) => {
-  const slug = String(params?.slug || "");
-  try {
-    const data = await getContent<LocationData>(`locations/${slug}`);
-    res.setHeader("Cache-Control", "public, s-maxage=60, stale-while-revalidate=300");
-    return { props: { data } };
-  } catch {
-    const data = fallbackLocation(slug);
-    if (data) {
-      res.setHeader("Cache-Control", "public, s-maxage=60, stale-while-revalidate=300");
-      return { props: { data } };
-    }
-    return { notFound: true };
+type Props =
+  | { kind: "location"; data: LocationData }
+  | {
+      kind: "blog";
+      post: BlogApiPost;
+      relatedPosts: BlogApiPost[];
+      categories: { name: string; slug: string }[];
+      sanitizedContent: string;
+    };
+
+export default function SlugPage(props: Props) {
+  if (props.kind === "blog") {
+    return (
+      <BlogPostView
+        post={props.post}
+        relatedPosts={props.relatedPosts}
+        categories={props.categories}
+        sanitizedContent={props.sanitizedContent}
+      />
+    );
   }
+  return <LocationPageView data={props.data} />;
+}
+
+export const getServerSideProps: GetServerSideProps<Props> = async ({ params, res }) => {
+  const slug = String(params?.slug || "");
+
+  const [locationData, blogPost] = await Promise.all([
+    getContent<LocationData>(`locations/${slug}`).catch(() => null),
+    getBlog(slug),
+  ]);
+
+  if (locationData) {
+    res.setHeader("Cache-Control", "public, s-maxage=60, stale-while-revalidate=300");
+    return { props: { kind: "location", data: locationData } };
+  }
+
+  if (blogPost) {
+    const posts = await getBlogs();
+    const otherPosts = posts.filter((item) => item.slug !== slug);
+    const categories = Array.from(
+      new Map(
+        otherPosts.flatMap((item) => item.categories).map((item) => [item.slug, item]),
+      ).values(),
+    );
+    res.setHeader("Cache-Control", "public, s-maxage=60, stale-while-revalidate=300");
+    return {
+      props: {
+        kind: "blog",
+        post: blogPost,
+        relatedPosts: otherPosts.slice(0, 5),
+        categories,
+        sanitizedContent: sanitizeWordPressHtml(blogPost.content || ""),
+      },
+    };
+  }
+
+  const fallbackData = fallbackLocation(slug);
+  if (fallbackData) {
+    res.setHeader("Cache-Control", "public, s-maxage=60, stale-while-revalidate=300");
+    return { props: { kind: "location", data: fallbackData } };
+  }
+
+  return { notFound: true };
 };
