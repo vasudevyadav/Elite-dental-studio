@@ -3,7 +3,6 @@ import { getBlogs } from "@/lib/blogsApi";
 import { getContent, type ClinicRef, type DoctorsData } from "@/lib/contentApi";
 import { getServices } from "@/lib/servicesApi";
 import { absoluteUrl } from "@/lib/siteUrl";
-import { isMainClinic } from "@/lib/clinics";
 
 const staticPaths = [
   "/",
@@ -43,9 +42,7 @@ export const getServerSideProps: GetServerSideProps = async ({ res }) => {
   (doctorsData?.items || []).forEach((doctor) =>
     paths.set(doctor.profileUrl || `/doctors/${doctor.slug}`, undefined),
   );
-  locationsData.items
-    .filter((location) => isMainClinic(location.slug))
-    .forEach((location) => paths.set(`/${location.slug}`, undefined));
+  locationsData.items.forEach((location) => paths.set(`/${location.slug}`, undefined));
 
   const urls = Array.from(paths)
     .map(([path, lastModified]) => {
