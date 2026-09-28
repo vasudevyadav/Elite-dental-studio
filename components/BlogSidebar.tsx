@@ -63,7 +63,7 @@ export default function BlogSidebar({
               className="relative mb-4 pl-[18px] text-base leading-[1.55] font-semibold before:absolute before:left-0 before:content-['•']"
               key={post.slug}
             >
-              <Link href={`/blog/${post.slug}`}>{post.title}</Link>
+              <Link href={`/${post.slug}`}>{post.title}</Link>
             </li>
           ))}
         </ul>

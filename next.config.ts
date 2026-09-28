@@ -16,6 +16,9 @@ const nextConfig: NextConfig = {
       { source: "/services/", destination: "/service", permanent: true },
       { source: "/services/:slug", destination: "/service/:slug", permanent: true },
       { source: "/services/:slug/", destination: "/service/:slug", permanent: true },
+      // Blog posts moved from /blog/:slug to /:slug (root); /blog itself (the list) is unchanged.
+      { source: "/blog/:slug", destination: "/:slug", permanent: true },
+      { source: "/blog/:slug/", destination: "/:slug", permanent: true },
       ...siteRedirects.flatMap(({ source, destination }) => [
         { source, destination, permanent: true },
         { source: `${source}/`, destination, permanent: true },

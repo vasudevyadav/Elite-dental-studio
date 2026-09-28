@@ -100,7 +100,7 @@ export default function BlogDirectory({
               </small>
               <Link
                 className="rounded-sm bg-[#286f73] px-[21px] py-2 text-[13px] font-semibold text-white sm:ml-auto"
-                href={`/blog/${featured?.slug ?? ""}`}
+                href={`/${featured?.slug ?? ""}`}
               >
                 Read more
               </Link>
@@ -141,7 +141,7 @@ export default function BlogDirectory({
                 key={`${post.slug}-${index}`}
               >
                 <Link
-                  href={`/blog/${post.slug}`}
+                  href={`/${post.slug}`}
                   className="relative block h-[185px] overflow-hidden sm:h-[195px] xl:h-[205px]"
                 >
                   <Image
@@ -166,7 +166,7 @@ export default function BlogDirectory({
                   </small>
                   <Link
                     className="ml-auto rounded-sm bg-[#286f73] px-[15px] py-1.5 text-[13px] font-semibold whitespace-nowrap text-white"
-                    href={`/blog/${post.slug}`}
+                    href={`/${post.slug}`}
                   >
                     Read more
                   </Link>

@@ -1,26 +1,23 @@
-import type { GetServerSideProps } from "next";
 import Image from "next/image";
 import BookAppointmentSection from "@/components/BookAppointmentSection";
 import BlogSidebar from "@/components/BlogSidebar";
 import FAQSection from "@/components/FAQSection";
 import SitePage from "@/components/SitePage";
-import {
-  formatBlogDate,
-  getBlog,
-  getBlogs,
-  sanitizeWordPressHtml,
-  type BlogApiPost,
-  type BlogCategory,
-} from "@/lib/blogsApi";
+import { formatBlogDate, type BlogApiPost, type BlogCategory } from "@/lib/blogsApi";
 
-type Props = {
+export type BlogPostViewProps = {
   post: BlogApiPost;
   relatedPosts: BlogApiPost[];
   categories: BlogCategory[];
   sanitizedContent: string;
 };
 
-export default function BlogPostPage({ post, relatedPosts, categories, sanitizedContent }: Props) {
+export default function BlogPostView({
+  post,
+  relatedPosts,
+  categories,
+  sanitizedContent,
+}: BlogPostViewProps) {
   return (
     <SitePage title={`${post.title} | Elite Dental Studio`} description={post.excerpt}>
       <section className="mx-auto max-w-[1240px] px-4 pt-8 pb-[34px] text-[#333] sm:px-8 sm:pt-10 lg:px-[34px] lg:pt-12">
@@ -66,22 +63,3 @@ export default function BlogPostPage({ post, relatedPosts, categories, sanitized
     </SitePage>
   );
 }
-
-export const getServerSideProps: GetServerSideProps<Props> = async ({ params, res }) => {
-  const slug = String(params?.slug || "");
-  const [post, posts] = await Promise.all([getBlog(slug), getBlogs()]);
-  if (!post) return { notFound: true };
-  const otherPosts = posts.filter((item) => item.slug !== slug);
-  const categories = Array.from(
-    new Map(otherPosts.flatMap((item) => item.categories).map((item) => [item.slug, item])).values(),
-  );
-  res.setHeader("Cache-Control", "public, s-maxage=60, stale-while-revalidate=300");
-  return {
-    props: {
-      post,
-      relatedPosts: otherPosts.slice(0, 5),
-      categories,
-      sanitizedContent: sanitizeWordPressHtml(post.content || ""),
-    },
-  };
-};

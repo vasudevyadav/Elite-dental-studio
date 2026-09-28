@@ -38,7 +38,7 @@ export const getServerSideProps: GetServerSideProps = async ({ res }) => {
   staticPaths.forEach((path) => paths.set(path, undefined));
   services.forEach((service) => paths.set(`/service/${service.slug}`, undefined));
   blogs.forEach((post) =>
-    paths.set(`/blog/${post.slug}`, post.updatedAt || post.publishedAt || undefined),
+    paths.set(`/${post.slug}`, post.updatedAt || post.publishedAt || undefined),
   );
   (doctorsData?.items || []).forEach((doctor) =>
     paths.set(doctor.profileUrl || `/doctors/${doctor.slug}`, undefined),
