@@ -86,6 +86,19 @@ const introductionFallbacks: Record<string, { title: string; paragraphs: [string
   },
 };
 
+// Used only when the locations API doesn't provide seo.metaTitle/metaDescription for a city.
+const seoFallbacks: Record<string, { title: string; description?: string }> = {
+  kochi: { title: "Best Dental Clinic In Kochi | Dental Hospital in Kochi" },
+  calicut: {
+    title: "Best Dental Clinic In Calicut | Dental Hospital in Calicut | Dentist in Calicut",
+  },
+  kannur: {
+    title: "Dental Clinic in Kannur | Best Dental Clinic in Kannur | Elite Dental Studio",
+    description:
+      "Looking for the best dental clinic in Kannur? Elite Dental Studio at Talap offers ISO-certified dental care with expert MDS specialists for implants, aligners, root canal & kids dentistry. Book Free Appointment Today!",
+  },
+};
+
 const clinicOptions = ["Kannur", "Calicut", "Kochi", "Coimbatore"];
 
 type ClinicDirectoryEntry = {
@@ -388,10 +401,14 @@ function LocationPageView({ data }: { data: LocationData }) {
   const introParagraphs = intro.paragraphs?.filter(Boolean)?.length
     ? intro.paragraphs
     : introduction.paragraphs;
+  const seoFallback = seoFallbacks[cityKey];
   const pageTitle =
-    data.seo?.metaTitle?.trim() || `Dental Clinic in ${data.name} | Elite Dental Studio`;
+    data.seo?.metaTitle?.trim() ||
+    seoFallback?.title ||
+    `Dental Clinic in ${data.name} | Elite Dental Studio`;
   const pageDescription =
     data.seo?.metaDescription?.trim() ||
+    seoFallback?.description ||
     `Visit Elite Dental Studio ${data.name} for specialist-led dental care, modern diagnostics and personalised treatment planning.`;
 
   return (

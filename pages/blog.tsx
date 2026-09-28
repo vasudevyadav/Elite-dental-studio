@@ -10,10 +10,10 @@ type Props = { data: BlogListData; initialCategory: string };
 export default function BlogPage({ data, initialCategory }: Props) {
   return (
     <SitePage
-      title={data.pageSeo?.metaTitle || "Dental Blog | Elite Dental Studio"}
+      title={data.pageSeo?.metaTitle || "Dental Blog | Expert Oral Health Tips & Treatments | Elite Dental Studio"}
       description={
         data.pageSeo?.metaDescription ||
-        "Read dental care tips, treatment guides and the latest news from Elite Dental Studio."
+        "Stay updated with the latest dental care tips and treatments from Elite Dental Studio, the best dental clinic in Calicut and Kochi."
       }
     >
       <BlogDirectory posts={data.items} initialCategory={initialCategory} />

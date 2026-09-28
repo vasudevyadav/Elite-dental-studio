@@ -188,8 +188,8 @@ const faqs = aboutFaqContent.items.map(({ question, answer }) => [question, answ
 export default function InternationalPatientsPage() {
   return (
     <SitePage
-      title="Dental Tourism in Kerala | Elite Dental Studio"
-      description="Plan dental treatment in Kerala with Elite Dental Studio clinics in Calicut, Kochi and Kannur. Get an indicative treatment plan before you travel."
+      title="Dental Tourism - Elite Dental Studio"
+      description="Explore affordable and high-quality dental treatments abroad with Elite Dental Studio's dental tourism services. Get world-class care, personalized treatment plans, and a seamless experience."
     >
       <section className="relative isolate overflow-hidden bg-[#083f43] text-white">
         <Image

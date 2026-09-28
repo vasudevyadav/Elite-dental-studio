@@ -5,8 +5,8 @@ import FacilitiesExperience from "@/components/facilities/FacilitiesExperience";
 export default function FacilitiesPage() {
   return (
     <SitePage
-      title="World-class Dental Facilities | Elite Dental Studio"
-      description="Explore modern dental technology, digital diagnostics, sterilisation and patient comfort facilities at Elite Dental Studio."
+      title="Dental Clinic Facilities | Elite Dental Studio"
+      description="Explore the modern facilities at Elite Dental Studio, designed to support advanced dental treatments, comfortable care, and a positive patient experience."
     >
       <div className="[&>section]:after:pointer-events-none [&>section]:after:absolute [&>section]:after:inset-0 [&>section]:after:z-20 [&>section]:after:bg-[rgba(4,55,60,.70)]">
         <HeroSection
