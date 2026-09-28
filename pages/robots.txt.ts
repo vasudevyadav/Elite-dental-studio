@@ -8,7 +8,9 @@ export default function Robots() {
 export const getServerSideProps: GetServerSideProps = async ({ res }) => {
   res.setHeader("Content-Type", "text/plain");
   res.setHeader("Cache-Control", "public, s-maxage=86400, stale-while-revalidate=604800");
-  res.write(`User-agent: *\nAllow: /\nDisallow: /api/\nDisallow: /thank-you\nSitemap: ${absoluteUrl("/sitemap.xml")}\n`);
+  res.write(
+    `User-agent: *\nAllow: /\nDisallow: /api/\nDisallow: /thank-you\nDisallow: /leads/\nDisallow: /includes/\nSitemap: ${absoluteUrl("/sitemap.xml")}\n`,
+  );
   res.end();
   return { props: {} };
 };

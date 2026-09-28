@@ -53,9 +53,17 @@ export function proxy(request: NextRequest) {
   headers.set("x-forwarded-host", request.headers.get("host") || "elitedentalstudio.co.in");
   headers.set("x-forwarded-proto", "https");
 
-  return NextResponse.rewrite(new URL(`${pathname}${search}`, CAMPAIGN_ORIGIN), {
+  const response = NextResponse.rewrite(new URL(`${pathname}${search}`, CAMPAIGN_ORIGIN), {
     request: { headers },
   });
+
+  // /leads/ (admin panel) and /includes/ (its shared assets) must never be indexed,
+  // on top of the robots.txt Disallow.
+  if (/^\/(leads|includes)(\/.*)?$/i.test(pathname)) {
+    response.headers.set("X-Robots-Tag", "noindex, nofollow");
+  }
+
+  return response;
 }
 
 export const config = {
