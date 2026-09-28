@@ -11,8 +11,8 @@ import SitePage from "@/components/SitePage";
 export default function AboutPage() {
   return (
     <SitePage
-      title="About Us | Elite Dental Studio"
-      description="Learn about Elite Dental Studio, our mission, leadership and patient-first approach to dental care."
+      title="About Elite Dental Studio"
+      description="Learn about Elite Dental Studio offering advanced dental treatments, experienced dentists, modern facilities, and compassionate patient care."
       mainClassName="bg-white"
     >
       <AboutHero />

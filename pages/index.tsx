@@ -57,8 +57,8 @@ function isSpecificMapUrl(mapUrl?: string) {
 export default function Home({ services, doctors, blogs, clinics, testimonials }: HomeProps) {
   return (
     <SitePage
-      title="Elite Dental Studio | Specialist Dental Care Across Calicut, Kochi, Kannur and Coimbatore"
-      description="ISO 9001 certified specialist dental care across Calicut, Kochi, Kannur and Coimbatore, led by MDS qualified doctors since 2020."
+      title="Best Dental Clinic in Calicut | Dental Clinic in Kozhikode | Elite Dental Studio"
+      description="Looking for the best dental clinic in Calicut? Elite Dental Studio offers expert dental care with ISO-certified facilities, specialist doctors & affordable treatments in Calicut, Kochi & Kannur. Book Free Appointment Today!"
       showFooterLocations={false}
     >
       <h1 className="sr-only">
