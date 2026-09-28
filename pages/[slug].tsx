@@ -10,6 +10,7 @@ import HeroSection from "@/components/HeroSection";
 import ServicesSection from "@/components/ServicesSection";
 import SitePage from "@/components/SitePage";
 import { getContent, section, type DynamicSection } from "@/lib/contentApi";
+import { locationStructuredData } from "@/lib/locationStructuredData";
 import { absoluteUrl } from "@/lib/siteUrl";
 import { getBlog, getBlogs, sanitizeWordPressHtml, type BlogApiPost } from "@/lib/blogsApi";
 
@@ -402,6 +403,7 @@ function LocationPageView({ data }: { data: LocationData }) {
     ? intro.paragraphs
     : introduction.paragraphs;
   const seoFallback = seoFallbacks[cityKey];
+  const richSchema = locationStructuredData[data.slug.toLowerCase()];
   const pageTitle =
     data.seo?.metaTitle?.trim() ||
     seoFallback?.title ||
@@ -415,21 +417,23 @@ function LocationPageView({ data }: { data: LocationData }) {
     <SitePage
       title={pageTitle}
       description={pageDescription}
-      structuredData={{
-        "@context": "https://schema.org",
-        "@type": "Dentist",
-        name: `Elite Dental Studio ${data.name}`,
-        url: absoluteUrl(`/${data.slug}`),
-        telephone: data.contact.mobile,
-        email: data.contact.email,
-        hasMap: data.contact.mapUrl,
-        address: {
-          "@type": "PostalAddress",
-          streetAddress: data.contact.addressLines.join(", "),
-          addressLocality: data.name,
-          addressCountry: "IN",
-        },
-      }}
+      structuredData={
+        richSchema || {
+          "@context": "https://schema.org",
+          "@type": "Dentist",
+          name: `Elite Dental Studio ${data.name}`,
+          url: absoluteUrl(`/${data.slug}`),
+          telephone: data.contact.mobile,
+          email: data.contact.email,
+          hasMap: data.contact.mapUrl,
+          address: {
+            "@type": "PostalAddress",
+            streetAddress: data.contact.addressLines.join(", "),
+            addressLocality: data.name,
+            addressCountry: "IN",
+          },
+        }
+      }
       mainClassName="[&_.scroll-reveal]:!translate-y-0 [&_.scroll-reveal]:!opacity-100"
     >
       <h1 className="sr-only">Elite Dental Studio dental clinic in {data.name}</h1>

@@ -19,6 +19,18 @@ export const siteRedirects = [
     destination: "/service/gum-treatement",
   },
   {
+    source: "/service/dental-hospital-in-calicut",
+    destination: "/dental-hospital-in-calicut",
+  },
+  {
+    source: "/service/dental-hospital-in-kochi",
+    destination: "/dental-hospital-in-kochi",
+  },
+  {
+    source: "/service/dentist-in-calicut",
+    destination: "/dentist-in-calicut",
+  },
+  {
     source: "/directors/dr-fathima-nifla",
     destination: "/doctors/dr-fathima-nifla-cp",
   },
