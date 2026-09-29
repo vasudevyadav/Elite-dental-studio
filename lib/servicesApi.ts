@@ -58,6 +58,13 @@ export type ServiceFaqs = {
   items: { question: string; answer: string }[];
 };
 
+type ServiceFaqItem = ServiceFaqs["items"][number];
+
+type ServiceApiDetail = Omit<ServiceDetail, "faqs"> & {
+  faqHeading?: string;
+  faqs?: ServiceFaqs | ServiceFaqItem[];
+};
+
 export type ServiceDetail = ServiceListItem & {
   treatmentName: string;
   seo?: {
@@ -73,7 +80,7 @@ export type ServiceDetail = ServiceListItem & {
   comparisonTable?: ServiceComparisonTable;
   earlyTreatment?: ServiceEarlyTreatment;
   specialists?: ServiceSpecialists;
-  faqs?: ServiceFaqs;
+  faqs?: ServiceFaqs | null;
 };
 
 export type ServicesPageData = {
@@ -176,7 +183,7 @@ export async function getServices(): Promise<ServiceListItem[]> {
 export async function getService(slug: string): Promise<ServiceDetail | null> {
   try {
     const service = await request<
-      ServiceDetail &
+      ServiceApiDetail &
         Record<ServiceSection["type"], Record<string, unknown>> & { accordion?: unknown }
     >(`/services/${encodeURIComponent(slug)}`);
     const listItem = normalizeListItem(service, service.sortOrder ?? 0);
@@ -203,6 +210,25 @@ export async function getService(slug: string): Promise<ServiceDetail | null> {
             isEnabled: true,
             content: service[type],
           }));
+    const rawFaqItems = Array.isArray(service.faqs) ? service.faqs : service.faqs?.items;
+    const faqItems = (rawFaqItems || []).filter(
+      (item): item is ServiceFaqItem =>
+        typeof item?.question === "string" &&
+        item.question.trim().length > 0 &&
+        typeof item?.answer === "string" &&
+        item.answer.trim().length > 0,
+    );
+    const faqs = faqItems.length
+      ? {
+          title:
+            (Array.isArray(service.faqs) ? service.faqHeading : service.faqs?.title) ||
+            "Frequently Asked Questions",
+          items: faqItems.map((item) => ({
+            question: decodeText(item.question),
+            answer: decodeText(item.answer),
+          })),
+        }
+      : undefined;
     return {
       ...service,
       ...listItem,
@@ -216,6 +242,7 @@ export async function getService(slug: string): Promise<ServiceDetail | null> {
         .filter((section) => section.isEnabled !== false)
         .sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0)),
       accordionItems,
+      faqs: faqs ?? null,
     };
   } catch (error) {
     console.error(`Unable to load service ${slug}.`, error);
