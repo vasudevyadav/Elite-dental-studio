@@ -19,6 +19,7 @@ import BenefitsSection from "@/components/services/BenefitsSection";
 import TreatmentResults from "@/components/services/TreatmentResults";
 import ComparisonTableSection from "@/components/services/ComparisonTableSection";
 import EarlyTreatmentSection from "@/components/services/EarlyTreatmentSection";
+import ServiceAccordionSection from "@/components/services/ServiceAccordionSection";
 import {
   getService,
   toLegacyService,
@@ -26,6 +27,7 @@ import {
   type ServiceSection,
 } from "@/lib/servicesApi";
 import { absoluteUrl } from "@/lib/siteUrl";
+import { serviceStructuredData } from "@/lib/serviceStructuredData";
 import { getTestimonials, type TestimonialItem } from "@/lib/testimonialsApi";
 import { getContent } from "@/lib/contentApi";
 
@@ -106,7 +108,13 @@ export default function ServiceDetailPage({ service, testimonials, galleryCases 
       }
     : results;
   const hasTreatmentDetails = Boolean(
-    introduction || procedures || candidate || expectation || aftercare || benefits,
+    introduction ||
+    procedures ||
+    candidate ||
+    expectation ||
+    aftercare ||
+    benefits ||
+    service.accordionItems.length,
   );
   const serviceFaqContent = service.faqs?.items?.length
     ? {
@@ -116,6 +124,7 @@ export default function ServiceDetailPage({ service, testimonials, galleryCases 
         items: service.faqs.items,
       }
     : undefined;
+  const structuredData = serviceStructuredData[service.slug];
 
   return (
     <>
@@ -152,6 +161,14 @@ export default function ServiceDetailPage({ service, testimonials, galleryCases 
             absoluteUrl("/navbar/elite-dental-logo.webp")
           }
         />
+        {structuredData && (
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify(structuredData).replace(/</g, "\\u003c"),
+            }}
+          />
+        )}
       </Head>
 
       <Navbar />
@@ -184,6 +201,7 @@ export default function ServiceDetailPage({ service, testimonials, galleryCases 
             {expectation && <TreatmentExpectationSection data={expectation} />}
             {aftercare && <AftercareSection data={aftercare} />}
             {benefits && <BenefitsSection treatmentName={treatmentName} data={benefits} />}
+            <ServiceAccordionSection items={service.accordionItems} />
           </div>
         )}
 
