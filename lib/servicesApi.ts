@@ -93,6 +93,11 @@ export type ServicesPageData = {
     description?: string;
   };
   items: ServiceListItem[];
+  pagination?: {
+    currentPage: number;
+    totalPages: number;
+    hasNextPage: boolean;
+  };
 };
 
 type Envelope<T> = { success: boolean; message?: string; data: T };
@@ -151,9 +156,21 @@ async function request<T>(path: string): Promise<T> {
 }
 
 export async function getServicesStrict(): Promise<ServiceListItem[]> {
-  const data = await request<{ items: ServiceListItem[] } | ServiceListItem[]>("/services");
-  const items = Array.isArray(data) ? data : data.items;
-  return items
+  const MAX_PAGES = 20;
+  const items: ServiceListItem[] = [];
+  let page = 1;
+
+  while (page <= MAX_PAGES) {
+    const data = await request<ServicesPageData | ServiceListItem[]>(`/services?page=${page}`);
+    const pageItems = Array.isArray(data) ? data : (data.items ?? []);
+    items.push(...pageItems);
+
+    if (Array.isArray(data) || !data.pagination?.hasNextPage) break;
+    if (page >= data.pagination.totalPages) break;
+    page += 1;
+  }
+
+  return Array.from(new Map(items.map((item) => [item.slug, item])).values())
     .filter((item) => item?.slug && item?.title)
     .map(normalizeListItem)
     .sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));

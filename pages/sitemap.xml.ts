@@ -28,6 +28,8 @@ const requiredDynamicPaths = [
   "/service/dental-implants-treatment-in-coimbatore",
   "/service/wisdom-teeth-removal-in-coimbatore",
   "/service/smile-makeover-treatment-in-coimbatore",
+  "/service/laser-dental-clinic-in-coimbatore",
+  "/service/cosmetic-dentist-in-coimbatore",
 ];
 
 const escapeXml = (value: string) =>
