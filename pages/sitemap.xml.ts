@@ -19,6 +19,17 @@ const staticPaths = [
   "/gallery/cases",
 ];
 
+// Published CMS detail pages can become available before their collection
+// endpoints are refreshed. Keep these canonical URLs discoverable until the
+// corresponding services/locations list responses include them as well.
+const requiredDynamicPaths = [
+  "/pediatric-dental-clinic-in-coimbatore",
+  "/service/dental-braces-treatment-in-coimbatore",
+  "/service/dental-implants-treatment-in-coimbatore",
+  "/service/wisdom-teeth-removal-in-coimbatore",
+  "/service/smile-makeover-treatment-in-coimbatore",
+];
+
 const escapeXml = (value: string) =>
   value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
@@ -35,6 +46,7 @@ export const getServerSideProps: GetServerSideProps = async ({ res }) => {
   ]);
   const paths = new Map<string, string | undefined>();
   staticPaths.forEach((path) => paths.set(path, undefined));
+  requiredDynamicPaths.forEach((path) => paths.set(path, undefined));
   services.forEach((service) => paths.set(`/service/${service.slug}`, undefined));
   blogs.forEach((post) =>
     paths.set(`/${post.slug}`, post.updatedAt || post.publishedAt || undefined),
