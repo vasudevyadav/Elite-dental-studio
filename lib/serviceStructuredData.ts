@@ -57,7 +57,7 @@ export const serviceStructuredData: Record<string, ServiceStructuredData> = {
       },
     ],
   },
-  periodontics: {
+  "gum-treatement": {
     "@context": "https://schema.org",
     "@graph": [
       {
@@ -159,7 +159,7 @@ export const serviceStructuredData: Record<string, ServiceStructuredData> = {
       },
     ],
   },
-  "clear-aligners-treatment": {
+  "clear-aligners": {
     "@context": "https://schema.org",
     "@graph": [
       {
@@ -179,21 +179,21 @@ export const serviceStructuredData: Record<string, ServiceStructuredData> = {
         },
         medicalSpecialty: "https://schema.org/Dentistry",
         availableService: {
-          "@id": "https://elitedentalstudio.co.in/service/clear-aligners-treatment/#procedure",
+          "@id": "https://elitedentalstudio.co.in/service/clear-aligners/#procedure",
         },
       },
       {
         "@type": "MedicalWebPage",
-        "@id": "https://elitedentalstudio.co.in/service/clear-aligners-treatment/#webpage",
-        url: "https://elitedentalstudio.co.in/service/clear-aligners-treatment/",
+        "@id": "https://elitedentalstudio.co.in/service/clear-aligners/#webpage",
+        url: "https://elitedentalstudio.co.in/service/clear-aligners/",
         name: "Clear Aligner Treatment in Kochi, Calicut and Kannur | Elite Dental Studio",
         description:
           "Get clear aligner treatment at Elite Dental Studio in Kochi, Calicut and Kannur. Explore customised invisible aligners, digital treatment planning and personalised orthodontic care.",
         about: {
-          "@id": "https://elitedentalstudio.co.in/service/clear-aligners-treatment/#procedure",
+          "@id": "https://elitedentalstudio.co.in/service/clear-aligners/#procedure",
         },
         mainEntity: {
-          "@id": "https://elitedentalstudio.co.in/service/clear-aligners-treatment/#procedure",
+          "@id": "https://elitedentalstudio.co.in/service/clear-aligners/#procedure",
         },
         publisher: {
           "@id": "https://elitedentalstudio.co.in/#organization",
@@ -204,7 +204,7 @@ export const serviceStructuredData: Record<string, ServiceStructuredData> = {
       },
       {
         "@type": "MedicalProcedure",
-        "@id": "https://elitedentalstudio.co.in/service/clear-aligners-treatment/#procedure",
+        "@id": "https://elitedentalstudio.co.in/service/clear-aligners/#procedure",
         name: "Clear Aligner Treatment",
         alternateName: ["Invisible Dental Aligners", "Invisalign Treatment"],
         description:
@@ -220,7 +220,7 @@ export const serviceStructuredData: Record<string, ServiceStructuredData> = {
           "@id": "https://elitedentalstudio.co.in/#dentist",
         },
         mainEntityOfPage: {
-          "@id": "https://elitedentalstudio.co.in/service/clear-aligners-treatment/#webpage",
+          "@id": "https://elitedentalstudio.co.in/service/clear-aligners/#webpage",
         },
       },
     ],
