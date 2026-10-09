@@ -16,6 +16,8 @@ const staticPaths = [
   "/contact",
   "/blog",
   "/careers",
+  "/privacy-policy",
+  "/terms-and-conditions",
   "/gallery/cases",
 ];
 

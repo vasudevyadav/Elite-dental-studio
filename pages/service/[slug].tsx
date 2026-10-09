@@ -27,7 +27,7 @@ import {
   type ServiceSection,
 } from "@/lib/servicesApi";
 import { absoluteUrl } from "@/lib/siteUrl";
-import { serviceStructuredData } from "@/lib/serviceStructuredData";
+import { getServiceStructuredData } from "@/lib/serviceStructuredData";
 import { getTestimonials, type TestimonialItem } from "@/lib/testimonialsApi";
 import { getContent } from "@/lib/contentApi";
 
@@ -124,7 +124,7 @@ export default function ServiceDetailPage({ service, testimonials, galleryCases 
         items: service.faqs.items,
       }
     : undefined;
-  const structuredData = serviceStructuredData[service.slug];
+  const structuredData = getServiceStructuredData(service.slug);
 
   return (
     <>

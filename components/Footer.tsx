@@ -238,6 +238,17 @@ export default function Footer() {
             </ul>
           </div>
         </div>
+        <div className="mt-10 flex flex-col items-center justify-between gap-4 border-t border-white/20 pt-6 text-center text-sm text-white/75 sm:flex-row sm:text-left">
+          <p>© {new Date().getFullYear()} Elite Dental Studio. All rights reserved.</p>
+          <div className="flex flex-wrap justify-center gap-x-6 gap-y-3 sm:justify-end">
+            <Link href="/privacy-policy" className="smooth-hover hover:text-dent-accent">
+              Privacy Policy
+            </Link>
+            <Link href="/terms-and-conditions" className="smooth-hover hover:text-dent-accent">
+              Terms &amp; Conditions
+            </Link>
+          </div>
+        </div>
       </div>
     </footer>
   );
