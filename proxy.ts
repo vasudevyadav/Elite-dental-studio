@@ -6,8 +6,7 @@ import { NextResponse, type NextRequest } from "next/server";
  * Transparent reverse proxy: browser URL never changes; POSTs (submit.php),
  * cookies (PHP session for captcha) and assets pass through.
  */
-const CAMPAIGN_ORIGIN =
-  process.env.CAMPAIGN_ORIGIN || "https://campaign.elitedentalstudio.co.in";
+const CAMPAIGN_ORIGIN = process.env.CAMPAIGN_ORIGIN || "https://campaign.elitedentalstudio.co.in";
 
 // Folders served from the campaign site: ad landing pages, the /leads/ admin panel,
 // and /includes/ (shared CSS/assets the leads panel loads from the site root).
@@ -21,13 +20,20 @@ export function proxy(request: NextRequest) {
   const { pathname, search } = new URL(request.url);
   const match = pathname.match(LANDING_DIR);
 
-  // www.elitedentalstudio.co.in/... -> elitedentalstudio.co.in/... (single permanent hop,
-  // path and query kept, trailing slash fixed in the same hop).
-  const host = (request.headers.get("host") || "").toLowerCase();
-  if (host.startsWith("www.")) {
+  // HTTP and www requests -> canonical HTTPS URL (single permanent hop, path and
+  // query kept, trailing slash fixed in the same hop). Prefer x-forwarded-proto
+  // because production TLS is terminated by the hosting proxy before Next.js.
+  const host = (request.headers.get("host") || "").toLowerCase().split(":")[0];
+  const forwardedProto = request.headers.get("x-forwarded-proto")?.split(",")[0].trim();
+  const protocol = forwardedProto || new URL(request.url).protocol.replace(":", "");
+  if (
+    (host === CANONICAL_HOST || host === `www.${CANONICAL_HOST}`) &&
+    (protocol === "http" || host.startsWith("www."))
+  ) {
     let target = pathname;
     if (match && !match[2]) target = `${pathname}/`;
-    else if (!match && target.length > 1 && target.endsWith("/")) target = target.replace(/\/+$/, "");
+    else if (!match && target.length > 1 && target.endsWith("/"))
+      target = target.replace(/\/+$/, "");
     return NextResponse.redirect(`https://${CANONICAL_HOST}${target}${search}`, 308);
   }
 
@@ -67,5 +73,6 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!_next/|api/|favicon.ico).*)"],
+  // Run on every request so HTTP cannot bypass the HTTPS redirect on APIs or assets.
+  matcher: ["/:path*"],
 };

@@ -774,3 +774,7 @@ export const serviceStructuredData: Record<string, ServiceStructuredData> = {
     ],
   },
 };
+
+export function getServiceStructuredData(serviceSlug: string) {
+  return serviceStructuredData[serviceSlug.trim().toLowerCase()];
+}
