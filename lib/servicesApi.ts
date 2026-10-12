@@ -263,10 +263,7 @@ export async function getService(slug: string): Promise<ServiceDetail | null> {
     };
   } catch (error) {
     console.error(`Unable to load service ${slug}.`, error);
-    const fallback = fallbackItems.find((item) => item.slug === slug);
-    return fallback
-      ? { ...fallback, treatmentName: fallback.title, sections: [], accordionItems: [] }
-      : null;
+    return null;
   }
 }
 
