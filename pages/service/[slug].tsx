@@ -235,7 +235,14 @@ export default function ServiceDetailPage({ service, testimonials, galleryCases 
 
 export const getServerSideProps: GetServerSideProps<Props> = async ({ params, res }) => {
   const service = await getService(String(params?.slug));
-  if (!service) return { notFound: true };
+  if (!service) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
   const [testimonials, galleryData] = await Promise.all([
     getTestimonials().catch(() => []),
     getContent<{ items?: GalleryCaseItem[] }>(
