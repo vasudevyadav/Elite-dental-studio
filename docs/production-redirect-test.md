@@ -39,8 +39,6 @@ Domain: https://elitedentalstudio.co.in
 | https://elitedentalstudio.co.in/service/cosmetic-treatments/?utm_source=redirect-check | 308 | https://elitedentalstudio.co.in/service/cosmetic-treatments?utm_source=redirect-check | 404 |
 | https://elitedentalstudio.co.in/service/dental-implant?utm_source=redirect-check | 404 | None | 404 |
 | https://elitedentalstudio.co.in/service/dental-implant/?utm_source=redirect-check | 308 | https://elitedentalstudio.co.in/service/dental-implant?utm_source=redirect-check | 404 |
-| https://elitedentalstudio.co.in/directors/dr-fathima-nifla?utm_source=redirect-check | 404 | None | 404 |
-| https://elitedentalstudio.co.in/directors/dr-fathima-nifla/?utm_source=redirect-check | 308 | https://elitedentalstudio.co.in/directors/dr-fathima-nifla?utm_source=redirect-check | 404 |
 | https://elitedentalstudio.co.in/directors/dr-amal-sidharth?utm_source=redirect-check | 404 | None | 404 |
 | https://elitedentalstudio.co.in/directors/dr-amal-sidharth/?utm_source=redirect-check | 308 | https://elitedentalstudio.co.in/directors/dr-amal-sidharth?utm_source=redirect-check | 404 |
 | https://elitedentalstudio.co.in/directors/dr-jafar-hamza?utm_source=redirect-check | 404 | None | 404 |

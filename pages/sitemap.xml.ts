@@ -3,6 +3,7 @@ import { getBlogs } from "@/lib/blogsApi";
 import { getContent, type ClinicRef, type DoctorsData } from "@/lib/contentApi";
 import { getServices } from "@/lib/servicesApi";
 import { absoluteUrl } from "@/lib/siteUrl";
+import { isHiddenDoctor } from "@/lib/doctorVisibility";
 
 const staticPaths = [
   "/",
@@ -55,9 +56,9 @@ export const getServerSideProps: GetServerSideProps = async ({ res }) => {
   blogs.forEach((post) =>
     paths.set(`/${post.slug}`, post.updatedAt || post.publishedAt || undefined),
   );
-  (doctorsData?.items || []).forEach((doctor) =>
-    paths.set(doctor.profileUrl || `/doctors/${doctor.slug}`, undefined),
-  );
+  (doctorsData?.items || [])
+    .filter((doctor) => !isHiddenDoctor(doctor))
+    .forEach((doctor) => paths.set(doctor.profileUrl || `/doctors/${doctor.slug}`, undefined));
   locationsData.items.forEach((location) => paths.set(`/${location.slug}`, undefined));
 
   const urls = Array.from(paths)

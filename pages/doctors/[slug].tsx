@@ -3,6 +3,7 @@ import DoctorProfile from "@/components/DoctorProfile";
 import { appointmentContent } from "@/content/siteSections";
 import SitePage from "@/components/SitePage";
 import { getContent, type DoctorDetail } from "@/lib/contentApi";
+import { isHiddenDoctor, isHiddenDoctorSlug } from "@/lib/doctorVisibility";
 
 export default function DoctorDetailsPage({ doctor }: { doctor: DoctorDetail }) {
   const title = doctor.seo?.metaTitle?.trim() || `${doctor.name} | Elite Dental Studio`;
@@ -24,8 +25,13 @@ export const getServerSideProps: GetServerSideProps<{ doctor: DoctorDetail }> = 
   params,
   res,
 }) => {
+  const slug = String(params?.slug || "");
+  if (isHiddenDoctorSlug(slug)) return { notFound: true };
+
   try {
-    const doctor = await getContent<DoctorDetail>(`doctors/${String(params?.slug || "")}`);
+    const doctor = await getContent<DoctorDetail>(`doctors/${slug}`);
+    if (isHiddenDoctor(doctor)) return { notFound: true };
+
     res.setHeader("Cache-Control", "public, s-maxage=60, stale-while-revalidate=300");
     return { props: { doctor } };
   } catch {

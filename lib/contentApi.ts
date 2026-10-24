@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { getEdsApiBaseUrl } from "@/lib/apiConfig";
+import { isHiddenDoctor } from "@/lib/doctorVisibility";
 
 type Envelope<T> = { success: boolean; message?: string; data: T };
 
@@ -52,7 +53,9 @@ export const DOCTORS_PAGE_SIZE = 9;
  * dedupe, so we're not artificially capped if/when the CMS starts paginating
  * for real.
  */
-async function collectDoctors(params: { clinic?: string; search?: string } = {}): Promise<DoctorsData> {
+async function collectDoctors(
+  params: { clinic?: string; search?: string } = {},
+): Promise<DoctorsData> {
   const MAX_PAGES = 20;
   let page = 1;
   let first: DoctorsData | null = null;
@@ -68,7 +71,9 @@ async function collectDoctors(params: { clinic?: string; search?: string } = {})
     const data = await getContent<DoctorsData>(`doctors?${query.toString()}`);
     if (!first) first = data;
 
-    const newItems = data.items.filter((doctor) => !seen.has(`${doctor.id}-${doctor.slug}`));
+    const newItems = data.items.filter(
+      (doctor) => !isHiddenDoctor(doctor) && !seen.has(`${doctor.id}-${doctor.slug}`),
+    );
     newItems.forEach((doctor) => seen.add(`${doctor.id}-${doctor.slug}`));
     items = items.concat(newItems);
 
