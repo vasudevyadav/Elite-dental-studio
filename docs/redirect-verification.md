@@ -25,7 +25,6 @@ Only complete pairs were implemented. Source sheet was not modified. Live status
 | https://elitedentalstudio.co.in/service/orthodontics/ | https://elitedentalstudio.co.in/services/orthodontics | 404 | 200 |
 | https://elitedentalstudio.co.in/service/cosmetic-treatments/ | https://elitedentalstudio.co.in/services/cosmetic-treatments | 404 | 200 |
 | https://elitedentalstudio.co.in/service/dental-implant/ | https://elitedentalstudio.co.in/services/dental-implant | 404 | 200 |
-| https://elitedentalstudio.co.in/directors/dr-fathima-nifla/ | https://elitedentalstudio.co.in/doctors/dr-fathima-nifla-cp | 404 | 200 |
 | https://elitedentalstudio.co.in/directors/dr-amal-sidharth/ | https://elitedentalstudio.co.in/doctors/dr-amal | 404 | 200 |
 | https://elitedentalstudio.co.in/directors/dr-jafar-hamza/ | https://elitedentalstudio.co.in/doctors/dr-jafar-vazhappully | 404 | 200 |
 | https://elitedentalstudio.co.in/about-us | https://elitedentalstudio.co.in/about | 404 | 200 |

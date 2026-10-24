@@ -28,12 +28,6 @@ const directors = [
     qualification: "BDS, MDS",
     profileUrl: "/doctors/dr-amal",
   },
-  {
-    name: "Dr. Fathima Nifla",
-    role: "Director",
-    image: "/about/fathima.png",
-    profileUrl: "/doctors/dr-fathima-nifla-cp",
-  },
 ] satisfies TeamMember[];
 
 const management = [

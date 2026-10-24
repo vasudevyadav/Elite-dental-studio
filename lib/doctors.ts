@@ -1,10 +1,10 @@
 import type { DoctorListItem } from "@/lib/contentApi";
+import { isHiddenDoctor } from "@/lib/doctorVisibility";
 
 // Keep the same priority on the home page, directory and clinic pages.
 const doctorOrder = [
   "dr-amal",
   "dr-jafar-vazhappully",
-  "dr-fathima-nifla-cp",
   "dr-sreenath-n",
   "dr-vipin-viswanath",
   "dr-shahin-ali-t",
@@ -18,7 +18,9 @@ export function orderDoctors<T extends { slug: string }>(doctors: T[]): T[] {
     const index = doctorOrder.indexOf(slug);
     return index < 0 ? doctorOrder.length : index;
   };
-  return [...doctors].sort((a, b) => priority(a.slug) - priority(b.slug));
+  return doctors
+    .filter((doctor) => !isHiddenDoctor(doctor))
+    .sort((a, b) => priority(a.slug) - priority(b.slug));
 }
 
 type DoctorIdentity = Pick<DoctorListItem, "slug" | "name" | "qualification" | "speciality"> & {

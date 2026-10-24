@@ -31,10 +31,6 @@ export const siteRedirects = [
     destination: "/dentist-in-calicut",
   },
   {
-    source: "/directors/dr-fathima-nifla",
-    destination: "/doctors/dr-fathima-nifla-cp",
-  },
-  {
     source: "/directors/dr-amal-sidharth",
     destination: "/doctors/dr-amal",
   },
