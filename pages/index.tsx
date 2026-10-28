@@ -22,6 +22,7 @@ import {
 } from "@/lib/contentApi";
 import { getServicesStrict, type ServiceListItem } from "@/lib/servicesApi";
 import { getTestimonials, type TestimonialItem } from "@/lib/testimonialsApi";
+import { getSeoMetadata, type SeoMetadata } from "@/lib/seoMetadataApi";
 
 type HomeProps = {
   services: ServiceListItem[];
@@ -29,6 +30,7 @@ type HomeProps = {
   blogs: BlogApiPost[];
   clinics: Record<string, Clinic>;
   testimonials: TestimonialItem[];
+  seo: SeoMetadata | null;
 };
 
 type LocationDetail = {
@@ -54,11 +56,23 @@ function isSpecificMapUrl(mapUrl?: string) {
   }
 }
 
-export default function Home({ services, doctors, blogs, clinics, testimonials }: HomeProps) {
+export default function Home({ services, doctors, blogs, clinics, testimonials, seo }: HomeProps) {
+  const title =
+    seo?.title ||
+    "Best Dental Clinic in Calicut | Dental Clinic in Kozhikode | Elite Dental Studio";
+  const description =
+    seo?.description ||
+    "Looking for the best dental clinic in Calicut? Elite Dental Studio offers expert dental care with ISO-certified facilities, specialist doctors & affordable treatments in Calicut, Kochi & Kannur. Book Free Appointment Today!";
+
   return (
     <SitePage
-      title="Best Dental Clinic in Calicut | Dental Clinic in Kozhikode | Elite Dental Studio"
-      description="Looking for the best dental clinic in Calicut? Elite Dental Studio offers expert dental care with ISO-certified facilities, specialist doctors & affordable treatments in Calicut, Kochi & Kannur. Book Free Appointment Today!"
+      title={title}
+      description={description}
+      keywords={seo?.keywords}
+      canonicalUrl={seo?.canonical_url}
+      openGraphTitle={seo?.og_title}
+      openGraphDescription={seo?.og_description}
+      openGraphImage={seo?.og_image}
       showFooterLocations={false}
     >
       <h1 className="sr-only">
@@ -82,12 +96,13 @@ export default function Home({ services, doctors, blogs, clinics, testimonials }
 
 export const getServerSideProps: GetServerSideProps<HomeProps> = async ({ res }) => {
   const clinicSlugs = new Set(["calicut", "kochi", "kannur", "coimbatore"]);
-  const [services, doctorsData, blogs, locationsData, testimonials] = await Promise.all([
+  const [services, doctorsData, blogs, locationsData, testimonials, seo] = await Promise.all([
     getServicesStrict().catch(() => []),
     getContent<DoctorsData>("doctors").catch(() => null),
     getBlogs().catch(() => []),
     getContent<{ items: ClinicRef[] }>("locations").catch(() => ({ items: [] })),
     getTestimonials().catch(() => []),
+    getSeoMetadata("home").catch(() => null),
   ]);
 
   const locationDetails = await Promise.all(
@@ -135,6 +150,7 @@ export const getServerSideProps: GetServerSideProps<HomeProps> = async ({ res })
       blogs: blogs.slice(0, 10),
       clinics,
       testimonials,
+      seo,
     },
   };
 };
