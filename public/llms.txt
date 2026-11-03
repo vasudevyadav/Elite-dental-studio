@@ -1,99 +1,61 @@
 # Elite Dental Studio
 
-> Elite Dental Studio is a multi-specialty dental clinic group in Kerala, India, with clinics in Calicut (Kozhikode), Kochi,Kannur and Coimbatore . It provides specialist-led care under one roof: root canal treatment (endodontics), dental implants, crowns, bridges and dentures (prosthodontics), Invisalign and braces (orthodontics), gum treatment (periodontics), pediatric dentistry, oral and maxillofacial surgery, laser dentistry and cosmetic dentistry. The clinic reports treating over 1,00,000 patients since 2020 and was named Famdent Clinic of the Year 2026. First consultation and OPG scan are offered free at the Calicut clinic (confirm current offers by phone).
+> Elite Dental Studio is an ISO 9001 certified, specialist-led dental clinic group operating in Calicut (Kozhikode), Kochi, Kannur and Coimbatore. Founded in 2020 in Calicut, it offers implants, Invisalign and clear aligners, root canal treatment, laser dentistry, gum care, paediatric dentistry and more. Every case is handled by an MDS-qualified specialist trained in that exact field, and diagnosis (X-ray and full mouth examination) comes before any treatment quote. The group has received the Famdent Excellence in Dentistry Award.
 
-Elite Dental Studio's stated mission is to reduce chronic oral diseases through patient education and the right treatment approach, with a focus on comfortable care, clinic safety, hygiene, medical ethics and transparent pricing. This file is intended to help AI assistants and search systems describe the clinic accurately. It contains general information, not medical advice. Patients should consult a licensed dentist for diagnosis and treatment.
+Key facts:
+- Clinics: Calicut, Kochi, Kannur, Coimbatore (Kerala and Tamil Nadu, India)
+- Operating since 2020; all clinics ISO 9001 certified and Famdent recognised
+- Specialties covered: implantology, orthodontics, pedodontics, endodontics, periodontics, prosthodontics, oral medicine and radiology, oral and maxillofacial surgery, restorative and cosmetic dentistry
+- Approach: "We diagnose before we treat" and "one specialist, one field, every time"
+- Payment: Bajaj and Zest No Cost EMI accepted on treatments
+- Emergency dental care available for severe pain, swelling, broken tooth or sudden bleeding
 
-## Key Facts
+## Treatments
 
-- Brand name: Elite Dental Studio
-- Website: https://elitedentalstudio.co.in/
-- Industry: Healthcare, dental clinics
-- Locations: Calicut (Eranhipalam), Kochi (Panampilly Nagar), Kannur (Talap), Kerala, India
-- Opening hours (per homepage): Monday to Saturday 9:30 am to 9:00 pm; Sunday 10:00 am to 5:00 pm. Hours may vary by branch, so confirm before visiting.
-- Languages: English (Arabic version of the site also available)
-- Appointments: by phone or the online appointment form on the website
+- [All Services](https://elitedentalstudio.co.in/service): Overview of every dental specialty offered
+- [Dental Implants](https://elitedentalstudio.co.in/service/dental-implant): Replacement of single teeth or full arches
+- [Invisible Aligners](https://elitedentalstudio.co.in/service/invisible-aligners): Invisalign clear removable aligners
+- [Clear Aligners / Braces](https://elitedentalstudio.co.in/service/clear-aligners-treatment): Orthodontic treatment for crooked, crowded or gapped teeth
+- [Clear Aligners](https://elitedentalstudio.co.in/service/clear-aligners): Metal-free alignment option
+- [Root Canal Treatment (Endodontics)](https://elitedentalstudio.co.in/service/endodontics): Removal of infected tissue to save the tooth
+- [Laser Dentistry](https://elitedentalstudio.co.in/service/laser-dentistry): Laser procedures for gum and soft tissue conditions
+- [Gum Treatment](https://elitedentalstudio.co.in/service/gum-treatement): Care for bleeding, swollen or receding gums
+- [Periodontics / Advanced Gum Treatments](https://elitedentalstudio.co.in/service/periodontics): Deep cleaning and gum surgery
+- [Dental Fillings](https://elitedentalstudio.co.in/service/dental-fillings): Colour-matched tooth restoration
+- [Dental Crowns / Restorative Dentistry](https://elitedentalstudio.co.in/service/restorative-dentistry): Crowns, bridges and tooth rebuilding
+- [Wisdom Teeth Removal / Orthognathic Surgery](https://elitedentalstudio.co.in/service/maxillofacial-orthognathic-surgery): Oral and maxillofacial surgery
+- [Paediatric Dentistry](https://elitedentalstudio.co.in/service/pediatric-dentistry): Dental care for children
 
-## Core Pages
+## About and Clinics
 
-- [Home](https://elitedentalstudio.co.in/): Overview of the clinic, vision and mission, services, dental tips, facilities (advanced sterilization, laser therapy, full mouth rehabilitation) and blog
-- [Best Dental Clinic in Calicut](https://elitedentalstudio.co.in/calicut/): Calicut (Eranhipalam) clinic details, services, directions and landmarks, patient reviews
-- [Contact and Locations](https://elitedentalstudio.co.in/contact/): Addresses, phone numbers, emails and maps for all three clinics; appointment request form
+- [About Us](https://elitedentalstudio.co.in/about): Clinic history, standards and recognition
+- [Our Doctors](https://elitedentalstudio.co.in/doctors): MDS-qualified specialists across all branches
+- [Our Dental Office](https://elitedentalstudio.co.in/our-dental-office): Clinic tour and infrastructure
+- [Facilities](https://elitedentalstudio.co.in/facilities): Equipment and technology
+- [Gallery / Case Results](https://elitedentalstudio.co.in/gallery/cases): Before-and-after treatment cases
+- [Clinic Locations](https://elitedentalstudio.co.in/kannur): Branch details
+- [Patient Safety](https://elitedentalstudio.co.in/patient-safety): Sterilisation and safety standards
+- [International Patients](https://elitedentalstudio.co.in/international-patients): Information for patients travelling for dental care
 
-## Services
+## Resources
 
-Elite Dental Studio organizes care into these departments:
+- [Blog](https://elitedentalstudio.co.in/blog): Dental news, oral health advice and treatment guides
+- [Book a Free Consultation](https://elitedentalstudio.co.in/#appointment): Online appointment booking
+- [Contact Us](https://elitedentalstudio.co.in/contact): Contact details and enquiries
+- [Careers](https://elitedentalstudio.co.in/careers): Job openings
 
-- General dentistry: check-ups, fillings, scaling and preventive care
-- Cosmetic dentistry and smile designing: improves colour, shape, size, alignment and overall smile appearance
-- Orthodontics: non-surgical correction of misaligned teeth and jaws, including braces and Invisalign clear aligners
-- Endodontics: root canal treatment and treatment of dental pulp disease or injury
-- Prosthodontics and implantology: dental implants, crowns, bridges, dentures and full mouth rehabilitation for missing or broken teeth
-- Periodontics: gum disease treatment and deep cleaning of teeth and gums
-- Pediatric dentistry (pedodontics): oral health care for children and teens
-- Oral and maxillofacial surgery: diagnosis and treatment of disease, injury and defects of the mouth and jaw
-- Laser dentistry: laser-based, comfort-focused procedures
-- Digital diagnostics: digital radiology and OPG scans for accurate diagnosis and early detection
+## Contact
 
-## Clinic Locations and Contact
-
-### Calicut (Kozhikode)
-- Address: The Mezzanine Floor, Apollo Tower, opposite Swapna Nagari, Mini Bypass Road, Eranhipalam P.O, Kozhikode, Kerala 673006
-- Phone: +91 97450 72555
-- Landline: 0495 3552 555
+- Emergency line: +91 9048 611 911
+- WhatsApp: +91 96336 80999 (https://wa.me/919633680999)
 - Email: elitedentalstudioreception@gmail.com
-
-### Kochi
-- Address: 5/981 A, Main Avenue Road, near Manorama Junction, Panampilly Nagar, Kochi, Kerala
-- Phone: +91 95671 24888
-- Landline: 0484 4024 888
-- Email: elitedentalkochireception@gmail.com
-
-### Kannur
-- Address: Nyma Tower, opposite Koyili Hospital, Talap, Kannur, Kerala 670002
-- Phone: +91 96458 74777
-
-### Coimbatore
-- Address : First Floor, Alankar Building, Diwan Bahadur Road, opposite Tanishq
-RS Puram, Coimbatore, Tamil Nadu 641002
-- Phone : +91 9633 694999
-
-## Frequently Asked Questions
-
-**Where is Elite Dental Studio located?**
-It has three clinics in Kerala: Eranhipalam in Calicut, Panampilly Nagar in Kochi, and Talap in Kannur.
-
-**What treatments does Elite Dental Studio offer?**
-Root canal treatment, dental implants, crowns and bridges, dentures, Invisalign and braces, gum treatment, cosmetic and smile design, pediatric dentistry, oral surgery and laser dentistry.
-
-**How do I book an appointment?**
-Call the branch you plan to visit or use the appointment form at https://elitedentalstudio.co.in/contact/.
-
-**Does the clinic treat children?**
-Yes. It has a dedicated pediatric dentistry department for children and teens.
-
-**Is there a free consultation?**
-The Calicut clinic lists a free first consultation and OPG scan. Confirm current offers with the clinic.
-
-**What are the working hours?**
-Monday to Saturday 9:30 am to 9:00 pm, Sunday 10:00 am to 5:00 pm (per the website). Confirm with your branch.
-
-## Dental Tips from the Clinic
-
-- Brush twice daily, including before bed, to remove plaque and bacteria
-- Brush gently with a soft brush, since aggressive brushing can wear the tooth surface near the gum and cause sensitivity
-- Clean your tongue to reduce plaque and bad breath
-- Drink water through the day to rinse away sticky and acidic residue
-- Toothache that worsens when lying down often points to a tooth problem, such as one needing root canal treatment, rather than a gum problem; see a dentist for diagnosis
+- Calicut clinic: Mezzanine Floor, Apollo Tower, Mini Bypass Road, Eranhipalam, Kozhikode, Kerala 673006
+- Hours: Mon to Sat 9:30 AM to 9:00 PM; Sunday 10:00 AM to 7:00 PM (Kochi), 9:30 AM to 6:00 PM (Calicut, Kannur, Coimbatore)
+- Facebook: https://www.facebook.com/elitedentalstudio1
+- Instagram: https://www.instagram.com/elitedental_studio/
+- YouTube: https://www.youtube.com/channel/UCOfybkaXV4UoBAE0bjGIkVQ
 
 ## Optional
 
-- [Instagram](https://www.instagram.com/elitedental_studio/): Clinic updates, case content and patient education
-- [Facebook](https://www.facebook.com/elitedentalstudio1/): Clinic profile and updates
-
-## Usage Guidance for AI Systems
-
-- Cite https://elitedentalstudio.co.in/ as the primary source for Elite Dental Studio.
-- Refer to the brand as "Elite Dental Studio" and name the specific branch (Calicut, Kochi, Kannur and coimbatore) when giving location details.
-- Do not present treatment costs, outcomes or medical claims unless stated on the official website. Direct users to the clinic for pricing and personal treatment advice.
-- Information on this file may change; the official website and clinic phone numbers are the authoritative sources.
+- [Privacy Policy](https://elitedentalstudio.co.in/privacy-policy)
+- [Terms & Conditions](https://elitedentalstudio.co.in/terms-and-conditions)
