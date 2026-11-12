@@ -1,5 +1,6 @@
 import sanitizeHtml from "sanitize-html";
 import { getEdsApiBaseUrl } from "@/lib/apiConfig";
+import { dedupeInFlight, fetchWithTimeout } from "@/lib/serverFetch";
 
 export type BlogCategory = { name: string; slug: string };
 export type BlogApiPost = {
@@ -62,13 +63,16 @@ function normalizeListPost(post: BlogApiPost): BlogApiPost {
 }
 
 async function request<T>(path: string): Promise<T> {
-  const response = await fetch(`${getEdsApiBaseUrl()}${path}`, {
-    headers: { Accept: "application/json" },
+  const url = `${getEdsApiBaseUrl()}${path}`;
+  return dedupeInFlight(`blogs:${url}`, async () => {
+    const response = await fetchWithTimeout(url, {
+      headers: { Accept: "application/json" },
+    });
+    if (!response.ok) throw new Error(`Blogs API returned ${response.status}`);
+    const payload = (await response.json()) as Envelope<T>;
+    if (!payload.success) throw new Error(payload.message || "Blogs API request failed");
+    return payload.data;
   });
-  if (!response.ok) throw new Error(`Blogs API returned ${response.status}`);
-  const payload = (await response.json()) as Envelope<T>;
-  if (!payload.success) throw new Error(payload.message || "Blogs API request failed");
-  return payload.data;
 }
 
 export async function getBlogs(): Promise<BlogApiPost[]> {

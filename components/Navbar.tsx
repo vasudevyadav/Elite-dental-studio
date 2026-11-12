@@ -5,6 +5,7 @@ import TrustBadges from "@/components/TrustBadges";
 import Link from "next/link";
 import { openConsultationPopup } from "@/lib/consultationPopup";
 import { isLocationSpecificServiceSlug, isMainClinic } from "@/lib/clinics";
+import { getSharedApiJson } from "@/lib/clientApi";
 
 type DropdownName = "treatments" | "clinic";
 
@@ -213,18 +214,14 @@ export default function Navbar() {
   };
 
   useEffect(() => {
-    const controller = new AbortController();
-
     const loadServices = async () => {
       try {
-        const response = await fetch("/api/services", { signal: controller.signal });
-        if (!response.ok) return;
-        const payload = (await response.json()) as {
+        const payload = await getSharedApiJson<{
           success: boolean;
           data?: { items?: ApiService[] };
-        };
-        const services = payload.data?.items;
-        if (!payload.success || !Array.isArray(services)) return;
+        }>("/api/services");
+        const services = payload?.data?.items;
+        if (!payload?.success || !Array.isArray(services)) return;
 
         setTreatmentItems(
           services
@@ -238,23 +235,18 @@ export default function Navbar() {
             })),
         );
       } catch (error) {
-        if (!controller.signal.aborted) {
-          console.warn(
-            "Unable to load services navigation; keeping the fallback menu.",
-            error instanceof Error ? error.message : "Request failed",
-          );
-        }
+        console.warn(
+          "Unable to load services navigation; keeping the fallback menu.",
+          error instanceof Error ? error.message : "Request failed",
+        );
       }
     };
 
     void loadServices();
-    return () => controller.abort();
   }, []);
 
   useEffect(() => {
-    const controller = new AbortController();
-    fetch("/api/locations", { signal: controller.signal })
-      .then((response) => (response.ok ? response.json() : null))
+    getSharedApiJson<{ data?: { items?: { name: string; slug: string }[] } }>("/api/locations")
       .then((payload) => {
         const items = payload?.data?.items;
         if (!Array.isArray(items)) return;
@@ -269,7 +261,6 @@ export default function Navbar() {
         );
       })
       .catch(() => undefined);
-    return () => controller.abort();
   }, []);
 
   useEffect(() => {

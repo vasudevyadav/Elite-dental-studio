@@ -2,6 +2,7 @@ import { services as fallbackServices, type Service } from "@/components/service
 import { getEdsApiBaseUrl } from "@/lib/apiConfig";
 import { isLocationSpecificServiceSlug } from "@/lib/clinics";
 import type { DoctorListItem } from "@/lib/contentApi";
+import { dedupeInFlight, fetchWithTimeout } from "@/lib/serverFetch";
 
 export type Media = { url: string; alt: string; width?: number | null; height?: number | null };
 
@@ -148,11 +149,14 @@ function normalizeListItem(item: ServiceListItem, index: number): ServiceListIte
 }
 
 async function request<T>(path: string): Promise<T> {
-  const response = await fetch(`${getEdsApiBaseUrl()}${path}`, {
-    headers: { Accept: "application/json" },
+  const url = `${getEdsApiBaseUrl()}${path}`;
+  return dedupeInFlight(`services:${url}`, async () => {
+    const response = await fetchWithTimeout(url, {
+      headers: { Accept: "application/json" },
+    });
+    if (!response.ok) throw new Error(`Services API returned ${response.status}`);
+    return unwrap<T>((await response.json()) as Envelope<T> | T);
   });
-  if (!response.ok) throw new Error(`Services API returned ${response.status}`);
-  return unwrap<T>((await response.json()) as Envelope<T> | T);
 }
 
 export async function getServicesStrict(): Promise<ServiceListItem[]> {

@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { isLocationSpecificServiceSlug, isMainClinic } from "@/lib/clinics";
+import { getSharedApiJson } from "@/lib/clientApi";
 
 const companyLinks = [
   { label: "About Us", href: "/about" },
@@ -93,9 +94,7 @@ export default function Footer() {
   const [services, setServices] = useState(fallbackServices);
 
   useEffect(() => {
-    const controller = new AbortController();
-    fetch("/api/locations", { signal: controller.signal })
-      .then((response) => (response.ok ? response.json() : null))
+    getSharedApiJson<{ data?: { items?: { name: string; slug: string }[] } }>("/api/locations")
       .then((payload) => {
         const items = payload?.data?.items;
         if (!Array.isArray(items)) return;
@@ -109,13 +108,10 @@ export default function Footer() {
         );
       })
       .catch(() => undefined);
-    return () => controller.abort();
   }, []);
 
   useEffect(() => {
-    const controller = new AbortController();
-    fetch("/api/services", { signal: controller.signal })
-      .then((response) => (response.ok ? response.json() : null))
+    getSharedApiJson<{ data?: { items?: { title: string; slug: string }[] } }>("/api/services")
       .then((payload) => {
         const items = payload?.data?.items;
         if (!Array.isArray(items)) return;
@@ -129,7 +125,6 @@ export default function Footer() {
         );
       })
       .catch(() => undefined);
-    return () => controller.abort();
   }, []);
   return (
     <footer className="bg-dent-nav text-white">
