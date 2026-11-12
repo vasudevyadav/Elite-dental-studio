@@ -1,17 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { getEdsApiBaseUrl } from "@/lib/apiConfig";
 import { isHiddenDoctor } from "@/lib/doctorVisibility";
+import { dedupeInFlight, fetchWithTimeout } from "@/lib/serverFetch";
 
 type Envelope<T> = { success: boolean; message?: string; data: T };
 
 export async function getContent<T>(path: string): Promise<T> {
-  const response = await fetch(`${getEdsApiBaseUrl()}/${path.replace(/^\//, "")}`, {
-    headers: { Accept: "application/json" },
+  const url = `${getEdsApiBaseUrl()}/${path.replace(/^\//, "")}`;
+  return dedupeInFlight(`content:${url}`, async () => {
+    const response = await fetchWithTimeout(url, {
+      headers: { Accept: "application/json" },
+    });
+    if (!response.ok) throw new Error(`Content API returned ${response.status}`);
+    const payload = (await response.json()) as Envelope<T>;
+    if (!payload.success) throw new Error(payload.message || "Content API request failed");
+    return payload.data;
   });
-  if (!response.ok) throw new Error(`Content API returned ${response.status}`);
-  const payload = (await response.json()) as Envelope<T>;
-  if (!payload.success) throw new Error(payload.message || "Content API request failed");
-  return payload.data;
 }
 
 export type Media = { url: string; alt: string };

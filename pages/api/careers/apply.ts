@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { getEdsApiBaseUrl } from "@/lib/apiConfig";
 import { readCaptchaToken, verifyRecaptcha } from "@/lib/recaptchaServer";
+import { fetchWithTimeout } from "@/lib/serverFetch";
 
 const MAX_BODY_SIZE = 6 * 1024 * 1024;
 
@@ -41,7 +42,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     if (!verified) {
       return res.status(400).json({ success: false, message: "Please complete the CAPTCHA." });
     }
-    const response = await fetch(`${getEdsApiBaseUrl()}/careers/apply`, {
+    const response = await fetchWithTimeout(`${getEdsApiBaseUrl()}/careers/apply`, {
       method: "POST",
       headers: {
         "Content-Type": contentType,

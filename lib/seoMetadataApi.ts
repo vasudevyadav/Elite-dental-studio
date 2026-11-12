@@ -1,4 +1,5 @@
 import { getEdsApiBaseUrl } from "@/lib/apiConfig";
+import { dedupeInFlight, fetchWithTimeout } from "@/lib/serverFetch";
 
 export type SeoMetadata = {
   title: string;
@@ -33,14 +34,17 @@ function isSeoMetadata(value: unknown): value is SeoMetadata {
 }
 
 export async function getSeoMetadata(page: SeoPage): Promise<SeoMetadata | null> {
-  const response = await fetch(getSeoApiUrl(page), {
-    headers: { Accept: "application/json" },
+  const url = getSeoApiUrl(page);
+  return dedupeInFlight(`seo:${url}`, async () => {
+    const response = await fetchWithTimeout(url, {
+      headers: { Accept: "application/json" },
+    });
+
+    if (!response.ok) throw new Error(`SEO metadata API returned ${response.status}`);
+
+    const metadata: unknown = await response.json();
+    if (!isSeoMetadata(metadata)) throw new Error("SEO metadata API returned invalid data");
+
+    return metadata;
   });
-
-  if (!response.ok) throw new Error(`SEO metadata API returned ${response.status}`);
-
-  const metadata: unknown = await response.json();
-  if (!isSeoMetadata(metadata)) throw new Error("SEO metadata API returned invalid data");
-
-  return metadata;
 }

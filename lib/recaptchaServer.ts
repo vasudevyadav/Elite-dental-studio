@@ -1,15 +1,18 @@
+import { fetchWithTimeout } from "@/lib/serverFetch";
+
 export async function verifyRecaptcha(token: unknown, remoteIp?: string) {
   if (
     process.env.NODE_ENV === "development" &&
     process.env.NEXT_PUBLIC_DISABLE_RECAPTCHA === "true"
-  ) return true;
+  )
+    return true;
   const secret = process.env.RECAPTCHA_SECRET_KEY;
   if (!secret) return true;
   if (typeof token !== "string" || !token) return false;
 
   const formData = new URLSearchParams({ secret, response: token });
   if (remoteIp) formData.set("remoteip", remoteIp);
-  const response = await fetch("https://www.google.com/recaptcha/api/siteverify", {
+  const response = await fetchWithTimeout("https://www.google.com/recaptcha/api/siteverify", {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
     body: formData,

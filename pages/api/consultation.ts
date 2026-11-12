@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { getEdsApiBaseUrl } from "@/lib/apiConfig";
 import { readCaptchaToken, verifyRecaptcha } from "@/lib/recaptchaServer";
+import { fetchWithTimeout } from "@/lib/serverFetch";
 
 const MAX_BODY_SIZE = 9 * 1024 * 1024;
 const legacyGoogleSheetsWebhook =
@@ -10,17 +11,17 @@ type Consultation = Record<string, unknown> & {
   captchaToken?: string;
   phone?: string;
   name?: string;
-    email?: string;
-    clinicSlug?: string;
-    source?: string;
-    url?: string;
-    message?: string;
-    utm_source?: string;
-    utm_medium?: string;
-    utm_campaign?: string;
-    utm_term?: string;
-    utm_content?: string;
-    gclid?: string;
+  email?: string;
+  clinicSlug?: string;
+  source?: string;
+  url?: string;
+  message?: string;
+  utm_source?: string;
+  utm_medium?: string;
+  utm_campaign?: string;
+  utm_term?: string;
+  utm_content?: string;
+  gclid?: string;
 };
 
 export const config = {
@@ -66,7 +67,7 @@ async function triggerClickToCall(phone: unknown) {
     agent_number: agentNumber,
     agentCLI: agentCli,
   });
-  await fetch(`https://v4-api.deepcall.com/api/v3/clickToCall/para?${query}`, {
+  await fetchWithTimeout(`https://v4-api.deepcall.com/api/v3/clickToCall/para?${query}`, {
     method: "POST",
     headers: { "cache-control": "no-cache" },
   });
@@ -93,7 +94,7 @@ async function forwardLeadToGoogleSheets(consultation: Consultation): Promise<bo
     gclid: String(consultation.gclid || ""),
     message: String(consultation.message || ""),
   });
-  const response = await fetch(webhook, {
+  const response = await fetchWithTimeout(webhook, {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
     body: lead,
@@ -129,9 +130,12 @@ async function sendLeadNotification(consultation: Consultation): Promise<boolean
     ["Message", consultation.message],
   ];
   const html = `<h2>New appointment request</h2><table>${fields
-    .map(([label, value]) => `<tr><td><strong>${label}</strong></td><td>${escapeHtml(value)}</td></tr>`)
+    .map(
+      ([label, value]) =>
+        `<tr><td><strong>${label}</strong></td><td>${escapeHtml(value)}</td></tr>`,
+    )
     .join("")}</table>`;
-  const response = await fetch("https://api.resend.com/emails", {
+  const response = await fetchWithTimeout("https://api.resend.com/emails", {
     method: "POST",
     headers: {
       Authorization: `Bearer ${apiKey}`,
@@ -148,7 +152,10 @@ async function sendLeadNotification(consultation: Consultation): Promise<boolean
   return response.ok;
 }
 
-async function parseMultipartConsultation(body: Buffer, contentType: string): Promise<Consultation> {
+async function parseMultipartConsultation(
+  body: Buffer,
+  contentType: string,
+): Promise<Consultation> {
   const request = new Request("http://localhost", {
     method: "POST",
     headers: { "Content-Type": contentType },
@@ -190,7 +197,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     let cmsOk = false;
     try {
-      const response = await fetch(`${getEdsApiBaseUrl()}/consultation`, {
+      const response = await fetchWithTimeout(`${getEdsApiBaseUrl()}/consultation`, {
         method: "POST",
         headers: {
           "Content-Type": contentType,
@@ -214,7 +221,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       sheetsOk = sheetsResult.status === "fulfilled" && sheetsResult.value === true;
       emailOk = emailResult.status === "fulfilled" && emailResult.value === true;
       notifications.forEach((result) => {
-        if (result.status === "rejected") console.error("Unable to deliver lead notification.", result.reason);
+        if (result.status === "rejected")
+          console.error("Unable to deliver lead notification.", result.reason);
       });
     }
 
@@ -222,7 +230,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(200).json({ success: true, message: "Request submitted successfully" });
     }
 
-    return res.status(502).json({ success: false, message: "Consultation service is unavailable." });
+    return res
+      .status(502)
+      .json({ success: false, message: "Consultation service is unavailable." });
   } catch (error) {
     if (error instanceof Error && error.message === "PAYLOAD_TOO_LARGE") {
       return res
