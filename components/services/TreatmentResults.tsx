@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 import { useRef, useState } from "react";
 
 type ResultItem = {
@@ -126,8 +125,6 @@ export default function TreatmentResults({
 
   if (!items?.length) return null;
 
-  const viewAll = data?.viewAll as { label?: string; url?: string } | undefined;
-
   return (
     <section className="overflow-hidden bg-[#f2f9f8] px-5 py-16 sm:px-8 sm:py-20 lg:px-12">
       <div className="mx-auto max-w-7xl">
@@ -168,14 +165,6 @@ export default function TreatmentResults({
             </button>
           </div>
         )}
-        <div className="mt-14 flex w-full justify-center text-center">
-          <Link
-            href={viewAll?.url || "/gallery/cases"}
-            className="rounded-xl bg-[#168f85] px-10 py-2 text-lg font-semibold text-white"
-          >
-            {viewAll?.label || "View all smile transformations →"}
-          </Link>
-        </div>
       </div>
     </section>
   );

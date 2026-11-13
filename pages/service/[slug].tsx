@@ -104,7 +104,6 @@ export default function ServiceDetailPage({ service, testimonials, galleryCases 
     ? {
         ...(results || {}),
         items: galleryResultItems,
-        viewAll: { label: "View all smile transformations →", url: "/gallery/cases" },
       }
     : results;
   const hasTreatmentDetails = Boolean(

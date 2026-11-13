@@ -19,7 +19,6 @@ const staticPaths = [
   "/careers",
   "/privacy-policy",
   "/terms-and-conditions",
-  "/gallery/cases",
 ];
 
 // Published CMS detail pages can become available before their collection
