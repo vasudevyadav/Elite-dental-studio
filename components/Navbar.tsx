@@ -148,17 +148,7 @@ type SubNavItem = {
 const subNavItems: SubNavItem[] = [
   { label: "Our Doctors", img: "/navbar/doctor.png", href: "/doctors" },
   { label: "About Us", img: "/navbar/icon02.png", href: "/about" },
-  {
-    label: "Our Dental Office",
-    img: "/navbar/icon-3.png",
-    href: "/our-dental-office",
-    children: [
-      {
-        label: "Hospital Tour",
-        href: "/our-dental-office",
-      },
-    ],
-  },
+  { label: "Our Dental Office", img: "/navbar/icon-3.png", href: "/our-dental-office" },
   {
     label: "International Patients",
     img: "/navbar/icon-6.png",
