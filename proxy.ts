@@ -10,8 +10,12 @@ const CAMPAIGN_ORIGIN = process.env.CAMPAIGN_ORIGIN || "https://campaign.elitede
 
 // Folders served from the campaign site: ad landing pages, the /leads/ admin panel,
 // and /includes/ (shared CSS/assets the leads panel loads from the site root).
+//
+// Newly added landing pages:
+// - /aligner-cost/
+// - /implant-cost/
 const LANDING_DIR =
-  /^\/(aligner|implant|dental-care|leads|includes|coimbatore-[a-z0-9-]+)(\/.*)?$/i;
+  /^\/(aligner|implant|aligner-cost|implant-cost|dental-care|leads|includes|coimbatore-[a-z0-9-]+)(\/.*)?$/i;
 
 const CANONICAL_HOST = "elitedentalstudio.co.in";
 
@@ -24,47 +28,60 @@ export function proxy(request: NextRequest) {
   // query kept, trailing slash fixed in the same hop). Prefer x-forwarded-proto
   // because production TLS is terminated by the hosting proxy before Next.js.
   const host = (request.headers.get("host") || "").toLowerCase().split(":")[0];
+
   const forwardedProto = request.headers.get("x-forwarded-proto")?.split(",")[0].trim();
+
   const protocol = forwardedProto || new URL(request.url).protocol.replace(":", "");
+
   if (
     (host === CANONICAL_HOST || host === `www.${CANONICAL_HOST}`) &&
     (protocol === "http" || host.startsWith("www."))
   ) {
     let target = pathname;
-    if (match && !match[2]) target = `${pathname}/`;
-    else if (!match && target.length > 1 && target.endsWith("/"))
+
+    if (match && !match[2]) {
+      target = `${pathname}/`;
+    } else if (!match && target.length > 1 && target.endsWith("/")) {
       target = target.replace(/\/+$/, "");
+    }
+
     return NextResponse.redirect(`https://${CANONICAL_HOST}${target}${search}`, 308);
   }
 
   if (!match) {
-    // skipTrailingSlashRedirect is on, so keep "/about/" -> "/about" for the rest of the site.
+    // skipTrailingSlashRedirect is on, so keep "/about/" -> "/about"
+    // for the rest of the site.
     if (pathname.length > 1 && pathname.endsWith("/")) {
       const url = new URL(request.url);
       url.pathname = pathname.replace(/\/+$/, "");
       return NextResponse.redirect(url, 308);
     }
+
     return NextResponse.next();
   }
 
-  // "/aligner" -> "/aligner/" so relative links (css/, js/, submit.php) resolve inside the folder.
+  // "/aligner" -> "/aligner/" so relative links (css/, js/, submit.php)
+  // resolve inside the folder.
   if (!match[2]) {
     const url = new URL(request.url);
     url.pathname = `${pathname}/`;
     return NextResponse.redirect(url, 308);
   }
 
-  // Tell PHP the public host so hidden url/returnURL fields and redirects can use the main domain.
+  // Tell PHP the public host so hidden url/returnURL fields and redirects
+  // can use the main domain.
   const headers = new Headers(request.headers);
-  headers.set("x-forwarded-host", request.headers.get("host") || "elitedentalstudio.co.in");
+
+  headers.set("x-forwarded-host", request.headers.get("host") || CANONICAL_HOST);
+
   headers.set("x-forwarded-proto", "https");
 
   const response = NextResponse.rewrite(new URL(`${pathname}${search}`, CAMPAIGN_ORIGIN), {
     request: { headers },
   });
 
-  // /leads/ (admin panel) and /includes/ (its shared assets) must never be indexed,
-  // on top of the robots.txt Disallow.
+  // /leads/ (admin panel) and /includes/ (its shared assets)
+  // must never be indexed, on top of the robots.txt Disallow.
   if (/^\/(leads|includes)(\/.*)?$/i.test(pathname)) {
     response.headers.set("X-Robots-Tag", "noindex, nofollow");
   }
@@ -73,6 +90,7 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
-  // Run on every request so HTTP cannot bypass the HTTPS redirect on APIs or assets.
+  // Run on every request so HTTP cannot bypass the HTTPS redirect
+  // on APIs or assets.
   matcher: ["/:path*"],
 };
