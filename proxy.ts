@@ -14,8 +14,10 @@ const CAMPAIGN_ORIGIN = process.env.CAMPAIGN_ORIGIN || "https://campaign.elitede
 // Newly added landing pages:
 // - /aligner-cost/
 // - /implant-cost/
+// - /coimbatore-generic-new/
+// - /dental-care-new/
 const LANDING_DIR =
-  /^\/(aligner|implant|aligner-cost|implant-cost|dental-care|leads|includes|coimbatore-[a-z0-9-]+)(\/.*)?$/i;
+  /^\/(aligner|implant|aligner-cost|implant-cost|dental-care|dental-care-new|leads|includes|coimbatore-[a-z0-9-]+)(\/.*)?$/i;
 
 const CANONICAL_HOST = "elitedentalstudio.co.in";
 
