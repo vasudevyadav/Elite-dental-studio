@@ -3,6 +3,7 @@ import { getEdsApiBaseUrl } from "@/lib/apiConfig";
 import { isLocationSpecificServiceSlug } from "@/lib/clinics";
 import type { DoctorListItem } from "@/lib/contentApi";
 import { dedupeInFlight, fetchWithTimeout } from "@/lib/serverFetch";
+import { normalizeCmsMediaUrls } from "@/lib/cmsMedia";
 
 export type Media = { url: string; alt: string; width?: number | null; height?: number | null };
 
@@ -155,7 +156,7 @@ async function request<T>(path: string): Promise<T> {
       headers: { Accept: "application/json" },
     });
     if (!response.ok) throw new Error(`Services API returned ${response.status}`);
-    return unwrap<T>((await response.json()) as Envelope<T> | T);
+    return normalizeCmsMediaUrls(unwrap<T>((await response.json()) as Envelope<T> | T));
   });
 }
 

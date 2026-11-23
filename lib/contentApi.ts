@@ -2,6 +2,7 @@
 import { getEdsApiBaseUrl } from "@/lib/apiConfig";
 import { isHiddenDoctor } from "@/lib/doctorVisibility";
 import { dedupeInFlight, fetchWithTimeout } from "@/lib/serverFetch";
+import { normalizeCmsMediaUrls } from "@/lib/cmsMedia";
 
 type Envelope<T> = { success: boolean; message?: string; data: T };
 
@@ -14,7 +15,7 @@ export async function getContent<T>(path: string): Promise<T> {
     if (!response.ok) throw new Error(`Content API returned ${response.status}`);
     const payload = (await response.json()) as Envelope<T>;
     if (!payload.success) throw new Error(payload.message || "Content API request failed");
-    return payload.data;
+    return normalizeCmsMediaUrls(payload.data);
   });
 }
 
@@ -144,7 +145,6 @@ export const localDoctorImage = (slug: string) =>
     "dr-amal": "/home/doctors/dr-amal.jpg",
     "dr-amrita-sathianathan": "/home/doctors/dr-amrita.jpg",
     "dr-vidhu-s": "/home/doctors/dr-vidhu.jpg",
-    "dr-manu-mathew": "/home/doctors/dr-manu.jpg",
     "dr-megha-mohan": "/home/doctors/dr-megha.jpg",
   })[slug] || "/home/doctors/dr-amal.jpg";
 

@@ -1,6 +1,7 @@
 import sanitizeHtml from "sanitize-html";
 import { getEdsApiBaseUrl } from "@/lib/apiConfig";
 import { dedupeInFlight, fetchWithTimeout } from "@/lib/serverFetch";
+import { normalizeCmsMediaUrl, normalizeCmsMediaUrls } from "@/lib/cmsMedia";
 
 export type BlogCategory = { name: string; slug: string };
 export type BlogApiPost = {
@@ -71,7 +72,7 @@ async function request<T>(path: string): Promise<T> {
     if (!response.ok) throw new Error(`Blogs API returned ${response.status}`);
     const payload = (await response.json()) as Envelope<T>;
     if (!payload.success) throw new Error(payload.message || "Blogs API request failed");
-    return payload.data;
+    return normalizeCmsMediaUrls(payload.data);
   });
 }
 
@@ -103,7 +104,7 @@ export function formatBlogDate(value: string): string {
 }
 
 export function sanitizeWordPressHtml(html: string): string {
-  const safeHtml = sanitizeHtml(html, {
+  const safeHtml = sanitizeHtml(normalizeCmsMediaUrl(html), {
     allowedTags: [
       ...sanitizeHtml.defaults.allowedTags,
       "img",
@@ -124,14 +125,6 @@ export function sanitizeWordPressHtml(html: string): string {
       td: ["colspan", "rowspan"],
     },
     allowedSchemes: ["http", "https", "mailto", "tel"],
-    exclusiveFilter(frame) {
-      return (
-        frame.tag === "img" &&
-        /^http:\/\/reinventmedia\.in\/elitedentalstudio\/wp-content\/uploads\//i.test(
-          frame.attribs.src || "",
-        )
-      );
-    },
     transformTags: {
       a: (_tagName, attribs) => ({
         tagName: "a",
