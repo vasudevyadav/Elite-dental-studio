@@ -30,6 +30,7 @@ import { absoluteUrl } from "@/lib/siteUrl";
 import { getServiceStructuredData } from "@/lib/serviceStructuredData";
 import { getTestimonials, type TestimonialItem } from "@/lib/testimonialsApi";
 import { getContent } from "@/lib/contentApi";
+import { getAuditDescription } from "@/lib/seoAuditOverrides";
 
 type GalleryCaseItem = {
   id?: string;
@@ -66,6 +67,11 @@ export default function ServiceDetailPage({ service, testimonials, galleryCases 
   const isLaser = service.slug === "laser-dentistry";
   const treatmentName = service.treatmentName || service.title;
   const canonicalUrl = absoluteUrl(`/service/${service.slug}`);
+  const metaDescription = getAuditDescription(
+    `/service/${service.slug}`,
+    service.seo?.metaDescription ||
+      `${service.title} consultation and treatment at Elite Dental Studio.`,
+  );
   const legacyService = toLegacyService(service);
   const content = (type: ServiceSection["type"]) => sectionContent(service.sections, type);
   const overview = content("overview");
@@ -129,13 +135,7 @@ export default function ServiceDetailPage({ service, testimonials, galleryCases 
     <>
       <Head>
         <title>{service.seo?.metaTitle || `${service.title} | Elite Dental Studio`}</title>
-        <meta
-          name="description"
-          content={
-            service.seo?.metaDescription ||
-            `${service.title} consultation and treatment at Elite Dental Studio.`
-          }
-        />
+        <meta name="description" content={metaDescription} />
         <link rel="canonical" href={canonicalUrl} />
         {service.seo?.robots && <meta name="robots" content={service.seo.robots} />}
         <meta property="og:type" content="website" />
@@ -144,13 +144,7 @@ export default function ServiceDetailPage({ service, testimonials, galleryCases 
           property="og:title"
           content={service.seo?.metaTitle || `${service.title} | Elite Dental Studio`}
         />
-        <meta
-          property="og:description"
-          content={
-            service.seo?.metaDescription ||
-            `${service.title} consultation and treatment at Elite Dental Studio.`
-          }
-        />
+        <meta property="og:description" content={metaDescription} />
         <meta property="og:url" content={canonicalUrl} />
         <meta
           property="og:image"

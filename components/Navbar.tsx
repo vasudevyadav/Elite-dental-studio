@@ -163,6 +163,8 @@ export default function Navbar() {
   const [mobileOfficeOpen, setMobileOfficeOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<DropdownName | null>(null);
   const headerRef = useRef<HTMLElement>(null);
+  const servicesLoadedRef = useRef(false);
+  const locationsLoadedRef = useRef(false);
   const [treatmentItems, setTreatmentItems] = useState<DropdownItem[]>(dropdowns.treatments.items);
   const [locationItems, setLocationItems] = useState<DropdownItem[]>([]);
 
@@ -198,6 +200,9 @@ export default function Navbar() {
   };
 
   useEffect(() => {
+    if (activeDropdown !== "treatments" || servicesLoadedRef.current) return;
+    servicesLoadedRef.current = true;
+
     const loadServices = async () => {
       try {
         const payload = await getSharedApiJson<{
@@ -227,9 +232,12 @@ export default function Navbar() {
     };
 
     void loadServices();
-  }, []);
+  }, [activeDropdown]);
 
   useEffect(() => {
+    if (activeDropdown !== "clinic" || locationsLoadedRef.current) return;
+    locationsLoadedRef.current = true;
+
     getSharedApiJson<{ data?: { items?: { name: string; slug: string }[] } }>("/api/locations")
       .then((payload) => {
         const items = payload?.data?.items;
@@ -245,7 +253,7 @@ export default function Navbar() {
         );
       })
       .catch(() => undefined);
-  }, []);
+  }, [activeDropdown]);
 
   useEffect(() => {
     const handlePointerDown = (event: PointerEvent) => {

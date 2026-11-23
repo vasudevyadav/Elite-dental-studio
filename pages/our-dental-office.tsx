@@ -7,6 +7,7 @@ import OfficeHero from "@/components/office/OfficeHero";
 import OfficeIntroduction from "@/components/office/OfficeIntroduction";
 import { appointmentContent } from "@/content/siteSections";
 import { getContent, section, type DynamicSection } from "@/lib/contentApi";
+import { getAuditDescription } from "@/lib/seoAuditOverrides";
 
 type OfficeData = {
   seo: { metaTitle: string; metaDescription: string };
@@ -17,7 +18,7 @@ export default function OurDentalOfficePage({ data }: { data: OfficeData }) {
   return (
     <SitePage
       title={data.seo.metaTitle}
-      description={data.seo.metaDescription}
+      description={getAuditDescription("/our-dental-office", data.seo.metaDescription)}
       mainClassName="bg-[#f7fbfa]"
     >
       <OfficeHero data={section(data.sections, "hero")} />

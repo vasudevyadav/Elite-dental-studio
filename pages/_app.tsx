@@ -3,6 +3,7 @@ import type { AppProps } from "next/app";
 import { Poppins } from "next/font/google";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import Script from "next/script";
 import ConsultationPopup from "@/components/ConsultationPopup";
 
 const poppins = Poppins({
@@ -44,6 +45,13 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <div className={poppins.className}>
+      <Script id="google-tag-manager" strategy="lazyOnload">
+        {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-MQ39SL8');`}
+      </Script>
       <div id="site-content" className="pb-[calc(72px+env(safe-area-inset-bottom))] md:pb-0">
         <Component {...pageProps} />
       </div>

@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 export const BIGIN_FORM_SCRIPTS = {
   section: "https://in.bigin.online/org60035126201/forms/book-an-appointment?script=$sYG",
   popup: "https://in.bigin.online/org60035126201/forms/book-an-appointment?script=$sYG",
@@ -12,6 +14,7 @@ export default function BiginAppointmentWidget({
   className?: string;
   hideTitle?: boolean;
 }) {
+  const [activated, setActivated] = useState(!hideTitle);
   const title = variant === "popup" ? "Book an appointment form" : "Appointment request form";
   const compact = variant === "popup";
   const formOverrides = `
@@ -90,13 +93,36 @@ export default function BiginAppointmentWidget({
 
   return (
     <div className={`w-full overflow-hidden rounded-xl bg-white ${className || ""}`}>
-      <iframe
-        title={title}
-        srcDoc={srcDoc}
-        loading="lazy"
-        referrerPolicy="strict-origin-when-cross-origin"
-        className={`block w-full border-0 bg-white ${variant === "popup" ? "h-[400px]" : hideTitle ? "h-[470px]" : "h-[530px]"}`}
-      />
+      {activated ? (
+        <iframe
+          title={title}
+          srcDoc={srcDoc}
+          loading="lazy"
+          referrerPolicy="strict-origin-when-cross-origin"
+          className={`block w-full border-0 bg-white ${variant === "popup" ? "h-[400px]" : hideTitle ? "h-[470px]" : "h-[530px]"}`}
+        />
+      ) : (
+        <button
+          type="button"
+          onClick={() => setActivated(true)}
+          className="flex h-[470px] w-full flex-col justify-center gap-3 bg-white px-4 text-left"
+          aria-label="Open appointment request form"
+        >
+          {["First Name", "Last Name", "Email Address", "Mobile No.", "-Select Clinic-"].map(
+            (label) => (
+              <span
+                key={label}
+                className="flex min-h-12 items-center rounded-md border border-[#bdc8d3] px-4 text-sm text-[#75808a]"
+              >
+                {label}
+              </span>
+            ),
+          )}
+          <span className="mt-1 inline-flex min-h-11 w-fit items-center rounded-md bg-[#07515a] px-6 text-sm font-bold text-white">
+            Continue to appointment form
+          </span>
+        </button>
+      )}
     </div>
   );
 }
