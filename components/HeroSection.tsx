@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import Image from "next/image";
+import Image, { getImageProps } from "next/image";
 import BiginAppointmentWidget from "@/components/BiginAppointmentWidget";
 import { openConsultationPopup } from "@/lib/consultationPopup";
 
@@ -22,6 +22,40 @@ type HeroSectionProps = {
     description: string;
   };
 };
+
+function ResponsiveHeroImage({ slide, highPriority }: { slide: HeroSlide; highPriority: boolean }) {
+  const common = { alt: slide.alt, sizes: "100vw", quality: 60 } as const;
+  const {
+    props: { srcSet: desktopSrcSet },
+  } = getImageProps({
+    ...common,
+    src: slide.img,
+    width: 2056,
+    height: 964,
+  });
+  const {
+    props: { srcSet: mobileSrcSet, ...mobileProps },
+  } = getImageProps({
+    ...common,
+    src: slide.mobileImg || slide.img,
+    width: slide.mobileImg ? 1228 : 2056,
+    height: 964,
+  });
+
+  return (
+    <picture>
+      <source media="(min-width: 1024px)" srcSet={desktopSrcSet} />
+      <source media="(max-width: 1023px)" srcSet={mobileSrcSet} />
+      <img
+        {...mobileProps}
+        alt={slide.alt}
+        loading={highPriority ? "eager" : "lazy"}
+        fetchPriority={highPriority ? "high" : "auto"}
+        className="absolute inset-0 h-full w-full object-cover object-left lg:object-center"
+      />
+    </picture>
+  );
+}
 
 export default function HeroSection({ slides = HOME_SLIDES, content }: HeroSectionProps) {
   const [slide, setSlide] = useState(0);
@@ -47,31 +81,7 @@ export default function HeroSection({ slides = HOME_SLIDES, content }: HeroSecti
           className="absolute inset-0 transition-opacity duration-1000 ease-in-out"
           style={{ opacity: i === slide ? 1 : 0 }}
         >
-          <div className="hidden lg:block">
-            <Image
-              src={s.img}
-              alt={s.alt}
-              fill
-              quality={85}
-              loading={i === 0 ? "eager" : "lazy"}
-              sizes="100vw"
-              className="object-cover object-left lg:object-center"
-              fetchPriority={i === 0 ? "high" : "auto"}
-            />
-          </div>
-
-          <div className="block lg:hidden">
-            <Image
-              src={s.mobileImg || s.img}
-              alt={s.alt}
-              fill
-              quality={85}
-              loading={i === 0 ? "eager" : "lazy"}
-              sizes="100vw"
-              className="mb-5 block object-cover lg:hidden lg:object-center"
-              fetchPriority={i === 0 ? "high" : "auto"}
-            />
-          </div>
+          <ResponsiveHeroImage slide={s} highPriority={i === 0} />
         </div>
       ))}
 

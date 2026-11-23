@@ -124,6 +124,14 @@ export function sanitizeWordPressHtml(html: string): string {
       td: ["colspan", "rowspan"],
     },
     allowedSchemes: ["http", "https", "mailto", "tel"],
+    exclusiveFilter(frame) {
+      return (
+        frame.tag === "img" &&
+        /^http:\/\/reinventmedia\.in\/elitedentalstudio\/wp-content\/uploads\//i.test(
+          frame.attribs.src || "",
+        )
+      );
+    },
     transformTags: {
       a: (_tagName, attribs) => ({
         tagName: "a",

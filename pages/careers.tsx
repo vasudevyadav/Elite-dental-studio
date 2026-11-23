@@ -3,12 +3,16 @@ import type { GetServerSideProps } from "next";
 import CareersContent from "@/components/careers/CareersContent";
 import SitePage from "@/components/SitePage";
 import { getContent } from "@/lib/contentApi";
+import { getAuditDescription } from "@/lib/seoAuditOverrides";
 
 export type CareersData = Record<string, any>;
 
 export default function CareersPage({ data }: { data: CareersData }) {
   return (
-    <SitePage title={data.seo.metaTitle} description={data.seo.metaDescription}>
+    <SitePage
+      title={data.seo.metaTitle}
+      description={getAuditDescription("/careers", data.seo.metaDescription)}
+    >
       <CareersContent data={data} />
     </SitePage>
   );

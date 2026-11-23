@@ -2,10 +2,14 @@ import BookAppointmentSection from "@/components/BookAppointmentSection";
 import DoctorsDirectory from "@/components/DoctorsDirectory";
 import SitePage from "@/components/SitePage";
 import { DOCTORS_PAGE_SIZE, getDoctorsPage, type DoctorsData } from "@/lib/contentApi";
+import { getAuditDescription } from "@/lib/seoAuditOverrides";
 
 export default function DoctorsPage({ data }: { data: DoctorsData }) {
   return (
-    <SitePage title={data.pageSeo.metaTitle} description={data.pageSeo.metaDescription}>
+    <SitePage
+      title={data.pageSeo.metaTitle}
+      description={getAuditDescription("/doctors", data.pageSeo.metaDescription)}
+    >
       <DoctorsDirectory data={data} />
       <BookAppointmentSection />
     </SitePage>
