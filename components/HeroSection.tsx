@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import Image, { getImageProps } from "next/image";
+import Head from "next/head";
 import BiginAppointmentWidget from "@/components/BiginAppointmentWidget";
 import { openConsultationPopup } from "@/lib/consultationPopup";
 
@@ -62,6 +63,17 @@ export default function HeroSection({ slides = HOME_SLIDES, content }: HeroSecti
 
   const total = slides.length;
   const next = useCallback(() => setSlide((p) => (p + 1) % total), [total]);
+  const firstSlide = slides[0];
+  const {
+    props: { srcSet: mobilePreloadSrcSet },
+  } = getImageProps({
+    src: firstSlide.mobileImg || firstSlide.img,
+    alt: firstSlide.alt,
+    width: firstSlide.mobileImg ? 1228 : 2056,
+    height: 964,
+    sizes: "100vw",
+    quality: 60,
+  });
 
   useEffect(() => {
     if (total < 2) {
@@ -74,6 +86,15 @@ export default function HeroSection({ slides = HOME_SLIDES, content }: HeroSecti
 
   return (
     <section className="relative h-[300px] overflow-hidden bg-[#f2f9f7] lg:h-[560px] lg:h-[clamp(560px,42.51vw,700px)]">
+      <Head>
+        <link
+          rel="preload"
+          as="image"
+          media="(max-width: 1023px)"
+          imageSrcSet={mobilePreloadSrcSet}
+          imageSizes="100vw"
+        />
+      </Head>
       {/* Background image slider */}
       {slides.map((s, i) => (
         <div

@@ -157,6 +157,7 @@ export default function NearestClinic({
   const [selectedClinic, setSelectedClinic] = useState(
     availableClinics[initialClinic] ? initialClinic : firstClinic,
   );
+  const [mapActivated, setMapActivated] = useState(false);
   const clinic = availableClinics[selectedClinic] || availableClinics[firstClinic];
   const encodedMapQuery = encodeURIComponent(clinic.mapQuery);
   const mapEmbedUrl =
@@ -246,15 +247,25 @@ export default function NearestClinic({
               </div>
 
               <div className="min-h-[190px] overflow-hidden rounded-2xl bg-white shadow-sm">
-                <iframe
-                  key={selectedClinic}
-                  title={`${clinic.name} clinic map`}
-                  src={mapEmbedUrl}
-                  className="h-full min-h-[190px] w-full border-0"
-                  loading="lazy"
-                  allowFullScreen
-                  referrerPolicy="strict-origin-when-cross-origin"
-                />
+                {mapActivated ? (
+                  <iframe
+                    key={selectedClinic}
+                    title={`${clinic.name} clinic map`}
+                    src={mapEmbedUrl}
+                    className="h-full min-h-[190px] w-full border-0"
+                    loading="lazy"
+                    allowFullScreen
+                    referrerPolicy="strict-origin-when-cross-origin"
+                  />
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => setMapActivated(true)}
+                    className="grid min-h-[190px] w-full place-items-center bg-[#dff3f0] px-6 text-center font-bold text-[#286d73]"
+                  >
+                    Load {clinic.name} clinic map
+                  </button>
+                )}
               </div>
             </div>
           </div>
