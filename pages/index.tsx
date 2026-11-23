@@ -75,7 +75,6 @@ export default function Home({ services, doctors, blogs, clinics, testimonials, 
       openGraphImage={seo?.og_image}
       showFooterLocations={false}
     >
-      <h1 className="sr-only">Best Dental Clinic in Calicut, Kochi, Kannur &amp; Coimbatore</h1>
       <HeroSection />
       <StatsBar />
       <NearestClinic clinics={clinics} />

@@ -31,11 +31,6 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "reinventmedia.in",
-        pathname: "/elitedentalstudio/**",
-      },
-      {
-        protocol: "https",
         hostname: "cms.elitedentalstudio.co.in",
         pathname: "/wp-content/uploads/**",
       },

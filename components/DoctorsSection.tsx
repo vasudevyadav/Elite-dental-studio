@@ -52,13 +52,6 @@ const doctors = [
     image: "/home/doctors/dr-vidhu.jpg",
   },
   {
-    name: "Dr. Manu Mathew",
-    slug: "dr-manu-mathew",
-    qualification: "BDS, MDS (Orthodontics)",
-    speciality: "Aligner Specialist",
-    image: "/home/doctors/dr-manu.jpg",
-  },
-  {
     name: "Dr. Megha Mohan",
     slug: "dr-megha-mohan",
     qualification: "BDS, MDS",
