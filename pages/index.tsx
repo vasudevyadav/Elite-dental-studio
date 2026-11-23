@@ -1,4 +1,4 @@
-import type { GetServerSideProps } from "next";
+import type { GetStaticProps } from "next";
 import HeroSection from "@/components/HeroSection";
 import StatsBar from "@/components/StatsBar";
 import NearestClinic from "@/components/NearestClinic";
@@ -92,7 +92,7 @@ export default function Home({ services, doctors, blogs, clinics, testimonials, 
   );
 }
 
-export const getServerSideProps: GetServerSideProps<HomeProps> = async ({ res }) => {
+export const getStaticProps: GetStaticProps<HomeProps> = async () => {
   const clinicSlugs = new Set(["calicut", "kochi", "kannur", "coimbatore"]);
   const [services, doctorsData, blogs, locationsData, testimonials, seo] = await Promise.all([
     getServicesStrict().catch(() => []),
@@ -140,7 +140,6 @@ export const getServerSideProps: GetServerSideProps<HomeProps> = async ({ res })
       }),
   );
 
-  res.setHeader("Cache-Control", "public, s-maxage=60, stale-while-revalidate=300");
   return {
     props: {
       services,
@@ -150,5 +149,6 @@ export const getServerSideProps: GetServerSideProps<HomeProps> = async ({ res })
       testimonials,
       seo,
     },
+    revalidate: 300,
   };
 };

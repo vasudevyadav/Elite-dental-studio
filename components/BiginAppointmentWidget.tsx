@@ -14,7 +14,7 @@ export default function BiginAppointmentWidget({
   className?: string;
   hideTitle?: boolean;
 }) {
-  const [activated, setActivated] = useState(!hideTitle);
+  const [activated, setActivated] = useState(variant === "popup");
   const title = variant === "popup" ? "Book an appointment form" : "Appointment request form";
   const compact = variant === "popup";
   const formOverrides = `
