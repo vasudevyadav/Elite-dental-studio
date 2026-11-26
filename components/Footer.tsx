@@ -2,7 +2,7 @@ import TrustBadges from "@/components/TrustBadges";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { isLocationSpecificServiceSlug, isMainClinic } from "@/lib/clinics";
+import { isLocationSpecificServiceSlug } from "@/lib/clinics";
 import { getSharedApiJson } from "@/lib/clientApi";
 
 const companyLinks = [
@@ -41,11 +41,11 @@ const fallbackServices = [
   "Paediatric Dentistry",
 ].map((name, index) => ({ name, slug: serviceSlugs[index] }));
 
-const fallbackClinics = [
-  { name: "Calicut", href: "https://share.google/Fwtkjjfxd6VB0I8Pg" },
-  { name: "Kochi", href: "https://share.google/rBjee9uoOFuyUrBiN" },
-  { name: "Kannur", href: "https://share.google/hqWjVESaLgEvGCPDX" },
-  { name: "Coimbatore", href: "/#clinics" },
+const clinics = [
+  { name: "Dental Clinic in Calicut", href: "/" },
+  { name: "Dental Clinic in Kochi", href: "/kochi" },
+  { name: "Dental Clinic in kannur", href: "/kannur" },
+  { name: "Dental Clinic in Coimbatore", href: "/coimbatore" },
 ];
 
 const socialLinks = {
@@ -90,25 +90,7 @@ function SocialIcon({ type }: { type: "facebook" | "instagram" | "youtube" }) {
 }
 
 export default function Footer() {
-  const [clinics, setClinics] = useState(fallbackClinics);
   const [services, setServices] = useState(fallbackServices);
-
-  useEffect(() => {
-    getSharedApiJson<{ data?: { items?: { name: string; slug: string }[] } }>("/api/locations")
-      .then((payload) => {
-        const items = payload?.data?.items;
-        if (!Array.isArray(items)) return;
-        setClinics(
-          items
-            .filter((item: { slug: string }) => isMainClinic(item.slug))
-            .map((item: { name: string; slug: string }) => ({
-              name: item.name,
-              href: `/${item.slug}`,
-            })),
-        );
-      })
-      .catch(() => undefined);
-  }, []);
 
   useEffect(() => {
     getSharedApiJson<{ data?: { items?: { title: string; slug: string }[] } }>("/api/services")
